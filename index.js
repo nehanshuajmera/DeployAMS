@@ -1,30 +1,38 @@
 const express = require("express");
 const app = express();
-require('dotenv').config();
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 5000;
+const cors = require("cors");
+const isauthenticated = require("./Middleware/isauthenticated")
 
+dotenv.config();
 app.use(express.json());
 
-app.get("/test",(req,res)=>{
-    res.send("Testing")
+app.use(cookieParser());
+
+app.use(cors({
+    origin: [
+      "http://localhost:3000",
+    ],
+    credentials: true,
   })
+);
 
 
-  app.use((req, res, next) => {
-      const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-      // console.log(req.headers['x-forwarded-for'], " : ",req.connection.remoteAddress," , ",`User IP: ${clientIp}`)
-      // const clientIp = req.ip; // Get the user's IP address from the request
-      console.log(`User IP: ${clientIp}`);
-      next(); // Call the next middleware in the chain
-    });
-    
-app.listen(PORT, () => {
-    console.log(`Server started on port: ${PORT}`);
-});
+// connect to mongoDB
 
-const path=require("path");
+mongoose.set('strictQuery', false)
+mongoose.connect(process.env.MDB_CONNECT) 
+.then(()=>{console.log('Mongodb connected')});
 
-app.use(express.static('client/dist'));
- app.get('*', (req, res) => {
-        res.sendFile(path.resolve('client','dist','index.html'));
+// set up routes
+app.use("/auth", require("./Routes/Authentication"));
+app.use("/profile",require("./Routes/UserProfile"));
+app.use("/logs",isauthenticated,require("./Routes/LogsRouter"));
+
+app.listen(PORT, err => {
+  if (err) throw err;
+  console.log(`Server started on port: ${PORT}`);
 });
