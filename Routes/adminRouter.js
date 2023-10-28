@@ -371,7 +371,7 @@ router.post('/updatestudent', isauthenticated, async (req, res) => {
       if (!updatedData) {
         return res.status(400).json({ message: 'Updated student data is required' });
       }
-  
+
       // Find the student by ID and update the specified fields
       const updatedStudent = await Student.findOneAndUpdate(
         { _id: studentId },
