@@ -21,7 +21,6 @@ function getDayOfWeek(date) {
         const subject = await Subject.findOne({
           _id: subjectId,
           day: getDayOfWeek(date),
-          date: date,
         });
   
         if (subject) {

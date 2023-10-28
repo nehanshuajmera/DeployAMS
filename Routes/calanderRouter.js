@@ -70,10 +70,6 @@ function getDayOfWeek(date) {
 
 
 
-
-
-
-
 // POST /updateholiday - Update academic calendar to mark a date as a holiday
 router.post('/updateholiday', isauthenticated, async (req, res) => {
   try {
