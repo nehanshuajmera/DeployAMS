@@ -1,10 +1,29 @@
 const express = require("express");
 const router = express.Router();
 const AcademicCalendar = require("../Model/calanderSchema"); // Import your AcademicCalendar model
+const Teacher = require("../Model/teacherSchema");
+const isauthenticated = require("../Middleware/authenticated");
 
 // POST /create-academic-calendar - Create academic calendar entries for a date range
-router.post("/create-academic-calendar", async (req, res) => {
+router.post("/create-academic-calendar",isauthenticated, async (req, res) => {
   try {
+    const userId = req.user_id; // You should have this information in your authentication middleware
+
+    if (req.user_role !== 'teacher') {
+      return res.status(403).json({ message: 'Forbidden: Access denied for non-teacher users' });
+    }
+
+    // Check if the user has admin privileges (admin_role is "Admin")
+    const teacher = await Teacher.findById(userId);
+
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
+    }
+
+    if (teacher.admin_role !== "Admin") {
+      return res.status(403).json({ message: "Forbidden: Access denied for non-admin teachers" });
+    }
+
     // Get the start date and end date from the request
     const { startDate, endDate } = req.body;
 
@@ -48,5 +67,58 @@ function getDayOfWeek(date) {
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   return daysOfWeek[date.getDay()];
 }
+
+
+
+
+
+
+
+// POST /updateholiday - Update academic calendar to mark a date as a holiday
+router.post('/updateholiday', isauthenticated, async (req, res) => {
+  try {
+  const userId = req.user_id; // You should have this information in your authentication middleware
+
+    if (req.user_role !== 'teacher') {
+      return res.status(403).json({ message: 'Forbidden: Access denied for non-teacher users' });
+    }
+
+    // Check if the user has admin privileges (admin_role is "Admin")
+    const teacher = await Teacher.findById(userId);
+
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
+    }
+
+    if (teacher.admin_role !== "Admin") {
+      return res.status(403).json({ message: "Forbidden: Access denied for non-admin teachers" });
+    }
+    // Get the date to mark as a holiday from the request body
+    const { date } = req.body;
+
+    if (!date) {
+      return res.status(400).json({ message: 'Date is required to update as a holiday' });
+    }
+
+    // Check if the date is not already marked as a holiday in the academic calendar
+    const existingEntry = await AcademicCalendar.findOne({ date: date, holiday: { $exists: false } });
+
+    if (existingEntry) {
+      return res.status(400).json({ message: 'The date is already in the academic calendar and is not marked as a holiday' });
+    }
+
+    // Update the academic calendar to mark the date as a holiday
+    await AcademicCalendar.findOneAndUpdate(
+      { date: date },
+      { $set: { holiday: 'Holiday' } },
+      { new: true, upsert: true }
+    );
+
+    return res.status(200).json({ message: 'Academic calendar updated to mark the date as a holiday' });
+  } catch (error) {
+    console.error('Error updating academic calendar:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 module.exports = router;
