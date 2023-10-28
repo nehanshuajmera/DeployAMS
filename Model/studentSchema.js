@@ -31,6 +31,7 @@ const studentSchema = new mongoose.Schema({
       attendance: [
         {
           date: Date,
+          count: Number,
           cause: String,
         },
       ],

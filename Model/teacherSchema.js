@@ -9,6 +9,7 @@ const teacherSchema = new mongoose.Schema({
     match: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
   },
   phone_no: String,
+  admin_role: String,
   subjects: [
     {
       subject_id: mongoose.Schema.Types.ObjectId,
