@@ -31,6 +31,8 @@ app.use("/api/authentic", require("./Routes/checkauthRouter.js"));
 app.use("/api/student", require("./Routes/studentRouter.js"));
 app.use("/api/teacher", require("./Routes/teacherRouter.js"));
 app.use("/api/calander", require("./Routes/calanderRouter.js"));
+app.use("/api/admin", require("./Routes/adminRouter.js"));
+
 
 app.listen(PORT, err => {
   if (err) throw err;

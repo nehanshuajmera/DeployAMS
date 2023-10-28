@@ -297,47 +297,6 @@ router.post("/createsubject", isauthenticated, async (req, res) => {
     }
   });
   
-  // POST /createstudent - Create a new student (only accessible by admin teachers)
-  router.post("/createstudent", isauthenticated, async (req, res) => {
-    try {
-      const userId = req.user_id; // You should have this information in your authentication middleware
-  
-      if (!teacher) {
-        return res.status(404).json({ message: "Teacher not found" });
-      }
-  
-      // Check if the user has admin privileges (admin_role is "Admin")
-      const teacher = await Teacher.findById(userId);
-  
-      if (teacher.admin_role !== "Admin") {
-        return res.status(403).json({ message: "Forbidden: Access denied for non-admin teachers" });
-      }
-  
-      // Create a new student using the data from the request body
-      const { name, enrollment_no, scholar_no, email, phone_no, branch, section, batch, password } = req.body;
-  
-      const newStudent = new Student({
-        name,
-        enrollment_no,
-        scholar_no,
-        email,
-        phone_no,
-        branch,
-        section,
-        batch,
-        password: await bcrypt.hash(password, 10), // Encrypt the password before saving
-      });
-  
-      // Save the new student to the database
-      const savedStudent = await newStudent.save();
-  
-      return res.status(201).json({ message: "Student created successfully", student: savedStudent });
-    } catch (error) {
-      return res.status(500).json({ message: "Internal server error" });
-    }
-  });
-  
-
   // POST /updatestudent - Update student information
 router.post('/updatestudent', isauthenticated, async (req, res) => {
     try {
@@ -426,5 +385,181 @@ router.post('/updatestudent', isauthenticated, async (req, res) => {
     }
   });
 
+
+// GET /allsubjects - Retrieve all subjects with teacher details
+router.get('/allsubjects', isauthenticated, async (req, res) => {
+  try {
+    const userId = req.user_id; // You should have this information in your authentication middleware
   
+      if (req.user_role !== 'teacher') {
+        return res.status(403).json({ message: 'Forbidden: Access denied for non-teacher users' });
+      }
+  
+      // Check if the user has admin privileges (admin_role is "Admin")
+      const teacher = await Teacher.findById(userId);
+  
+      if (!teacher) {
+        return res.status(404).json({ message: "Teacher not found" });
+      }
+  
+      if (teacher.admin_role !== "Admin") {
+        return res.status(403).json({ message: "Forbidden: Access denied for non-admin teachers" });
+      }
+
+    // Find all subjects and populate the teacher details
+    const subjects = await Subject.find().populate('teacher_id');
+
+    if (!subjects || subjects.length === 0) {
+      return res.status(404).json({ message: 'No subjects found' });
+    }
+
+    // Map the subjects and format the response
+    const subjectsWithTeacherDetails = subjects.map(subject => ({
+      subject_id: subject.subject_id,
+      subject_name: subject.subject_name,
+      course_code: subject.course_code,
+      branch: subject.branch,
+      section: subject.section,
+      batch: subject.batch,
+      teacher: {
+        teacher_id: subject.teacher_id.teacher_id,
+        name: subject.teacher_id.name,
+        email: subject.teacher_id.email,
+        phone_no: subject.teacher_id.phone_no,
+      },
+      attendance_date: subject.attendance_date,
+      day: subject.day,
+    }));
+
+    return res.status(200).json({ subjects: subjectsWithTeacherDetails });
+  } catch (error) {
+    console.error('Error fetching subjects with teacher details:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// GET /allstudents - Retrieve all students with subjects and teacher details
+router.get('/allstudents', isauthenticated, async (req, res) => {
+  try {
+    const userId = req.user_id; // You should have this information in your authentication middleware
+  
+      if (req.user_role !== 'teacher') {
+        return res.status(403).json({ message: 'Forbidden: Access denied for non-teacher users' });
+      }
+  
+      // Check if the user has admin privileges (admin_role is "Admin")
+      const teacher = await Teacher.findById(userId);
+  
+      if (!teacher) {
+        return res.status(404).json({ message: "Teacher not found" });
+      }
+  
+      if (teacher.admin_role !== "Admin") {
+        return res.status(403).json({ message: "Forbidden: Access denied for non-admin teachers" });
+      }
+    // Find all students
+    const students = await Student.find();
+
+    if (!students || students.length === 0) {
+      return res.status(404).json({ message: 'No students found' });
+    }
+
+    // Map students and get their subjects and teacher details
+    const studentsWithSubjectsAndTeachers = await Promise.all(
+      students.map(async (student) => {
+        const subjects = await Subject.find({ subject_id: { $in: student.subjects.map(sub => sub.subject_id) } }).populate('teacher_id');
+        
+        const studentSubjects = subjects.map(subject => ({
+          subject_id: subject.subject_id,
+          subject_name: subject.subject_name,
+          course_code: subject.course_code,
+          teacher: {
+            teacher_id: subject.teacher_id.teacher_id,
+            name: subject.teacher_id.name,
+            email: subject.teacher_id.email,
+            phone_no: subject.teacher_id.phone_no,
+          },
+        }));
+        
+        return {
+          name: student.name,
+          enrollment_no: student.enrollment_no,
+          scholar_no: student.scholar_no,
+          email: student.email,
+          phone_no: student.phone_no,
+          branch: student.branch,
+          section: student.section,
+          batch: student.batch,
+          subjects: studentSubjects,
+        };
+      })
+    );
+
+    return res.status(200).json({ message: studentsWithSubjectsAndTeachers });
+  } catch (error) {
+    console.error('Error fetching students with subjects and teacher details:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+// GET /allteachers - Retrieve all teachers with their subjects
+router.get('/allteachers', isauthenticated, async (req, res) => {
+  try {
+    const userId = req.user_id; // You should have this information in your authentication middleware
+  
+      if (req.user_role !== 'teacher') {
+        return res.status(403).json({ message: 'Forbidden: Access denied for non-teacher users' });
+      }
+  
+      // Check if the user has admin privileges (admin_role is "Admin")
+      const teacher = await Teacher.findById(userId);
+  
+      if (!teacher) {
+        return res.status(404).json({ message: "Teacher not found" });
+      }
+  
+      if (teacher.admin_role !== "Admin") {
+        return res.status(403).json({ message: "Forbidden: Access denied for non-admin teachers" });
+      }
+
+    // Find all teachers
+    const teachers = await Teacher.find();
+
+    if (!teachers || teachers.length === 0) {
+      return res.status(404).json({ message: 'No teachers found' });
+    }
+
+    // Map teachers and get their subjects
+    const teachersWithSubjects = await Promise.all(
+      teachers.map(async (teacher) => {
+        const subjects = await Subject.find({ teacher_id: teacher.teacher_id });
+        
+        const teacherSubjects = subjects.map(subject => ({
+          subject_id: subject.subject_id,
+          subject_name: subject.subject_name,
+          course_code: subject.course_code,
+          branch: subject.branch,
+          section: subject.section,
+          batch: subject.batch,
+        }));
+        
+        return {
+          teacher_id: teacher.teacher_id,
+          name: teacher.name,
+          email: teacher.email,
+          phone_no: teacher.phone_no,
+          subjects: teacherSubjects,
+        };
+      })
+    );
+
+    return res.status(200).json({ message: teachersWithSubjects });
+  } catch (error) {
+    console.error('Error fetching teachers with subjects:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 module.exports = router;

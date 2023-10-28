@@ -195,6 +195,40 @@ router.post('/updateattendance', isauthenticated, async (req, res) => {
 });
 
 
+// POST /changepassword - Change teacher's password
+router.post("/changepassword", isauthenticated, async (req, res) => {
+  try {
+      const teacherId = req.user_id; // You should have this information in your teacher authentication middleware
+      
+      if (req.user_role !== 'teacher') {
+        return res.status(403).json({ message: 'Forbidden: Access denied for non-teacher users' });
+      }
+
+      // Find the teacher by their ID
+      const teacher = await Teacher.findById(teacherId);
+
+      if (!teacher) {
+          return res.status(404).json({ message: "Teacher Details not found" });
+      }
+
+      // // Check if the current password provided in the request matches the stored password
+      // const isPasswordMatch = await bcrypt.compare(req.body.currentPassword, teacher.password);
+
+      // if (!isPasswordMatch) {
+      //     return res.status(400).json({ message: "Current password is incorrect" });
+      // }
+
+      // Update the password to the new password provided in the request
+      teacher.password = await bcrypt.hash(req.body.newPassword, 10); // Encrypt the new password
+
+      // Save the updated teacher information
+      await teacher.save();
+
+      return res.status(200).json({ message: "Password changed successfully" });
+  } catch (error) {
+      return res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 
 module.exports = router;

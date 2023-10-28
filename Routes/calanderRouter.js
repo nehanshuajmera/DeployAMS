@@ -117,4 +117,45 @@ router.post('/updateholiday', isauthenticated, async (req, res) => {
   }
 });
 
+
+// GET /academiccalendar - Retrieve all dates, days, and holidays from the academic calendar
+router.get('/academiccalendar', isauthenticated, async (req, res) => {
+  try {
+    const userId = req.user_id; // You should have this information in your authentication middleware
+
+    if (req.user_role !== 'teacher') {
+      return res.status(403).json({ message: 'Forbidden: Access denied for non-teacher users' });
+    }
+
+    // Check if the user has admin privileges (admin_role is "Admin")
+    const teacher = await Teacher.findById(userId);
+
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
+    }
+
+    if (teacher.admin_role !== "Admin") {
+      return res.status(403).json({ message: "Forbidden: Access denied for non-admin teachers" });
+    }
+    // Find all entries in the academic calendar
+    const calendarEntries = await AcademicCalendar.find();
+
+    if (!calendarEntries || calendarEntries.length === 0) {
+      return res.status(404).json({ message: 'No academic calendar entries found' });
+    }
+
+    // Map the calendar entries to format the response
+    const academicCalendarData = calendarEntries.map(entry => ({
+      date: entry.date,
+      day: entry.day,
+      holiday: entry.holiday || 'No holiday', // Provide a default value if 'holiday' is not defined
+    }));
+
+    return res.status(200).json({ message: academicCalendarData });
+  } catch (error) {
+    console.error('Error fetching academic calendar entries:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 module.exports = router;

@@ -77,5 +77,40 @@ router.get("/studentdetails", isauthenticated, async (req, res) => {
   }
 });
 
+// POST /changepassword - Change student's password
+router.post("/changepassword", isauthenticated, async (req, res) => {
+  try {
+      const studentId = req.user_id; // You should have this information in your student authentication middleware
+      
+      if (req.user_role !== "student") {
+        return res.status(403).json({ message: "Forbidden: Access denied for non-student users" });
+      }
+
+      // Find the student by their ID
+      const student = await Student.findById(studentId);
+
+      if (!student) {
+          return res.status(404).json({ message: "Student not found" });
+      }
+
+      // // Check if the current password provided in the request matches the stored password
+      // const isPasswordMatch = await bcrypt.compare(req.body.currentPassword, student.password);
+
+      // if (!isPasswordMatch) {
+      //     return res.status(400).json({ message: "Current password is incorrect" });
+      // }
+
+      // Update the password to the new password provided in the request
+      student.password = await bcrypt.hash(req.body.newPassword, 10); // Encrypt the new password
+
+      // Save the updated student information
+      await student.save();
+
+      return res.status(200).json({ message: "Password changed successfully" });
+  } catch (error) {
+      return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 
 module.exports = router;
