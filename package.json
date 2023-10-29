@@ -25,6 +25,7 @@
     "jwt-decode": "^3.1.2",
     "mongoose": "^7.3.2",
     "node": "^20.5.0",
+    "node-cron": "^3.0.2",
     "nodemon": "^3.0.1",
     "path": "^0.12.7"
   }

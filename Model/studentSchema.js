@@ -37,6 +37,16 @@ const studentSchema = new mongoose.Schema({
       ],
     },
   ],
+  ratings: [
+    {
+      star: {
+        type: Number,
+        min: 0,
+        max: 5,
+      },
+      teacher_id: mongoose.Schema.Types.ObjectId, // Assuming this references the teacher
+    },
+  ],
 });
 
 // Create a Student model

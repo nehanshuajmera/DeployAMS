@@ -4,7 +4,9 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Student = require("../Model/studentSchema");
 const Subject = require("../Model/subjectSchema");
+const Complaint = require("../Model/complaintSchema");
 const isauthenticated = require("../Middleware/authenticated");
+const getallteacher = require("../Controller/allteachers");
 
 // POST /login/ - Authenticate user and provide JWT token
 router.post("/login", async (req, res) => {
@@ -112,5 +114,42 @@ router.post("/changepassword", isauthenticated, async (req, res) => {
   }
 });
 
+// GET /allteachers - Retrieve all teachers with their subjects
+router.get('/allteachers', isauthenticated,getallteacher);
+
+// POST /complaints - Create a new complaint
+router.post('/complaints',isauthenticated, async (req, res) => {
+  try {
+    const studentId = req.user_id; // You should have this information in your student authentication middleware
+      
+      if (req.user_role !== "student") {
+        return res.status(403).json({ message: "Forbidden: Access denied for non-student users" });
+      }
+
+      // Find the student by their ID
+      const student = await Student.findById(studentId);
+
+      if (!student) {
+          return res.status(404).json({ message: "Student not found" });
+      }
+    const { teacher_id, message } = req.body;
+
+
+    // Create a new complaint
+    const newComplaint = new Complaint({
+      teacher_id, // Assuming you have the teacher's ID
+      student_id:studentId, // Assuming you have the student's ID
+      message,
+    });
+
+    // Save the new complaint to the database
+    const savedComplaint = await newComplaint.save();
+
+    res.status(201).json({ message: 'Complaint sent successfully', complaint: savedComplaint });
+  } catch (error) {
+    console.error('Error sending complaint:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 module.exports = router;

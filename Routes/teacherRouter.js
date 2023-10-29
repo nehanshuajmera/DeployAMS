@@ -7,6 +7,7 @@ const isauthenticated = require("../Middleware/authenticated");
 const Subject = require("../Model/subjectSchema");
 const isClassScheduled = require("../Controller/isClassDay")
 const Student = require("../Model/studentSchema");
+const addLog = require('../Controller/logs');
 
 // POST /login/ - Authenticate user and provide JWT token
 router.post("/login", async (req, res) => {
@@ -186,6 +187,8 @@ router.post('/updateattendance', isauthenticated, async (req, res) => {
         }
       }
     }
+    
+    addLog(`Student attendance updated for subject: ${subject._id}`, teacherId);
 
     return res.status(200).json({ message: 'Attendance updated successfully' });
   } catch (error) {

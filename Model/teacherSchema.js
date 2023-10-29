@@ -31,6 +31,18 @@ const teacherSchema = new mongoose.Schema({
       default: Date.now,
     },
   },
+  rating: {
+    star: {
+      type: Number,
+      default: 0,
+      min: 0,  // Minimum value
+      max: 5,  // Maximum value
+    },
+    participants: {
+      type: Number,
+      default: 0,
+    },
+  },
 });
 
 // Create a Teacher model
