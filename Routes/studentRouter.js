@@ -64,7 +64,7 @@ router.get("/studentdetails", isauthenticated, async (req, res) => {
     }
 
     // Fetch the user's attendance data from the database
-    const student = await Student.findById(userId).select("subjects");
+    const student = await Student.findById(userId);
 
     if (!student) {
       return res.status(404).json({ message: "User not found" });
@@ -133,7 +133,6 @@ router.post('/complaints',isauthenticated, async (req, res) => {
           return res.status(404).json({ message: "Student not found" });
       }
     const { teacher_id, message } = req.body;
-
 
     // Create a new complaint
     const newComplaint = new Complaint({

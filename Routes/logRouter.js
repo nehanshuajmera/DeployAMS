@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Log = require('../Model/logSchema'); // Import your Log model
 
-// GET /logs - Retrieve all log entries
-router.get('/logs', async (req, res) => {
+// GET / - Retrieve all log entries
+router.get('/', async (req, res) => {
   try {
     // Find all log entries
     const logs = await Log.find();

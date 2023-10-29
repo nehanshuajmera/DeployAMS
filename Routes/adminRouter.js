@@ -31,7 +31,7 @@ router.post("/createsubject", isauthenticated, async (req, res) => {
       }
   
       // Create a new subject using the data from the request body
-      const { subject_name, course_code, branch, section, batch, count, teacher_id, day } = req.body;
+      const { subject_name, course_code, branch, section, batch,  teacher_id, day } = req.body;
   
       const newSubject = new Subject({
         subject_name,
@@ -39,7 +39,6 @@ router.post("/createsubject", isauthenticated, async (req, res) => {
         branch,
         section,
         batch,
-        count,
         teacher_id,
         attendance_date: [],
         day
@@ -177,12 +176,13 @@ router.post("/createsubject", isauthenticated, async (req, res) => {
   
       return res.status(201).json({ message: "Teacher created successfully", teacher: savedTeacher });
     } catch (error) {
+      console.log({error})
       return res.status(500).json({ message: "Internal server error" });
     }
   });
   
   // PUT /updateteacher/:id - Update teacher information (only accessible by admin teachers)
-  router.put("/updateteacher/:id", isauthenticated, async (req, res) => {
+  router.post("/updateteacher/:id", isauthenticated, async (req, res) => {
     try {
       const userId = req.user_id; // You should have this information in your authentication middleware
   
@@ -225,7 +225,7 @@ router.post("/createsubject", isauthenticated, async (req, res) => {
   
   
   // DELETE /deleteteacher/:id - Delete a teacher (only accessible by admin teachers)
-  router.delete("/deleteteacher/:id", isauthenticated, async (req, res) => {
+  router.get("/deleteteacher/:id", isauthenticated, async (req, res) => {
     try {
       const userId = req.user_id; // You should have this information in your authentication middleware
   
@@ -304,12 +304,13 @@ router.post("/createsubject", isauthenticated, async (req, res) => {
   
       return res.status(201).json({ message: "Student created successfully", student: savedStudent });
     } catch (error) {
+      console.log({error})
       return res.status(500).json({ message: "Internal server error" });
     }
   });
   
   // POST /updatestudent - Update student information
-router.post('/updatestudent', isauthenticated, async (req, res) => {
+router.post('/updatestudent/:id', isauthenticated, async (req, res) => {
     try {
       const userId = req.user_id; // You should have this information in your authentication middleware
   
@@ -329,25 +330,26 @@ router.post('/updatestudent', isauthenticated, async (req, res) => {
       }
 
       // Get the student ID from the request body
-      const { studentId } = req.body;
+      const studentId = req.params.id;
   
       if (!studentId) {
         return res.status(400).json({ message: 'Student ID is required to update student information' });
       }
   
       // Get the updated student data from the request body
-      const updatedData = req.body.updatedData;
+      // const updatedData = req.body.updatedData;
   
-      if (!updatedData) {
-        return res.status(400).json({ message: 'Updated student data is required' });
-      }
+      // if (!updatedData) {
+      //   return res.status(400).json({ message: 'Updated student data is required' });
+      // }
       addLog(`Student updated: ${studentId}`, userId);
 
       // Find the student by ID and update the specified fields
-      const updatedStudent = await Student.findOneAndUpdate(
-        { _id: studentId },
-        { $set: updatedData },
-        { new: true }
+      const updatedStudent = await Student.findByIdAndUpdate(studentId,
+        {
+          $set: req.body, // Use the request body to update teacher details
+        },
+        { new: true } 
       );
   
       if (!updatedStudent) {
@@ -363,7 +365,7 @@ router.post('/updatestudent', isauthenticated, async (req, res) => {
   
 
   // DELETE /deletestudent/:id - Delete a student (only accessible by admin teachers)
-  router.delete("/deletestudent/:id", isauthenticated, async (req, res) => {
+  router.get("/deletestudent/:id", isauthenticated, async (req, res) => {
     try {
       const userId = req.user_id; // You should have this information in your authentication middleware
   

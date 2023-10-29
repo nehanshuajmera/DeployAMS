@@ -1,4 +1,5 @@
 const Teacher = require("../Model/teacherSchema");
+const Subject = require("../Model/subjectSchema");
 
 
 const getallteacher=async (req, res) => {
@@ -46,7 +47,11 @@ const getallteacher=async (req, res) => {
             name: teacher.name,
             email: teacher.email,
             phone_no: teacher.phone_no,
+            admin_role: teacher.admin_role,
             subjects: teacherSubjects,
+            updated_at: teacher.updated_at,
+            created_at_and_by: teacher.created_at_and_by,
+            rating: teacher.rating,
           };
         })
       );

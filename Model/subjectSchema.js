@@ -8,10 +8,14 @@ const subjectSchema = new mongoose.Schema({
   branch: String,
   section: String,
   batch: String,
-  count:Number,
   teacher_id: String,
   attendance_date: [Date], // An array of date objects
-  day: [String], // An array of strings representing days of the week (e.g., "Mon")
+  day: [
+    {
+      name:String ,
+      count:Number
+    }
+    ], // An array of strings representing days of the week (e.g., "Mon")
 });
 
 // Create a Subject model

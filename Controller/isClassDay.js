@@ -1,30 +1,31 @@
 const AcademicCalendar = require("../Model/calanderSchema"); // Import your AcademicCalendar model
 const Subject = require("../Model/subjectSchema"); // Import your Subject model
 
-// Function to get the day of the week (e.g., "Monday")
-function getDayOfWeek(date) {
-    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    return daysOfWeek[date.getDay()];
-  }
-  
-  // Function to check if a class is scheduled for a specific date and subject
-  async function isClassScheduled(date, subjectId) {
+
+// Function to check if a class is scheduled for a specific date and subject
+async function isClassScheduled(date, subjectId) {
     try {
       // Check if the provided date is not a holiday in the academic calendar
       const academicCalendarEntry = await AcademicCalendar.findOne({
-        date: date,
+        date: new Date(date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()),
         holiday: { $exists: false },
       });
-  
-      if (academicCalendarEntry) {
+//  console.log({academicCalendarEntry}, new Date(date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate())) 
+
+if (academicCalendarEntry) {
         // Check if the subject with the given subjectId has a class scheduled for the provided date
         const subject = await Subject.findOne({
           _id: subjectId,
-          day: getDayOfWeek(date),
+          // day: getDayOfWeek(date),
         });
-  
+ 
+        // console.log(subject.day,subject.day.find(getDayOfWeek(date)))
+        
         if (subject) {
-          return true; // The subject has a class scheduled for the provided date
+          // console.log(getDayOfWeek(date))
+          var isday= subject.day.find(day => day.name === getDayOfWeek(date));
+
+          return !(!isday); // The subject has a class scheduled for the provided date
         }
       }
   
@@ -35,4 +36,11 @@ function getDayOfWeek(date) {
     }
   }
   
+
+  // Function to get the day of the week (e.g., "Monday")
+function getDayOfWeek(date) {
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    return daysOfWeek[date.getDay()];
+ }
+
   module.exports = isClassScheduled;

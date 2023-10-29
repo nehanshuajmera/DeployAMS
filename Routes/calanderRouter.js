@@ -25,8 +25,9 @@ router.post("/create-academic-calendar",isauthenticated, async (req, res) => {
     }
 
     // Get the start date and end date from the request
-    const { startDate, endDate } = req.body;
-
+    let { startDate, endDate } = req.body;
+    startDate=new Date(startDate);
+    endDate=new Date(endDate);
     if (!startDate || !endDate) {
       return res.status(400).json({ message: "Start date and end date are required" });
     }
@@ -36,7 +37,7 @@ router.post("/create-academic-calendar",isauthenticated, async (req, res) => {
 
     // Create academic calendar entries with date and day, leaving "holiday" unassigned
     const academicCalendarEntries = dateRange.map(date => ({
-      date: date,
+      date: date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(),
       day: getDayOfWeek(date),
     }));
 
@@ -53,11 +54,13 @@ router.post("/create-academic-calendar",isauthenticated, async (req, res) => {
 function createDateRange(startDate, endDate) {
   const dateRange = [];
   let currentDate = new Date(startDate);
-
+// console.log({currentDate})
   while (currentDate <= endDate) {
     dateRange.push(new Date(currentDate));
     currentDate.setDate(currentDate.getDate() + 1);
   }
+  
+// console.log({dateRange})
 
   return dateRange;
 }
@@ -90,23 +93,24 @@ router.post('/updateholiday', isauthenticated, async (req, res) => {
       return res.status(403).json({ message: "Forbidden: Access denied for non-admin teachers" });
     }
     // Get the date to mark as a holiday from the request body
-    const { date } = req.body;
+    let { date,holiday } = req.body;
+    date=new Date(date);
 
     if (!date) {
       return res.status(400).json({ message: 'Date is required to update as a holiday' });
     }
 
     // Check if the date is not already marked as a holiday in the academic calendar
-    const existingEntry = await AcademicCalendar.findOne({ date: date, holiday: { $exists: false } });
+    // const existingEntry = await AcademicCalendar.findOne({ date: date, holiday: { $exists: false } });
 
-    if (existingEntry) {
-      return res.status(400).json({ message: 'The date is already in the academic calendar and is not marked as a holiday' });
-    }
+    // if (existingEntry) {
+    //   return res.status(400).json({ message: 'The date is already in the academic calendar and is not marked as a holiday' });
+    // }
 
     // Update the academic calendar to mark the date as a holiday
     await AcademicCalendar.findOneAndUpdate(
-      { date: date },
-      { $set: { holiday: 'Holiday' } },
+      { date },
+      { $set: { holiday } },
       { new: true, upsert: true }
     );
 

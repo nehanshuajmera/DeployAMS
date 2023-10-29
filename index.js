@@ -34,7 +34,7 @@ app.use("/api/student", require("./Routes/studentRouter.js"));
 app.use("/api/teacher", require("./Routes/teacherRouter.js"));
 app.use("/api/calander", require("./Routes/calanderRouter.js"));
 app.use("/api/admin", require("./Routes/adminRouter.js"));
-app.use("/api/log", require("./Routes/logRouter.js"));
+app.use("/api/logs", require("./Routes/logRouter.js"));
 
 // Schedule the cron job to run at 3 am every day
 cron.schedule('0 3 * * *', () => {

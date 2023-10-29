@@ -9,6 +9,12 @@ const isClassScheduled = require("../Controller/isClassDay")
 const Student = require("../Model/studentSchema");
 const addLog = require('../Controller/logs');
 
+  // Function to get the day of the week (e.g., "Monday")
+  function getDayOfWeek(date) {
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    return daysOfWeek[date.getDay()];
+ }
+
 // POST /login/ - Authenticate user and provide JWT token
 router.post("/login", async (req, res) => {
   const { teacher_id, password } = req.body;
@@ -104,7 +110,7 @@ router.get("/studentsattendance/:id", isauthenticated, async (req, res) => {
     }
 
     // Fetch attendance data for all students for the specified subject
-    const studentsAttendance = await Student.find({ "subjects.subject_id": subjectId }).select("name subjects.attendance");
+    const studentsAttendance = await Student.find({ "subjects.subject_id": subjectId });
 
     return res.status(200).json({ mesaage: studentsAttendance });
   } catch (error) {
@@ -167,20 +173,33 @@ router.post('/updateattendance', isauthenticated, async (req, res) => {
       const count = studentData.count;
       const student = await Student.findOne({ _id: studentId });
 
+      // console.log({student})
 
       if (student) {
         // Find the subject in the student's subjects array
         const subjectIndex = student.subjects.findIndex(sub => sub.subject_id.equals(subject._id));
-
+        // console.log({subjectIndex})
+        // console.log(subject.day)
+        
         if (subjectIndex !== -1) {
           const subjectAttendance = student.subjects[subjectIndex].attendance;
+          var isday= subject.day.find(day => day.name === getDayOfWeek(today));
+
+          // console.log(subjectAttendance,subject.day,getDayOfWeek(today),isday) 
+          
 
           // Check if the attendance assigned is less than or equal to the subject's count
-          if (count <= subject.count) {
+          if (isday&&count <= isday.count) {
             // Update the attendance data
-              subjectAttendance.push({ date: new Date(), count, cause:'' });
-
+            if(subjectAttendance.length){
+              const lastdate=subjectAttendance[subjectAttendance.length-1].date;
+              if(lastdate.getFullYear() === today.getFullYear() &&lastdate.getMonth() === today.getMonth() &&lastdate.getDate() === today.getDate()){  
+                subjectAttendance.pop();
+              } 
+            }
+            subjectAttendance.push({ date: new Date(), count, cause:'' });
             await student.save();
+
           } else {
             return res.status(400).json({ message: 'Attendance limit exceeded' });
           }
