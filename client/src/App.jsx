@@ -1,5 +1,3 @@
-
-
 function App() {
 
   return (
@@ -8,11 +6,11 @@ function App() {
         <div className="bg-white w-full h-full flex items-center justify-center rounded-full">
           <h1 className="text-3xl text-green-500  font-bold ">
             Client
-          </h1>          
-        </div>        
+          </h1>
+        </div>
       </div>
 
-   </div>
+    </div>
 
   )
 }
