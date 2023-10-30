@@ -151,4 +151,49 @@ router.post('/complaints',isauthenticated, async (req, res) => {
   }
 });
 
+// POST /givestar - Give a star rating to a teacher
+router.post('/givestar', async (req, res) => {
+  try {
+    const studentId = req.user_id; // You should have this information in your authentication middleware
+
+    // Get the request data (teacher ID and star rating)
+    const { teacherId, star } = req.body;
+
+    // Check if the provided teacher ID exists
+    const teacher = await Teacher.findById(teacherId);
+
+    if (!teacher) {
+      return res.status(404).json({ message: 'Teacher not found' });
+    }
+
+    // Check if the provided star rating is valid (between 0 and 5)
+    if (star < 0 || star > 5) {
+      return res.status(400).json({ message: 'Invalid star rating. Must be between 0 and 5' });
+    }
+
+    // Check if the student has already rated the teacher
+    const student = await Student.findById(studentId);
+    const existingRating = student.ratings.find((rating) => rating.teacher_id.equals(teacherId));
+
+    if (existingRating) {
+      existingRating.star = star;
+      await student.save();
+      return res.status(400).json({ message: 'You have already rated this teacher so, Ratting updated Successfully' });
+    }
+
+    // Add the new rating to the student's ratings
+    student.ratings.push({ star, teacher_id: teacherId });
+    await student.save();
+
+    // Calculate and update the average teacher rating (you can reuse the calculateTeacherRatings function from a previous response)
+
+    // Respond with a success message
+    return res.status(200).json({ message: 'Rating submitted successfully' });
+  } catch (error) {
+    console.error('Error giving a star rating to the teacher:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 module.exports = router;
