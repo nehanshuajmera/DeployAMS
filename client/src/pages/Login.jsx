@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLogin } from "../context/LoginContext";
 
 const initialLoginData = {
   userId: "",
@@ -11,6 +12,7 @@ const initialResetData = {
 
 const Login = () => {
   const [toggle, setToggle] = useState(true);
+  const {loginHandler} = useLogin()
   // toggle == true --> login form
   // toggle == false --> forget password form
   const [loginData, setLoginData] = useState(initialLoginData);
@@ -138,7 +140,7 @@ const Login = () => {
               </div>
             </div>
             <div>
-              <button className="button1">Log In</button>
+              <button className="button1" onClick={()=>loginHandler(loginData)}>Log In</button>
             </div>
           </div>
         </div>
