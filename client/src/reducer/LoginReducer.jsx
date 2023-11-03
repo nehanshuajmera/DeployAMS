@@ -7,6 +7,7 @@ const LoginReducer = (state, action) => {
         ...state,
         isError:true,
         isLoading: false,
+        errMsg:action.payload,
     }
     case actionType.SET_LOADING: 
     return {
@@ -17,6 +18,7 @@ const LoginReducer = (state, action) => {
         return{
             ...state,
             isError:false,
+            errMsg:'',
             isLoading:false,
             userId:action.payload.userId,
             password:action.payload.password,
