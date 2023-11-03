@@ -6,7 +6,7 @@ import axios from 'axios'
 const LoginContext = createContext();
 
 const initialState = {
-    userId:'',
+    teacher_id:'',
     password:'',
     isLogIn:false,
     isError:false,
@@ -16,13 +16,13 @@ const LoginContextProvider = ({children})=>{
 
     const loginHandler = (data)=>{
         dispatch({type:actionType.SET_LOADING})
-        const {userId,password} = data
-        if(userId && password){
+        const {teacher_id,password} = data
+        if(teacher_id && password){
           try {
               ;(async()=>{
-                    const res = axios.post("http://localhost:5000/api/teacher/login",{userId,password})
+                    const res = axios.post("http://localhost:5000/api/teacher/login",{teacher_id,password})
                     console.log(res)
-                    dispatch({type:actionType.SET_LOGIN,payload:{userId,password}})                  
+                    dispatch({type:actionType.SET_LOGIN,payload:{teacher_id,password}})                  
               })()
           } catch (error) {
             console.log(error)
