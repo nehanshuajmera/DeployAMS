@@ -12,7 +12,7 @@ const initialResetData = {
 
 const Login = () => {
   const [toggle, setToggle] = useState(true);
-  const {loginHandler} = useLogin()
+  const {loginHandler} = useLogin();
   // toggle == true --> login form
   // toggle == false --> forget password form
   const [loginData, setLoginData] = useState(initialLoginData);
