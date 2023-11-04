@@ -1,10 +1,25 @@
-import React from 'react'
 import './Login.css'
+import { useLogin } from '../../context/LoginContext'
+import { useState } from 'react';
+
+
+const initialState = {
+  userId:'',
+  password:'',
+}
 
 export default function Login() {
+  const [loginData, setLoginData] = useState(initialState);
+  const {isLoading,isError,errMsg,loginHandler} = useLogin()
   return (
     <div className='loginClass'>
-      <form action="" className="form_main">
+      <div className="form_main">
+        {
+          isError &&
+          <div className='text-white bg-red-600 px-6 py-2  z-50 rounded-lg'>
+            {errMsg}
+          </div>
+        }
         <p className="heading">Student Login</p>
         <div className="inputContainer">
           <svg
@@ -22,6 +37,11 @@ export default function Login() {
             className="inputField"
             id="username"
             placeholder="Enrollment No."
+            value={loginData.userId}
+            onChange={(e)=>{setLoginData(prev=>({
+              ...prev,
+              userId: e.target.value,
+            }))}}
           />
         </div>
         <div className="inputContainer">
@@ -40,13 +60,18 @@ export default function Login() {
             className="inputField"
             id="password"
             placeholder="Password"
+            value={loginData.password}
+            onChange={(e)=>{setLoginData(prev=>({
+              ...prev,
+              password: e.target.value,
+            }))}}
           />
         </div>
-        <button className="button">Login</button>
+        <button className="button" disabled={isLoading} onClick={()=>loginHandler(loginData)}>Login</button>
         <a className="forgotLink" href="#">
           Forgot your password?
         </a>
-      </form>
+      </div>
 
     </div>
   )
