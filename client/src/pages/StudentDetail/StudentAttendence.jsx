@@ -1,7 +1,10 @@
 import React from 'react'
+import './StudentAttendence.css';
 
 export default function StudentAttendence() {
   return (
-    <div>StudentAttendence</div>
+    <div className="studentDetailsMain flex items-center justify-center ">
+      <div className="">Students</div>
+    </div>
   )
 }
