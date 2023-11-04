@@ -1,5 +1,6 @@
-import Login from "./pages/Login/Login"
-
+import { Route, Routes } from "react-router-dom"
+import StudentAttendance from './pages/StudentDetail/StudentAttendence'
+import PrivateRoutes from "./components/PrivateRoutes"
 // import Login from "./pages/Login"
 
 function App() {
@@ -7,7 +8,12 @@ function App() {
   return (
     <div className="w-screen overflow-hidden h-screen flex items-center justify-center">
       {/* <Login/> */}
-      <Login/>
+      <Routes>
+        <Route path="/" element={<PrivateRoutes/>}>
+          <Route path="/student" element={<StudentAttendance/>}/>
+        </Route>
+      </Routes>
+      
     </div>
 
   )
