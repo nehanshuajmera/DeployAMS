@@ -37,6 +37,36 @@
 			"response": []
 		},
 		{
+			"name": "Student login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"enrollment_no\":\"EN20CS306059\",\r\n    \"password\":\"medicaps\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/student/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"student",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Check authentic and usertype",
 			"request": {
 				"method": "GET",
@@ -527,6 +557,27 @@
 						"api",
 						"teacher",
 						"updateattendance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Student Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/student/detail",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"student",
+						"detail"
 					]
 				}
 			},
