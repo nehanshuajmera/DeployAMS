@@ -105,9 +105,8 @@
     margin: 1em auto;
     padding: 0.5em;
     width: 60vw;
-    /* border: 1px solid red; */
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .detailedAttendence button {
