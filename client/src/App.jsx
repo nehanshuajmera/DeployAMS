@@ -1,15 +1,14 @@
-import Login from "./pages/Login/Login"
+// import Login from "./pages/Login/Login"
+import StudentAttendence from "./pages/Attendence/StudentAttendence"
 
-// import Login from "./pages/Login"
 
 function App() {
 
   return (
-    <div className="w-screen overflow-hidden h-screen flex items-center justify-center">
+    <div className="w-screen overflow-hidden h-screen flex items-center justify-center flex-col">
       {/* <Login/> */}
-      <Login/>
+      <StudentAttendence/>
     </div>
-
   )
 }
 
