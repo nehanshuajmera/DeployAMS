@@ -1,5 +1,5 @@
-import Login from "./pages/Login/Login"
-import StudentAttendence from "./pages/StudentDetail/StudentAttendence"
+// import Login from "./pages/Login/Login"
+import StudentAttendence from "./pages/Attendence/StudentAttendence"
 
 
 function App() {
