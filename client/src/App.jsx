@@ -1,13 +1,15 @@
-// import Login from "./pages/Login/Login"
+import Login from "./pages/Login/Login"
 import StudentAttendence from "./pages/Attendence/StudentAttendence"
+import DailyAttendence from "./pages/DaywiseAtt/DailyAttendence"
 
 
 function App() {
 
   return (
-    <div className="w-screen overflow-hidden h-screen flex items-center justify-center flex-col">
-      {/* <Login/> */}
-      <StudentAttendence/>
+    <div>
+      <Login/>
+      {/* <StudentAttendence/> */}
+      {/* <DailyAttendence /> */}
     </div>
   )
 }
