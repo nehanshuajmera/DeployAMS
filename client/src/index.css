@@ -11,7 +11,11 @@
     box-sizing: border-box;
 }
 
-body {
+/* body {
     background-color: #000;
     color: #fff;
-}
+} */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

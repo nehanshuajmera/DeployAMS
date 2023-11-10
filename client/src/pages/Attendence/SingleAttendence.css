@@ -1,0 +1,119 @@
+.singleStudentMain {
+    /* background: linear-gradient(135deg, #1C1C1C 20%, #494949 100%); */
+    background-color: #fff;
+    color: #000;
+    width: 100vw;
+    height: 100vh;
+}
+
+.universalDetails {
+    margin: 0.5em;
+    padding: 0.5em;
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cllgLogo {
+    height: 10vh;
+    width: 15vw;
+    padding: 0.5em;
+    /* border: 1px solid blue; */
+}
+
+.cllgLogo img {
+    width: 100%;
+    height: 100%;
+}
+
+.studentDepartment {
+    /* border: 1px solid green; */
+    padding: 0.5em;
+    font-size: 1.4em;
+    font-weight: 500;
+}
+
+.logoutButton {
+    padding: 0.3em;
+    font-size: 1em;
+    border: 2px solid black;
+    border-radius: 0.3em;
+}
+
+.logoutButton button {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.studentDetails {
+    /* border: 1px solid red; */
+    margin: 0.5em auto;
+    padding: 0.5em 3em;
+    width: 60vw;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    /* gap: 0.1em; */
+}
+
+.studentDetails h4 {
+    display: flex;
+    align-items: center;
+    padding: 0.4em;
+    font-weight: 500;
+    font-size: 1em;
+    /* background-color: aqua; */
+}
+
+.styleHr {
+    border: 1px solid black;
+}
+
+.subjectAttendence {
+    margin: 0.5em auto;
+    padding: 0.5em;
+    width: 60vw;
+    /* border: 1px solid red; */
+}
+
+.subjectTable {
+    /* border: 1px solid yellow; */
+    padding: 0.5em;
+    margin: 0.2em auto;
+    /* width: 50vw; */
+}
+
+.headingForStudents {
+    border: 2px solid #000;
+    margin: 0.2em;
+    padding: 0.2em;
+    width: 20vw;
+}
+
+.dataForStudents {
+    border: 2px solid #000;
+    margin: 0.2em;
+    padding: 0.4em;
+    width: 10vw;
+    font-size: 1em;
+    font-weight: 500;
+    text-align: center;
+}
+
+.detailedAttendence {
+    margin: 1em auto;
+    padding: 0.5em;
+    width: 60vw;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.detailedAttendence button {
+    margin: 0.5em;
+    padding: 0.5em;
+    border: 2px solid #000;
+    border-radius: 0.4em;
+    font-weight: 500;
+    font-size: 1em;
+}
