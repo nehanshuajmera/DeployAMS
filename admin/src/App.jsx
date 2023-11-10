@@ -1,16 +1,20 @@
-
+import { Route, Routes } from "react-router-dom"
+import Login from './pages/Login'
+import ErrMsg from "./components/ErrMsg"
+import CreateStudent from "./pages/CreateStudent"
+import UpdateStudent from "./pages/UpdateStudent"
 
 function App() {
 
   return (
-    <div className="w-screen overflow-hidden h-screen flex items-center justify-center">
-      <div className=" bg-red-500 h-[170px] w-[170px] rounded-full p-[2px] flex items-center justify-center cursor-pointer hover:scale-110 duration-500">
-        <div className="bg-white w-full h-full flex items-center justify-center rounded-full">
-          <h1 className="text-3xl text-red-500  font-bold ">
-            Client
-          </h1>          
-        </div>        
-      </div>
+    <div className="w-full overflow-hidden ">
+      <ErrMsg/>
+      <Routes>
+        <Route path={'/'} element={<Login/>}/>
+          <Route path="/createstudent" element={<CreateStudent/>} />
+          <Route path="/updatestudent/:id" element={<UpdateStudent/>} />
+          <Route path="*" element={<ErrMsg/>}/>
+      </Routes>
 
    </div>
   )

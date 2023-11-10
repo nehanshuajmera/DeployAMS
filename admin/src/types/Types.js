@@ -1,7 +1,11 @@
 const actionType={
     SET_LOGIN:"SET_LOGIN",
     SET_ERROR:"SET_ERROR",
-    SET_LOADING:"SET_LOADING"
+    SET_LOADING:"SET_LOADING",
+    SET_LOGOUT:"SET_LOGOUT",
+    SET_AUTHENTICATE:"SET_AUTHENTICATE",
+    SET_DATA:"SET_DATA",
+    
 }
 
 
@@ -21,4 +25,12 @@ const errorType = {
 
 
 }
-export {actionType,errorType}
+
+const API_Type ={
+    student:"student",
+    teacher:"teacher",
+
+}
+
+
+export {actionType,errorType, API_Type}

@@ -12,15 +12,14 @@ const initialResetData = {
 
 const Login = () => {
   const [toggle, setToggle] = useState(true);
-  const {loginHandler} = useLogin();
+  const { loginHandler } = useLogin();
   // toggle == true --> login form
   // toggle == false --> forget password form
   const [loginData, setLoginData] = useState(initialLoginData);
   const [restData, setRestData] = useState(initialResetData);
   return (
     <div className="h-screen w-full flex flexCenter bg-[#f6f5f7] ">
-      {/* desktop */}
-      <div className=" w-1/2 bg-white flex md:items-center justify-between flex-col md:flex-row gap-5 relative h-3/4 md:h-2/3">
+      <div className=" min-w-[50%] bg-white flex md:items-center justify-between flex-col md:flex-row gap-5 relative min-h-[75%] h-3/4 md:min-h-[66%]">
         {/* reset password */}
         <div
           className={`absolute bottom-0 md:right-0 ease-in-out loginContainers duration-700 flexCenter ${
@@ -29,7 +28,7 @@ const Login = () => {
               : "z-20 translate-y-[-100%] opacity-1 md:translate-y-0 md:translate-x-[-100%]"
           }`}
         >
-          <div className="flex flex-col gap-2 md:gap-12">
+          <div className="flex p-5 flex-col gap-2 md:gap-12">
             <h3 className="font-semibold text-xl md:text-3xl">
               Reset Password
             </h3>
@@ -78,7 +77,7 @@ const Login = () => {
                   className="inputBox outline-none  bg-gray-200"
                 />
               </div>
-            </div>
+            </div>            
             <div>
               <button className="button1">Reset</button>
             </div>
@@ -86,7 +85,7 @@ const Login = () => {
         </div>
         {/* log in */}
         <div
-          className={`absolute top-0 md:left-0 ease-in-out loginContainers duration-700 flexCenter ${
+          className={`absolute p-5 top-0 md:left-0 ease-in-out loginContainers duration-700 flexCenter ${
             toggle
               ? "z-20 translate-y-[100%] opacity-1 md:translate-y-0 md:translate-x-[100%]"
               : "opacity-0 z-10"
@@ -140,7 +139,12 @@ const Login = () => {
               </div>
             </div>
             <div>
-              <button className="button1" onClick={()=>loginHandler(loginData)}>Log In</button>
+              <button
+                className="button1"
+                onClick={() => loginHandler(loginData)}
+              >
+                Log In
+              </button>
             </div>
           </div>
         </div>
