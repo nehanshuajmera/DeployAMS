@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom"
-import Login from './pages/Login'
+import Login from './pages/Login/Login'
 import ErrMsg from "./components/ErrMsg"
 import CreateStudent from "./pages/CreateStudent"
 import UpdateStudent from "./pages/UpdateStudent"

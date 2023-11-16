@@ -9,7 +9,8 @@ export default function SingleAttendence(props) {
     <div className="singleStudentMain">
       <div className="universalDetails">
         <div className="cllgLogo">
-          <img src={props.Image} alt="CollegeLogo" />
+          {/* <img src={props.Image} alt="CollegeLogo" /> */}
+          <img src="https://medicaps.ac.in/resources/img/logo-navbar.png" alt="CollegeLogo" />
         </div>
         <div className="studentDepartment">
           <h4>Department of {props.Department}</h4>
