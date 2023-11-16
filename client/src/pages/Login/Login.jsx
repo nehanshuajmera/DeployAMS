@@ -36,7 +36,7 @@ export default function Login() {
             type="text"
             className="inputField"
             id="username"
-            placeholder="Enrollment No."
+            placeholder="Enrollment/Scholar No."
             value={loginData.userId}
             onChange={(e)=>{setLoginData(prev=>({
               ...prev,
