@@ -20,7 +20,7 @@ export default function DailyAttendence(props) {
       <hr className="styleHr" />
 
       <div className="studentDetails">
-        <div className="studentProgramme"><h4>Program: {props.Program}</h4></div>
+        <div className="studentProgramme"><h4>Programme: {props.Programme}</h4></div>
         <div className="studentName"><h4>Name: {props.Name}</h4></div>
         <div className="studentId"><h4>Enrollment No.: {props.Id}</h4></div>
         <div className="Year"><h4>Year: {props.Year}</h4></div>

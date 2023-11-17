@@ -1,0 +1,12 @@
+.allStudentMain{
+    max-width: 100vw;
+    width: 100%;
+}
+
+.allStudentTable{
+    max-width: 90vw;
+    width: 90%;
+    border: 1px solid red;
+    padding: 1rem;
+    display: flex;
+}
