@@ -43,14 +43,17 @@ router.post("/createsubject", isauthenticated, async (req, res) => {
         attendance_date: [],
         day
       });
+      
 
-      addLog({message:`Subject created: ${subject_name}`, createdBy:req.user_id})
+      // addLog({message:`Subject created: ${subject_name}`, createdBy:req.user_id})
   
       // Save the new subject to the database
       const savedSubject = await newSubject.save();
+      const updatedteacher= await Teacher.updateOne({ teacher_id: teacher_id }, { $push: { subjects: { subject_id: savedSubject._id, permission:"write" } } });
   
       return res.status(201).json({ message: "Subject created successfully", subject: savedSubject });
     } catch (error) {
+      console.error({error})
       return res.status(500).json({ message: "Internal server error" });
     }
   });

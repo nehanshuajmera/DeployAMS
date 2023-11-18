@@ -8,7 +8,7 @@ function isauthenticated(req, res, next) {
   if (!token) {
     return res.status(401).json({ message: "Unauthorized: Missing token" });
   }
-
+  
   // Verify the token
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {

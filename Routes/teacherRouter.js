@@ -21,6 +21,10 @@ router.post("/login", async (req, res) => {
 
   try {
     // Find the user by enrollment number
+    if (!teacher_id || !password) {
+      return res.status(401).json({ message: "Invalid Teacher ID or password" });
+    }
+
     const teacher = await Teacher.findOne({ teacher_id });
 
     if (!teacher) {
@@ -44,7 +48,7 @@ router.post("/login", async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "1h", // Token expires in 1 hour (adjust as needed)
+        expiresIn: "3h", // Token expires in 1 hour (adjust as needed)
       }
     );
 
@@ -61,8 +65,8 @@ router.post("/login", async (req, res) => {
 });
 
 
-// GET /teacherdetails - Get authenticated teacher's details with subject details
-router.get("/teacherdetails", isauthenticated, async (req, res) => {
+// GET /details - Get authenticated teacher's details with subject details
+router.get("/details", isauthenticated, async (req, res) => {
   try {
     // Get the authenticated teacher's information from the request
     const userId = req.user_id; // You should have this information in your authentication middleware
@@ -72,7 +76,7 @@ router.get("/teacherdetails", isauthenticated, async (req, res) => {
     }
 
     // Fetch the teacher's details, including subject details
-    const teacher = await Teacher.findById(userId).select("name subjects");
+    const teacher = await Teacher.findById(userId);
 
     if (!teacher) {
       return res.status(404).json({ message: "User not found" });

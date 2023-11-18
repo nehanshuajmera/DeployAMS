@@ -8,6 +8,8 @@ router.get("/", isauthenticated, async(req, res) => {
   try {
     const userId = req.user_id; 
     const userRole = req.user_role;
+
+    // Check if the user is a student
     if (req.user_role !== 'teacher') {
       return res.status(200).json({ message: userRole });
     }
@@ -20,7 +22,7 @@ router.get("/", isauthenticated, async(req, res) => {
     }
 
     if (teacher.admin_role !== "Admin") {
-      return res.status(403).json({ message: "Forbidden: Access denied for non-admin teachers" });
+      return res.status(403).json({ message: "teacher" });
     }
 
     // Send the user_role in the response
