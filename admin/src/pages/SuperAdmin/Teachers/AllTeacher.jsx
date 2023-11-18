@@ -1,10 +1,17 @@
-import React from 'react'
-import fakeData from "./MockData.json";
+import React, { useContext, useEffect } from 'react'
+// import fakeData from "./MockData.json";
 import { useTable, usePagination } from 'react-table'
 import './AllTeacher.css'
+import AdminContext from '../../../context/AdminContext';
 
 export default function AllTeacher() {
-  const data = React.useMemo(() => fakeData, []);
+  const {allTeacher} = useContext(AdminContext);
+//  console.log(allTeacher); 
+useEffect(() => { 
+  console.log(allTeacher);
+}, [allTeacher])
+
+const data = React.useMemo(() => allTeacher, [allTeacher]);
   const columns = React.useMemo(
     () => [
       {
@@ -69,7 +76,7 @@ export default function AllTeacher() {
 
   return (
     <div className='allStudentMain'>
-      <h2>All Students List</h2>
+      <h2>All Teacher List</h2>
       <div className="allStudentTable">
         <table className='adminStudentTable' {...getTableProps()}>
           <thead>

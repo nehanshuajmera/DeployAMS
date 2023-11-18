@@ -422,31 +422,38 @@ router.get('/allsubjects', isauthenticated, async (req, res) => {
       }
 
     // Find all subjects and populate the teacher details
-    const subjects = await Subject.find().populate('teacher_id');
+    const subjects = await Subject.find();
+
 
     if (!subjects || subjects.length === 0) {
       return res.status(404).json({ message: 'No subjects found' });
     }
 
-    // Map the subjects and format the response
-    const subjectsWithTeacherDetails = subjects.map(subject => ({
-      subject_id: subject.subject_id,
-      subject_name: subject.subject_name,
-      course_code: subject.course_code,
-      branch: subject.branch,
-      section: subject.section,
-      batch: subject.batch,
-      teacher: {
-        teacher_id: subject.teacher_id.teacher_id,
-        name: subject.teacher_id.name,
-        email: subject.teacher_id.email,
-        phone_no: subject.teacher_id.phone_no,
-      },
-      attendance_date: subject.attendance_date,
-      day: subject.day,
-    }));
+    // console.log(subjects)
+  const subjectsWithTeacherDetails = await Promise.all(
+    subjects.map(async (subject) => {
+      const teacher = await Teacher.findById(subject.teacher_id);
+      return {
+        subject_id: subject._id,
+        subject_name: subject.subject_name,
+        course_code: subject.course_code,
+        branch: subject.branch,
+        section: subject.section,
+        batch: subject.batch,
+        teacher: {
+          teacher_id: teacher.teacher_id,
+          name: teacher.name,
+          email: teacher.email,
+          phone_no: teacher.phone_no,
+        },
+        attendance_date: subject.attendance_date,
+        day: subject.day,
+      };
+    })
+  );
+  // console.log(subjectsWithTeacherDetails)
 
-    return res.status(200).json({ subjects: subjectsWithTeacherDetails });
+    return res.status(200).json({ message: subjectsWithTeacherDetails });
   } catch (error) {
     console.error('Error fetching subjects with teacher details:', error);
     return res.status(500).json({ message: 'Internal server error' });

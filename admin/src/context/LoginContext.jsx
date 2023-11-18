@@ -21,15 +21,15 @@ const LoginContextProvider = ({ children }) => {
     const { userId, password } = data;
 
     if (userId && password) {
-      axios
-        .post("/api/teacher/login", { teacher_id: userId, password: password })
-        .then(() => {
-          return axios
-            .get("/api/authentic")      //this api for checking authenticate 
-            .then(() => dispatch({ type: actionType.SET_AUTHENTICATE }))
-            .catch((err) => {
-              dispatch({ type: actionType.SET_ERROR, payload: err.message });
-            });
+      axios.post("/api/teacher/login", { teacher_id: userId, password: password })
+        .then((res) => {
+          console.log(res.data);
+          // return axios
+          //   .get("/api/authentic")      //this api for checking authenticate 
+          //   .then(() => dispatch({ type: actionType.SET_AUTHENTICATE }))
+          //   .catch((err) => {
+          //     dispatch({ type: actionType.SET_ERROR, payload: err.message });
+          //   });
         })
         .catch((err) =>
           dispatch({ type: actionType.SET_ERROR, payload: err.message })
