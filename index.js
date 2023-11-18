@@ -5,8 +5,8 @@ const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 5000;
 const cors = require("cors");
-const cron = require('node-cron');
-const calculateTeacherRatings = require("./Controller/rattingcron") 
+// const cron = require('node-cron');
+// const calculateTeacherRatings = require("./Controller/rattingcron") 
 
 dotenv.config();
 app.use(express.json());
@@ -38,10 +38,10 @@ app.use("/api/logs", require("./Routes/logRouter.js"));
 app.use("/api/schedule",require("./Routes/scheduleRouter"));
 
 // Schedule the cron job to run at 3 am every day
-cron.schedule('0 3 * * *', () => {
-  console.log('Running teacher rating update job...');
-  calculateTeacherRatings();
-});
+// cron.schedule('0 3 * * *', () => {
+//   console.log('Running teacher rating update job...');
+//   calculateTeacherRatings();
+// });
 
 app.listen(PORT, err => {
   if (err) throw err;

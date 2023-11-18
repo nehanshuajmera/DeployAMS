@@ -79,6 +79,8 @@ router.get("/detail", isauthenticated, async (req, res) => {
   }
 });
 
+
+
 // POST /changepassword - Change student's password
 router.post("/changepassword", isauthenticated, async (req, res) => {
   try {
@@ -95,12 +97,12 @@ router.post("/changepassword", isauthenticated, async (req, res) => {
           return res.status(404).json({ message: "Student not found" });
       }
 
-      // // Check if the current password provided in the request matches the stored password
-      // const isPasswordMatch = await bcrypt.compare(req.body.currentPassword, student.password);
+      // Check if the current password provided in the request matches the stored password
+      const isPasswordMatch = await bcrypt.compare(req.body.currentPassword, student.password);
 
-      // if (!isPasswordMatch) {
-      //     return res.status(400).json({ message: "Current password is incorrect" });
-      // }
+      if (!isPasswordMatch) {
+          return res.status(400).json({ message: "Current password is incorrect" });
+      }
 
       // Update the password to the new password provided in the request
       student.password = await bcrypt.hash(req.body.newPassword, 10); // Encrypt the new password

@@ -5,15 +5,8 @@ const bcrypt = require("bcrypt");
 const Teacher = require("../Model/teacherSchema");
 const isauthenticated = require("../Middleware/authenticated");
 const Subject = require("../Model/subjectSchema");
-const isClassScheduled = require("../Controller/isClassDay")
 const Student = require("../Model/studentSchema");
 const addLog = require('../Controller/logs');
-
-  // Function to get the day of the week (e.g., "Monday")
-  function getDayOfWeek(date) {
-    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    return daysOfWeek[date.getDay()];
- }
 
 // POST /login/ - Authenticate user and provide JWT token
 router.post("/login", async (req, res) => {
@@ -136,9 +129,11 @@ router.get("/hasclasstoday/:id", isauthenticated, async (req, res) => {
 
     // Check if the subject with :id has a class scheduled for today
     const today = new Date();
-    const hasClassToday = await isClassScheduled(today, subjectId);
-
-    return res.status(200).json({ hasClassToday });
+    const isclasstoday= Subject.findOne({ _id: subjectId, lecture_dates: { $elemMatch: { date: today } } });
+    if (!isclasstoday) {
+      return res.status(403).json({ message: "No Class Today" });
+    }
+    return res.status(200).json({ message: "Class Today" ,count : isclasstoday.count });
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }
@@ -166,17 +161,24 @@ router.post('/updateattendance', isauthenticated, async (req, res) => {
 
     // Check if the subject has a class scheduled for today
     const today = new Date();
-    const hasClassToday = isClassScheduled(today, subjectId);
-    if (!hasClassToday) {
-      return res.status(403).json({ message: "Forbidden: No permission to update attendance today" });
+    const isclasstoday= Subject.findOne({ _id: subjectId, lecture_dates: { $elemMatch: { date: today } } });
+    if (!isclasstoday) {
+      return res.status(403).json({ message: "No Class Today" });
     }
+
 
     // Update student attendance for each student in the studentIDs array
     for (const studentData of studentIDs) {
       const studentId = studentData.studentid;
       const count = studentData.count;
+      if (count>isclasstoday.count){
+        return res.status(403).json({ message: "Attendance limit exceeded" });
+      }
       const student = await Student.findOne({ _id: studentId });
 
+      if(!student){
+        return res.status(404).json({ message: "Student not found" });
+      }
       // console.log({student})
 
       if (student) {
@@ -187,14 +189,8 @@ router.post('/updateattendance', isauthenticated, async (req, res) => {
         
         if (subjectIndex !== -1) {
           const subjectAttendance = student.subjects[subjectIndex].attendance;
-          var isday= subject.day.find(day => day.name === getDayOfWeek(today));
-
-          // console.log(subjectAttendance,subject.day,getDayOfWeek(today),isday) 
-          
 
           // Check if the attendance assigned is less than or equal to the subject's count
-          if (isday&&count <= isday.count) {
-            // Update the attendance data
             if(subjectAttendance.length){
               const lastdate=subjectAttendance[subjectAttendance.length-1].date;
               if(lastdate.getFullYear() === today.getFullYear() &&lastdate.getMonth() === today.getMonth() &&lastdate.getDate() === today.getDate()){  
@@ -203,10 +199,6 @@ router.post('/updateattendance', isauthenticated, async (req, res) => {
             }
             subjectAttendance.push({ date: new Date(), count, cause:'' });
             await student.save();
-
-          } else {
-            return res.status(400).json({ message: 'Attendance limit exceeded' });
-          }
         }
       }
     }
@@ -219,6 +211,7 @@ router.post('/updateattendance', isauthenticated, async (req, res) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 
 // POST /changepassword - Change teacher's password
@@ -237,12 +230,12 @@ router.post("/changepassword", isauthenticated, async (req, res) => {
           return res.status(404).json({ message: "Teacher Details not found" });
       }
 
-      // // Check if the current password provided in the request matches the stored password
-      // const isPasswordMatch = await bcrypt.compare(req.body.currentPassword, teacher.password);
+      // Check if the current password provided in the request matches the stored password
+      const isPasswordMatch = await bcrypt.compare(req.body.currentPassword, teacher.password);
 
-      // if (!isPasswordMatch) {
-      //     return res.status(400).json({ message: "Current password is incorrect" });
-      // }
+      if (!isPasswordMatch) {
+          return res.status(400).json({ message: "Current password is incorrect" });
+      }
 
       // Update the password to the new password provided in the request
       teacher.password = await bcrypt.hash(req.body.newPassword, 10); // Encrypt the new password
