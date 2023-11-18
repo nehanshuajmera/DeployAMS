@@ -1,9 +1,9 @@
 import React from 'react'
 import fakeData from "./MockData.json";
 import { useTable, usePagination } from 'react-table'
-import './AllTeacher.css'
+// import './All.css'
 
-export default function AllTeacher() {
+export default function AllSubject() {
   const data = React.useMemo(() => fakeData, []);
   const columns = React.useMemo(
     () => [
