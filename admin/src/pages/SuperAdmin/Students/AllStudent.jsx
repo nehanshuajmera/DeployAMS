@@ -5,7 +5,7 @@ import './AllStudent.css'
 import AdminContext from '../../../context/AdminContext';
 
 export default function AllStudent() {
-  const {allStudent} = useContext(AdminContext);
+  const { allStudent } = useContext(AdminContext);
   // console.log(allStudent);
   // console.log(allSubject);
   // console.log(allTeacher);
@@ -14,8 +14,8 @@ export default function AllStudent() {
   //   console.log(allStudent);
   // }, [allStudent])
 
-  
-  const data = React.useMemo(() => allStudent,  [allStudent]);
+
+  const data = React.useMemo(() => allStudent, [allStudent]);
   const columns = React.useMemo(
     () => [
       {
@@ -53,6 +53,16 @@ export default function AllStudent() {
       {
         Header: "Programme",
         accessor: "programme",
+      },
+      {
+        Header: 'Action',
+        accessor: (originalRow, rowIndex) => (
+          <div>
+            <button style={{color:"black"}} onClick={() => handleEdit(originalRow)}>Edit</button>
+            <button onClick={() => handleDelete(originalRow)}>Delete</button>
+          </div>
+        ),
+        id: 'action',
       }
     ],
     []
@@ -74,7 +84,7 @@ export default function AllStudent() {
     pageOptions,
     state,
     prepareRow
-  } = useTable({ columns, data, initialState, enableEditing:true }, usePagination);
+  } = useTable({ columns, data, initialState, enableEditing: true }, usePagination);
 
   const { pageIndex } = state;
 

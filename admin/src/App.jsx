@@ -19,12 +19,12 @@ function App() {
         <Route path={'/allsubject'} element={<AllSubject/>}/>
           {/* <Route path="/createstudent" element={<CreateStudent/>} /> */}
           {/* <Route path="/updatestudent/:id" element={<UpdateStudent/>} /> */}
-          <Route path="*" element={<ErrMsg/>}/>
+          {/* <Route path="*" element={<ErrMsg/>}/> */}
       </Routes>
 
       {/* <Login/> */}
 
-      <Dashboard/>
+      {/* <Dashboard/> */}
       {/* <AllStudent/> */}
       {/* <AllTeacher/> */}
       {/* <AllSubject/> */}
