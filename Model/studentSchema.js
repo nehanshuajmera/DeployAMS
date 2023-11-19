@@ -10,6 +10,9 @@ const studentSchema = new mongoose.Schema({
     match: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
   },
   phone_no: String,
+  programme: String,
+  faculty: String,
+  specialisation: String,
   branch: String,
   section: String,
   batch: String,
@@ -19,7 +22,7 @@ const studentSchema = new mongoose.Schema({
     default: Date.now,
   },
   created_at_and_by: {
-    admin: String,
+    admin_name: String,
     timestamp: {
       type: Date,
       default: Date.now,

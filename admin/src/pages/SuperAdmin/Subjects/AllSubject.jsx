@@ -1,28 +1,31 @@
-import React from 'react'
-import fakeData from "./MockData.json";
+import React, { useContext } from 'react'
+// import fakeData from "./MockData.json";
 import { useTable, usePagination } from 'react-table'
+import AdminContext from '../../../context/AdminContext';
 // import './All.css'
 
 export default function AllSubject() {
-  const data = React.useMemo(() => fakeData, []);
+  const {allSubject} = useContext(AdminContext);
+  console.log(allSubject);
+  const data = React.useMemo(() => allSubject, [allSubject]);
   const columns = React.useMemo(
     () => [
       {
-        Header: "Name",
-        accessor: "name",
+        Header: "Subject Name",
+        accessor: "subject_name",
       },
       {
-        Header: "Enrollment No.",
-        accessor: "enrollmentNo",
+        Header: "Course Code",
+        accessor: "course_code",
       },
       {
-        Header: "Scholar No.",
-        accessor: "scholarNo",
+        Header: "Teacher Name",
+        accessor: "teacher.name",
       },
-      {
-        Header: "Year",
-        accessor: "year",
-      },
+      // {
+      //   Header: "Year",
+      //   accessor: "year",
+      // },
       {
         Header: "Branch",
         accessor: "branch",
@@ -31,18 +34,18 @@ export default function AllSubject() {
         Header: "Section",
         accessor: "section",
       },
-      {
-        Header: "Specialization",
-        accessor: "specialization",
-      },
-      {
-        Header: "Faculty",
-        accessor: "faculty",
-      },
-      {
-        Header: "Programme",
-        accessor: "programme",
-      }
+      // {
+      //   Header: "Specialization",
+      //   accessor: "specialization",
+      // },
+      // {
+      //   Header: "Faculty",
+      //   accessor: "faculty",
+      // },
+      // {
+      //   Header: "Programme",
+      //   accessor: "programme",
+      // }
     ],
     []
   );
@@ -69,7 +72,7 @@ export default function AllSubject() {
 
   return (
     <div className='allStudentMain'>
-      <h2>All Students List</h2>
+      <h2>All Subject List</h2>
       <div className="allStudentTable">
         <table className='adminStudentTable' {...getTableProps()}>
           <thead>

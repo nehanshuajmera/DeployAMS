@@ -10,13 +10,17 @@ function App() {
 
   return (
     <div>
-      {/* <ErrMsg/>
+      {/* <ErrMsg/> */}
       <Routes>
         <Route path={'/'} element={<Login/>}/>
-          <Route path="/createstudent" element={<CreateStudent/>} />
-          <Route path="/updatestudent/:id" element={<UpdateStudent/>} />
+        <Route path={'/dashboard'} element={<Dashboard/>}/>
+        <Route path={'/allstudent'} element={<AllStudent/>}/>
+        <Route path={'/allteacher'} element={<AllTeacher/>}/>
+        <Route path={'/allsubject'} element={<AllSubject/>}/>
+          {/* <Route path="/createstudent" element={<CreateStudent/>} /> */}
+          {/* <Route path="/updatestudent/:id" element={<UpdateStudent/>} /> */}
           <Route path="*" element={<ErrMsg/>}/>
-      </Routes> */}
+      </Routes>
 
       {/* <Login/> */}
 
