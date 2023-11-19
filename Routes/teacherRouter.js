@@ -212,7 +212,73 @@ router.post('/updateattendance', isauthenticated, async (req, res) => {
   }
 });
 
+// mark absent api
+router.post('/markabsent',isauthenticated,async(req,res)=>{
+  try{
+    const teacherId = req.user_id; // You should have this information in your authentication middleware
 
+    if (req.user_role !== 'teacher') {
+      return res.status(403).json({ message: 'Forbidden: Access denied for non-teacher users' });
+    }
+
+    // Get the request data (subject ID, student IDs, attendance date, and count)
+    const { subjectId, studentIDs } = req.body;
+
+    // Check if the teacher has permission to update attendance for this subject
+    const subject = await Subject.findOne({ _id: subjectId, teacher_id: teacherId });
+
+    if (!subject) {
+      return res.status(403).json({ message: 'Forbidden: No permission to update attendance for this subject' });
+    }
+
+    // Check if the subject has a class scheduled for today
+    const today = new Date();
+    const isclasstoday= Subject.findOne({ _id: subjectId, lecture_dates: { $elemMatch: { date: today } } });
+    if (!isclasstoday) {
+      return res.status(403).json({ message: "No Class Today" });
+    }
+    // remove all this student from attendance list
+    for (const studentData of studentIDs) {
+      const studentId = studentData.studentid;
+      // const count = studentData.count;
+      // if (count>isclasstoday.count){
+      //   return res.status(403).json({ message: "Attendance limit exceeded" });
+      // }
+      const student = await Student.findOne({ _id: studentId });
+
+      if(!student){
+        return res.status(404).json({ message: "Student not found" });
+      }
+      // console.log({student})
+
+      if (student) {
+        // Find the subject in the student's subjects array
+        const subjectIndex = student.subjects.findIndex(sub => sub.subject_id.equals(subject._id));
+        // console.log({subjectIndex})
+        // console.log(subject.day)
+        
+        if (subjectIndex !== -1) {
+          const subjectAttendance = student.subjects[subjectIndex].attendance;
+
+          // Check if the attendance assigned is less than or equal to the subject's count
+            if(subjectAttendance.length){
+              const lastdate=subjectAttendance[subjectAttendance.length-1].date;
+              if(lastdate.getFullYear() === today.getFullYear() &&lastdate.getMonth() === today.getMonth() &&lastdate.getDate() === today.getDate()){  
+                subjectAttendance.pop();
+              } 
+            }
+            await student.save();
+        }
+      }
+    } 
+    addLog(`Student attendance updated for subject: ${subject._id}`, teacherId);
+
+    return res.status(200).json({ message: 'Attendance updated successfully' });
+  }catch(error){
+    console.error('Error updating attendance:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+})
 
 // POST /changepassword - Change teacher's password
 router.post("/changepassword", isauthenticated, async (req, res) => {
