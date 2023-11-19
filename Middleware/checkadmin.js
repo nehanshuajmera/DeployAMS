@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const Teacher = require("../Models/teacher");
+const Teacher = require("../Model/teacherSchema");
 
 const isAdmin = async (req, res, next) => {
   // Get the JWT token from the request cookies or headers
