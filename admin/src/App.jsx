@@ -18,9 +18,9 @@ function App() {
           <Route path="*" element={<ErrMsg/>}/>
       </Routes> */}
 
-      <Login/>
+      {/* <Login/> */}
 
-      {/* <Dashboard/> */}
+      <Dashboard/>
       {/* <AllStudent/> */}
       {/* <AllTeacher/> */}
       {/* <AllSubject/> */}
