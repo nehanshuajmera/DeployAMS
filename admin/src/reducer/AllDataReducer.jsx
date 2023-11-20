@@ -9,6 +9,13 @@ const AllDataReducer = (state,action)=>{
                 isLoading: false,
                 errMsg:action.payload
             }
+        case actionType.SET_MSG:
+            // let {msg} = action.payload
+            return{
+                ...state,
+                msg:action.payload,
+                // msgType:Type
+            }
         case actionType.SET_LOADING:
             return{
                 ...state,
@@ -20,6 +27,7 @@ const AllDataReducer = (state,action)=>{
                 return{
                     ...state,
                     [name]:data,
+                    isLoading:false,
                 }
             }
     

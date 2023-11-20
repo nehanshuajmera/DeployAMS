@@ -7,7 +7,7 @@ import UpdateStudent from "./pages/UpdateStudent"
 function App() {
 
   return (
-    <div className="w-full overflow-hidden ">
+    <div className="w-full overflow-hidden bg-dimWhite ">
       <ErrMsg/>
       <Routes>
         <Route path={'/'} element={<Login/>}/>

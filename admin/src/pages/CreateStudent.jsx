@@ -3,7 +3,7 @@ import reducer from '../reducer/CreateStudentReducer'
 import StudentForm from "../components/StudentForm";
 import { studentFieldVerify } from "../action/InputFieldVerification";
 import { useAllData } from "../context/AllDataContext";
-import { API_Type } from "../types/Types";
+import { API_Type, msgType } from "../types/Types";
 
 const initState = {
   
@@ -20,16 +20,16 @@ const data = {
   branch: "",
   section: "",
   batch: "",
-  password: "",
+  // password: "",
   subjects: [
-    {
-      name: "OS",
-      id: 1,
-    },
-    {
-      name: "DBMS",
-      id: 2,
-    },
+    // {
+    //   name: "OS",
+    //   id: 1,
+    // },
+    // {
+    //   name: "DBMS",
+    //   id: 2,
+    // },
   ],
 };
 
@@ -38,7 +38,7 @@ const Subject = {
   attendance:[]
 }
 const CreateStudent = () => {
-  const {createItem} = useAllData()
+  const {createItem,setMsg} = useAllData()
   const [student, setStudent] = useState(data);
 
   const [state, dispatch] = useReducer(reducer, initState);
@@ -47,7 +47,13 @@ const CreateStudent = () => {
     if(studentFieldVerify(student)){
       createItem({API:API_Type.student,data:student})
     }
+    else{
+      let msg = "Fill all required fields"
+      setMsg({msg,msgType:msgType.WARNING})
+    }
   }
+
+
   return (
     <div>
       <StudentForm student={student} setStudent={setStudent}  HandleClick={HandleClick}/>

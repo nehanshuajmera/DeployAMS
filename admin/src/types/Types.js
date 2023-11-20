@@ -5,9 +5,13 @@ const actionType={
     SET_LOGOUT:"SET_LOGOUT",
     SET_AUTHENTICATE:"SET_AUTHENTICATE",
     SET_DATA:"SET_DATA",
-    
+    SET_MSG:"SET_MSG",
 }
 
+const msgType = {
+    SUCCESS:"SUCCESS",
+    WARNING:"WARNING",
+}
 
 const errorType = {
     WRG:{
@@ -33,4 +37,4 @@ const API_Type ={
 }
 
 
-export {actionType,errorType, API_Type}
+export {actionType,errorType, API_Type,msgType}

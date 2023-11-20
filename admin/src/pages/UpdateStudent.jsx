@@ -3,7 +3,7 @@ import reducer from '../reducer/CreateStudentReducer'
 import StudentForm from "../components/StudentForm";
 import { studentFieldVerify } from "../action/InputFieldVerification";
 import { useAllData } from "../context/AllDataContext";
-import { API_Type } from "../types/Types";
+import { API_Type, msgType } from "../types/Types";
 import DeleteButton from "../components/DeleteButton";
 
 const initState = {
@@ -39,7 +39,7 @@ const Subject = {
   attendance:[]
 }
 const UpdateStudent = () => {
-  const {updateItem} = useAllData()
+  const {updateItem,setMsg} = useAllData()
   const [student, setStudent] = useState(data);
   const [state, dispatch] = useReducer(reducer, initState);
   
@@ -47,6 +47,10 @@ const UpdateStudent = () => {
     const itemId =''
     if(studentFieldVerify(student)){
       updateItem({API:API_Type.student,itemId,data:student})
+    }
+    else{
+      let msg = "Fill all required fields"
+      setMsg({msg,msgType:msgType.WARNING})
     }
   }
   return (

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useReducer } from "react";
-import { actionType } from "../types/Types";
+import { actionType, msgType } from "../types/Types";
 import reducer from '../reducer/AllDataReducer'
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,9 @@ const initState = {
     allCourses:[],
     isError:false,
     isLoading:false,
-    errMsg:''
+    errMsg:'',
+    msg:'',
+    // msgType:'',
 }
 
 const AllDataContextProvider = ({children})=>{
@@ -30,9 +32,11 @@ const AllDataContextProvider = ({children})=>{
         .then(res=>(
             dispatch({type:actionType.SET_DATA,payload:{name,data:res}})
         ))
-        .catch(err=>(
+        .catch(err=>{
+            
             dispatch({type:actionType.SET_ERROR,payload:err})
-        ))
+            setMsg({msg:err.Message,msgType:msgType.WARNING})
+        })
     }
 
     // create teacher/student/subject
@@ -43,9 +47,11 @@ const AllDataContextProvider = ({children})=>{
           console.log(res);
           navigate('/')
         })
-        .catch(err=>(
-          dispatch({type:actionType.SET_ERROR,payload:err})
-        ))
+        .catch(err=>{
+            
+            dispatch({type:actionType.SET_ERROR,payload:err})
+            setMsg({msg:err.Message,msgType:msgType.WARNING})
+        })
     }
 
     // update teacher/student/subject
@@ -56,9 +62,10 @@ const AllDataContextProvider = ({children})=>{
             console.log(res)
             navigate("/")
         })
-        .catch(err=>(
+        .catch(err=>{            
             dispatch({type:actionType.SET_ERROR,payload:err})
-        ))
+            setMsg({msg:err.Message,msgType:msgType.WARNING})
+        })
     }
 
     // delete teacher/student/subject
@@ -69,13 +76,21 @@ const AllDataContextProvider = ({children})=>{
             console.log(res)
             navigate('/')
         })
-        .catch(err=>(
+        .catch(err=>{
+            
             dispatch({type:actionType.SET_ERROR,payload:err})
-        ))
+            setMsg({msg:err.Message,msgType:msgType.WARNING})
+        })
     }
-    
+
+    // set message to None/success/error
+    const setMsg = (obj)=>{
+        const {msg,msgType} = obj
+        dispatch({type:actionType.SET_MSG,payload:msg})
+    }
+
     return(
-        <AllDataContext.Provider value={{...state,getAllDataOf,createItem,updateItem,deleteItem}}>
+        <AllDataContext.Provider value={{...state,getAllDataOf,createItem,updateItem,deleteItem,setMsg}}>
             {children}
         </AllDataContext.Provider>
     )
