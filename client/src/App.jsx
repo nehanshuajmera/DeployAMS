@@ -1,18 +1,24 @@
 import { Route, Routes } from "react-router-dom"
-import StudentAttendance from './pages/StudentDetail/StudentAttendence'
+import StudentAttendance from './pages/Attendence/StudentAttendence'
 import PrivateRoutes from "./components/PrivateRoutes"
-// import Login from "./pages/Login"
+import Login from "./pages/Login/Login"
+import AttendenceSheet from "./pages/DaywiseAtt/AttendenceSheet"
+import ChangePassword from "./pages/ChangePassword/ChangePassword"
 
 function App() {
 
   return (
     <div className="w-screen overflow-hidden h-screen flex items-center justify-center">
-      {/* <Login/> */}
-      <Routes>
+      {/* <Routes>
         <Route path="/" element={<PrivateRoutes/>}>
           <Route path="/student" element={<StudentAttendance/>}/>
         </Route>
-      </Routes>
+      </Routes> */}
+
+      {/* <Login/> */}
+      <ChangePassword/>
+      {/* <StudentAttendance/> */}
+      {/* <AttendenceSheet/> */}
       
     </div>
   )

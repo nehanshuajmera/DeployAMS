@@ -47,6 +47,10 @@
     font-weight: 500;
 }
 
+.styleHr {
+    border: 1px solid black;
+}
+
 .studentDetails {
     /* border: 1px solid red; */
     margin: 0.5em auto;
@@ -66,23 +70,30 @@
     /* background-color: aqua; */
 }
 
-.styleHr {
-    border: 1px solid black;
-}
-
 .subjectAttendence {
     margin: 0.5em auto;
     padding: 0.5em;
     width: 60vw;
+    overflow-x: scroll;
     /* border: 1px solid red; */
+}
+
+.subjectAttendence::-webkit-scrollbar {
+    display: none;
 }
 
 .subjectTable {
     /* border: 1px solid yellow; */
     padding: 0.5em;
     margin: 0.2em auto;
-    /* width: 50vw; */
+    /* width: 10vw; */
+    /* overflow-x: scroll; */
 }
+
+/* .subjectTableHeading{
+    width: 5vw;
+    overflow-x: scroll;
+} */
 
 .headingForStudents {
     border: 2px solid #000;
