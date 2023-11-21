@@ -1,49 +1,59 @@
 import { createContext, useContext, useReducer } from "react";
-import reducer from '../reducer/LoginReducer'
+import reducer from "../reducer/LoginReducer";
 import { actionType } from "../types/Types";
-import axios from 'axios'
+import axios from "axios";
 
 const LoginContext = createContext();
 
 const initialState = {
-    teacher_id:'',
-    password:'',
-    isLogIn:false,
-    isError:false,
-}
+  isLogIn: false,
+  isError: false,
+  errorMsg: "",
+  isAuthenticate: false,
+};
 
-const LoginContextProvider = ({children})=>{
+const LoginContextProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  // const history =
 
-    const loginHandler = (data)=>{
-        dispatch({type:actionType.SET_LOADING})
-        const {teacher_id,password} = data
-        if(teacher_id && password){
-          try {
-              ;(async()=>{
-                    const res = axios.post("http://localhost:5000/api/teacher/login",{teacher_id,password})
-                    console.log(res)
-                    dispatch({type:actionType.SET_LOGIN,payload:{teacher_id,password}})                  
-              })()
-          } catch (error) {
-            console.log(error)
-          }
-        }
-        else{
-            dispatch({type:actionType.SET_ERROR})
-            console.log("empty")
-        }
+  const loginHandler = (data) => {
+    dispatch({ type: actionType.SET_LOADING });
+    const { userId, password } = data;
+
+    if (userId && password) {
+      axios.post("/api/teacher/login", { teacher_id: userId, password: password })
+        .then((res) => {
+          console.log(res.data);
+          // return axios
+          //   .get("/api/authentic")      //this api for checking authenticate 
+          //   .then(() => dispatch({ type: actionType.SET_AUTHENTICATE }))
+          //   .catch((err) => {
+          //     dispatch({ type: actionType.SET_ERROR, payload: err.message });
+          //   });
+        })
+        .catch((err) =>
+          dispatch({ type: actionType.SET_ERROR, payload: err.message })
+        );
+    } else {
+      dispatch({ type: actionType.SET_ERROR, payload: "Field/(s) is empty" });
+      console.log("empty");
     }
-    const [state, dispatch] = useReducer(reducer, initialState);
-    return(
-        <LoginContext.Provider value={{...state,loginHandler}}>
-            {children}
-        </LoginContext.Provider>
-    )
-}
+  };
 
-const useLogin = ()=>{
-    return useContext(LoginContext)
-}
+  const logOut = () => {
+    dispatch({ type: actionType.SET_LOGOUT });
+  };
 
-export default LoginContextProvider
-export {useLogin}
+  return (
+    <LoginContext.Provider value={{ ...state, loginHandler, logOut }}>
+      {children}
+    </LoginContext.Provider>
+  );
+};
+
+const useLogin = () => {
+  return useContext(LoginContext);
+};
+
+export default LoginContextProvider;
+export { useLogin };

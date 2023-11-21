@@ -36,7 +36,7 @@ export default function Login() {
             type="text"
             className="inputField"
             id="username"
-            placeholder="Enrollment No."
+            placeholder="Enrollment/Scholar No."
             value={loginData.userId}
             onChange={(e)=>{setLoginData(prev=>({
               ...prev,
@@ -67,7 +67,7 @@ export default function Login() {
             }))}}
           />
         </div>
-        <button className="button" disabled={isLoading} onClick={()=>loginHandler(loginData)}>Login</button>
+        <button className={`button ${isLoading?`cursor-wait bg-gray-400`:``}`} disabled={isLoading} onClick={()=>loginHandler(loginData)}>Login</button>
         <a className="forgotLink" href="#">
           Forgot your password?
         </a>

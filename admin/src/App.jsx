@@ -1,18 +1,34 @@
-
+import { Route, Routes } from "react-router-dom"
+import Login from './pages/Login/Login'
+import ErrMsg from "./components/ErrMsg"
+import Dashboard from "./pages/SuperAdmin/Dashboard/Dashboard"
+import AllStudent from "./pages/SuperAdmin/Students/AllStudent"
+import AllTeacher from "./pages/SuperAdmin/Teachers/AllTeacher"
+import AllSubject from "./pages/SuperAdmin/Subjects/AllSubject"
 
 function App() {
 
   return (
-    <div className="w-screen overflow-hidden h-screen flex items-center justify-center">
-      <div className=" bg-red-500 h-[170px] w-[170px] rounded-full p-[2px] flex items-center justify-center cursor-pointer hover:scale-110 duration-500">
-        <div className="bg-white w-full h-full flex items-center justify-center rounded-full">
-          <h1 className="text-3xl text-red-500  font-bold ">
-            Client
-          </h1>          
-        </div>        
-      </div>
+    <div>
+      {/* <ErrMsg/> */}
+      <Routes>
+        <Route path={'/'} element={<Login/>}/>
+        <Route path={'/dashboard'} element={<Dashboard/>}/>
+        <Route path={'/allstudent'} element={<AllStudent/>}/>
+        <Route path={'/allteacher'} element={<AllTeacher/>}/>
+        <Route path={'/allsubject'} element={<AllSubject/>}/>
+          {/* <Route path="/createstudent" element={<CreateStudent/>} /> */}
+          {/* <Route path="/updatestudent/:id" element={<UpdateStudent/>} /> */}
+          <Route path="*" element={<ErrMsg/>}/>
+      </Routes>
 
-   </div>
+      {/* <Login/> */}
+
+      {/* <Dashboard/> */}
+      {/* <AllStudent/> */}
+      {/* <AllTeacher/> */}
+      {/* <AllSubject/> */}
+    </div>
   )
 }
 

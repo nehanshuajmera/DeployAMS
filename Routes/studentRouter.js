@@ -37,7 +37,7 @@ router.post("/login", async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "1h", // Token expires in 1 hour (adjust as needed)
+        expiresIn: "3h", // Token expires in 1 hour (adjust as needed)
       }
     );
 
@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
 });
 
 
-router.get("/studentdetails", isauthenticated, async (req, res) => {
+router.get("/detail", isauthenticated, async (req, res) => {
   try {
     // Get the authenticated user's information from the request
     const userId = req.user_id; // You should have this information in your authentication middleware
@@ -79,6 +79,8 @@ router.get("/studentdetails", isauthenticated, async (req, res) => {
   }
 });
 
+
+
 // POST /changepassword - Change student's password
 router.post("/changepassword", isauthenticated, async (req, res) => {
   try {
@@ -95,12 +97,12 @@ router.post("/changepassword", isauthenticated, async (req, res) => {
           return res.status(404).json({ message: "Student not found" });
       }
 
-      // // Check if the current password provided in the request matches the stored password
-      // const isPasswordMatch = await bcrypt.compare(req.body.currentPassword, student.password);
+      // Check if the current password provided in the request matches the stored password
+      const isPasswordMatch = await bcrypt.compare(req.body.currentPassword, student.password);
 
-      // if (!isPasswordMatch) {
-      //     return res.status(400).json({ message: "Current password is incorrect" });
-      // }
+      if (!isPasswordMatch) {
+          return res.status(400).json({ message: "Current password is incorrect" });
+      }
 
       // Update the password to the new password provided in the request
       student.password = await bcrypt.hash(req.body.newPassword, 10); // Encrypt the new password
