@@ -14,7 +14,7 @@ const subjectSchema = new mongoose.Schema({
   // Changed Schema 
   updateAttendance:[{
     actualDate:Date,
-    status:String,
+    status:Boolean,
   }],
 
   extraClass:[{
