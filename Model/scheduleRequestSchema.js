@@ -22,7 +22,7 @@ const scheduleRequestSchema = new mongoose.Schema({
     default: 'pending',
   },
 
-  adminComment: String, // Optional comment from the dean
+  adminComment: String, // Optional comment from the admin
 }, { timestamps: true });
 
 const scheduleRequest = mongoose.model('RescheduleRequest', scheduleRequestSchema);
