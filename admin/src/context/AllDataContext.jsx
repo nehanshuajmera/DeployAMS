@@ -47,8 +47,7 @@ const AllDataContextProvider = ({children})=>{
           console.log(res);
           navigate('/')
         })
-        .catch(err=>{
-            
+        .catch(err=>{            
             dispatch({type:actionType.SET_ERROR,payload:err})
             setMsg({msg:err.Message,msgType:msgType.WARNING})
         })
@@ -87,6 +86,11 @@ const AllDataContextProvider = ({children})=>{
     const setMsg = (obj)=>{
         const {msg,msgType} = obj
         dispatch({type:actionType.SET_MSG,payload:msg})
+        
+        // to remove msg in 5s time
+        const timerRef = setTimeout(() => {
+            dispatch({type:actionType.SET_MSG,payload:""})            
+        }, 5000);
     }
 
     return(
