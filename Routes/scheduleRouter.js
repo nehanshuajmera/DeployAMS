@@ -23,7 +23,7 @@ router.post('/request', async (req, res) => {
             typeOfRequest: type,
             proposedDateTime: proposedDateTime,
             reason: reason,
-            subject: subject, // Include subject details in the request
+            subject: subject._id, // Include subject details in the request
         });
 
         // Save the request to the database
@@ -89,6 +89,10 @@ router.put('/updateRequest/:id', async (req, res) => {
         Request.status = status;
         Request.adminComment = comment;
 
+        //  if Request is denied or is in the pending state 
+        if(status=='denied')
+        return res.status(200).json({ message: 'Request updated successfully', updatedRequest });
+
         // Get the subject ID
         const subID = Request.subject._id;
 
@@ -97,23 +101,27 @@ router.put('/updateRequest/:id', async (req, res) => {
 
         // Check the type of request
         if (Request.typeOfRequest == 'update') {
-            // Find a record with the specified actual date
+            // Find a record with the specified actual date from the updateAttendance array 
+            // It is done to check if there is already a request present for that Date. 
             let record = await subject.updateAttendance.find({ actualDate: ActualDate });
             if (!record) {
                 // If no record is found, add a new entry to updateAttendance
-                subject.updateAttendance.push({ ActualDate });
+                subject.updateAttendance.push({ actualDate:ActualDate,status:true });
             } else {
                 // If a record exists, mark it as 'true'
                 record.status = true;
             }
+            await subject.save();
         }
         else if (Request.typeOfRequest == 'reschedule') {
             // Add a new entry to rescheduleClass
             await subject.rescheduleClass.push({ Day, dateOfreschedule: ProposedDate });
+            await subject.save();
         }
         else if (Request.typeOfRequest == 'extra') {
             // Add a new entry to extraClass
             await subject.extraClass.push({ dateOfClass: ProposedDate, count: classCount });
+            await subject.save();
         }
 
         // Save the updated request

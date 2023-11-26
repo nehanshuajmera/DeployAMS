@@ -6,7 +6,6 @@ import { useAllData } from "../context/AllDataContext";
 import { API_Type } from "../types/Types";
 
 const initState = {
-  
   isError: false,
   isLoading: false,
 }
@@ -34,23 +33,23 @@ const data = {
 };
 
 const Subject = {
-  subject_id:'',
-  attendance:[]
+  subject_id: '',
+  attendance: []
 }
 const CreateStudent = () => {
-  const {createItem} = useAllData()
+  const { createItem } = useAllData()
   const [student, setStudent] = useState(data);
 
   const [state, dispatch] = useReducer(reducer, initState);
-  
-  const HandleClick = ()=>{
-    if(studentFieldVerify(student)){
-      createItem({API:API_Type.student,data:student})
+
+  const HandleClick = () => {
+    if (studentFieldVerify(student)) {
+      createItem({ API: API_Type.student, data: student })
     }
   }
   return (
     <div>
-      <StudentForm student={student} setStudent={setStudent}  HandleClick={HandleClick}/>
+      <StudentForm student={student} setStudent={setStudent} HandleClick={HandleClick} />
     </div>
   )
 }
