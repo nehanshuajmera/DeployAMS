@@ -7,14 +7,16 @@ import { useNavigate } from "react-router-dom";
 const LoginContext = createContext();
 
 const initialState = {
+  isLoading:false,
   isLogIn: false,
   isError: false,
   errorMsg: "",
-  isAuthenticate: false,
+  isAdmin: false,
 };
 
 const LoginContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const navigate = useNavigate()
   // const history =
 
   const loginHandler = (data) => {
@@ -24,7 +26,9 @@ const LoginContextProvider = ({ children }) => {
     if (userId && password) {
       axios.post("/api/teacher/login", { teacher_id: userId, password: password })
         .then((res) => {
-          res==="Admin"?useNavigate(''):useNavigate();
+          dispatch({type:actionType.SET_LOGIN})
+          res==="Admin"?navigate('/admin/dashboard'):navigate("/teacher/dashboard");
+          dispatch({type:actionType.SET_USERTYPE ,payload:(res==="Admin"?true:false)})
         })
         .catch((err) =>
           dispatch({ type: actionType.SET_ERROR, payload: err.message })

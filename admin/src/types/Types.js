@@ -6,6 +6,12 @@ const actionType={
     SET_AUTHENTICATE:"SET_AUTHENTICATE",
     SET_DATA:"SET_DATA",
     SET_MSG:"SET_MSG",
+    SET_USERTYPE:"SET_USERTYPE",
+}
+
+const userType = {
+    Admin:"Admin",
+    Teacher:"Teacher"
 }
 
 const msgType = {
@@ -37,4 +43,4 @@ const API_Type ={
 }
 
 
-export {actionType,errorType, API_Type,msgType}
+export {actionType, errorType, API_Type, msgType, userType } 

@@ -9,7 +9,6 @@ const LoginReducer = (state, action) => {
         isError:true,
         isLoading: false,
         errorMsg:action.payload,
-        isAuthenticate: false,
     }
     case actionType.SET_LOADING: 
     return {
@@ -19,7 +18,6 @@ const LoginReducer = (state, action) => {
     case actionType.SET_LOGIN:
         return{
             ...state,
-            isAuthenticate: false,
             isError:false,
             errorMsg:'',
             isLoading:false,
@@ -31,15 +29,12 @@ const LoginReducer = (state, action) => {
             isLogIn:false,
             isError:false,
             errorMsg:'',
-            isAuthenticate: false,
+            isAdmin:false,
         }
-    case actionType.SET_AUTHENTICATE:
+    case actionType.SET_USERTYPE:
         return{
             ...state,
-            isLogIn:false,
-            isError:false,
-            errorMsg:'',
-            isAuthenticate: true,
+            isAdmin: action.payload,
         }
     default:
       return state;
