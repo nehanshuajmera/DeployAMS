@@ -44,6 +44,7 @@ export default function Login() {
             type="text"
             className="inputField"
             id="username"
+            name='userId'
             placeholder="Teacher Id"
             value={loginData.userId}
             onChange={(e)=>{LoginDetailFunc(e)}}
@@ -64,6 +65,7 @@ export default function Login() {
             type="password"
             className="inputField"
             id="password"
+            name='password'
             placeholder="Password"
             value={loginData.password}
             onChange={(e)=>{LoginDetailFunc(e)}}

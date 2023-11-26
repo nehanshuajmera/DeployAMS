@@ -27,8 +27,9 @@ const LoginContextProvider = ({ children }) => {
       axios.post("/api/teacher/login", { teacher_id: userId, password: password })
         .then((res) => {
           dispatch({type:actionType.SET_LOGIN})
-          res==="Admin"?navigate('/admin/dashboard'):navigate("/teacher/dashboard");
-          dispatch({type:actionType.SET_USERTYPE ,payload:(res==="Admin"?true:false)})
+          const msg = res.data.message
+          msg==="Admin"?navigate('/admin/dashboard'):navigate("/teacher/dashboard");
+          dispatch({type:actionType.SET_USERTYPE ,payload:(msg==="Admin"?true:false)})
         })
         .catch((err) =>
           dispatch({ type: actionType.SET_ERROR, payload: err.message })
