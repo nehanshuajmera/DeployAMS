@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer } from "react";
 import reducer from "../reducer/LoginReducer";
 import { actionType } from "../types/Types";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LoginContext = createContext();
 
@@ -23,13 +24,7 @@ const LoginContextProvider = ({ children }) => {
     if (userId && password) {
       axios.post("/api/teacher/login", { teacher_id: userId, password: password })
         .then((res) => {
-          console.log(res.data);
-          // return axios
-          //   .get("/api/authentic")      //this api for checking authenticate 
-          //   .then(() => dispatch({ type: actionType.SET_AUTHENTICATE }))
-          //   .catch((err) => {
-          //     dispatch({ type: actionType.SET_ERROR, payload: err.message });
-          //   });
+          res==="Admin"?useNavigate():useNavigate();
         })
         .catch((err) =>
           dispatch({ type: actionType.SET_ERROR, payload: err.message })
