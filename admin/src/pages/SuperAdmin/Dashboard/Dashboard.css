@@ -1,5 +1,10 @@
 .dashboardMainContainer {
     background-color: #fff;
+    background-image: url('https://img.freepik.com/free-vector/network-mesh-wire-digital-technology-background_1017-27428.jpg?w=1060&t=st=1700814703~exp=1700815303~hmac=6a310d20b0d0df6346466b04ff048f2ba29a16b8542deea3b3b8e2041e1219cd');
+    background-image: url('https://w0.peakpx.com/wallpaper/294/709/HD-wallpaper-train-travel-illustration-ultra-aero-vector-art-illustration-landscape-mountains-train.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     color: #000;
     width: 100vw;
     height: 100vh;
@@ -36,6 +41,7 @@
     padding: 0.5rem;
     font-size: 1.2rem;
     border: 2px solid black;
+    /* border: 2px solid white; */
     border-radius: 0.3rem;
 }
 

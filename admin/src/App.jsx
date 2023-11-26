@@ -5,21 +5,21 @@ import Dashboard from "./pages/SuperAdmin/Dashboard/Dashboard"
 import AllStudent from "./pages/SuperAdmin/Students/AllStudent"
 import AllTeacher from "./pages/SuperAdmin/Teachers/AllTeacher"
 import AllSubject from "./pages/SuperAdmin/Subjects/AllSubject"
-
+import CreateStudent from './pages/CreateStudent'
 function App() {
 
   return (
     <div>
       {/* <ErrMsg/> */}
       <Routes>
-        <Route path={'/'} element={<Login/>}/>
-        <Route path={'/dashboard'} element={<Dashboard/>}/>
-        <Route path={'/allstudent'} element={<AllStudent/>}/>
-        <Route path={'/allteacher'} element={<AllTeacher/>}/>
-        <Route path={'/allsubject'} element={<AllSubject/>}/>
-          {/* <Route path="/createstudent" element={<CreateStudent/>} /> */}
-          {/* <Route path="/updatestudent/:id" element={<UpdateStudent/>} /> */}
-          {/* <Route path="*" element={<ErrMsg/>}/> */}
+        <Route path={'/'} element={<Login />} />
+        <Route path={'/dashboard'} element={<Dashboard />} />
+        <Route path={'/allstudent'} element={<AllStudent />} />
+        <Route path={'/allteacher'} element={<AllTeacher />} />
+        <Route path={'/allsubject'} element={<AllSubject />} />
+        <Route path="/createstudent" element={<CreateStudent />} />
+        {/* <Route path="/updatestudent/:id" element={<UpdateStudent/>} /> */}
+        {/* <Route path="*" element={<ErrMsg/>}/> */}
       </Routes>
 
       {/* <Login/> */}
