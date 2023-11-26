@@ -7,8 +7,6 @@ const isAdmin = require("../Middleware/checkadmin");
 // POST /create-academic-calendar - Create academic calendar entries for a date range
 router.post("/create-academic-calendar",isAdmin, async (req, res) => {
   try {
-
-
     // Get the start date and end date from the request
     let { startDate, endDate } = req.body;
     startDate=new Date(startDate);
@@ -48,7 +46,6 @@ function createDateRange(startDate, endDate) {
   }
   
 // console.log({dateRange})
-
   return dateRange;
 }
 

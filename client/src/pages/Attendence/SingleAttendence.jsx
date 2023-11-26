@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import './SingleAttendence.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function SingleAttendence(props) {
 
   // const [Subjects, setSubjects] = useState(Data);
+  const navigate = useNavigate();
 
   return (
     <div className="singleStudentMain">
@@ -16,7 +18,7 @@ export default function SingleAttendence(props) {
           <h4>Department of {props.Department}</h4>
         </div>
         <div className="logoutButton">
-          <button>Logout</button>
+          <button onClick={() => navigate('/')}>Logout</button>
         </div>
       </div>
       <hr className="styleHr" />
@@ -72,7 +74,8 @@ export default function SingleAttendence(props) {
       </div>
       <div className="detailedAttendence">
         <div className="checkAttendence">
-          <button><h4>Check Day-Wise Attendence</h4></button>
+          <button onClick={() => navigate('/changepassword')}><h4>Change Password</h4></button>
+          <button onClick={() => navigate('/attendencesheet')}><h4>Check Day-Wise Attendence</h4></button>
         </div>
       </div>
     </div>

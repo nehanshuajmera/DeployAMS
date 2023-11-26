@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-// import fakeData from "./MockData.json";
 import { useTable, usePagination } from 'react-table'
 import AdminContext from '../../../context/AdminContext';
 // import './All.css'
@@ -22,10 +21,6 @@ export default function AllSubject() {
         Header: "Teacher Name",
         accessor: "teacher.name",
       },
-      // {
-      //   Header: "Year",
-      //   accessor: "year",
-      // },
       {
         Header: "Branch",
         accessor: "branch",
@@ -33,19 +28,7 @@ export default function AllSubject() {
       {
         Header: "Section",
         accessor: "section",
-      },
-      // {
-      //   Header: "Specialization",
-      //   accessor: "specialization",
-      // },
-      // {
-      //   Header: "Faculty",
-      //   accessor: "faculty",
-      // },
-      // {
-      //   Header: "Programme",
-      //   accessor: "programme",
-      // }
+      }
     ],
     []
   );
