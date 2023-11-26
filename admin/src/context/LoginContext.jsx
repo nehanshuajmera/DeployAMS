@@ -28,7 +28,7 @@ const LoginContextProvider = ({ children }) => {
         .then((res) => {
           dispatch({type:actionType.SET_LOGIN})
           const msg = res.data.message
-          msg==="Admin"?navigate('/admin/dashboard'):navigate("/teacher/dashboard");
+          msg==="Admin"?navigate('/dashboard'):navigate("/teacher/dashboard");
           dispatch({type:actionType.SET_USERTYPE ,payload:(msg==="Admin"?true:false)})
         })
         .catch((err) =>

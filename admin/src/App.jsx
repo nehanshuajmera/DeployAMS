@@ -14,12 +14,12 @@ function App() {
       <ErrMsg/>
       <Routes>
         <Route path={'/'} element={<Login/>}/>
-        <Route path={'/admin/dashboard'} element={<Dashboard/>}/>
-        <Route path={'/admin/allstudent'} element={<AllStudent/>}/>
-        <Route path={'/admin/allteacher'} element={<AllTeacher/>}/>
-        <Route path={'/admin/allsubject'} element={<AllSubject/>}/>
-          <Route path="/admin/createstudent" element={<CreateStudent/>}/>
-          <Route path="/admin/updatestudent/:id" element={<UpdateStudent/>} />
+        <Route path={'/dashboard'} element={<Dashboard/>}/>
+        <Route path={'/allstudent'} element={<AllStudent/>}/>
+        <Route path={'/allteacher'} element={<AllTeacher/>}/>
+        <Route path={'/allsubject'} element={<AllSubject/>}/>
+          <Route path="/createstudent" element={<CreateStudent/>}/>
+          <Route path="/updatestudent/:id" element={<UpdateStudent/>} />
           <Route path="*" element={<ErrMsg/>}/>
       </Routes>
 
