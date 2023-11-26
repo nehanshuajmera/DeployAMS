@@ -52,10 +52,10 @@ router.post("/login", async (req, res) => {
     });
 
     if (teacher.admin_role !== "Admin") {
-      return res.status(403).json({ message: "Admin" });
+      return res.status(403).json({ message: "Teacher" });
     }
 
-    return res.status(200).json({ message: "Teacher" });
+    return res.status(200).json({ message: "Admin" });
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }
