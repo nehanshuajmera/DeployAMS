@@ -2,10 +2,8 @@ import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
 import { useAdmin } from "../context/AdminContext";
 
+const StudentForm = ({ student, setStudent, HandleClick }) => {
 
-
-const StudentForm = ({student,setStudent,HandleClick}) => {
- 
   console.log(student.email)
   const [subject, setSubject] = useState("");
 
@@ -30,8 +28,6 @@ const StudentForm = ({student,setStudent,HandleClick}) => {
     });
   };
 
-
-
   return (
     <div className="w-full px-5 py-10 gap-14 flex flex-col item-center justify-center  bg-dimWhite">
       <div className="flex justify-start items-center ">
@@ -39,8 +35,7 @@ const StudentForm = ({student,setStudent,HandleClick}) => {
         <div className="relative w-full grid grid-cols-3 md:flex md:justify-start md:gap-5">
           <label
             htmlFor="name"
-            className={`px-3 py-2 text-secondary text-xl col-span-1 `}
-          >
+            className={`px-3 py-2 text-secondary text-xl col-span-1 `}>
             Name
           </label>
           <div className="relative col-span-2">
@@ -51,22 +46,19 @@ const StudentForm = ({student,setStudent,HandleClick}) => {
               className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/name focus:border-primary focus:border-[1px] "
               value={student.name}
               onChange={(e) => ChangeHandler(e)}
-              placeholder="Name"
-            />
+              placeholder="Name" />
             <p className="absolute text-sm text-primary left-20 top-[100%] hidden peer-invalid/name:block">
               Incorrect input
             </p>
           </div>
         </div>
       </div>
-
       <div className="flex justify-start items-center flex-col md:flex-row gap-5 flex-1">
         {/* Email field */}
         <div className="relative w-full grid grid-cols-3 flex-1 md:flex md:justify-start md:gap-5">
           <label
             htmlFor="email"
-            className={`px-3 py-2 text-secondary text-xl col-span-1 `}
-          >
+            className={`px-3 py-2 text-secondary text-xl col-span-1 `}>
             Email
           </label>
           <div className="relative col-span-2">
@@ -78,8 +70,7 @@ const StudentForm = ({student,setStudent,HandleClick}) => {
               value={student.email}
               onChange={(e) => ChangeHandler(e)}
               required
-              placeholder="email@gmail.com"
-            />
+              placeholder="email@gmail.com" />
             <p className="absolute text-sm z-10 text-primary left-0 top-[80%] md:top-[100%] hidden peer-invalid/email:block">
               Incorrect input
             </p>
@@ -89,8 +80,7 @@ const StudentForm = ({student,setStudent,HandleClick}) => {
         <div className="relative w-full grid grid-cols-3 md:flex md:justify-start md:gap-5 flex-1">
           <label
             htmlFor="password"
-            className={`px-3 py-2 text-secondary text-xl col-span-1 `}
-          >
+            className={`px-3 py-2 text-secondary text-xl col-span-1 `}>
             Password
           </label>
           <div className="relative col-span-2">
@@ -101,8 +91,7 @@ const StudentForm = ({student,setStudent,HandleClick}) => {
               className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/password focus:border-primary focus:border-[1px] "
               value={student.password}
               onChange={(e) => ChangeHandler(e)}
-              placeholder="Password"
-            />
+              placeholder="Password" />
             <p className="absolute text-sm text-primary left-20 top-[100%] hidden peer-invalid/password:block">
               Incorrect input
             </p>
@@ -115,8 +104,7 @@ const StudentForm = ({student,setStudent,HandleClick}) => {
         <div className="relative w-full grid grid-cols-3 ">
           <label
             htmlFor="enrollment_no"
-            className={`px-3 py-2 text-secondary text-xl col-span-1 `}
-          >
+            className={`px-3 py-2 text-secondary text-xl col-span-1 `}>
             Enrollment
           </label>
           <div className="relative col-span-2">
@@ -127,8 +115,7 @@ const StudentForm = ({student,setStudent,HandleClick}) => {
               className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/enrollment_no focus:border-primary focus:border-[1px] "
               value={student.enrollment_no}
               onChange={(e) => ChangeHandler(e)}
-              placeholder="Enrollment No."
-            />
+              placeholder="Enrollment No." />
             <p className="absolute text-sm text-primary left-20 top-[100%] hidden peer-invalid/enrollment_no:block">
               Incorrect input
             </p>
@@ -138,8 +125,7 @@ const StudentForm = ({student,setStudent,HandleClick}) => {
         <div className="relative w-full grid grid-cols-3 ">
           <label
             htmlFor="scholar_no"
-            className={`px-3 py-2 text-secondary text-xl col-span-1 `}
-          >
+            className={`px-3 py-2 text-secondary text-xl col-span-1 `}>
             Scholar No.
           </label>
           <div className="relative col-span-2">
@@ -150,8 +136,7 @@ const StudentForm = ({student,setStudent,HandleClick}) => {
               className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/scholar_no focus:border-primary focus:border-[1px]"
               value={student.scholar_no}
               onChange={(e) => ChangeHandler(e)}
-              placeholder="Scholar No."
-            />
+              placeholder="Scholar No." />
             <p className="absolute text-sm text-primary left-20 top-[100%] hidden peer-invalid/scholar_no:block">
               Incorrect input
             </p>
@@ -161,8 +146,7 @@ const StudentForm = ({student,setStudent,HandleClick}) => {
         <div className="relative w-full grid grid-cols-3 ">
           <label
             htmlFor="phone_no"
-            className={`px-3 py-2 text-secondary text-xl  col-span-1 `}
-          >
+            className={`px-3 py-2 text-secondary text-xl  col-span-1 `}>
             Phone No.
           </label>
           <div className="relative col-span-2">
@@ -173,22 +157,19 @@ const StudentForm = ({student,setStudent,HandleClick}) => {
               className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/phone_no focus:border-primary focus:border-[1px] "
               value={student.phone_no}
               onChange={(e) => ChangeHandler(e)}
-              placeholder="Phone No."
-            />
+              placeholder="Phone No." />
             <p className="absolute text-sm text-primary left-20 top-[100%] hidden peer-invalid:block">
               Incorrect input
             </p>
           </div>
         </div>
       </div>
-
       <div className="flex justify-start items-center flex-col md:flex-row md:grid  md:grid-cols-3 gap-5 flex-1">
         {/* Branch field */}
         <div className="relative w-full grid grid-cols-3 ">
           <label
             htmlFor="branch"
-            className={`px-3 py-2 text-secondary text-xl col-span-1 `}
-          >
+            className={`px-3 py-2 text-secondary text-xl col-span-1 `}>
             Branch
           </label>
           <div className="relative col-span-2">
@@ -199,8 +180,7 @@ const StudentForm = ({student,setStudent,HandleClick}) => {
               className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/branch focus:border-primary focus:border-[1px]   "
               value={student.branch}
               onChange={(e) => ChangeHandler(e)}
-              placeholder="Branch"
-            />
+              placeholder="Branch" />
             <p className="absolute text-sm text-primary left-0 bottom-0  hidden peer-invalid/branch:block">
               Incorrect input
             </p>
@@ -210,8 +190,7 @@ const StudentForm = ({student,setStudent,HandleClick}) => {
         <div className="relative w-full grid grid-cols-3 ">
           <label
             htmlFor="section"
-            className={`px-3 py-2 text-secondary text-xl col-span-1 `}
-          >
+            className={`px-3 py-2 text-secondary text-xl col-span-1 `}>
             Section
           </label>
           <div className="relative col-span-2">

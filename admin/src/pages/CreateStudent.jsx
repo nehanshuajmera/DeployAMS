@@ -7,7 +7,6 @@ import { API_Type, msgType } from "../types/Types";
 import TopOfPage from "../components/TopOfPage";
 
 const initState = {
-  
   isError: false,
   isLoading: false,
 }
@@ -23,20 +22,20 @@ const data = {
   batch: "",
   // password: "",
   subjects: [
-    // {
-    //   name: "OS",
-    //   id: 1,
-    // },
-    // {
-    //   name: "DBMS",
-    //   id: 2,
-    // },
+    {
+      name: "OS",
+      id: 1,
+    },
+    {
+      name: "DBMS",
+      id: 2,
+    },
   ],
 };
 
 const Subject = {
-  subject_id:'',
-  attendance:[]
+  subject_id: '',
+  attendance: []
 }
 const CreateStudent = () => {
   const {createItem,setMsg} = useAllData()

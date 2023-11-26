@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react'
-// import fakeData from "./MockData.json";
 import { useTable, usePagination } from 'react-table'
 import './AllTeacher.css'
 import AdminContext from '../../../context/AdminContext';

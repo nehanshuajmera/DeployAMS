@@ -51,9 +51,13 @@ router.post("/login", async (req, res) => {
       // secure: true, // Enable this in production with HTTPS
     });
 
-    return res.status(200).json({ message: "Authentication successful" });
+    if (teacher.admin_role !== "Admin") {
+      return res.status(403).json({ message: "Admin" });
+    }
+
+    return res.status(200).json({ message: "Teacher" });
   } catch (error) {
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error"});
   }
 });
 
