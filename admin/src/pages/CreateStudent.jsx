@@ -4,6 +4,7 @@ import StudentForm from "../components/StudentForm";
 import { studentFieldVerify } from "../action/InputFieldVerification";
 import { useAllData } from "../context/AllDataContext";
 import { API_Type, msgType } from "../types/Types";
+import TopOfPage from "../components/TopOfPage";
 
 const initState = {
   
@@ -56,6 +57,7 @@ const CreateStudent = () => {
 
   return (
     <div>
+      <TopOfPage pagePath={"Dashboard >> Student >> create"} pageName={"Create Student"}/>
       <StudentForm student={student} setStudent={setStudent}  HandleClick={HandleClick}/>
     </div>
   )

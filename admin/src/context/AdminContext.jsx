@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AdminContext = createContext();
 
@@ -45,5 +45,9 @@ return (
     );
 }
 
+const useAdmin= ()=>{
+    return useContext(AdminContext)
+}
+
 export default AdminContext;
-export { AdminContextProvider };
+export { AdminContextProvider,useAdmin };

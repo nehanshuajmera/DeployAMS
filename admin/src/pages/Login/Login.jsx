@@ -11,6 +11,14 @@ const initialState = {
 export default function Login() {
   const [loginData, setLoginData] = useState(initialState);
   const {isLoading,isError,errMsg,loginHandler} = useLogin()
+
+  const LoginFunc = (e) =>{
+    setLoginData(prev=>({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }))
+  }
+
   return (
     <div className='loginClass'>
       <div className="form_main">
@@ -38,10 +46,7 @@ export default function Login() {
             id="username"
             placeholder="Teacher Id"
             value={loginData.userId}
-            onChange={(e)=>{setLoginData(prev=>({
-              ...prev,
-              userId: e.target.value,
-            }))}}
+            onChange={(e)=>{LoginFunc(e)}}
           />
         </div>
         <div className="inputContainer">
@@ -61,10 +66,7 @@ export default function Login() {
             id="password"
             placeholder="Password"
             value={loginData.password}
-            onChange={(e)=>{setLoginData(prev=>({
-              ...prev,
-              password: e.target.value,
-            }))}}
+            onChange={(e)=>{LoginFunc(e)}}
           />
         </div>
         <button className="button" disabled={isLoading} onClick={()=>loginHandler(loginData)}>Login</button>

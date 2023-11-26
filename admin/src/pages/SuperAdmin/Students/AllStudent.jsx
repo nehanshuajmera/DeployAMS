@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useTable, usePagination } from 'react-table'
 import './AllStudent.css'
 import AdminContext from '../../../context/AdminContext';
+import TopOfPage from '../../../components/TopOfPage';
 
 export default function AllStudent() {
   const {allStudent} = useContext(AdminContext);
@@ -80,6 +81,7 @@ export default function AllStudent() {
 
   return (
     <div className='allStudentMain'>
+      <TopOfPage pageName={"Student"} pagePath={"student"}/>
       <h2>All Students List</h2>
       <div className="allStudentTable">
         <table className='adminStudentTable' {...getTableProps()}>

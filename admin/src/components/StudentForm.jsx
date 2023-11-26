@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
+import { useAdmin } from "../context/AdminContext";
 
 
 
@@ -307,5 +308,24 @@ const SubjectCollection = ({ subject, removeSubject }) => {
     </div>
   );
 };
+
+
+const SubjectSearch = ({selectedSubject})=>{
+  const {allsubject} = useAdmin()
+  const listOfSubject = [...allsubject]
+  return(
+    <div>
+      {
+        listOfSubject.map(subject=>{
+          return(
+            <div key={subject}>
+              {subject}
+            </div>
+          )
+        })
+      }
+    </div>
+  )
+}
 
 export default StudentForm;
