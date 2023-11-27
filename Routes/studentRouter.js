@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const Student = require("../Model/studentSchema");
 const Subject = require("../Model/subjectSchema");
 const Complaint = require("../Model/complaintSchema");
+const Teacher = require("../Model/teacherSchema");
 const isauthenticated = require("../Middleware/authenticated");
 const { all_teachers } = require("../Controller/CRUDteacher");
 
