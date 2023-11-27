@@ -179,7 +179,7 @@ router.post("/createsubject", isAdmin, async (req, res) => {
         return res.status(400).json({ message: "Subject ID is required to delete a subject" });
       }
 
-      addLog(`Subject deleted: ${subjectId}`, userId);
+      // addLog(`Subject deleted: ${subjectId}`, userId);
       // Find and remove the subject by its ID
       const deletedSubject = await Subject.findByIdAndRemove(subjectId);
           
@@ -303,7 +303,7 @@ router.post("/createsubject", isAdmin, async (req, res) => {
         password: await bcrypt.hash(password, 10), // Encrypt the password before saving
         subjects,
       });
-      addLog(`Student created: ${name}`, userId);
+      // addLog(`Student created: ${name}`, userId);
   
       // Save the new student to the database
       const savedStudent = await newStudent.save();

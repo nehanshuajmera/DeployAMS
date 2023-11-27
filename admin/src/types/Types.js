@@ -39,7 +39,7 @@ const errorType = {
 const API_Type ={
     student:"student",
     teacher:"teacher",
-
+    subject:"subject",
 }
 
 

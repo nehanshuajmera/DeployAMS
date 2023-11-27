@@ -59,7 +59,7 @@ const AllDataContextProvider = ({children})=>{
         axios.post(`/api/admin/update${API}/${itemId}`,data)
         .then((res)=>{
             console.log(res)
-            navigate("/")
+            // navigate("/")
         })
         .catch(err=>{            
             dispatch({type:actionType.SET_ERROR,payload:err})
@@ -73,7 +73,7 @@ const AllDataContextProvider = ({children})=>{
         axios.get(`/api/admin/delete${API}/${itemId}`)
         .then(res=>{
             console.log(res)
-            navigate('/')
+            // navigate('/')
         })
         .catch(err=>{
             

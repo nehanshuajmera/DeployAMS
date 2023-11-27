@@ -1,16 +1,11 @@
-import { useReducer, useState } from "react";
-import reducer from '../reducer/CreateStudentReducer'
+import {  useState } from "react";
 import StudentForm from "../components/StudentForm";
 import { studentFieldVerify } from "../action/InputFieldVerification";
 import { useAllData } from "../context/AllDataContext";
 import { API_Type, msgType } from "../types/Types";
 import DeleteButton from "../components/DeleteButton";
 
-const initState = {
-  
-  isError: false,
-  isLoading: false,
-}
+
 
 const data = {
   name: "",
@@ -41,7 +36,6 @@ const Subject = {
 const UpdateStudent = () => {
   const {updateItem,setMsg} = useAllData()
   const [student, setStudent] = useState(data);
-  const [state, dispatch] = useReducer(reducer, initState);
   
   const HandleClick = ()=>{
     const itemId =''
