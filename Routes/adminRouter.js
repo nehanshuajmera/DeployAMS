@@ -267,7 +267,7 @@ router.post("/createsubject", isAdmin, async (req, res) => {
     try {
   
       const teacherId = req.params.id; // Get the teacher ID from the request parameters
-      addLog(`Teacher deleted: ${teacherId}`, userId);
+      // addLog(`Teacher deleted: ${teacherId}`, userId);
   
       // Find and remove the teacher by their ID
       const deletedTeacher = await Teacher.findByIdAndRemove(teacherId);
@@ -332,7 +332,7 @@ router.post('/updatestudent/:id', isAdmin, async (req, res) => {
       // if (!updatedData) {
       //   return res.status(400).json({ message: 'Updated student data is required' });
       // }
-      addLog(`Student updated: ${studentId}`, userId);
+      // addLog(`Student updated: ${studentId}`, userId);
 
       // Find the student by ID and update the specified fields
       const updatedStudent = await Student.findByIdAndUpdate(studentId,
