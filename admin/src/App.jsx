@@ -9,7 +9,7 @@ import CreateStudent from './pages/CreateStudent'
 import UpdateStudent from './pages/UpdateStudent'
 // import UpdateTeacher from "./pages/SuperAdmin/Teachers/UpdateTeacher"
 // import CreateTeacher from "./pages/SuperAdmin/Teachers/CreateTeacher"
-// import UpdateSubject from "./pages/SuperAdmin/Subjects/UpdateSubject"
+import UpdateSubject from "./pages/SuperAdmin/Subjects/UpdateSubject"
 import CreateSubject from "./pages/SuperAdmin/Subjects/CreateSubject"
 function App() {
 
@@ -23,9 +23,9 @@ function App() {
         <Route path={'/allteacher'} element={<AllTeacher/>}/>
         <Route path={'/allsubject'} element={<AllSubject/>}/>
           <Route path="/createstudent" element={<CreateStudent/>}/>
-          <Route path="/updatestudent/:id" element={<UpdateStudent/>} />
+          <Route path="/updatestudent" element={<UpdateStudent/>} />
           <Route path="/createsubject" element={<CreateSubject/>}/>
-          {/* <Route path="/updatesubject/:id" element={<UpdateSubject/>} /> */}
+          <Route path="/updatesubject" element={<UpdateSubject/>} />
           {/* <Route path="/createteacher" element={<CreateTeacher/>}/>
           <Route path="/updateteacher/:id" element={<UpdateTeacher/>} /> */}
           <Route path="*" element={<ErrMsg/>}/>

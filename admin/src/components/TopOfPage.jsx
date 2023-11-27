@@ -1,7 +1,4 @@
-import {useLocation} from 'react-router-dom'
 const TopOfPage = (props) => {
-    const location = useLocation()
-    console.log(location)
   return (
     <div className='w-full h-[150px] bg-primary relative '>
       <div className="flex flex-col items-stretch gap-4 pl-6 pt-2">
