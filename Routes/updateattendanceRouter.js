@@ -6,9 +6,10 @@ const Student = require("../Model/studentSchema");
 const isauthenticated = require("../Middleware/authenticated");
 const addLog = require('../Controller/logs');
 const isAdmin = require("../Middleware/checkadmin");
+const isTeacher = require('../Middleware/checkteacher');
 
 // create a api /asktoupdate/:id in which id of subject was passed and date on which attendance was updated was passed by teacher and when admin give permission to update attendance then teacher can update attendance of that subject on that date
-router.post("/asktoupdate/:id",isauthenticated,async(req,res)=>{
+router.post("/asktoupdate/:id",isauthenticated,isTeacher ,async(req,res)=>{
     try{
         const teacher = await Teacher.findById(req.user.user_id);
         const subject = await Subject.findById(req.params.id);
@@ -92,7 +93,7 @@ router.post("/acceptorreject/:id",isAdmin,async(req,res)=>{
 });
 
 // create a api for teacher to update attendance of subject on date
-router.post("/updateattendance/:id",isauthenticated,async(req,res)=>{
+router.post("/updateattendance/:id",isauthenticated,isTeacher,async(req,res)=>{
     try{
         const teacher = await Teacher.findById(req.user.user_id);
         const subject = await Subject.findById(req.params.id);

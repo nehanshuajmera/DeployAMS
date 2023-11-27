@@ -6,7 +6,7 @@ const Student = require("../Model/studentSchema");
 const Subject = require("../Model/subjectSchema");
 const Complaint = require("../Model/complaintSchema");
 const isauthenticated = require("../Middleware/authenticated");
-const getallteacher = require("../Controller/allteachers");
+const { all_teachers } = require("../Controller/CRUDteacher");
 
 // POST /login/ - Authenticate user and provide JWT token
 router.post("/login", async (req, res) => {
@@ -80,7 +80,6 @@ router.get("/detail", isauthenticated, async (req, res) => {
 });
 
 
-
 // POST /changepassword - Change student's password
 router.post("/changepassword", isauthenticated, async (req, res) => {
   try {
@@ -117,7 +116,7 @@ router.post("/changepassword", isauthenticated, async (req, res) => {
 });
 
 // GET /allteachers - Retrieve all teachers with their subjects
-router.get('/allteachers', isauthenticated,getallteacher);
+router.get('/allteachers', isauthenticated,all_teachers);
 
 // POST /complaints - Create a new complaint
 router.post('/complaints',isauthenticated, async (req, res) => {

@@ -20,10 +20,10 @@ router.post("/create-academic-calendar",isAdmin, async (req, res) => {
 
     // Create academic calendar entries with date and day, leaving "holiday" unassigned
     const academicCalendarEntries = dateRange.map(date => ({
-      date: date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(),
+      date: date.toDateString(),
       day: getDayOfWeek(date),
-      holiday: false,
-      event: "No event",
+      holiday: getDayOfWeek(date)==="Sunday"?true:false, 
+      event: getDayOfWeek(date)==="Sunday"?"Sunday":"No event",
     }));
 
     // Insert the academic calendar entries into the database
@@ -31,6 +31,7 @@ router.post("/create-academic-calendar",isAdmin, async (req, res) => {
 
     return res.status(201).json({ message: "Academic calendar entries created successfully" });
   } catch (error) {
+    console.error("Error creating academic calendar entries:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 });
@@ -39,7 +40,7 @@ router.post("/create-academic-calendar",isAdmin, async (req, res) => {
 function createDateRange(startDate, endDate) {
   const dateRange = [];
   let currentDate = new Date(startDate);
-// console.log({currentDate})
+
   while (currentDate <= endDate) {
     dateRange.push(new Date(currentDate));
     currentDate.setDate(currentDate.getDate() + 1);
@@ -55,30 +56,6 @@ function getDayOfWeek(date) {
   return daysOfWeek[date.getDay()];
 }
 
-// if new class was added we have to add it to subject schema that lecture_dates array
-
-// router.post('/updateholiday', isAdmin, async (req, res) => {
-//   try {
-//     // Get the date to mark as a holiday from the request body
-//     let { date,event } = req.body;
-//     date=new Date(date);
-
-//     if (!date) {
-//       return res.status(400).json({ message: 'Date is required to update as a holiday' });
-//     }
-
-//     // Update the academic calendar to mark the date as a holiday
-//     await AcademicCalendar.findOneAndUpdate(
-//       { date },
-//       { holiday: true, event },
-//     );
-
-//     return res.status(200).json({ message: 'Academic calendar updated to mark the date as a holiday' });
-//   } catch (error) {
-//     console.error('Error updating academic calendar:', error);
-//     return res.status(500).json({ message: 'Internal server error' });
-//   }
-// });
 
 
 // GET /academiccalendar - Retrieve all dates, days, and holidays from the academic calendar
@@ -91,9 +68,33 @@ router.get('/academiccalendar', isAdmin, async (req, res) => {
       return res.status(404).json({ message: 'No academic calendar entries found' });
     }
     
-    return res.status(200).json({ message: AcademicCalendar });
+    return res.status(200).json({ message: calendarEntries });
   } catch (error) {
     console.error('Error fetching academic calendar entries:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+// if new class was added we have to add it to subject schema that lecture_dates array
+router.post('/updateholiday', isAdmin, async (req, res) => {
+  try {
+    // Get the date to mark as a holiday from the request body
+    let { date,holiday,event } = req.body;
+    
+    if (!date) {
+      return res.status(400).json({ message: 'Date is required to update as a holiday' });
+    }
+    date=(new Date(date)).toDateString();
+
+    // Update the academic calendar to mark the date as a holiday
+    await AcademicCalendar.findOneAndUpdate(
+      { date },
+      { holiday, event},
+    );
+    
+    return res.status(200).json({ message: 'Academic calendar updated to mark the date as a holiday' });
+  } catch (error) {
+    console.error('Error updating academic calendar:', error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 });

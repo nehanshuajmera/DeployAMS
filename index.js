@@ -29,10 +29,10 @@ mongoose.connect(process.env.MDB_CONNECT)
 .then(()=>{console.log('Mongodb connected')});
 
 // set up routes
+app.use("/api/calander", require("./Routes/calanderRouter.js"));
+app.use("/api/teacher", require("./Routes/teacherRouter.js"));
 app.use("/api/authentic", require("./Routes/checkauthRouter.js"));
 app.use("/api/student", require("./Routes/studentRouter.js"));
-app.use("/api/teacher", require("./Routes/teacherRouter.js"));
-app.use("/api/calander", require("./Routes/calanderRouter.js"));
 app.use("/api/admin", require("./Routes/adminRouter.js"));
 app.use("/api/logs", require("./Routes/logRouter.js"));
 app.use("/api/schedule",require("./Routes/scheduleRouter"));
