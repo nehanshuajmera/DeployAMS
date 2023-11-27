@@ -7,13 +7,24 @@
 	},
 	"item": [
 		{
+			"name": "Admin APIS",
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Teacher/Admin login",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"teacher_id\":\"1\",\r\n    \"password\":\"medicaps\"\r\n}",
+					"raw": "{\r\n    \"teacher_id\":\"2\",\r\n    \"password\":\"medicaps\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -58,6 +69,27 @@
 			"response": []
 		},
 		{
+			"name": "Logout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/authentic/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"authentic",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get teacher details",
 			"request": {
 				"method": "GET",
@@ -85,7 +117,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"startDate\":\"Jan 1 2024\",\r\n    \"endDate\":\"Dec 31 2024\"\r\n}",
+					"raw": "{\r\n    \"startDate\":\"2024-01-01\",\r\n    \"endDate\":\"2024-12-31\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -115,7 +147,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"date\":\"Jan 1 2024\",\r\n    \"holiday\":true,\r\n    \"event\":\"rakhi\"\r\n}",
+					"raw": "{\r\n    \"date\":\"2024-01-10\",\r\n    \"holiday\":true,\r\n    \"event\":\"Testing\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -160,43 +192,13 @@
 			"response": []
 		},
 		{
-			"name": "create new teacher",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"teacher_id\":\"2\",\r\n    \"name\":\"mayukh Jain\",\r\n    \"email\":\"mayukhjain@gmail.com\",\r\n    \"phone_no\":\"8796451231\",\r\n    \"subjects\":[],\r\n    \"password\":\"medicaps\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5000/api/admin/createteacher",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"admin",
-						"createteacher"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Create new subject",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"subject_name\":\"CN\",\r\n     \"course_code\":\"CB703022\",\r\n      \"branch\":\"CSBS\",\r\n       \"section\":\"A\",\r\n        \"batch\":\"B\",\r\n          \"teacher_id\":\"1\", \r\n          \"day\":[{\"name\":\"Monday\",\"count\":1},{\"name\":\"Thursday\",\"count\":2}]\r\n}",
+					"raw": "{\r\n    \"subject_name\":\"Compiler design\",\r\n    \"course_code\":\"CB703084\",\r\n    \"branch\":\"CSBS\",\r\n    \"section\":\"A\",\r\n    \"batch\":\"B\",\r\n    \"day\":[{\"name\":\"Monday\",\"count\":1},{\"name\":\"Thursday\",\"count\":2},{\"name\":\"Friday\",\"count\":1}]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -220,13 +222,13 @@
 			"response": []
 		},
 		{
-			"name": "Create student",
+			"name": "Change Subject Time Table",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"Vishal Sharma\", \r\n    \"enrollment_no\":\"EN20CS306059\",\r\n    \"scholar_no\":\"2002235\",\r\n    \"email\":\"sharma39vishal@gmail.com\",\r\n    \"phone_no\":\"4659781641\", \r\n    \"branch\":\"CSBS\", \r\n    \"section\":\"S\", \r\n    \"batch\":\"B\", \r\n    \"password\":\"medicaps\", \r\n    \"subjects\":[]\r\n}",
+					"raw": "{\r\n    \"day\":[{\"name\":\"Tuesday\",\"count\":2}]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -234,7 +236,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/admin/createstudent",
+					"raw": "http://localhost:5000/api/admin/changesubjecttimetable/6564a1816d1cbaaed2f05f0b",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -243,7 +245,121 @@
 					"path": [
 						"api",
 						"admin",
-						"createstudent"
+						"changesubjecttimetable",
+						"6564a1816d1cbaaed2f05f0b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Extra Lecture in Subject",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"date\":\"2024-01-01T00:00:00.000Z\", \r\n    \"count\":2, \r\n    \"cause\":\"Extra lecture\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/admin/extralecture/6564a1816d1cbaaed2f05f0b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"extralecture",
+						"6564a1816d1cbaaed2f05f0b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Subject",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"subject_name\":\"Compiler new design\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/admin/updatesubject/6564a1816d1cbaaed2f05f0b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"updatesubject",
+						"6564a1816d1cbaaed2f05f0b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin All Subjects",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/admin/allsubjects",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"allsubjects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create new teacher",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"teacher_id\":\"2\",\r\n    \"name\":\"mayukh Jain\",\r\n    \"email\":\"mayukhjain@gmail.com\",\r\n    \"phone_no\":\"8796451231\",\r\n    \"subjects\":[{\"subject_id\":\"6564a1816d1cbaaed2f05f0b\",\"permission\":\"write\"}],\r\n    \"password\":\"medicaps\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/admin/createteacher",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"createteacher"
 					]
 				}
 			},
@@ -281,21 +397,12 @@
 			"response": []
 		},
 		{
-			"name": "Update student",
+			"name": "Admin All Teachers",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"section\":\"C\",\r\n    \"subjects\":[{\"subject_id\":\"653e3987f8e7f66ed48fbf5d\",\"attendance\":[]}]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:5000/api/admin/updatestudent/653e3d752ae07cd9cd8fd76a",
+					"raw": "http://localhost:5000/api/admin/allteachers",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -304,8 +411,7 @@
 					"path": [
 						"api",
 						"admin",
-						"updatestudent",
-						"653e3d752ae07cd9cd8fd76a"
+						"allteachers"
 					]
 				}
 			},
@@ -334,6 +440,88 @@
 			"response": []
 		},
 		{
+			"name": "Create student",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Vishal Sharma\", \r\n    \"enrollment_no\":\"EN20CS306059\",\r\n    \"scholar_no\":\"2002235\",\r\n    \"email\":\"sharma39vishal@gmail.com\",\r\n    \"phone_no\":\"4659781641\", \r\n    \"branch\":\"CSBS\", \r\n    \"section\":\"S\", \r\n    \"batch\":\"B\", \r\n    \"password\":\"medicaps\", \r\n    \"subjects\":[]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/admin/createstudent",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"createstudent"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update student",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"section\":\"C\",\r\n    \"subjects\":[{\"subject_id\":\"6564a1816d1cbaaed2f05f0b\",\"attendance\":[]}]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/admin/updatestudent/6564b60c4751b887f3dba005",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"updatestudent",
+						"6564b60c4751b887f3dba005"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin All Students",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/admin/allstudents",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"allstudents"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Delete Student",
 			"request": {
 				"method": "GET",
@@ -356,64 +544,12 @@
 			"response": []
 		},
 		{
-			"name": "Admin See All subjects",
+			"name": "Teacher API's",
 			"request": {
-				"method": "GET",
+				"method": "OPTIONS",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/admin/allsubjects",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"admin",
-						"allsubjects"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Admin See all Subject",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:5000/api/admin/allstudents",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"admin",
-						"allstudents"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "All teacher",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:5000/api/admin/allteachers",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"admin",
-						"allteachers"
-					]
+					"raw": ""
 				}
 			},
 			"response": []
@@ -424,7 +560,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/teacher/studentsattendance/653e3987f8e7f66ed48fbf5d",
+					"raw": "http://localhost:5000/api/teacher/studentsattendance/6564a1816d1cbaaed2f05f0b",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -434,7 +570,7 @@
 						"api",
 						"teacher",
 						"studentsattendance",
-						"653e3987f8e7f66ed48fbf5d"
+						"6564a1816d1cbaaed2f05f0b"
 					]
 				}
 			},
@@ -446,7 +582,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/teacher/hasclasstoday/653e3879b47e44733782554d",
+					"raw": "http://localhost:5000/api/teacher/hasclasstoday/6564a1816d1cbaaed2f05f0b",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -456,7 +592,7 @@
 						"api",
 						"teacher",
 						"hasclasstoday",
-						"653e3879b47e44733782554d"
+						"6564a1816d1cbaaed2f05f0b"
 					]
 				}
 			},
@@ -469,7 +605,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"subjectId\":\"653e3987f8e7f66ed48fbf5d\",\r\n    \"studentIDs\":[{\"studentid\":\"653e6242a71b2d97c34e9e03\",\"count\":1},{\"studentid\":\"653e3d752ae07cd9cd8fd76a\",\"count\":1}]\r\n}",
+					"raw": "{\r\n    \"subjectId\":\"6564a1816d1cbaaed2f05f0b\",\r\n    \"studentIDs\":[{\"studentid\":\"6564b60c4751b887f3dba005\",\"count\":1}]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -514,6 +650,20 @@
 			"response": []
 		},
 		{
+			"name": "Student API's",
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "Student API's",
+					"host": [
+						"Student API's"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Student login",
 			"request": {
 				"method": "POST",
@@ -549,7 +699,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/admin/allsubjects",
+					"raw": "http://localhost:5000/api/admin/details",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -558,7 +708,7 @@
 					"path": [
 						"api",
 						"admin",
-						"allsubjects"
+						"details"
 					]
 				}
 			},

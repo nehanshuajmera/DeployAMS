@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
 });
 
 
-router.get("/detail", isauthenticated, async (req, res) => {
+router.get("/details", isauthenticated, async (req, res) => {
   try {
     // Get the authenticated user's information from the request
     const userId = req.user_id; // You should have this information in your authentication middleware
