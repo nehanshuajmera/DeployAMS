@@ -34,4 +34,20 @@ router.get("/", isauthenticated, async(req, res) => {
   }
 });
 
+// logout api
+router.get("/logout", isauthenticated, async(req, res) => {
+  try {
+    
+    res.cookie("_secureourapp", "", {
+      httpOnly: true,
+      // secure: true, // Enable this in production with HTTPS
+    });
+    
+    return res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.log({error})
+    return res.status(500).json({ message: "Internal server error", error:error });
+  }
+});
+
 module.exports = router;

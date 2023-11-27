@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const AcademicCalendar = require("../Model/calanderSchema"); // Import your AcademicCalendar model
 const Teacher = require("../Model/teacherSchema");
+const subject = require("../Model/subjectSchema");
 const isAdmin = require("../Middleware/checkadmin");
 
 // POST /create-academic-calendar - Create academic calendar entries for a date range
@@ -11,8 +12,18 @@ router.post("/create-academic-calendar",isAdmin, async (req, res) => {
     let { startDate, endDate } = req.body;
     startDate=new Date(startDate);
     endDate=new Date(endDate);
+
+    if (startDate > endDate) {
+      return res.status(400).json({ message: "Start date must be before end date" });
+    }
+    // console.log({startDate,endDate})
+    
     if (!startDate || !endDate) {
       return res.status(400).json({ message: "Start date and end date are required" });
+    }
+    const oldacademicCalendarEntries = await AcademicCalendar.find();
+    if(oldacademicCalendarEntries.length>0){
+      return res.status(400).json({ message: "Academic calendar already created" });
     }
 
     // Calculate the date range
@@ -20,13 +31,15 @@ router.post("/create-academic-calendar",isAdmin, async (req, res) => {
 
     // Create academic calendar entries with date and day, leaving "holiday" unassigned
     const academicCalendarEntries = dateRange.map(date => ({
-      date: date.toDateString(),
+      date: date,
       day: getDayOfWeek(date),
       holiday: getDayOfWeek(date)==="Sunday"?true:false, 
       event: getDayOfWeek(date)==="Sunday"?"Sunday":"No event",
     }));
 
+    // console.log({academicCalendarEntries})
     // Insert the academic calendar entries into the database
+
     await AcademicCalendar.insertMany(academicCalendarEntries);
 
     return res.status(201).json({ message: "Academic calendar entries created successfully" });
@@ -40,6 +53,11 @@ router.post("/create-academic-calendar",isAdmin, async (req, res) => {
 function createDateRange(startDate, endDate) {
   const dateRange = [];
   let currentDate = new Date(startDate);
+  
+  // currentDate.setHours(currentDate.getHours() + 5);
+  // currentDate.setMinutes(currentDate.getMinutes() + 30);
+  // endDate.setHours(endDate.getHours() + 5);
+  // endDate.setMinutes(endDate.getMinutes() + 30);
 
   while (currentDate <= endDate) {
     dateRange.push(new Date(currentDate));
@@ -62,6 +80,7 @@ function getDayOfWeek(date) {
 router.get('/academiccalendar', isAdmin, async (req, res) => {
   try {
     // Find all entries in the academic calendar
+
     const calendarEntries = await AcademicCalendar.find();
 
     if (!calendarEntries || calendarEntries.length === 0) {
@@ -80,12 +99,21 @@ router.post('/updateholiday', isAdmin, async (req, res) => {
   try {
     // Get the date to mark as a holiday from the request body
     let { date,holiday,event } = req.body;
+    const subjectList = await subject.find();
     
-    if (!date) {
+    if(subjectList.length>0){
+      return res.status(400).json({ message: 'Please use other methods to update dates' });
+    }
+
+    if (!date||!holiday||!event) {
       return res.status(400).json({ message: 'Date is required to update as a holiday' });
     }
-    date=(new Date(date)).toDateString();
 
+    date=(new Date(date));
+
+    // date.setHours(date.getHours() + 5);
+    // date.setMinutes(date.getMinutes() + 30);
+    console.log({date})
     // Update the academic calendar to mark the date as a holiday
     await AcademicCalendar.findOneAndUpdate(
       { date },

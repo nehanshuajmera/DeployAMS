@@ -44,11 +44,24 @@ const createteacher=async (req, res) => {
         password: await bcrypt.hash(password, 10), // Encrypt the password before saving
       });
       
-      addLog(`Teacher created: ${teacher_id}`, userId);
+      // addLog(`Teacher created: ${teacher_id}`, userId);
 
       // Save the new teacher to the database
       const savedTeacher = await newTeacher.save();
-  
+      // for all subject_id of subjects in subjects array update teacher_id in teacher_id if subject permissions is write in subjects array
+
+      for(let i=0; i<subjects.length; i++){
+        if(subjects[i].permission === "write"){
+          const updatedSubject = await Subject.findByIdAndUpdate(
+            subjects[i].subject_id,
+            {
+              $set: { teacher_id: savedTeacher._id }, // Use the request body to update teacher details
+            },
+            { new: true } // Return the updated teacher
+          );
+        }
+      }
+      
       return res.status(201).json({ message: "Teacher created successfully", teacher: savedTeacher });
     } catch (error) {
       console.log({error})
@@ -60,7 +73,7 @@ const update_teacher_by_id=async (req, res) => {
     try {
   
       const teacherId = req.params.id; // Get the teacher ID from the request parameters
-      addLog(`Teacher updated: ${teacherId}`, userId);
+      // addLog(`Teacher updated: ${teacherId}`, userId);
       
       // Find and update the teacher by their ID
       const updatedTeacher = await Teacher.findByIdAndUpdate(

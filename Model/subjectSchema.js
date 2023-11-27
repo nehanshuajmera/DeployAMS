@@ -7,9 +7,6 @@ const subjectSchema = new mongoose.Schema({
   branch: String,
   section: String,
   batch: String,
-  teacher_id: String,
-  attendance_date: [Date], // An array of date objects
- 
   // Changed Schema 
   updateAttendance:[{
     actualDate:Date,

@@ -15,7 +15,7 @@ router.post("/changesubjecttimetable/:id", isAdmin, changetimetable);
 
 router.post("/extralecture/:id", isAdmin, addextralecture)
 
-router.put("/updatesubject/:id", isAdmin,updatesubjectdetails );
+router.post("/updatesubject/:id", isAdmin,updatesubjectdetails );
 
 router.delete("/deletesubject/:id", isAdmin,deletesubjectbyid );
 
