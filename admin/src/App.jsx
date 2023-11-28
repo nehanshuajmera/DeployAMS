@@ -7,10 +7,12 @@ import AllTeacher from "./pages/SuperAdmin/Teachers/AllTeacher"
 import AllSubject from "./pages/SuperAdmin/Subjects/AllSubject"
 import CreateStudent from './pages/CreateStudent'
 import UpdateStudent from './pages/UpdateStudent'
-// import UpdateTeacher from "./pages/SuperAdmin/Teachers/UpdateTeacher"
-// import CreateTeacher from "./pages/SuperAdmin/Teachers/CreateTeacher"
+import UpdateTeacher from "./pages/SuperAdmin/Teachers/UpdateTeacher"
+import CreateTeacher from "./pages/SuperAdmin/Teachers/CreateTeacher"
 import UpdateSubject from "./pages/SuperAdmin/Subjects/UpdateSubject"
 import CreateSubject from "./pages/SuperAdmin/Subjects/CreateSubject"
+
+
 function App() {
 
   return (
@@ -26,17 +28,10 @@ function App() {
         <Route path={'/updatestudent'} element={<UpdateStudent />} />
         <Route path={'/createsubject'} element={<CreateSubject />} />
         <Route path={'/updatesubject'} element={<UpdateSubject />} />
-        {/* <Route path="/createteacher" element={<CreateTeacher/>}/>
-          <Route path="/updateteacher/:id" element={<UpdateTeacher/>} /> */}
+        <Route path="/createteacher" element={<CreateTeacher />} />
+        <Route path="/updateteacher/:id" element={<UpdateTeacher />} />
         <Route path="*" element={<ErrMsg />} />
       </Routes>
-
-      {/* <Login/> */}
-
-      {/* <Dashboard/> */}
-      {/* <AllStudent/> */}
-      {/* <AllTeacher/> */}
-      {/* <AllSubject/> */}
     </div>
   )
 }

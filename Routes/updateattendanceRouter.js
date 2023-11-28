@@ -6,12 +6,14 @@ const Student = require("../Model/studentSchema");
 const isauthenticated = require("../Middleware/authenticated");
 const addLog = require('../Controller/logs');
 const isAdmin = require("../Middleware/checkadmin");
+const isTeacher = require('../Middleware/checkteacher');
 
 // create a api /asktoupdate/:id in which id of subject was passed and date on which attendance was updated was passed by teacher and when admin give permission to update attendance then teacher can update attendance of that subject on that date
-router.post("/asktoupdate/:id",isauthenticated,async(req,res)=>{
+router.post("/asktoupdate/:id",isauthenticated,isTeacher ,async(req,res)=>{
     try{
         const teacher = await Teacher.findById(req.user.user_id);
         const subject = await Subject.findById(req.params.id);
+        
         if(!teacher){
             return res.status(401).json({message:"Invalid Teacher ID"});
         }
@@ -35,7 +37,7 @@ router.post("/asktoupdate/:id",isauthenticated,async(req,res)=>{
             subject:req.params.id,
             proposedDateTime:date,
             typeOfRequest:"update",
-            status:"pending",
+            status:"pending"
         });
         await request.save();
         // addLog(req.user.user_id,`Teacher ${teacher.name} asked to update attendance of subject ${subject.name} on date ${date}`);
@@ -70,14 +72,14 @@ router.post("/acceptorreject/:id",isAdmin,async(req,res)=>{
         // if(request.status !== "pending"){
         //     return res.status(401).json({message:"Request already processed"});
         // }
-        if(req.body.status === "accepted"){
-            request.status = "accepted";
+        if(req.body.status === "Accepted"){
+            request.status = "Accepted";
             await request.save();
             // addLog(req.user.user_id,`Admin accepted the request of teacher ${request.teacher.name} to update attendance of subject ${request.subject.name} on date ${request.proposedDateTime}`);
             return res.status(200).json({message:"Request accepted"});
         }
-        else if(req.body.status === "rejected"){
-            request.status = "rejected";
+        else if(req.body.status === "Rejected"){
+            request.status = "Rejected";
             await request.save();
             // addLog(req.user.user_id,`Admin rejected the request of teacher ${request.teacher.name} to update attendance of subject ${request.subject.name} on date ${request.proposedDateTime}`);
             return res.status(200).json({message:"Request rejected"});
@@ -92,7 +94,7 @@ router.post("/acceptorreject/:id",isAdmin,async(req,res)=>{
 });
 
 // create a api for teacher to update attendance of subject on date
-router.post("/updateattendance/:id",isauthenticated,async(req,res)=>{
+router.post("/updateattendancebypermission/:id",isauthenticated,isTeacher,async(req,res)=>{
     try{
         const teacher = await Teacher.findById(req.user.user_id);
         const subject = await Subject.findById(req.params.id);
@@ -125,13 +127,9 @@ router.post("/updateattendance/:id",isauthenticated,async(req,res)=>{
         if(!request){
             return res.status(401).json({message:"You have not been given permission to update attendance of this subject on this date"});
         }
-        if(request.status !== "accepted"){
-            return res.status(401).json({message:"You have not been given permission to update attendance of this subject on this date"});
-        }
 
-        const isclasstoday= await Subject.findOne({ _id: req.params.id, lecture_dates: { $elemMatch: { date: date } } });
-        if (!isclasstoday) {
-            return res.status(403).json({ message: "No Class" });
+        if(request.status !== "Accepted"){
+            return res.status(401).json({message:"You have not been given permission to update attendance of this subject on this date"});
         }
 
         for (const studentData of studentIDs) {

@@ -5,8 +5,9 @@ const bcrypt = require("bcrypt");
 const Student = require("../Model/studentSchema");
 const Subject = require("../Model/subjectSchema");
 const Complaint = require("../Model/complaintSchema");
+const Teacher = require("../Model/teacherSchema");
 const isauthenticated = require("../Middleware/authenticated");
-const getallteacher = require("../Controller/allteachers");
+const { all_teachers } = require("../Controller/CRUDteacher");
 
 // POST /login/ - Authenticate user and provide JWT token
 router.post("/login", async (req, res) => {
@@ -54,7 +55,7 @@ router.post("/login", async (req, res) => {
 });
 
 
-router.get("/detail", isauthenticated, async (req, res) => {
+router.get("/details", isauthenticated, async (req, res) => {
   try {
     // Get the authenticated user's information from the request
     const userId = req.user_id; // You should have this information in your authentication middleware
@@ -78,7 +79,6 @@ router.get("/detail", isauthenticated, async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 });
-
 
 
 // POST /changepassword - Change student's password
@@ -117,7 +117,7 @@ router.post("/changepassword", isauthenticated, async (req, res) => {
 });
 
 // GET /allteachers - Retrieve all teachers with their subjects
-router.get('/allteachers', isauthenticated,getallteacher);
+router.get('/allteachers', isauthenticated,all_teachers);
 
 // POST /complaints - Create a new complaint
 router.post('/complaints',isauthenticated, async (req, res) => {

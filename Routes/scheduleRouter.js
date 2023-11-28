@@ -3,9 +3,11 @@ const router = express.Router();
 const scheduleRequest = require('../Model/scheduleRequestSchema');
 const Teacher = require('../Model/teacherSchema');
 const Subject = require('../Model/subjectSchema');
+const isauthenticated = require('../Middleware/authenticated');
+const isTeacher = require('../Middleware/checkteacher');
 
 // It is used to post a Attendence Manipulation request in the server 
-router.post('/request', async (req, res) => {
+router.post('/request',isauthenticated,isTeacher, async (req, res) => {
     try {
         const { subject, type, proposedDateTime, reason } = req.body;
         const teacherId = subject.teacher_id;
@@ -37,7 +39,7 @@ router.post('/request', async (req, res) => {
 
 
 // If a teacher wants to see the status of its schedule request .
-router.get('/requestStatus/:id', async (req, res) => {
+router.get('/requestStatus/:id',isauthenticated,isTeacher, async (req, res) => {
     try {
 
         const requestId = req.params.id;
@@ -55,7 +57,7 @@ router.get('/requestStatus/:id', async (req, res) => {
 });
 
 // This API collect all the request from request Database and display it to admin 
-router.get('/getAllRequest', async (req, res) => {
+router.get('/getAllRequest',isauthenticated,isTeacher, async (req, res) => {
     try {
         const allRequest = await scheduleRequest.find({ status: 'pending' });
         return res.status(200).json(allRequest);
@@ -66,7 +68,7 @@ router.get('/getAllRequest', async (req, res) => {
 })
 
 // This operation is Done by Admin to update the Request
-router.put('/updateRequest/:id', async (req, res) => {
+router.put('/updateRequest/:id',isauthenticated,isTeacher, async (req, res) => {
     try {
         // Destructure request parameters from the request body
         const { status, comment, ActualDate, ProposedDate, Day, classCount } = req.body;

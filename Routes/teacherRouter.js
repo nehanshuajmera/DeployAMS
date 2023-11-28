@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Teacher = require("../Model/teacherSchema");
 const isauthenticated = require("../Middleware/authenticated");
+const isTeacher = require("../Middleware/checkteacher");
 const Subject = require("../Model/subjectSchema");
 const Student = require("../Model/studentSchema");
 const addLog = require('../Controller/logs');
@@ -121,37 +122,33 @@ router.get("/studentsattendance/:id", isauthenticated, async (req, res) => {
 
 
 // GET /hasclasstoday/:id - Check if the subject with :id has a class scheduled for today
-router.get("/hasclasstoday/:id", isauthenticated, async (req, res) => {
+router.get("/hasclasstoday/:id", isauthenticated,isTeacher , async (req, res) => {
   try {
-    const userId = req.user_id; // You should have this information in your authentication middleware
-
-    if (req.user_role !== "teacher") {
-      return res.status(403).json({ message: "Forbidden: Access denied for non-teacher users" });
-    }
 
     const subjectId = req.params.id; // Get the subject ID from the request parameters
 
     // Check if the subject with :id has a class scheduled for today
     const today = new Date();
-    const isclasstoday= Subject.findOne({ _id: subjectId, lecture_dates: { $elemMatch: { date: today } } });
+    // console.log({subjectId,today})
+    let isclasstoday= await Subject.findById(subjectId);
+    // console.log(isclasstoday.lecture_dates)
+    isclasstoday=isclasstoday?.lecture_dates?.find(d => d.date.getFullYear() === today.getFullYear() && d.date.getMonth() === today.getMonth() && d.date.getDate() === today.getDate());
+    // console.log({isclasstoday})
     if (!isclasstoday) {
       return res.status(403).json({ message: "No Class Today" });
     }
-    return res.status(200).json({ message: "Class Today" ,count : isclasstoday.count });
+    return res.status(200).json({ message: "Class Today" , count : isclasstoday.count });
   } catch (error) {
+    console.error("Error checking if class is scheduled for today:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 });
 
 
 // POST /updateattendance - Update student attendance for a subject
-router.post('/updateattendance', isauthenticated, async (req, res) => {
+router.post('/updateattendance', isauthenticated,isTeacher, async (req, res) => {
   try {
     const teacherId = req.user_id; // You should have this information in your authentication middleware
-
-    if (req.user_role !== 'teacher') {
-      return res.status(403).json({ message: 'Forbidden: Access denied for non-teacher users' });
-    }
 
     // Get the request data (subject ID, student IDs, attendance date, and count)
     const { subjectId, studentIDs } = req.body;
@@ -159,13 +156,18 @@ router.post('/updateattendance', isauthenticated, async (req, res) => {
     // Check if the teacher has permission to update attendance for this subject
     const subject = await Subject.findOne({ _id: subjectId, teacher_id: teacherId });
 
+    
+
     if (!subject) {
       return res.status(403).json({ message: 'Forbidden: No permission to update attendance for this subject' });
     }
 
     // Check if the subject has a class scheduled for today
     const today = new Date();
-    const isclasstoday= Subject.findOne({ _id: subjectId, lecture_dates: { $elemMatch: { date: today } } });
+    let isclasstoday= await Subject.findById(subjectId);
+    // console.log(isclasstoday.lecture_dates)
+    isclasstoday=isclasstoday?.lecture_dates?.find(d => d.date.getFullYear() === today.getFullYear() && d.date.getMonth() === today.getMonth() && d.date.getDate() === today.getDate());
+    // console.log({isclasstoday})
     if (!isclasstoday) {
       return res.status(403).json({ message: "No Class Today" });
     }
@@ -207,7 +209,7 @@ router.post('/updateattendance', isauthenticated, async (req, res) => {
       }
     }
     
-    addLog(`Student attendance updated for subject: ${subject._id}`, teacherId);
+    // addLog(`Student attendance updated for subject: ${subject._id}`, teacherId);
 
     return res.status(200).json({ message: 'Attendance updated successfully' });
   } catch (error) {
@@ -275,7 +277,7 @@ router.post('/markabsent',isauthenticated,async(req,res)=>{
         }
       }
     } 
-    addLog(`Student attendance updated for subject: ${subject._id}`, teacherId);
+    // addLog(`Student attendance updated for subject: ${subject._id}`, teacherId);
 
     return res.status(200).json({ message: 'Attendance updated successfully' });
   }catch(error){
