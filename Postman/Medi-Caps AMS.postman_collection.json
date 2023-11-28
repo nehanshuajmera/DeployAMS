@@ -198,7 +198,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"subject_name\":\"Compiler design\",\r\n    \"course_code\":\"CB703084\",\r\n    \"branch\":\"CSBS\",\r\n    \"section\":\"A\",\r\n    \"batch\":\"B\",\r\n    \"day\":[{\"name\":\"Monday\",\"count\":1},{\"name\":\"Thursday\",\"count\":2},{\"name\":\"Friday\",\"count\":1}]\r\n}",
+					"raw": "{\r\n    \"subject_name\":\"Operating System\",\r\n    \"course_code\":\"CB703084\",\r\n    \"branch\":\"btech-CSBS\",\r\n    \"section\":\"A\",\r\n    \"batch\":\"B\",\r\n    \"day\":[{\"name\":\"Tuesday\",\"count\":1}]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -617,6 +617,26 @@
 			"response": []
 		},
 		{
+			"name": "See All logs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/logs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Teacher API's",
 			"request": {
 				"method": "OPTIONS",
@@ -843,7 +863,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/api/admin/details",
+					"raw": "http://localhost:5000/api/student/details",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -851,28 +871,8 @@
 					"port": "5000",
 					"path": [
 						"api",
-						"admin",
+						"student",
 						"details"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "See All logs",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:5000/api/logs",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"logs"
 					]
 				}
 			},
