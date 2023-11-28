@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useTable, usePagination } from 'react-table'
+import { useTable, usePagination, useSortBy } from 'react-table'
 import './AllStudent.css'
 import AdminContext from '../../../context/AdminContext';
-import TopOfPage from '../../../components/TopOfPage';
-import SearchBar from '../../../components/SearchBar';
+// import TopOfPage from '../../../components/TopOfPage';
+// import SearchBar from '../../../components/SearchBar';
 
 export default function AllStudent() {
   const { allStudent } = useContext(AdminContext);
   const data = React.useMemo(() => allStudent, [allStudent]);
-  const [sortData, setSortData] = useState([...allStudent]);
+  // const [sortData, setSortData] = useState([...allStudent]);
   const columns = React.useMemo(
     () => [
       {
@@ -77,23 +77,32 @@ export default function AllStudent() {
     pageOptions,
     state,
     prepareRow
-  } = useTable({ columns, data, initialState, enableEditing: true }, usePagination);
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState,
+      enableEditing: true
+    },useSortBy, usePagination);
 
   const { pageIndex } = state;
 
   return (
     <div className='allStudentMain'>
-      <TopOfPage pageName={"Student"} pagePath={"student"}/>
+      {/* <TopOfPage pageName={"Student"} pagePath={"student"}/> */}
       <h2>All Students List</h2>
-      <SearchBar sortData={sortData} setSortData={setSortData} />
+      {/* <SearchBar sortData={sortData} setSortData={setSortData} /> */}
       <div className="allStudentTable">
         <table className='adminStudentTable' {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr className='adminStudentTableRow' {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th className='adminStudentTableHead' {...column.getHeaderProps()}>
+                  <th className='adminStudentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
+                    {/* <span>
+                    {column.isSortedDesc ? ' 🔽' : ' 🔼'}
+                  </span> */}
                   </th>
                 ))}
               </tr>
