@@ -16,7 +16,7 @@ export default function TeacherDashboard() {
 
       <div className="teacherContentContainer">
         <div className="teacherMain">
-          <div onClick={() => navigate("/allstudent")}>CSE-3B</div>
+          <div onClick={() => navigate("")}>CSE-3B</div>
           <div onClick={() => navigate("")}>7-CSBS</div>
           <div onClick={() => navigate("")}>CSE-5A</div>
           <div onClick={() => navigate("")}>CSE-3D</div>
