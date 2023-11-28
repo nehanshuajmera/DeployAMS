@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAdmin } from "../context/AdminContext";
 
 const StudentForm = ({ subject, setSubject, HandleClick }) => {
 
@@ -21,18 +20,6 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
       };
     });
   }
-
-  // const removeSubject = (id) => {
-  //   const newList = student.day.filter((subject) => {
-  //     return subject.id != id;
-  //   });
-  //   setSubject((prev) => {
-  //     return {
-  //       ...prev,
-  //       day: newList,
-  //     };
-  //   });
-  // };
 
   return (
     <div className="w-full px-5 py-10 gap-14 flex flex-col item-center justify-center  bg-dimWhite">
@@ -72,7 +59,6 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
               className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/teacher_id focus:border-primary focus:border-[1px] "
               value={subject.teacher_id}
               onChange={(e) => ChangeHandler(e)}
-              placeholder="teacher_id"
             />
           </div>
         </div>
@@ -114,7 +100,6 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
               className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/branch focus:border-primary focus:border-[1px] "
               value={subject.branch}
               onChange={(e) => ChangeHandler(e)}
-              placeholder="branch"
             />
           </div>
         </div>
@@ -137,7 +122,6 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
               className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/section focus:border-primary focus:border-[1px] "
               value={subject.section}
               onChange={(e) => ChangeHandler(e)}
-              placeholder="section"
             />
           </div>
         </div>
@@ -226,16 +210,16 @@ const DaysSelection = ({changeDayObj}) => {
   // ];
   
   const countChange = (e)=>{
+    const indexOfDay = weekDays.findIndex(item=>(item.name===e.target.name))
     setWeekDays((prev)=>{
-      console.log(prev)
-      
-      const indexOfDay = prev.findIndex(item=>(item.name===e.target.name))
+      const days = prev.map((day,i)=>{
+        // if(day.name === e.target.name)
+        if(i === indexOfDay)
+          day.count = e.target.value
+        return day
+      })
       return[
-        ...prev,
-        // prev[indexOfDay]={
-        //   ...prev[indexOfDay],
-        //   count:e.target.value
-        // },
+        ...days
       ]
     })
     const listOfDay = weekDays.filter(day=>day.count!==0)
@@ -247,8 +231,8 @@ const DaysSelection = ({changeDayObj}) => {
     <table>
       <thead>
         <tr>
-          <td>Day</td>
-          <td>Count</td>
+          <td className="pb-4 font-medium">Day</td>
+          <td className="pb-4 font-medium">Count</td>
         </tr>
       </thead>
       <tbody className="">
@@ -264,9 +248,9 @@ const DaysSelection = ({changeDayObj}) => {
                   <input
                     type="number"
                     name={day.name}
-                    // id={day.name}
+                    id={day.name}
                     // defaultValue={}
-                    className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/batch focus:border-primary focus:border-[1px] "
+                    className="inputBox max-w-[100px] outline-none bg-dimGray  border-secondary peer/batch focus:border-primary focus:border-[1px] "
                     value={day.count}
                     onChange={(e) => countChange(e)}
                   />

@@ -10,11 +10,13 @@ const AllDataReducer = (state,action)=>{
                 errMsg:action.payload
             }
         case actionType.SET_MSG:
-            // let {msg} = action.payload
-            return{
-                ...state,
-                msg:action.payload,
-                // msgType:Type
+            {
+                let {msg,msgType} = action.payload
+                return{
+                    ...state,
+                    msg:msg,
+                    msgType:msgType,
+                }
             }
         case actionType.SET_LOADING:
             return{

@@ -15,8 +15,8 @@ const userType = {
 }
 
 const msgType = {
-    SUCCESS:"SUCCESS",
-    WARNING:"WARNING",
+    SUCCESS:true,
+    WARNING:false,
 }
 
 const errorType = {
