@@ -26,7 +26,7 @@ const createsubject= async (req, res) => {
         const date_curr = academicCalander.find(d => new Date(d.date).toDateString() === todayDate.toDateString());
 
 
-        if(date_curr.holiday){
+        if(date_curr?.holiday){
           todayDate.setDate(todayDate.getDate() + 1);
           continue;
         }
