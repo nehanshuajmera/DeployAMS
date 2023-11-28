@@ -3,7 +3,7 @@ import { useLogin } from '../context/LoginContext'
 
 const ErrMsg = () => {
     const {errorMsg} = useLogin()
-    const {msg} = useAllData()
+    const {msg,msgType} = useAllData()
   return (
     <>
        {
@@ -18,7 +18,7 @@ const ErrMsg = () => {
        {
               msg &&
             <div
-              className={`w-full py-1 px-2 rounded-md flexCenter bg-primary `}
+              className={`w-[40%] fixed top-0 left-0 translate-x-[50%] py-1 px-2 rounded-md flexCenter ${msgType?" bg-green-400":" bg-red-400"} z-10 `}
             >
               <h4 className="text-center text-white ">{msg}</h4>
             </div>

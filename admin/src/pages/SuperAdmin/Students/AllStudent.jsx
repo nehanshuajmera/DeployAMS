@@ -3,11 +3,12 @@ import { useTable, usePagination } from 'react-table'
 import './AllStudent.css'
 import AdminContext from '../../../context/AdminContext';
 import TopOfPage from '../../../components/TopOfPage';
+import SearchBar from '../../../components/SearchBar';
 
 export default function AllStudent() {
   const { allStudent } = useContext(AdminContext);
   const data = React.useMemo(() => allStudent, [allStudent]);
-
+  const [sortData, setSortData] = useState([...allStudent]);
   const columns = React.useMemo(
     () => [
       {
@@ -84,6 +85,7 @@ export default function AllStudent() {
     <div className='allStudentMain'>
       <TopOfPage pageName={"Student"} pagePath={"student"}/>
       <h2>All Students List</h2>
+      <SearchBar sortData={sortData} setSortData={setSortData} />
       <div className="allStudentTable">
         <table className='adminStudentTable' {...getTableProps()}>
           <thead>

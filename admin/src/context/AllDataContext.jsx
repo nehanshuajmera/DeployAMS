@@ -15,7 +15,7 @@ const initState = {
     isLoading:false,
     errMsg:'',
     msg:'',
-    // msgType:'',
+    msgType:'',
 }
 
 const AllDataContextProvider = ({children})=>{
@@ -85,11 +85,12 @@ const AllDataContextProvider = ({children})=>{
     // set message to None/success/error
     const setMsg = (obj)=>{
         const {msg,msgType} = obj
-        dispatch({type:actionType.SET_MSG,payload:msg})
+        console.log(msgType)
+        dispatch({type:actionType.SET_MSG,payload:{msg,msgType}})
         
         // to remove msg in 5s time
         const timerRef = setTimeout(() => {
-            dispatch({type:actionType.SET_MSG,payload:""})            
+            dispatch({type:actionType.SET_MSG,payload:{msg:'',msgType:''}})            
         }, 5000);
     }
 
