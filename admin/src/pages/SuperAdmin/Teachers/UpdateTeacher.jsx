@@ -1,59 +1,47 @@
-// import {  useState } from "react";
-// import StudentForm from "../../../components/StudentForm";
-// import { studentFieldVerify } from "../action/InputFieldVerification";
-// import { useAllData } from "../context/AllDataContext";
-// import { API_Type, msgType } from "../types/Types";
-// import DeleteButton from "../components/DeleteButton";
+import { useState } from "react";
+import { useAllData } from "../../../context/AllDataContext";
+import { teacherFieldVerify } from "../../../action/InputFieldVerification";
+import { API_Type, msgType } from "../../../types/Types";
+import TopOfPage from "../../../components/TopOfPage";
+import TeacherForm from "../../../components/TeacherForm";
+import DeleteButton from "../../../components/DeleteButton";
 
 
-// const data = {
-//   name: "",
-//   enrollment_no: "",
-//   scholar_no: "",
-//   email: "",
-//   phone_no: "",
-//   branch: "",
-//   section: "",
-//   batch: "",
-//   password: "",
-//   subjects: [
-//     {
-//       name: "OS",
-//       id: 1,
-//     },
-//     {
-//       name: "DBMS",
-//       id: 2,
-//     },
-//   ],
-// };
+const data = {
+    teacher_id:"",
+    name:"",
+    email:"",
+    phone_no:"",
+    subjects:[],
+    password:"",
+}
 
-// const Subject = {
-//   subject_id:'',
-//   attendance:[]
-// }
-// const UpdateTeacher = () => {
-//   const {updateItem,setMsg} = useAllData()
-//   const [student, setStudent] = useState(data);
+
+const UpdateTeacher = () => {
+  const {createItem,setMsg} = useAllData()
+  const [teacher, setTeacher] = useState(data);
+
   
-//   const HandleClick = ()=>{
-//     const itemId =''
-//     if(studentFieldVerify(student)){
-//       updateItem({API:API_Type.student,itemId,data:student})
-//     }
-//     else{
-//       let msg = "Fill all required fields"
-//       setMsg({msg,msgType:msgType.WARNING})
-//     }
-//   }
-//   return (
-//     <div>
-//       <StudentForm student={student} setSubject={setStudent}  HandleClick={HandleClick}/>
-//       <div className="flex justify-end px-3">
-//         <DeleteButton API={API_Type.student} itemId={''} />
-//       </div>
-//     </div>
-//   )
-// }
+  const HandleClick = ()=>{
+    if(teacherFieldVerify(teacher)){
+      createItem({API:API_Type.teacher,data:teacher})
+    }
+    else{
+      let msg = "Fill all required fields"
+      setMsg({msg,msgType:msgType.WARNING})
+    }
+  }
 
-// export default UpdateTeacher
+
+  return (
+    <div>
+      <TopOfPage pagePath={"Dashboard >> Teacher >> Update"} pageName={"Update Teacher"}/>
+      <TeacherForm teacher={teacher} setTeacher={setTeacher}  HandleClick={HandleClick}/>
+      <div className="flex justify-end px-3">
+        <DeleteButton API={API_Type.student} itemId={''} />
+      </div>
+    </div>
+  )
+}
+
+export default UpdateTeacher

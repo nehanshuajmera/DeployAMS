@@ -1,59 +1,43 @@
-// import { useState } from "react";
-// import StudentForm from "../../../components/StudentForm";
-// import { studentFieldVerify } from "../action/InputFieldVerification";
-// import { useAllData } from "../context/AllDataContext";
-// import { API_Type, msgType } from "../types/Types";
-// import TopOfPage from "../components/TopOfPage";
+import { useState } from "react";
+import { useAllData } from "../../../context/AllDataContext";
+import { teacherFieldVerify } from "../../../action/InputFieldVerification";
+import { API_Type, msgType } from "../../../types/Types";
+import TopOfPage from "../../../components/TopOfPage";
+import TeacherForm from "../../../components/TeacherForm";
 
 
-// const data = {
-//   name: "",
-//   enrollment_no: "",
-//   scholar_no: "",
-//   email: "",
-//   phone_no: "",
-//   branch: "",
-//   section: "",
-//   batch: "",
-//   // password: "",
-//   subjects: [
-//     // {
-//     //   name: "OS",
-//     //   id: 1,
-//     // },
-//     // {
-//     //   name: "DBMS",
-//     //   id: 2,
-//     // },
-//   ],
-// };
+const data = {
+    teacher_id:"",
+    name:"",
+    email:"",
+    phone_no:"",
+    subjects:[],
+    password:"",
+}
 
-// const Subject = {
-//   subject_id: '',
-//   attendance: []
-// }
-// const CreateTeacher = () => {
-//   const {createItem,setMsg} = useAllData()
-//   const [student, setStudent] = useState(data);
+
+const CreateTeacher = () => {
+  const {createItem,setMsg} = useAllData()
+  const [teacher, setTeacher] = useState(data);
 
   
-//   const HandleClick = ()=>{
-//     if(studentFieldVerify(student)){
-//       createItem({API:API_Type.student,data:student})
-//     }
-//     else{
-//       let msg = "Fill all required fields"
-//       setMsg({msg,msgType:msgType.WARNING})
-//     }
-//   }
+  const HandleClick = ()=>{
+    if(teacherFieldVerify(teacher)){
+      createItem({API:API_Type.teacher,data:teacher})
+    }
+    else{
+      let msg = "Fill all required fields"
+      setMsg({msg,msgType:msgType.WARNING})
+    }
+  }
 
 
-//   return (
-//     <div>
-//       <TopOfPage pagePath={"Dashboard >> Student >> create"} pageName={"Create Student"}/>
-//       <StudentForm student={student} setStudent={setStudent}  HandleClick={HandleClick}/>
-//     </div>
-//   )
-// }
+  return (
+    <div>
+      <TopOfPage pagePath={"Dashboard >> Teacher >> Create"} pageName={"Create Teacher"}/>
+      <TeacherForm teacher={teacher} setTeacher={setTeacher}  HandleClick={HandleClick}/>
+    </div>
+  )
+}
 
-// export default CreateTeacher
+export default CreateTeacher
