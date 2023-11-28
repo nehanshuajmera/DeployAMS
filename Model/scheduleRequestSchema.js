@@ -21,7 +21,14 @@ const scheduleRequestSchema = new mongoose.Schema({
     enum: ['pending', 'approved', 'denied'],
     default: 'pending',
   },
-
+  created_at: {
+    type: Date,
+    default: Date.now,
+  },
+  updated_at: {
+    type: Date,
+    default: Date.now,
+  },
   adminComment: String, // Optional comment from the admin
 }, { timestamps: true });
 

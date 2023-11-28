@@ -1,6 +1,8 @@
 import './Login.css'
-import { useLogin } from '../../context/LoginContext'
+
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { loginAsync ,logoutAsync } from '../../redux-toolkit/slicees/loginslice';
 
 
 const initialState = {
@@ -10,14 +12,18 @@ const initialState = {
 
 export default function Login() {
   const [loginData, setLoginData] = useState(initialState);
-  const {isLoading,isError,errMsg,loginHandler} = useLogin()
+ const stateofuser = useSelector((state) => state.login);
+
+    console.log(stateofuser);
+  const dispatch = useDispatch();
+   let iserror=false
   return (
     <div className='loginClass'>
       <div className="form_main">
         {
-          isError &&
+          iserror &&
           <div className='text-white bg-red-600 px-6 py-2  z-50 rounded-lg'>
-            {errMsg}
+            {errmsg}
           </div>
         }
         <p className="heading">Student Login</p>
@@ -67,7 +73,8 @@ export default function Login() {
             }))}}
           />
         </div>
-        <button className={`button ${isLoading?`cursor-wait bg-gray-400`:``}`} disabled={isLoading} onClick={()=>loginHandler(loginData)}>Login</button>
+        <button className='button' onClick={()=>{dispatch(loginAsync(loginData))}}>Login</button>
+        <button className='button' onClick={()=>{dispatch(logoutAsync())}}>Logout</button>
         <a className="forgotLink" href="#">
           Forgot your password?
         </a>

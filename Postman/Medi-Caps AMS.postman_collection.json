@@ -544,6 +544,79 @@
 			"response": []
 		},
 		{
+			"name": "All complaints",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/admin/allcomplaints",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"allcomplaints"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Pending Attendance requests (NOT TESTED)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/admin/viewallrequest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"viewallrequest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accept Reject Permissions (NOT TESTED)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\":\"Accepted\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/admin/acceptorreject/     :request_id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"admin",
+						"acceptorreject",
+						"     :request_id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Teacher API's",
 			"request": {
 				"method": "OPTIONS",
@@ -629,12 +702,21 @@
 			"response": []
 		},
 		{
-			"name": "All complaints",
+			"name": "Teacher/Admin Change Password",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"currentPassword\":\"medicaps\",\r\n    \"password\":\"newpassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:5000/api/admin/allcomplaints",
+					"raw": "http://localhost:5000/api/teacher/changepassword",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -642,8 +724,70 @@
 					"port": "5000",
 					"path": [
 						"api",
-						"admin",
-						"allcomplaints"
+						"teacher",
+						"changepassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ask to mark past attendance (NOT TESTED)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"date\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/teacher/asktoupdate/6564a1816d1cbaaed2f05f0b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"teacher",
+						"asktoupdate",
+						"6564a1816d1cbaaed2f05f0b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mark Attendance By Permission (NOT TESTED)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"studentIDs\":[{\"studentid\":\"6564b60c4751b887f3dba005\",\"count\":1}]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/teacher/updateattendancebypermission/6564a1816d1cbaaed2f05f0b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"teacher",
+						"updateattendancebypermission",
+						"6564a1816d1cbaaed2f05f0b"
 					]
 				}
 			},
@@ -729,6 +873,96 @@
 					"path": [
 						"api",
 						"logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Student Change Password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"currentPassword\":\"medicaps\",\r\n    \"password\":\"newpassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/student/changepassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"student",
+						"changepassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Teacher Complaint (NOT TESTED)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"teacher_id\":\"\",\r\n     \"message\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/student/complaints",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"student",
+						"complaints"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Teacher Stars (NOT TESTED)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"teacher_id\":\"\",\r\n     \"star\":5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/student/givestar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"student",
+						"givestar"
 					]
 				}
 			},
