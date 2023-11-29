@@ -10,6 +10,9 @@ const teacherSchema = new mongoose.Schema({
   },
   phone_no: String,
   admin_role: String,
+  department: String,
+  faculty: String,
+  designation: String,
   subjects: [
     {
       subject_id: mongoose.Schema.Types.ObjectId,

@@ -295,6 +295,12 @@ router.post("/changepassword", isauthenticated, async (req, res) => {
         return res.status(403).json({ message: 'Forbidden: Access denied for non-teacher users' });
       }
 
+      const { currentPassword, newPassword } = req.body;
+      
+      if (!currentPassword || !newPassword) {
+          return res.status(400).json({ message: "Current password and new password are required" });
+      }
+
       // Find the teacher by their ID
       const teacher = await Teacher.findById(teacherId);
 
@@ -303,14 +309,14 @@ router.post("/changepassword", isauthenticated, async (req, res) => {
       }
 
       // Check if the current password provided in the request matches the stored password
-      const isPasswordMatch = await bcrypt.compare(req.body.currentPassword, teacher.password);
+      const isPasswordMatch = await bcrypt.compare(currentPassword, teacher.password);
 
       if (!isPasswordMatch) {
           return res.status(400).json({ message: "Current password is incorrect" });
       }
 
       // Update the password to the new password provided in the request
-      teacher.password = await bcrypt.hash(req.body.newPassword, 10); // Encrypt the new password
+      teacher.password = await bcrypt.hash(newPassword, 10); // Encrypt the new password
 
       // Save the updated teacher information
       await teacher.save();

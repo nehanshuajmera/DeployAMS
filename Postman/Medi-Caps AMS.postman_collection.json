@@ -342,7 +342,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"teacher_id\":\"2\",\r\n    \"name\":\"mayukh Jain\",\r\n    \"email\":\"mayukhjain@gmail.com\",\r\n    \"phone_no\":\"8796451231\",\r\n    \"subjects\":[{\"subject_id\":\"6564a1816d1cbaaed2f05f0b\",\"permission\":\"write\"}],\r\n    \"password\":\"medicaps\"\r\n}",
+					"raw": "{\r\n    \"teacher_id\": \"2\",\r\n    \"name\": \"mayukh Jain\",\r\n     department: ,\r\n  faculty: ,\r\n    \"email\": \"mayukhjain@gmail.com\",\r\n    \"phone_no\": \"8796451231\",\r\n    \"subjects\": [\r\n        {\r\n            \"subject_id\": \"6564a1816d1cbaaed2f05f0b\",\r\n            \"permission\": \"write\"\r\n        }\r\n    ],\r\n    \"password\": \"medicaps\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -446,7 +446,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"Vishal Sharma\", \r\n    \"enrollment_no\":\"EN20CS306059\",\r\n    \"scholar_no\":\"2002235\",\r\n    \"email\":\"sharma39vishal@gmail.com\",\r\n    \"phone_no\":\"4659781641\", \r\n    \"branch\":\"CSBS\", \r\n    \"section\":\"S\", \r\n    \"batch\":\"B\", \r\n    \"password\":\"medicaps\", \r\n    \"subjects\":[]\r\n}",
+					"raw": "{\r\n    \"name\":\"Vishal Sharma\", \r\n    \r\n    \"enrollment_no\":\"EN20CS306059\",\r\n    \"scholar_no\":\"2002235\",\r\n    \"email\":\"sharma39vishal@gmail.com\",\r\n            programme,\r\n        faculty,\r\n        specialisation,\r\n        year,\r\n\r\n    \"phone_no\":\"4659781641\", \r\n    \"branch\":\"CSBS\", \r\n    \"section\":\"S\", \r\n    \"batch\":\"B\", \r\n    \"password\":\"medicaps\", \r\n    \"subjects\":[]\r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
