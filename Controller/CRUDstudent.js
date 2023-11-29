@@ -141,6 +141,7 @@ const all_students=async (req, res) => {
           }));
           
           return {
+            id: student._id,
             name: student.name,
             enrollment_no: student.enrollment_no,
             scholar_no: student.scholar_no,
