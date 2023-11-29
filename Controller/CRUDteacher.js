@@ -32,7 +32,11 @@ const createteacher=async (req, res) => {
       }
   
       // Create a new teacher using the data from the request body
-      const { teacher_id, name, email, phone_no, subjects, password } = req.body;
+      const { teacher_id, name, email, faculty,department , phone_no, subjects, password } = req.body;
+
+      if (!teacher_id || !name || !email || !phone_no || !subjects || !password || !faculty || !department) {
+        return res.status(400).json({ message: "Please provide all required information" });
+      }
   
       const newTeacher = new Teacher({
         teacher_id,
@@ -41,6 +45,8 @@ const createteacher=async (req, res) => {
         phone_no,
         admin_role: "Teacher",
         subjects,
+        faculty,
+        department,
         password: await bcrypt.hash(password, 10), // Encrypt the password before saving
       });
       

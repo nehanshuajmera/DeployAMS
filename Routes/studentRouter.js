@@ -97,15 +97,22 @@ router.post("/changepassword", isauthenticated, async (req, res) => {
           return res.status(404).json({ message: "Student not found" });
       }
 
+      const { currentPassword, newPassword } = req.body;
+      
+      if (!currentPassword || !newPassword) {
+          return res.status(400).json({ message: "Current password and new password are required" });
+      }
+
+
       // Check if the current password provided in the request matches the stored password
-      const isPasswordMatch = await bcrypt.compare(req.body.currentPassword, student.password);
+      const isPasswordMatch = await bcrypt.compare(currentPassword, student.password);
 
       if (!isPasswordMatch) {
           return res.status(400).json({ message: "Current password is incorrect" });
       }
 
       // Update the password to the new password provided in the request
-      student.password = await bcrypt.hash(req.body.newPassword, 10); // Encrypt the new password
+      student.password = await bcrypt.hash(newPassword, 10); // Encrypt the new password
 
       // Save the updated student information
       await student.save();
