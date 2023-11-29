@@ -22,6 +22,8 @@ function AdminContextProvider(props) {
         axios.get("/api/admin/allteachers")
             .then((res) => {
                 setAllTeacher(res.data.message);
+                // console.log("allTeacher",res.data.message);
+                
             })
             .catch((err) => {
                 console.log(err.message);

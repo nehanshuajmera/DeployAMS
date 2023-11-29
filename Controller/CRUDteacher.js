@@ -115,10 +115,9 @@ const delete_teacher_by_id= async (req, res) => {
 
 const all_teachers = async (req, res) => {
     try {
-
       const allTeachers = await Teacher.find();
-  
-      res.status(200).json({ teachers: allTeachers });
+      // console.log({allTeachers});   
+      res.status(200).json({ message: allTeachers });
     } catch (error) {
       console.error('Error fetching teachers:', error);
       res.status(500).json({ message: 'Internal server error' });

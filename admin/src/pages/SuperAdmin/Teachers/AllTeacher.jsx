@@ -9,6 +9,7 @@ export default function AllTeacher() {
   const { allTeacher } = useContext(AdminContext);
   const data = React.useMemo(() => allTeacher, [allTeacher]);
 
+
   const columns = React.useMemo(
     () => [
       {
@@ -68,6 +69,8 @@ export default function AllTeacher() {
 
   return (
     <div className='allTeacherMain'>
+  {/* {console.log("YE TEACHER HEY",allTeacher)} */}
+
       <h2>All Teacher List</h2>
       <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
       <div className="allTeacherTable">
