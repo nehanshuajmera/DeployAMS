@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useTable, usePagination, useSortBy } from 'react-table'
+import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
 import './AllStudent.css'
 import AdminContext from '../../../context/AdminContext';
+import GlobalFiltering from '../../../components/GlobalFiltering';
 // import TopOfPage from '../../../components/TopOfPage';
 // import SearchBar from '../../../components/SearchBar';
 
@@ -47,16 +48,6 @@ export default function AllStudent() {
         Header: "Programme",
         accessor: "programme",
       },
-      // {
-      //   Header: 'Action',
-      //   accessor: (originalRow, rowIndex) => (
-      //     <div>
-      //       <button style={{color:"black"}} onClick={() => handleEdit(originalRow)}>Edit</button>
-      //       <button onClick={() => handleDelete(originalRow)}>Delete</button>
-      //     </div>
-      //   ),
-      //   id: 'action',
-      // }
     ],
     []
   );
@@ -76,6 +67,7 @@ export default function AllStudent() {
     canPreviousPage,
     pageOptions,
     state,
+    setGlobalFilter,
     prepareRow
   } = useTable(
     {
@@ -83,14 +75,15 @@ export default function AllStudent() {
       data,
       initialState,
       enableEditing: true
-    },useSortBy, usePagination);
+    }, useGlobalFilter, useSortBy, usePagination);
 
-  const { pageIndex } = state;
+  const { pageIndex, globalFilter } = state;
 
   return (
     <div className='allStudentMain'>
       {/* <TopOfPage pageName={"Student"} pagePath={"student"}/> */}
       <h2>All Students List</h2>
+      <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter}/>
       {/* <SearchBar sortData={sortData} setSortData={setSortData} /> */}
       <div className="allStudentTable">
         <table className='adminStudentTable' {...getTableProps()}>
@@ -100,9 +93,9 @@ export default function AllStudent() {
                 {headerGroup.headers.map((column) => (
                   <th className='adminStudentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
-                    {/* <span>
-                    {column.isSortedDesc ? ' 🔽' : ' 🔼'}
-                  </span> */}
+                    <span>
+                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' '}
+                    </span>
                   </th>
                 ))}
               </tr>
