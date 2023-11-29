@@ -30,6 +30,7 @@ export default function Dashboard() {
           <div onClick={() => navigate("/")}>Delete Subject</div>
         </div>
         <div className="adminExtra">
+          <div onClick={() => navigate("/")}>Create Academic Calender</div>
           <div onClick={() => navigate("/")}>Attendence Permission</div>
           <div onClick={() => navigate("/")}>Alert & Notice</div>
         </div>

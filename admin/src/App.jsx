@@ -17,28 +17,21 @@ function App() {
 
   return (
     <div className="w-full overflow-hidden bg-dimWhite ">
-      <ErrMsg/>
+      <ErrMsg />
       <Routes>
-        <Route path={'/'} element={<Login/>}/>
-        <Route path={'/dashboard'} element={<Dashboard/>}/>
-        <Route path={'/allstudent'} element={<AllStudent/>}/>
-        <Route path={'/allteacher'} element={<AllTeacher/>}/>
-        <Route path={'/allsubject'} element={<AllSubject/>}/>
-          <Route path="/createstudent" element={<CreateStudent/>}/>
-          <Route path="/updatestudent" element={<UpdateStudent/>} />
-          <Route path="/createsubject" element={<CreateSubject/>}/>
-          <Route path="/updatesubject" element={<UpdateSubject/>} />
-          <Route path="/createteacher" element={<CreateTeacher/>}/>
-          <Route path="/updateteacher" element={<UpdateTeacher/>} />
-          <Route path="*" element={<ErrMsg/>}/>
+        <Route path={'/'} element={<Login />} />
+        <Route path={'/dashboard'} element={<Dashboard />} />
+        <Route path={'/allstudent'} element={<AllStudent />} />
+        <Route path={'/allteacher'} element={<AllTeacher />} />
+        <Route path={'/allsubject'} element={<AllSubject />} />
+        <Route path={'/createstudent'} element={<CreateStudent />} />
+        <Route path={'/updatestudent'} element={<UpdateStudent />} />
+        <Route path={'/createsubject'} element={<CreateSubject />} />
+        <Route path={'/updatesubject'} element={<UpdateSubject />} />
+        <Route path="/createteacher" element={<CreateTeacher />} />
+        <Route path="/updateteacher/:id" element={<UpdateTeacher />} />
+        <Route path="*" element={<ErrMsg />} />
       </Routes>
-
-      {/* <Login/> */}
-
-      {/* <Dashboard/> */}
-      {/* <AllStudent/> */}
-      {/* <AllTeacher/> */}
-      {/* <AllSubject/> */}
     </div>
   )
 }

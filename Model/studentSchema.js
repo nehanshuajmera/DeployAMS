@@ -13,6 +13,7 @@ const studentSchema = new mongoose.Schema({
   programme: String,
   faculty: String,
   specialisation: String,
+  year: Number,
   branch: String,
   section: String,
   batch: String,
