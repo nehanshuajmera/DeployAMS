@@ -16,18 +16,6 @@ export default function AllSubject() {
       {
         Header: "Course Code",
         accessor: "course_code",
-      },
-      {
-        Header: "Teacher Name",
-        accessor: "teacher.name",
-      },
-      {
-        Header: "Branch",
-        accessor: "branch",
-      },
-      {
-        Header: "Section",
-        accessor: "section",
       }
     ],
     []

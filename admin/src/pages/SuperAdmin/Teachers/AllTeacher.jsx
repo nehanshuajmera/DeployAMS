@@ -8,8 +8,6 @@ export default function AllTeacher() {
 
   const { allTeacher } = useContext(AdminContext);
   const data = React.useMemo(() => allTeacher, [allTeacher]);
-
-
   const columns = React.useMemo(
     () => [
       {
@@ -69,7 +67,7 @@ export default function AllTeacher() {
 
   return (
     <div className='allTeacherMain'>
-  {/* {console.log("YE TEACHER HEY",allTeacher)} */}
+      {/* {console.log("YE TEACHER HEY",allTeacher)} */}
 
       <h2>All Teacher List</h2>
       <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
@@ -82,7 +80,7 @@ export default function AllTeacher() {
                   <th className='adminTeacherTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
                     <span>
-                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' ↕️'}
                     </span>
                   </th>
                 ))}
@@ -105,16 +103,18 @@ export default function AllTeacher() {
           </tbody>
         </table>
       </div>
-      <div className="tablePageButtons">
-        <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
-        <span className="pageNoDetails">
-          {' '}Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>
-        </span>
-        <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
-      </div>
+      {page.length ?
+        <div className="tablePageButtons">
+          <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
+          <span className="pageNoDetails">
+            {' '}Page{' '}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>
+          </span>
+          <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
+        </div>
+        : <h2 className="noData">No Data</h2>}
     </div>
   )
 }
