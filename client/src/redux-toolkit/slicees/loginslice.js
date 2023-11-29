@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const storedState = JSON.parse(localStorage.getItem('reduxState'));
 const initialState = {
     isLogin: false,
     isAuthenticated: false,
@@ -40,12 +41,22 @@ export const loginAsync = createAsyncThunk('login/loginAsync', async (payload, {
 });
 
 // Async thunk for logout
-export const logoutAsync = createAsyncThunk('login/logoutAsync', async ( payload,{ rejectWithValue }) => {
+export const logoutAsync = createAsyncThunk('login/logoutAsync', async (payload, { rejectWithValue }) => {
     try {
-        
+
         const response = await axios.get('/api/authentic/logout');
-        return msg=response.data.message
-      
+       const msg = response.data.message
+        console.log("message:",msg);
+        if (msg === "Logout successful")
+        {
+            
+            return msg
+        }
+
+
+        return rejectWithValue(msg);
+
+
     } catch (error) {
         return rejectWithValue(error.message);
     }
@@ -58,21 +69,33 @@ export const loginslice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(loginAsync.fulfilled, (state, action) => {
-
+                    console.log("payload-",action.payload);
                 state.isLogin = true;
                 state.isAuthenticated = true;
                 state.enrollment_no = action.payload.enrollment_no;
                 state.usertype = action.payload.usertype;
+                console.log("seting value");
+                localStorage.setItem('reduxState', JSON.stringify(state));
+                
             })
             .addCase(loginAsync.rejected, (state, action) => {
 
                 state.iserror = true;
                 state.errmsg = action.payload || 'Authentication error';
             })
-            .addCase(logoutAsync.fulfilled, (state) => {
-                state = initialState; // Reset state to initial values on logout
-              })
-              
+            .addCase(logoutAsync.fulfilled, (state,action) => {
+                        
+                state={...initialState}
+               localStorage.removeItem('reduxState');
+                localStorage.setItem('reduxState',JSON.stringify(initialState));
+             
+            })
+            .addCase(logoutAsync.rejected, (state,action) => {
+                state.iserror = true,
+                    state.errmsg ="something went wrong"
+                    console.error('Logout failed with error:', action.payload);
+            })
+
     },
 });
 

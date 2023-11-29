@@ -1,8 +1,11 @@
 import './Login.css'
 
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { loginAsync ,logoutAsync } from '../../redux-toolkit/slicees/loginslice';
+import { useNavigate } from 'react-router-dom';
+
+
 
 
 const initialState = {
@@ -12,10 +15,17 @@ const initialState = {
 
 export default function Login() {
   const [loginData, setLoginData] = useState(initialState);
- const stateofuser = useSelector((state) => state.login);
-
-    console.log(stateofuser);
+  // const stateofuser = useSelector((state) => state.login);
+  // const changestate= useSelector((state) => state.changePassword)
+  const navigate= useNavigate();
   const dispatch = useDispatch();
+  
+  const handellogin=()=>{
+    dispatch(loginAsync(loginData));
+    navigate("/studentattandence");
+      }
+      
+      
    let iserror=false
   return (
     <div className='loginClass'>
@@ -73,8 +83,8 @@ export default function Login() {
             }))}}
           />
         </div>
-        <button className='button' onClick={()=>{dispatch(loginAsync(loginData))}}>Login</button>
-        <button className='button' onClick={()=>{dispatch(logoutAsync())}}>Logout</button>
+        <button className='button' onClick={handellogin}>Login</button>
+        {/* <button className='button' onClick={()=>{dispatch(logoutAsync())}}>Logout</button> */}
         <a className="forgotLink" href="#">
           Forgot your password?
         </a>

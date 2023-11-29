@@ -1,12 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './SingleAttendence.css';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutAsync } from '../../redux-toolkit/slicees/loginslice';
 
 export default function SingleAttendence(props) {
-
+const dispatch=useDispatch()
+const data=useSelector((state)=>state.login);
   // const [Subjects, setSubjects] = useState(Data);
+  
+  
   const navigate = useNavigate();
-
+ const handellogout=async()=>{
+  console.log("logging out");
+      dispatch(logoutAsync());
+      navigate("/login");
+      
+  }
+  useEffect(() => {
+    const unsub=console.log(data);
+  
+    return () => {
+      unsub
+    }
+  }, [data])
   return (
     <div className="singleStudentMain">
       <div className="universalDetails">
@@ -18,7 +35,7 @@ export default function SingleAttendence(props) {
           <h4>Department of {props.Department}</h4>
         </div>
         <div className="logoutButton">
-          <button onClick={() => navigate('/')}>Logout</button>
+          <button onClick={handellogout}>Logout</button>
         </div>
       </div>
       <hr className="styleHr" />
@@ -75,7 +92,7 @@ export default function SingleAttendence(props) {
       <div className="detailedAttendence">
         <div className="checkAttendence">
           <button onClick={() => navigate('/changepassword')}><h4>Change Password</h4></button>
-          <button onClick={() => navigate('/attendencesheet')}><h4>Check Day-Wise Attendence</h4></button>
+          <button onClick={() => navigate('/studentattendance/daywise')}><h4>Check Day-Wise Attendence</h4></button>
         </div>
       </div>
     </div>
