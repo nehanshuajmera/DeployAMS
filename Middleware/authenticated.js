@@ -6,18 +6,18 @@ function isauthenticated(req, res, next) {
   const token = req.cookies._secureourapp || req.headers.authorization;
 
   if (!token) {
-    return res.status(401).json({ message: "Unauthorized: Missing token" });
+    return res.status(401).json({ message: "Unauthorized" });
   }
   
   // Verify the token
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      return res.status(401).json({ message: "Unauthorized: Invalid token" });
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
     // Check if the token is expired
     if (decoded.exp * 1000 < Date.now()) {
-      return res.status(401).json({ message: "Unauthorized: Token has expired" });
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
     // If the token is valid and not expired, you can access the user's information

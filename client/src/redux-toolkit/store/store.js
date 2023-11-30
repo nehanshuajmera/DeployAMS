@@ -1,12 +1,13 @@
-import { configureStore,getDefaultMiddleware} from '@reduxjs/toolkit'
+import { configureStore} from '@reduxjs/toolkit'
 import loginslice from '../slicees/loginslice'
 import passwordreducer from '../slicees/passwordslice'
-import thunk from 'redux-thunk'
+import detailreducer from '../slicees/studentdataslice'
 
 export const store = configureStore({
   reducer: {
     login:loginslice,
     changePassword:passwordreducer,
+    studentDetail:detailreducer,
   },
-  middleware: [...getDefaultMiddleware(), thunk], 
+  
 })
