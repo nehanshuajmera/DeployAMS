@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="w-full overflow-hidden bg-dimWhite ">
       <ErrMsg />
-      <Routes>
+      {/* <Routes>
         <Route path={'/'} element={<Login />} />
         <Route path={'/dashboard'} element={<Dashboard />} />
         <Route path={'/allstudent'} element={<AllStudent />} />
@@ -31,7 +31,9 @@ function App() {
         <Route path="/createteacher" element={<CreateTeacher />} />
         <Route path="/updateteacher/:id" element={<UpdateTeacher />} />
         <Route path="*" element={<ErrMsg />} />
-      </Routes>
+      </Routes> */}
+
+      <Login/>
     </div>
   )
 }
