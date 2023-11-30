@@ -12,6 +12,7 @@ import CreateTeacher from "./pages/SuperAdmin/Teachers/CreateTeacher"
 import UpdateSubject from "./pages/SuperAdmin/Subjects/UpdateSubject"
 import CreateSubject from "./pages/SuperAdmin/Subjects/CreateSubject"
 import Alert from "./pages/SuperAdmin/Alert&Notice/Alert"
+import MarkAttendence from "./pages/Admin/AttendenceSheet/MarkAttendence"
 
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
         <Route path="*" element={<ErrMsg />} />
       </Routes>
 
-      {/* <Login/> */}
+      {/* <MarkAttendence/> */}
     </div>
   )
 }
