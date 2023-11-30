@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
-import './AllStudent.css'
 import AdminContext from '../../../context/AdminContext';
 import GlobalFiltering from '../../../components/GlobalFiltering';
+import './AllStudent.css'
 
 export default function AllStudent() {
   const { allStudent } = useContext(AdminContext);
@@ -36,12 +36,12 @@ export default function AllStudent() {
       },
       {
         Header: "Specialization",
-        accessor: "specialization",
+        accessor: "specialisation",
       },
-      {
-        Header: "Faculty",
-        accessor: "faculty",
-      },
+      // {
+      //   Header: "Faculty",
+      //   accessor: "faculty",
+      // },
       {
         Header: "Programme",
         accessor: "programme",
@@ -52,8 +52,12 @@ export default function AllStudent() {
           const { row: index } = tableInstance;
           return (
             <div>
-              <button onClick={() => console.log(index)}>Edit</button>
-              <button onClick={() => console.log(index)}>Delete</button>
+              <button className='actionBtn' onClick={() => console.log(index)}>
+                <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
+              </button>
+              <button className='actionBtn' onClick={() => console.log(index)}>
+                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
+              </button>
             </div>
           )
         }
@@ -102,7 +106,7 @@ export default function AllStudent() {
                   <th className='adminStudentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
                     <span>
-                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' ↕️'}
+                      {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
                     </span>
                   </th>
                 ))}

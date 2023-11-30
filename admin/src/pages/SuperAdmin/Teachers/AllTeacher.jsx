@@ -33,6 +33,22 @@ export default function AllTeacher() {
       {
         Header: "Phone No.",
         accessor: "phone_no",
+      },
+      {
+        Header: 'Actions',
+        Cell: (tableInstance) => {
+          const { row: index } = tableInstance;
+          return (
+            <div>
+              <button className='actionBtn' onClick={() => console.log(index)}>
+                <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
+              </button>
+              <button className='actionBtn' onClick={() => console.log(index)}>
+                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
+              </button>
+            </div>
+          )
+        }
       }
     ],
     []
@@ -67,8 +83,6 @@ export default function AllTeacher() {
 
   return (
     <div className='allTeacherMain'>
-      {/* {console.log("YE TEACHER HEY",allTeacher)} */}
-
       <h2>All Teacher List</h2>
       <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
       <div className="allTeacherTable">

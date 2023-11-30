@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
-import { useTable, usePagination } from 'react-table'
+import { useTable, useSortBy, useGlobalFilter, usePagination } from 'react-table'
 import AdminContext from '../../../context/AdminContext';
-// import './All.css'
+import GlobalFiltering from '../../../components/GlobalFiltering';
+import './AllSubject.css'
 
 export default function AllSubject() {
-  const {allSubject} = useContext(AdminContext);
+  const { allSubject } = useContext(AdminContext);
   console.log(allSubject);
   const data = React.useMemo(() => allSubject, [allSubject]);
   const columns = React.useMemo(
@@ -16,6 +17,22 @@ export default function AllSubject() {
       {
         Header: "Course Code",
         accessor: "course_code",
+      },
+      {
+        Header: 'Actions',
+        Cell: (tableInstance) => {
+          const { row: index } = tableInstance;
+          return (
+            <div>
+              <button className='actionBtn' onClick={() => console.log(index)}>
+                <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
+              </button>
+              <button className='actionBtn' onClick={() => console.log(index)}>
+                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
+              </button>
+            </div>
+          )
+        }
       }
     ],
     []
@@ -36,22 +53,33 @@ export default function AllSubject() {
     canPreviousPage,
     pageOptions,
     state,
+    setGlobalFilter,
     prepareRow
-  } = useTable({ columns, data, initialState, enableEditing:true }, usePagination);
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState,
+      enableEditing: true
+    }, useGlobalFilter, useSortBy, usePagination);
 
-  const { pageIndex } = state;
+  const { pageIndex, globalFilter } = state;
 
   return (
-    <div className='allStudentMain'>
-      <h2>All Subject List</h2>
-      <div className="allStudentTable">
-        <table className='adminStudentTable' {...getTableProps()}>
+    <div className='allSubjectMain'>
+      <h2>All Subjects List</h2>
+      <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
+      <div className="allSubjectTable">
+        <table className='adminSubjectTable' {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
-              <tr className='adminStudentTableRow' {...headerGroup.getHeaderGroupProps()}>
+              <tr className='adminSubjectTableRow' {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th className='adminStudentTableHead' {...column.getHeaderProps()}>
+                  <th className='adminSubjectTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
+                    <span>
+                      {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
+                    </span>
                   </th>
                 ))}
               </tr>
@@ -61,9 +89,11 @@ export default function AllSubject() {
             {page.map((row) => {
               prepareRow(row);
               return (
-                <tr className='adminStudentTableRow' {...row.getRowProps()}>
+                <tr className='adminSubjectTableRow' {...row.getRowProps()}>
                   {row.cells.map((cell) => (
-                    <td className='adminStudentTableData' {...cell.getCellProps()}> {cell.render("Cell")} </td>
+                    <td className='adminSubjectTableData' {...cell.getCellProps()}>
+                      {cell.render("Cell")}
+                    </td>
                   ))}
                 </tr>
               );
@@ -71,16 +101,18 @@ export default function AllSubject() {
           </tbody>
         </table>
       </div>
-      <div className="tablePageButtons">
-        <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
-        <span className="pageNoDetails">
-          {' '}Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>
-        </span>
-        <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
-      </div>
+      {page.length ?
+        <div className="tablePageButtons">
+          <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
+          <span className="pageNoDetails">
+            {' '}Page{' '}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>
+          </span>
+          <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
+        </div>
+        : <h2 className="noData">No Data</h2>}
     </div>
   )
 }
