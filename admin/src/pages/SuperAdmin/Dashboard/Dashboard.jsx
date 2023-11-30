@@ -20,14 +20,14 @@ export default function Dashboard() {
       <div className="adminContentContainer">
         <div className="adminMain">
           <div onClick={() => navigate("/allstudent")}>See All Students</div>
-          <div onClick={() => navigate("/")}>Create Student</div>
-          <div onClick={() => navigate("/")}>Delete student</div>
+          <div onClick={() => navigate("/createstudent")}>Create Student</div>
+          {/* <div onClick={() => navigate("/")}>Delete student</div> */}
           <div onClick={() => navigate("/allteacher")}>See All Teachers</div>
-          <div onClick={() => navigate("/")}>Create Teacher</div>
-          <div onClick={() => navigate("/")}>Delete Teacher</div>
+          <div onClick={() => navigate("/createteacher")}>Create Teacher</div>
+          {/* <div onClick={() => navigate("/")}>Delete Teacher</div> */}
           <div onClick={() => navigate("/allsubject")}>See All Subjects</div>
-          <div onClick={() => navigate("/")}>Create Subject</div>
-          <div onClick={() => navigate("/")}>Delete Subject</div>
+          <div onClick={() => navigate("/createsubject")}>Create Subject</div>
+          {/* <div onClick={() => navigate("/")}>Delete Subject</div> */}
         </div>
         <div className="adminExtra">
           <div onClick={() => navigate("/")}>Create Academic Calender</div>
