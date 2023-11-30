@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useTable, usePagination, useSortBy } from 'react-table'
 import './AllStudent.css'
 import AdminContext from '../../../context/AdminContext';
-// import TopOfPage from '../../../components/TopOfPage';
+import TopOfPage from '../../../components/TopOfPage';
 // import SearchBar from '../../../components/SearchBar';
 
 export default function AllStudent() {
@@ -89,7 +89,7 @@ export default function AllStudent() {
 
   return (
     <div className='allStudentMain'>
-      {/* <TopOfPage pageName={"Student"} pagePath={"student"}/> */}
+      <TopOfPage pageName={"Student"} pagePath={"student"}/>
       <h2>All Students List</h2>
       {/* <SearchBar sortData={sortData} setSortData={setSortData} /> */}
       <div className="allStudentTable">

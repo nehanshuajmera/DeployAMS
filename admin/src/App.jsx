@@ -29,7 +29,7 @@ function App() {
         <Route path={'/createsubject'} element={<CreateSubject />} />
         <Route path={'/updatesubject'} element={<UpdateSubject />} />
         <Route path="/createteacher" element={<CreateTeacher />} />
-        <Route path="/updateteacher/:id" element={<UpdateTeacher />} />
+        <Route path="/updateteacher" element={<UpdateTeacher />} />
         <Route path="*" element={<ErrMsg />} />
       </Routes>
     </div>
