@@ -113,7 +113,7 @@ router.post('/updateholiday', isAdmin, async (req, res) => {
 
     // date.setHours(date.getHours() + 5);
     // date.setMinutes(date.getMinutes() + 30);
-    console.log({date})
+    // console.log({date})
     // Update the academic calendar to mark the date as a holiday
     await AcademicCalendar.findOneAndUpdate(
       { date },

@@ -15,7 +15,8 @@ app.use(cookieParser());
 
 app.use(cors({
     origin: [
-      "http://localhost:3000",
+      // "http://localhost:3000",
+      "http://localhost:5173",
     ],
     credentials: true,
   })
@@ -37,6 +38,8 @@ app.use("/api/admin", require("./Routes/adminRouter.js"));
 app.use("/api/logs", require("./Routes/logRouter.js"));
 app.use("/api/schedule",require("./Routes/scheduleRouter"));
 app.use("/api/updateattendance",require("./Routes/updateattendanceRouter"));
+app.use("/api/alert",require("./Routes/alertRouter"));
+
 
 // Schedule the cron job to run at 3 am every day
 // cron.schedule('0 3 * * *', () => {
