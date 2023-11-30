@@ -32,7 +32,7 @@ export default function Dashboard() {
         <div className="adminExtra">
           <div onClick={() => navigate("/")}>Create Academic Calender</div>
           <div onClick={() => navigate("/")}>Attendence Permission</div>
-          <div onClick={() => navigate("/")}>Alert & Notice</div>
+          <div onClick={() => navigate("/alert")}>Alert & Notice</div>
         </div>
       </div>
     </div>

@@ -11,14 +11,15 @@ import UpdateTeacher from "./pages/SuperAdmin/Teachers/UpdateTeacher"
 import CreateTeacher from "./pages/SuperAdmin/Teachers/CreateTeacher"
 import UpdateSubject from "./pages/SuperAdmin/Subjects/UpdateSubject"
 import CreateSubject from "./pages/SuperAdmin/Subjects/CreateSubject"
+import Alert from "./pages/SuperAdmin/Alert&Notice/Alert"
 
 
 function App() {
 
   return (
     <div className="w-full overflow-hidden bg-dimWhite ">
-      <ErrMsg />
-      {/* <Routes>
+      {/* <ErrMsg /> */}
+      <Routes>
         <Route path={'/'} element={<Login />} />
         <Route path={'/dashboard'} element={<Dashboard />} />
         <Route path={'/allstudent'} element={<AllStudent />} />
@@ -30,10 +31,11 @@ function App() {
         <Route path={'/updatesubject'} element={<UpdateSubject />} />
         <Route path="/createteacher" element={<CreateTeacher />} />
         <Route path="/updateteacher/:id" element={<UpdateTeacher />} />
+        <Route path="/alert" element={<Alert/>}/>
         <Route path="*" element={<ErrMsg />} />
-      </Routes> */}
+      </Routes>
 
-      <Login/>
+      {/* <Login/> */}
     </div>
   )
 }

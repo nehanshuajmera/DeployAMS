@@ -23,6 +23,7 @@ router.get("/", isauthenticated, async(req, res) => {
 
 router.post("/createalert", isauthenticated, isAdmin, async(req, res) => {
     try {
+        // console.log("Create Alert Api", req.body)
         const {title, alert} = req.body;
         
         created_by = req.user_id;
