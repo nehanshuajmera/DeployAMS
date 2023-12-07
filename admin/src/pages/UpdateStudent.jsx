@@ -4,6 +4,8 @@ import { studentFieldVerify } from "../action/InputFieldVerification";
 import { useAllData } from "../context/AllDataContext";
 import { API_Type, msgType } from "../types/Types";
 import DeleteButton from "../components/DeleteButton";
+import { useLocation } from "react-router-dom";
+import TopOfPage from "../components/TopOfPage";
 
 
 
@@ -29,13 +31,12 @@ const data = {
   ],
 };
 
-const Subject = {
-  subject_id:'',
-  attendance:[]
-}
 const UpdateStudent = () => {
+  const {state} = useLocation()
+  console.log(state)
   const {updateItem,setMsg} = useAllData()
-  const [student, setStudent] = useState(data);
+  // const [student, setStudent] = useState(data);
+  const [student, setStudent] = useState({...state});
   
   const HandleClick = ()=>{
     const itemId =''
@@ -49,9 +50,10 @@ const UpdateStudent = () => {
   }
   return (
     <div>
+      <TopOfPage pagePath={"Dashboard >> Student >> Update"} pageName={"Update Student"}/>
       <StudentForm student={student} setSubject={setStudent}  HandleClick={HandleClick}/>
       <div className="flex justify-end px-3">
-        <DeleteButton API={API_Type.student} itemId={''} />
+        <DeleteButton API={API_Type.student} itemId={student.id} />
       </div>
     </div>
   )

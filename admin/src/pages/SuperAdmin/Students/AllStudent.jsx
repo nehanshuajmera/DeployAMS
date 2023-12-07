@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useTable, usePagination, useSortBy } from 'react-table'
+import {useNavigate} from 'react-router-dom'
+import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
 import './AllStudent.css'
 import AdminContext from '../../../context/AdminContext';
+import GlobalFiltering from '../../../components/GlobalFiltering';
 import TopOfPage from '../../../components/TopOfPage';
 // import SearchBar from '../../../components/SearchBar';
 
 export default function AllStudent() {
   const { allStudent } = useContext(AdminContext);
   const data = React.useMemo(() => allStudent, [allStudent]);
-  // const [sortData, setSortData] = useState([...allStudent]);
+  const navigate = useNavigate()
+
   const columns = React.useMemo(
     () => [
       {
@@ -47,16 +50,18 @@ export default function AllStudent() {
         Header: "Programme",
         accessor: "programme",
       },
-      // {
-      //   Header: 'Action',
-      //   accessor: (originalRow, rowIndex) => (
-      //     <div>
-      //       <button style={{color:"black"}} onClick={() => handleEdit(originalRow)}>Edit</button>
-      //       <button onClick={() => handleDelete(originalRow)}>Delete</button>
-      //     </div>
-      //   ),
-      //   id: 'action',
-      // }
+      {
+        Header: 'Actions',
+        Cell: (tableInstance) => {
+          const { row: index } = tableInstance;
+          return (
+            <div>
+              <button onClick={() => console.log(index)}>Edit</button>
+              <button onClick={() => console.log(index)}>Delete</button>
+            </div>
+          )
+        }
+      }
     ],
     []
   );
@@ -76,6 +81,7 @@ export default function AllStudent() {
     canPreviousPage,
     pageOptions,
     state,
+    setGlobalFilter,
     prepareRow
   } = useTable(
     {
@@ -83,15 +89,19 @@ export default function AllStudent() {
       data,
       initialState,
       enableEditing: true
-    },useSortBy, usePagination);
+    }, useGlobalFilter, useSortBy, usePagination);
 
-  const { pageIndex } = state;
+  const { pageIndex, globalFilter } = state;
+
+    const gotoUpdate = (row)=>{
+      navigate("/updatestudent", {state:{...row.original}})
+    }
 
   return (
     <div className='allStudentMain'>
       <TopOfPage pageName={"Student"} pagePath={"student"}/>
       <h2>All Students List</h2>
-      {/* <SearchBar sortData={sortData} setSortData={setSortData} /> */}
+      <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
       <div className="allStudentTable">
         <table className='adminStudentTable' {...getTableProps()}>
           <thead>
@@ -100,9 +110,9 @@ export default function AllStudent() {
                 {headerGroup.headers.map((column) => (
                   <th className='adminStudentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
-                    {/* <span>
-                    {column.isSortedDesc ? ' 🔽' : ' 🔼'}
-                  </span> */}
+                    <span>
+                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' ↕️'}
+                    </span>
                   </th>
                 ))}
               </tr>
@@ -111,10 +121,13 @@ export default function AllStudent() {
           <tbody {...getTableBodyProps()}>
             {page.map((row) => {
               prepareRow(row);
+              console.log(row)
               return (
-                <tr className='adminStudentTableRow' {...row.getRowProps()}>
+                <tr className='adminStudentTableRow' {...row.getRowProps()} onClick={()=>gotoUpdate(row)}>
                   {row.cells.map((cell) => (
-                    <td className='adminStudentTableData' {...cell.getCellProps()}> {cell.render("Cell")} </td>
+                    <td className='adminStudentTableData' {...cell.getCellProps()}>
+                      {cell.render("Cell")}
+                    </td>
                   ))}
                 </tr>
               );
@@ -122,16 +135,18 @@ export default function AllStudent() {
           </tbody>
         </table>
       </div>
-      <div className="tablePageButtons">
-        <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
-        <span className="pageNoDetails">
-          {' '}Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>
-        </span>
-        <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
-      </div>
+      {page.length ?
+        <div className="tablePageButtons">
+          <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
+          <span className="pageNoDetails">
+            {' '}Page{' '}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>
+          </span>
+          <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
+        </div>
+        : <h2 className="noData">No Data</h2>}
     </div>
   )
 }

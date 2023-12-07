@@ -1,16 +1,15 @@
-import React, { useContext, useEffect } from 'react'
-import { useTable, usePagination } from 'react-table'
+import React, { useContext } from 'react'
+import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
 import './AllTeacher.css'
 import AdminContext from '../../../context/AdminContext';
+import GlobalFiltering from '../../../components/GlobalFiltering';
+import { useNavigate } from 'react-router-dom';
 
 export default function AllTeacher() {
-  const {allTeacher} = useContext(AdminContext);
-//  console.log(allTeacher); 
-useEffect(() => { 
-  console.log(allTeacher);
-}, [allTeacher])
 
-const data = React.useMemo(() => allTeacher, [allTeacher]);
+  const navigate =useNavigate()
+  const { allTeacher } = useContext(AdminContext);
+  const data = React.useMemo(() => allTeacher, [allTeacher]);
   const columns = React.useMemo(
     () => [
       {
@@ -18,36 +17,24 @@ const data = React.useMemo(() => allTeacher, [allTeacher]);
         accessor: "name",
       },
       {
-        Header: "Enrollment No.",
-        accessor: "enrollmentNo",
+        Header: "Teacher Id",
+        accessor: "teacher_id",
       },
       {
-        Header: "Scholar No.",
-        accessor: "scholarNo",
-      },
-      {
-        Header: "Year",
-        accessor: "year",
-      },
-      {
-        Header: "Branch",
-        accessor: "branch",
-      },
-      {
-        Header: "Section",
-        accessor: "section",
-      },
-      {
-        Header: "Specialization",
-        accessor: "specialization",
+        Header: "Department",
+        accessor: "department",
       },
       {
         Header: "Faculty",
         accessor: "faculty",
       },
       {
-        Header: "Programme",
-        accessor: "programme",
+        Header: "Email",
+        accessor: "email",
+      },
+      {
+        Header: "Phone No.",
+        accessor: "phone_no",
       }
     ],
     []
@@ -68,22 +55,40 @@ const data = React.useMemo(() => allTeacher, [allTeacher]);
     canPreviousPage,
     pageOptions,
     state,
+    setGlobalFilter,
     prepareRow
-  } = useTable({ columns, data, initialState, enableEditing:true }, usePagination);
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState,
+      enableEditing: true
+    }, useGlobalFilter, useSortBy, usePagination);
 
-  const { pageIndex } = state;
+  const { pageIndex, globalFilter } = state;
 
+  const gotoUpdate = (row)=>{
+    console.log(row.original)
+    navigate("/updateteacher", {state:{...row.original}})
+  }
+  
   return (
-    <div className='allStudentMain'>
+    <div className='allTeacherMain'>
+      {/* {console.log("YE TEACHER HEY",allTeacher)} */}
+
       <h2>All Teacher List</h2>
-      <div className="allStudentTable">
-        <table className='adminStudentTable' {...getTableProps()}>
+      <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
+      <div className="allTeacherTable">
+        <table className='adminTeacherTable' {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
-              <tr className='adminStudentTableRow' {...headerGroup.getHeaderGroupProps()}>
+              <tr className='adminTeacherTableRow' {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th className='adminStudentTableHead' {...column.getHeaderProps()}>
+                  <th className='adminTeacherTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
+                    <span>
+                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' ↕️'}
+                    </span>
                   </th>
                 ))}
               </tr>
@@ -93,9 +98,11 @@ const data = React.useMemo(() => allTeacher, [allTeacher]);
             {page.map((row) => {
               prepareRow(row);
               return (
-                <tr className='adminStudentTableRow' {...row.getRowProps()}>
+                <tr className='adminTeacherTableRow' {...row.getRowProps()} onClick={()=>gotoUpdate(row)}>
                   {row.cells.map((cell) => (
-                    <td className='adminStudentTableData' {...cell.getCellProps()}> {cell.render("Cell")} </td>
+                    <td className='adminTeacherTableData' {...cell.getCellProps()}>
+                      {cell.render("Cell")}
+                    </td>
                   ))}
                 </tr>
               );
@@ -103,16 +110,18 @@ const data = React.useMemo(() => allTeacher, [allTeacher]);
           </tbody>
         </table>
       </div>
-      <div className="tablePageButtons">
-        <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
-        <span className="pageNoDetails">
-          {' '}Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>
-        </span>
-        <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
-      </div>
+      {page.length ?
+        <div className="tablePageButtons">
+          <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
+          <span className="pageNoDetails">
+            {' '}Page{' '}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>
+          </span>
+          <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
+        </div>
+        : <h2 className="noData">No Data</h2>}
     </div>
   )
 }

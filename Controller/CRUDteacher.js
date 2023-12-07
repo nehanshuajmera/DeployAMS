@@ -32,7 +32,11 @@ const createteacher=async (req, res) => {
       }
   
       // Create a new teacher using the data from the request body
-      const { teacher_id, name, email, phone_no, subjects, password } = req.body;
+      const { teacher_id, name, email, faculty,department , phone_no, subjects, password } = req.body;
+
+      if (!teacher_id || !name || !email || !phone_no || !subjects || !password || !faculty || !department) {
+        return res.status(400).json({ message: "Please provide all required information" });
+      }
   
       const newTeacher = new Teacher({
         teacher_id,
@@ -41,6 +45,8 @@ const createteacher=async (req, res) => {
         phone_no,
         admin_role: "Teacher",
         subjects,
+        faculty,
+        department,
         password: await bcrypt.hash(password, 10), // Encrypt the password before saving
       });
       
@@ -71,7 +77,7 @@ const createteacher=async (req, res) => {
 
 const update_teacher_by_id=async (req, res) => {
     try {
-  
+      console.log(req.params.id,req.body)
       const teacherId = req.params.id; // Get the teacher ID from the request parameters
       // addLog(`Teacher updated: ${teacherId}`, userId);
       
@@ -115,10 +121,9 @@ const delete_teacher_by_id= async (req, res) => {
 
 const all_teachers = async (req, res) => {
     try {
-
       const allTeachers = await Teacher.find();
-  
-      res.status(200).json({ teachers: allTeachers });
+      // console.log({allTeachers});   
+      res.status(200).json({ message: allTeachers });
     } catch (error) {
       console.error('Error fetching teachers:', error);
       res.status(500).json({ message: 'Internal server error' });

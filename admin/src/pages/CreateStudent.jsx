@@ -28,10 +28,7 @@ const data = {
   ],
 };
 
-const Subject = {
-  subject_id: '',
-  attendance: []
-}
+
 const CreateStudent = () => {
   const {createItem,setMsg} = useAllData()
   const [student, setStudent] = useState(data);

@@ -5,6 +5,7 @@ import { API_Type, msgType } from "../../../types/Types";
 import TopOfPage from "../../../components/TopOfPage";
 import TeacherForm from "../../../components/TeacherForm";
 import DeleteButton from "../../../components/DeleteButton";
+import { useLocation } from "react-router-dom";
 
 
 const data = {
@@ -18,8 +19,10 @@ const data = {
 
 
 const UpdateTeacher = () => {
+  const {state} = useLocation()
   const {createItem,setMsg} = useAllData()
-  const [teacher, setTeacher] = useState(data);
+  // const [teacher, setTeacher] = useState(data);
+  const [teacher, setTeacher] = useState({...state});
 
   
   const HandleClick = ()=>{
@@ -38,7 +41,7 @@ const UpdateTeacher = () => {
       <TopOfPage pagePath={"Dashboard >> Teacher >> Update"} pageName={"Update Teacher"}/>
       <TeacherForm teacher={teacher} setTeacher={setTeacher}  HandleClick={HandleClick}/>
       <div className="flex justify-end px-3">
-        <DeleteButton API={API_Type.student} itemId={''} />
+        <DeleteButton API={API_Type.student} itemId={teacher.id} />
       </div>
     </div>
   )

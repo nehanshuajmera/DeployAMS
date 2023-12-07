@@ -11,8 +11,8 @@ const subjectFieldVerify = (data)=>{
     return false
 }
 const teacherFieldVerify = (data)=>{
-    const {name,scholar_no} = data
-    if(name&&scholar_no )
+    const {name,email, teacher_id} = data
+    if(name&&email&& teacher_id )
         return true
     return false
 }

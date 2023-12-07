@@ -348,11 +348,32 @@ const SearchBar = () => {
   }, [allSubject])
 
 
+  useEffect(()=>{
+    
+    (()=>{
+      
+      if(search===''){
+        setSearchResult([...allSubject])
+      }
+      else{
+        
+        const resultOfSearch = searchResult.filter(item=>{
+          console.log(item.subject_name.toLowerCase())
+          // filter out content either have same name or id
+          // return (item.name.toLowerCase.include(search.toLowerCase) || item.course_code.toLowerCase.include(search.toLowerCase))
+          
+          return (item.subject_name).toLowerCase().includes(search.toLowerCase())
+        })        
+        setSearchResult([...resultOfSearch])
+      }
+    })()
+  },[search,allSubject])
+
 return (
   <div>
       <div className="relative w-[300px] md:w-[400px]">
           <input type="text" name="search" id="search" className="inputBox border-[1px] border-gray-500 w-[300px] md:w-[400px] peer/search" 
-          value={search}
+          value={search ||''}
           onChange={(e)=>searchFunc(e)}
           />
           {/* dropdown */}
