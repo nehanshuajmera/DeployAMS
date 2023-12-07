@@ -3,12 +3,28 @@ import './SingleAttendence.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutAsync } from '../../redux-toolkit/slicees/loginslice';
+import { changepassasync } from '../../redux-toolkit/slicees/studentdataslice';
 
+
+//hey nehanshu i have an task for you 
+//you have  to join the data to frontend
+//i will guide you by this message.
+//to get the data of student on other page use use select hook like on line no.26 exactly same
+//but wait first you have to call api by use dispatch hook  in use effect so that data can reload on page automatically in line no. 16 exactly same
 export default function SingleAttendence(props) {
 const dispatch=useDispatch()
-const data=useSelector((state)=>state.login);
-  // const [Subjects, setSubjects] = useState(Data);
-  
+useEffect(() => {
+ const unsub=()=>{
+    dispatch(changepassasync());
+ }
+
+  return () => {
+    unsub()
+  }
+}, [])
+
+const detail=useSelector((state)=>state.studentDetail);
+  console.log(detail);
   
   const navigate = useNavigate();
  const handellogout=async()=>{
@@ -17,13 +33,7 @@ const data=useSelector((state)=>state.login);
       navigate("/login");
       
   }
-  useEffect(() => {
-    const unsub=console.log(data);
   
-    return () => {
-      unsub
-    }
-  }, [data])
   return (
     <div className="singleStudentMain">
       <div className="universalDetails">

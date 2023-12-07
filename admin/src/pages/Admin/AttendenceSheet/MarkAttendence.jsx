@@ -1,23 +1,27 @@
 import React, { useContext } from 'react'
-import { useTable, useSortBy, useGlobalFilter, usePagination } from 'react-table'
+import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
 import AdminContext from '../../../context/AdminContext';
 import GlobalFiltering from '../../../components/GlobalFiltering';
-import './AllSubject.css'
+// import './MarkAttendence.css'
 
-export default function AllSubject() {
-  const { allSubject } = useContext(AdminContext);
-  console.log(allSubject);
-  const data = React.useMemo(() => allSubject, [allSubject]);
+export default function MarkAttendence() {
+  const { allStudent } = useContext(AdminContext);
+  const data = React.useMemo(() => allStudent, [allStudent]);
+
   const columns = React.useMemo(
     () => [
       {
-        Header: "Subject Name",
-        accessor: "subject_name",
+        Header: "Enrollment No.",
+        accessor: "enrollment_no",
       },
       {
-        Header: "Course Code",
-        accessor: "course_code",
+        Header: "Name",
+        accessor: "name",
       },
+      // {
+      //   Header: "",
+      //   accessor: "",
+      // },
       {
         Header: 'Actions',
         Cell: (tableInstance) => {
@@ -25,10 +29,10 @@ export default function AllSubject() {
           return (
             <div>
               <button className='actionBtn' onClick={() => console.log(index)}>
-                <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
+                Present
               </button>
               <button className='actionBtn' onClick={() => console.log(index)}>
-                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
+                Absent
               </button>
             </div>
           )
@@ -39,7 +43,7 @@ export default function AllSubject() {
   );
 
   const initialState = {
-    pageSize: 20
+    pageSize: 100
   }
 
   const {
@@ -66,16 +70,16 @@ export default function AllSubject() {
   const { pageIndex, globalFilter } = state;
 
   return (
-    <div className='allSubjectMain'>
-      <h2>All Subjects List</h2>
+    <div className='markAttendenceMain'>
+      <h2>Attendence Sheet</h2>
       <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
-      <div className="allSubjectTable">
-        <table className='adminSubjectTable' {...getTableProps()}>
+      <div className="markAttendenceTable">
+        <table className='markTable' {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
-              <tr className='adminSubjectTableRow' {...headerGroup.getHeaderGroupProps()}>
+              <tr className='markAttendenceTableRow' {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th className='adminSubjectTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <th className='markAttendenceTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
                     <span>
                       {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
@@ -89,9 +93,9 @@ export default function AllSubject() {
             {page.map((row) => {
               prepareRow(row);
               return (
-                <tr className='adminSubjectTableRow' {...row.getRowProps()}>
+                <tr className='markAttendenceTableRow' {...row.getRowProps()}>
                   {row.cells.map((cell) => (
-                    <td className='adminSubjectTableData' {...cell.getCellProps()}>
+                    <td className='markAttendenceTableData' {...cell.getCellProps()}>
                       {cell.render("Cell")}
                     </td>
                   ))}
