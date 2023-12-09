@@ -1,4 +1,5 @@
 const Teacher = require("../Model/teacherSchema");
+const Student = require("../Model/studentSchema");
 const Subject = require("../Model/subjectSchema");
 const AcademicCalander = require("../Model/calanderSchema");
 
@@ -228,4 +229,32 @@ const all_subjects=async (req, res) => {
     }
   }
 
-module.exports = {createsubject,changetimetable,addextralecture,updatesubjectdetails,deletesubjectbyid,all_subjects};
+
+const resheduledate = async (req, res) => {
+    try {
+      // change all subject lecture_dates array date who have curr_date to new date
+      const { curr_date, new_date  } = req.body;
+      // check if any student has attendance of curr_date then don't change date
+      const students = await Student.find();
+      const studentsId = students.map(s => s._id);
+      // if any student has attendance of curr_date then throw error
+      const attendance = await Attendance.find({student_id: {$in: studentsId}, date: curr_date});
+      if(attendance.length>0){
+        return res.status(400).json({ message: "Attendance already taken for this date" });
+      }
+      // if no student has attendance of curr_date then change date
+
+      const subjects = await Subject.find();
+      const subjectsId = subjects.map(s => s._id);
+      const updatedSubjects = await Subject.updateMany(
+        {_id: {$in: subjectsId}, "lecture_dates.date": curr_date},
+        {$set: {"lecture_dates.$.date": new_date}}
+      );
+      return res.status(200).json({ message: "Lecture date rescheduled successfully" });
+    }
+    catch(error){
+      return res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+module.exports = {createsubject,changetimetable,addextralecture,updatesubjectdetails,deletesubjectbyid,all_subjects,resheduledate};

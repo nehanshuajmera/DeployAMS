@@ -1,12 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const isAdmin = require("../Middleware/checkadmin");
-const {createsubject,changetimetable, addextralecture, updatesubjectdetails, deletesubjectbyid, all_subjects} = require("../Controller/CRUDsubject");
+const {createsubject,changetimetable, addextralecture, updatesubjectdetails, deletesubjectbyid, all_subjects, resheduledate} = require("../Controller/CRUDsubject");
 const { createteacher, update_teacher_by_id, delete_teacher_by_id, all_teachers } = require("../Controller/CRUDteacher");
 const { create_student, update_student_by_id, delete_student_by_id, all_students } = require("../Controller/CRUDstudent");
 const { all_complaints } = require("../Controller/Complaints");
+const {getLeaveTeacherAttendance,  adminaddattendanceinallstudents,adminrejectleaveattendance} = require("../Controller/leaveTeacherAttendance");
 
 // Subject API
+
+
 router.get('/allsubjects', isAdmin, all_subjects);
 
 router.post("/createsubject",isAdmin, createsubject);
@@ -42,6 +45,16 @@ router.get("/deletestudent/:id", isAdmin, delete_student_by_id);
 
 // Complaints API
 router.get('/allcomplaints', isAdmin,all_complaints );
+
+
+router.post("/resheduledate", isAdmin, resheduledate);
+
+
+// LeaveTeacherAttendance API
+router.get('/allleaveteacherattendance', isAdmin,getLeaveTeacherAttendance );
+router.get('/adminaddattendanceinallstudents/:id', isAdmin,adminaddattendanceinallstudents );
+router.get('/adminrejectleaveattendance/:id', isAdmin,adminrejectleaveattendance );
+
 
 
 // // create a api in which csv file uploaded to create subjects in bulk
