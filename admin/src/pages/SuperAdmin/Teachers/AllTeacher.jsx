@@ -121,7 +121,7 @@ export default function AllTeacher() {
             {page.map((row) => {
               prepareRow(row);
               return (
-                <tr className='adminTeacherTableRow' {...row.getRowProps()}>
+                <tr className='adminTeacherTableRow' {...row.getRowProps()} onClick={()=>gotoUpdate(row)}>
                   {row.cells.map((cell) => (
                     <td className='adminTeacherTableData' {...cell.getCellProps()}>
                       {cell.render("Cell")}

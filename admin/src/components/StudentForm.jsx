@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
+<<<<<<< HEAD
 // import { useAdmin } from "../context/AdminContext";
+=======
+import { useAdmin } from "../context/AdminContext";
+import { useEffect } from "react";
+>>>>>>> f3b19dc9d7ee295f414b4e45f69b2f86cce45535
 
 const StudentForm = ({ student, setStudent, HandleClick }) => {
 
-  console.log(student.email)
-  const [subject, setSubject] = useState("");
+  const [subject, setSubject] = useState("")
+  
 
+
+  
+  
   const ChangeHandler = (e) => {
     setStudent((prev) => {
       return {
@@ -15,7 +23,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
       };
     });
   };
-
+  
   const removeSubject = (id) => {
     const newList = student.subjects.filter((subject) => {
       return subject.id != id;
@@ -27,6 +35,9 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
       };
     });
   };
+  
+  
+
 
   return (
     <div className="w-full px-5 py-10 gap-14 flex flex-col item-center justify-center  bg-dimWhite">
@@ -265,6 +276,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
           </div>
         </div>
       </div>
+      <SearchBar  />
       <div className="flex justify-end items-center">
         <button className="button1" onClick={() => HandleClick()}>
           Save
@@ -290,8 +302,8 @@ const SubjectCollection = ({ subject, removeSubject }) => {
 
 
 const SubjectSearch = ({selectedSubject})=>{
-  const {allsubject} = useAdmin()
-  const listOfSubject = [...allsubject]
+  const {allSubject} = useAdmin()
+  const listOfSubject = [...allSubject]
   return(
     <div>
       {
@@ -305,6 +317,87 @@ const SubjectSearch = ({selectedSubject})=>{
       }
     </div>
   )
+}
+
+
+const SearchBar = () => {
+
+  const {allSubject} = useAdmin()
+  const [searchResult, setSearchResult] = useState([...allSubject]);
+  const [search, setSearch] = useState('');
+    
+  const searchFunc = (e)=>{
+      setSearch(e.target.value)
+      console.log(search)
+      if(search===''){
+        setSearchResult([...allSubject])
+      }
+      else{
+
+        const resultOfSearch = searchResult.filter(item=>{
+          console.log(item.subject_name.toLowerCase())
+          // filter out content either have same name or id
+          // return (item.name.toLowerCase.include(search.toLowerCase) || item.course_code.toLowerCase.include(search.toLowerCase))
+          
+          return (item.subject_name).toLowerCase().includes(search.toLowerCase())
+        })        
+        setSearchResult([...resultOfSearch])
+      }
+  }
+  
+  // to set new result when allSubject changes
+  useEffect(() => {
+    setSearchResult([...allSubject])  
+   console.log("useEffect")
+  }, [allSubject])
+
+
+  useEffect(()=>{
+    
+    (()=>{
+      
+      if(search===''){
+        setSearchResult([...allSubject])
+      }
+      else{
+        
+        const resultOfSearch = searchResult.filter(item=>{
+          console.log(item.subject_name.toLowerCase())
+          // filter out content either have same name or id
+          // return (item.name.toLowerCase.include(search.toLowerCase) || item.course_code.toLowerCase.include(search.toLowerCase))
+          
+          return (item.subject_name).toLowerCase().includes(search.toLowerCase())
+        })        
+        setSearchResult([...resultOfSearch])
+      }
+    })()
+  },[search,allSubject])
+
+return (
+  <div>
+      <div className="relative w-[300px] md:w-[400px]">
+          <input type="text" name="search" id="search" className="inputBox border-[1px] border-gray-500 w-[300px] md:w-[400px] peer/search" 
+          value={search ||''}
+          onChange={(e)=>searchFunc(e)}
+          />
+          {/* dropdown */}
+          <div className="absolute w-full h-[170px] bg-[#FFFBF5] left-0  hidden peer-focus/search:block">
+              <div className="flexStart flex-col">
+                  {
+                    searchResult.map(data=>{
+                      console.log(data.subject_name)
+                      return(
+                        <div key={data._id} className="text-black ">
+                          {data.subject_name}
+                        </div>
+                      )
+                    })
+                  }
+              </div>
+          </div>
+      </div>
+  </div>
+)
 }
 
 export default StudentForm;

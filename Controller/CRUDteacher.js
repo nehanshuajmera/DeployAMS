@@ -77,7 +77,7 @@ const createteacher=async (req, res) => {
 
 const update_teacher_by_id=async (req, res) => {
     try {
-  
+      console.log(req.params.id,req.body)
       const teacherId = req.params.id; // Get the teacher ID from the request parameters
       // addLog(`Teacher updated: ${teacherId}`, userId);
       

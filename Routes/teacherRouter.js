@@ -9,6 +9,9 @@ const Subject = require("../Model/subjectSchema");
 const Student = require("../Model/studentSchema");
 const addLog = require('../Controller/logs');
 
+const {createLeaveTeacherAttendance,  getLeaveTeacherAttendanceByteacherId, getassignTeachersubjectallStudentsbydate,markleaveattendanceontoday } = require("../Controller/leaveTeacherAttendance");
+
+
 // POST /login/ - Authenticate user and provide JWT token
 router.post("/login", async (req, res) => {
   const { teacher_id, password } = req.body;
@@ -216,7 +219,7 @@ router.post('/updateattendance', isauthenticated,isTeacher, async (req, res) => 
 });
 
 // mark absent api
-router.post('/markabsent',isauthenticated,async(req,res)=>{
+router.post('/markabsent',isauthenticated,isTeacher, async(req,res)=>{
   try{
     const teacherId = req.user_id; // You should have this information in your authentication middleware
 
@@ -284,7 +287,7 @@ router.post('/markabsent',isauthenticated,async(req,res)=>{
 })
 
 // POST /changepassword - Change teacher's password
-router.post("/changepassword", isauthenticated, async (req, res) => {
+router.post("/changepassword", isauthenticated,isTeacher, async (req, res) => {
   try {
       const teacherId = req.user_id; // You should have this information in your teacher authentication middleware
       
@@ -323,6 +326,12 @@ router.post("/changepassword", isauthenticated, async (req, res) => {
       return res.status(500).json({ message: "Internal server error" });
   }
 });
+
+// all leaveTeacherAttendance routes
+router.post("/createleaveTeacherAttendance", isauthenticated, isTeacher, createLeaveTeacherAttendance);
+router.get("/getleaveTeacherAttendance", isauthenticated, isTeacher, getLeaveTeacherAttendanceByteacherId);
+router.post("/getassignTeachersubjectallStudentsbydate", isauthenticated, isTeacher, getassignTeachersubjectallStudentsbydate);
+router.post("/markleaveattendanceontoday", isauthenticated, isTeacher, markleaveattendanceontoday);
 
 
 module.exports = router;

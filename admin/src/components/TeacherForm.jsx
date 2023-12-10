@@ -54,7 +54,7 @@ const TeacherForm = ({ teacher, setTeacher, HandleClick }) => {
             htmlFor="teacher_id"
             className={`px-3 py-2 text-secondary text-xl col-span-1 `}
           >
-            Teacher
+            Teacher ID
           </label>
           <div className="relative col-span-2">
             <input
