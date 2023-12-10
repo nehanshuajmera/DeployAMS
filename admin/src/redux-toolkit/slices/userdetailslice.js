@@ -8,38 +8,39 @@ const initialState={
     details:"",
 }
 
-export const studentdetailasync = createAsyncThunk('studentDetail/studentdetailasync', async (payload, { rejectWithValue }) => {
+export const userdetailasync = createAsyncThunk('userDetail/detailasync', async (payload, { rejectWithValue }) => {
     try {
-        
-            const response = await axios.get('api/student/details');
+        if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
+        {
+            const response = await axios.get('/api/teacher/details');
             const msg = response.data.message;
             
-              if(msg !== "Unauthorized" ||msg !== "User not found" || msg !== "Forbidden: Access denied for non-student users")      
+              if(msg !=="Unauthorized" ||msg !=="User not found" || msg !=="Forbidden: Access denied for non-student users")      
             return msg;
             
             
             // Return undefined or an error object if the authentication fails
             return rejectWithValue(msg);
-        
+        }
     } catch (error) {
         // Return undefined or an error object if an error occurs
         return rejectWithValue(error.message);
     }
 });
 
-export const studentslice = createSlice(
+export const userdetailslice = createSlice(
     {
-        name: 'studentDetail',
+        name: 'userDetail',
         initialState,
         reducers: {},
         extraReducers: (builder) => {
             builder
-                .addCase(studentdetailasync.fulfilled, (state, action) => {
+                .addCase(userdetailasync.fulfilled, (state, action) => {
     
                     state.value = true;
                     state.details=action.payload;
                 })
-                .addCase(studentdetailasync.rejected, (state, action) => {
+                .addCase(userdetailasync.rejected, (state, action) => {
                     state.isErr = true;
                     state.errMsg =  action.payload
                 })
@@ -47,6 +48,6 @@ export const studentslice = createSlice(
     }
 )
 
-export const { studentDetail } = studentslice.actions;
+export const { userDetail } = userdetailslice.actions;
 
-export default studentslice.reducer;
+export default userdetailslice.reducer;

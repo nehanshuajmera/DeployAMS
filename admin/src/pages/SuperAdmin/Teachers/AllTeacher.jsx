@@ -1,90 +1,106 @@
 import React, { useContext } from 'react'
 import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
 import './AllTeacher.css'
-import AdminContext from '../../../context/AdminContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
 import GlobalFiltering from '../../../components/GlobalFiltering';
+import { useEffect } from 'react';
 
 export default function AllTeacher() {
 
-  const { allTeacher } = useContext(AdminContext);
-  const data = React.useMemo(() => allTeacher, [allTeacher]);
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Teacher Id",
-        accessor: "teacher_id",
-      },
-      {
-        Header: "Department",
-        accessor: "department",
-      },
-      {
-        Header: "Faculty",
-        accessor: "faculty",
-      },
-      {
-        Header: "Email",
-        accessor: "email",
-      },
-      {
-        Header: "Phone No.",
-        accessor: "phone_no",
-      },
-      {
-        Header: 'Actions',
-        Cell: (tableInstance) => {
-          const { row: index } = tableInstance;
-          return (
-            <div>
-              <button className='actionBtn' onClick={() => console.log(index)}>
-                <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
-              </button>
-              <button className='actionBtn' onClick={() => console.log(index)}>
-                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
-              </button>
-            </div>
-          )
-        }
-      }
-    ],
-    []
-  );
+  const dispatch=useDispatch();
+  
+  const logdata=useSelector((state)=>state.login)
+  useEffect(() => {
+    const unsub=()=>{
+       dispatch(fetchdetailasync({apiname:"allteachers"}));
+    }
+   
+     return () => {
+       unsub()
+     }
+   }, [logdata])
+  
+  const dataofteacher=useSelector((state)=>state.fetchDetail.details);
+  console.log(dataofteacher);
+  // const data = React.useMemo(() =>dataofteacher, [dataofteacher]);
+  // const columns = React.useMemo(
+  //   () => [
+  //     {
+  //       Header: "Name",
+  //       accessor: "name",
+  //     },
+  //     {
+  //       Header: "Teacher Id",
+  //       accessor: "teacher_id",
+  //     },
+  //     {
+  //       Header: "Department",
+  //       accessor: "department",
+  //     },
+  //     {
+  //       Header: "Faculty",
+  //       accessor: "faculty",
+  //     },
+  //     {
+  //       Header: "Email",
+  //       accessor: "email",
+  //     },
+  //     {
+  //       Header: "Phone No.",
+  //       accessor: "phone_no",
+  //     },
+  //     {
+  //       Header: 'Actions',
+  //       Cell: (tableInstance) => {
+  //         const { row: index } = tableInstance;
+  //         return (
+  //           <div>
+  //             <button className='actionBtn' onClick={() => console.log(index)}>
+  //               <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
+  //             </button>
+  //             <button className='actionBtn' onClick={() => console.log(index)}>
+  //               <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
+  //             </button>
+  //           </div>
+  //         )
+  //       }
+  //     }
+  //   ],
+  //   []
+  // );
 
-  const initialState = {
-    pageSize: 20
-  }
+  // const initialState = {
+  //   pageSize: 20
+  // }
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    nextPage,
-    previousPage,
-    canNextPage,
-    canPreviousPage,
-    pageOptions,
-    state,
-    setGlobalFilter,
-    prepareRow
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState,
-      enableEditing: true
-    }, useGlobalFilter, useSortBy, usePagination);
+  // const {
+  //   getTableProps,
+  //   getTableBodyProps,
+  //   headerGroups,
+  //   page,
+  //   nextPage,
+  //   previousPage,
+  //   canNextPage,
+  //   canPreviousPage,
+  //   pageOptions,
+  //   state,
+  //   setGlobalFilter,
+  //   prepareRow
+  // } = useTable(
+  //   {
+  //     columns,
+  //     data,
+  //     initialState,
+  //     enableEditing: true
+  //   }, useGlobalFilter, useSortBy, usePagination);
 
-  const { pageIndex, globalFilter } = state;
+  // const { pageIndex, globalFilter } = state;
 
   return (
     <div className='allTeacherMain'>
-      <h2>All Teacher List</h2>
-      <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
+       <h2>All Teacher List</h2>
+     {/* <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
       <div className="allTeacherTable">
         <table className='adminTeacherTable' {...getTableProps()}>
           <thead>
@@ -128,7 +144,7 @@ export default function AllTeacher() {
           </span>
           <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
         </div>
-        : <h2 className="noData">No Data</h2>}
+        : <h2 className="noData">No Data</h2>} */}
     </div>
   )
 }

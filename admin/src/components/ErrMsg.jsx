@@ -1,9 +1,7 @@
-import { useAllData } from '../context/AllDataContext'
-import { useLogin } from '../context/LoginContext'
+
 
 const ErrMsg = () => {
-    const {errorMsg} = useLogin()
-    const {msg,msgType} = useAllData()
+    const errorMsg=false;
   return (
     <>
        {
@@ -16,11 +14,11 @@ const ErrMsg = () => {
 
             }
        {
-              msg &&
+              // msg &&
             <div
-              className={`w-[40%] fixed top-0 left-0 translate-x-[50%] py-1 px-2 rounded-md flexCenter ${msgType?" bg-green-400":" bg-red-400"} z-10 `}
+              // className={`w-[40%] fixed top-0 left-0 translate-x-[50%] py-1 px-2 rounded-md flexCenter ${msgType?" bg-green-400":" bg-red-400"} z-10 `}
             >
-              <h4 className="text-center text-white ">{msg}</h4>
+              <h4 className="text-center text-white ">{}</h4>
             </div>
 
             }

@@ -1,7 +1,17 @@
 import React from 'react'
 import './Dashboard.css'
-
+import { useSelector, useDispatch } from 'react-redux'
+import{useNavigate} from "react-router-dom"
+import { logoutAsync } from '../../../redux-toolkit/slices/loginslice';
 export default function TeacherDashboard() {
+  const dispatch=useDispatch();
+  const navigate =useNavigate();
+  
+  const handellogout= ()=>{
+    dispatch(logoutAsync());
+      
+    navigate("/")
+  }
   return (
     <div className='teacherDashboard'>
       <div className="universalDetailsAdmin">
@@ -9,7 +19,10 @@ export default function TeacherDashboard() {
           <img src="https://medicaps.ac.in/resources/img/logo-navbar.png" alt="CollegeLogo" />
         </div>
         <div className="logoutButton">
-          <button onClick={() => navigate('/')}>Logout</button>
+          <button onClick={()=>{navigate('/dashboard')}}>Admin Dashboard</button>
+        </div>
+        <div className="logoutButton">
+          <button onClick={handellogout}>Logout</button>
         </div>
       </div>
       <hr className="styleHr" />

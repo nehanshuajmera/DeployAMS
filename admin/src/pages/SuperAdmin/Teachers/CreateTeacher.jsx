@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useAllData } from "../../../context/AllDataContext";
-import { teacherFieldVerify } from "../../../action/InputFieldVerification";
-import { API_Type, msgType } from "../../../types/Types";
+
+
 import TopOfPage from "../../../components/TopOfPage";
 import TeacherForm from "../../../components/TeacherForm";
 

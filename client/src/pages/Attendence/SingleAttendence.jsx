@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './SingleAttendence.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutAsync } from '../../redux-toolkit/slicees/loginslice';
-import { changepassasync } from '../../redux-toolkit/slicees/studentdataslice';
+import { studentdetailasync } from '../../redux-toolkit/slicees/studentdataslice';
 
 
 //hey nehanshu i have an task for you 
@@ -13,15 +13,22 @@ import { changepassasync } from '../../redux-toolkit/slicees/studentdataslice';
 //but wait first you have to call api by use dispatch hook  in use effect so that data can reload on page automatically in line no. 16 exactly same
 export default function SingleAttendence(props) {
 const dispatch=useDispatch()
+const data=useSelector((state)=>state.login)
 useEffect(() => {
  const unsub=()=>{
-    dispatch(changepassasync());
+  dispatch(studentdetailasync());
+
  }
 
   return () => {
-    unsub()
+   unsub();
   }
-}, [])
+}, [data])
+
+// if(useLocation().pathname === '/studentattandence')
+// {
+//   dispatch(studentdetailasync());
+// }
 
 const detail=useSelector((state)=>state.studentDetail);
   console.log(detail);
@@ -51,11 +58,11 @@ const detail=useSelector((state)=>state.studentDetail);
       <hr className="styleHr" />
       <div className="studentDetails">
         <div className="studentProgramme"><h4>Programme: {props.Programme}</h4></div>
-        <div className="studentName"><h4>Name: {props.Name}</h4></div>
-        <div className="studentId"><h4>Enrollment No.: {props.Id}</h4></div>
+        <div className="studentName"><h4>Name: {detail.details.name}</h4></div>
+        <div className="studentId"><h4>Enrollment No.: {detail.details.enrollment_no}</h4></div>
         <div className="Year"><h4>Year: {props.Year}</h4></div>
-        <div className="cls-sec"><h4>Class & Section: {props.Class}-{props.Section}</h4></div>
-        <div className="studentBatch"><h4>Batch: {props.Batch}</h4></div>
+        <div className="cls-sec"><h4>Class & Section: {detail.details.branch}</h4></div>
+        <div className="studentBatch"><h4>Batch: {detail.details.batch}</h4></div>
       </div>
       <div className="subjectAttendence">
         <table className='subjectTable'>

@@ -1,27 +1,50 @@
 import './Login.css'
-import { useLogin } from '../../context/LoginContext'
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { loginAsync } from '../../redux-toolkit/slices/loginslice';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
-  userId:'',
-  password:'',
+  userId: '',
+  password: '',
 }
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userstate = useSelector((state) => { state.login });
+
   const [loginData, setLoginData] = useState(initialState);
-  const {isLoading,isError,errMsg,loginHandler} = useLogin()
 
-  const LoginDetailFunc = (e) =>{
-    setLoginData(prev=>({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }))
-  }
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+  const handelsubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      // Dispatch login action
+      await dispatch(loginAsync(loginData));
+  
+      // Additional logic after successful login if needed
+  
+      // Navigate to the dashboard
+      navigate('/teacherdashboard');
+    } catch (error) {
+      // Handle login error
+      console.error('Login error:', error);
+    }
+  };
+  const isError = false;
   return (
     <div className='loginClass'>
-      <div className="form_main">
+
+      <form onSubmit={handelsubmit} className="form_main">
         {
           isError &&
           <div className='text-white bg-red-600 px-6 py-2  z-50 rounded-lg'>
@@ -47,7 +70,7 @@ export default function Login() {
             name='userId'
             placeholder="Teacher Id"
             value={loginData.userId}
-            onChange={(e)=>{LoginDetailFunc(e)}}
+            onChange={handleChange}
           />
         </div>
         <div className="inputContainer">
@@ -68,14 +91,14 @@ export default function Login() {
             name='password'
             placeholder="Password"
             value={loginData.password}
-            onChange={(e)=>{LoginDetailFunc(e)}}
+            onChange={handleChange}
           />
         </div>
-        <button className="button" disabled={isLoading} onClick={()=>loginHandler(loginData)}>Login</button>
+        <button type="submit" className="button"  >Login</button>
         <a className="forgotLink" href="#">
           Forgot your password?
         </a>
-      </div>
+      </form>
 
     </div>
   )

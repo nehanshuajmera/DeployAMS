@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
-import TeacherContext from '../../../context/TeacherContext';
+
 import axios from 'axios';
 
 export default function Alert() {
-  const { alerts } = useContext(TeacherContext);
+
   // console.log(alerts)
 
   const [newAlert, setnewAlert] = useState({
@@ -20,13 +20,13 @@ export default function Alert() {
   };
 
   const createalert=()=>{
-    console.log("Creating New Alert ",newAlert)
-    axios.post("/api/alert/createalert",newAlert).then((res) => {
-      // console.log(res.data)
-      alerts.push(res.data)
-      window.location.reload(false);
+    // console.log("Creating New Alert ",newAlert)
+    // axios.post("/api/alert/createalert",newAlert).then((res) => {
+    //   // console.log(res.data)
+    //   alerts.push(res.data)
+    //   window.location.reload(false);
 
-    });
+    // });
   }
 
 

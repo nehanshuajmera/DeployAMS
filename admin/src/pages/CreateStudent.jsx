@@ -1,8 +1,6 @@
 import {  useState } from "react";
 import StudentForm from "../components/StudentForm";
-import { studentFieldVerify } from "../action/InputFieldVerification";
-import { useAllData } from "../context/AllDataContext";
-import { API_Type, msgType } from "../types/Types";
+
 import TopOfPage from "../components/TopOfPage";
 
 
@@ -33,7 +31,7 @@ const Subject = {
   attendance: []
 }
 const CreateStudent = () => {
-  const {createItem,setMsg} = useAllData()
+  // const {createItem,setMsg} = useAllData()
   const [student, setStudent] = useState(data);
 
   

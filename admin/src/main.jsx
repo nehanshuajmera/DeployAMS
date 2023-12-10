@@ -2,24 +2,19 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import LoginContextProvider from './context/LoginContext.jsx'
-import { BrowserRouter } from 'react-router-dom'
-import AllDataContextProvider from './context/AllDataContext.jsx'
-import { AdminContextProvider } from './context/AdminContext.jsx'
-import { TeacherContextProvider } from './context/TeacherContext.jsx'
 
+import { BrowserRouter } from 'react-router-dom'
+
+import { store } from './redux-toolkit/store/store.js'
+import { Provider } from 'react-redux'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-    <TeacherContextProvider>
-    <AdminContextProvider>
-      <LoginContextProvider>
-        <AllDataContextProvider>
+    
+          <Provider store={store}>
           <App />
-        </AllDataContextProvider>
-      </LoginContextProvider>      
-    </AdminContextProvider>
-    </TeacherContextProvider>
+          </Provider>
+  
     </BrowserRouter>
   </React.StrictMode>,
 )

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAdmin } from "../context/AdminContext";
+// import { useAdmin } from "../context/AdminContext";
 
 const TeacherForm = ({ teacher, setTeacher, HandleClick }) => {
 

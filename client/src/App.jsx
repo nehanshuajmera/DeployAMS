@@ -7,10 +7,16 @@ import ChangePassword from "./pages/ChangePassword/ChangePassword"
 import ProtectedRoute from "./protectrouter/ProtectedRoute"
 import StudentAttendence from "./pages/Attendence/StudentAttendence"
 import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { studentdetailasync } from "./redux-toolkit/slicees/studentdataslice"
 
 
 function App() {
-
+  console.log("hello");
+  const logindata=useSelector((state)=>state.login)
+  const dispatch=useDispatch()
+  
+  
   return (
     <div className="w-screen overflow-hidden h-screen flex items-center justify-center">
       <Router>

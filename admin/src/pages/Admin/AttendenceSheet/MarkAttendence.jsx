@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
-import AdminContext from '../../../context/AdminContext';
+// import AdminContext from '../../../context/AdminContext';
 import GlobalFiltering from '../../../components/GlobalFiltering';
 // import './MarkAttendence.css'
 
 export default function MarkAttendence() {
-  const { allStudent } = useContext(AdminContext);
+  // const { allStudent } = useContext(AdminContext);
   const data = React.useMemo(() => allStudent, [allStudent]);
 
   const columns = React.useMemo(

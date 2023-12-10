@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
-import { useAdmin } from "../context/AdminContext";
+// import { useAdmin } from "../context/AdminContext";
 
 const StudentForm = ({ student, setStudent, HandleClick }) => {
 

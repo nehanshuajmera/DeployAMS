@@ -1,9 +1,17 @@
 import React from 'react'
 import './Dashboard.css'
 import { useNavigate } from "react-router-dom";
+import {  useDispatch } from 'react-redux'
+import { logoutAsync } from '../../../redux-toolkit/slices/loginslice';
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const dispatch=useDispatch();
+  
+  const handellogout=()=>{
+    dispatch(logoutAsync());
+    navigate("/")
+  }
   return (
     <div className='dashboardMainContainer'>
 
@@ -12,14 +20,14 @@ export default function Dashboard() {
           <img src="https://medicaps.ac.in/resources/img/logo-navbar.png" alt="CollegeLogo" />
         </div>
         <div className="logoutButton">
-          <button onClick={() => navigate('/')}>Logout</button>
+          <button onClick={handellogout}>Logout</button>
         </div>
       </div>
       <hr className="styleHr" />
 
       <div className="adminContentContainer">
         <div className="adminMain">
-          <div onClick={() => navigate("/allstudent")}>See All Students</div>
+          <div onClick={()=>{navigate('/allstudent')}}>See All Students</div>
           <div onClick={() => navigate("/createstudent")}>Create Student</div>
           {/* <div onClick={() => navigate("/")}>Delete student</div> */}
           <div onClick={() => navigate("/allteacher")}>See All Teachers</div>

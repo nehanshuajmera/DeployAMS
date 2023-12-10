@@ -13,25 +13,51 @@ import UpdateSubject from "./pages/SuperAdmin/Subjects/UpdateSubject"
 import CreateSubject from "./pages/SuperAdmin/Subjects/CreateSubject"
 import Alert from "./pages/SuperAdmin/Alert&Notice/Alert"
 import MarkAttendence from "./pages/Admin/AttendenceSheet/MarkAttendence"
-
+import TeacherDashboard from "./pages/Admin/Dashboard/TeacherDashboard"
+import ProtectedRoute from "./protectrouter/ProtectedRoute"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
-
+  
   return (
     <div className="w-full overflow-hidden bg-dimWhite ">
-      {/* <ErrMsg /> */}
+     
       <Routes>
         <Route path={'/'} element={<Login />} />
-        <Route path={'/dashboard'} element={<Dashboard />} />
-        <Route path={'/allstudent'} element={<AllStudent />} />
-        <Route path={'/allteacher'} element={<AllTeacher />} />
-        <Route path={'/allsubject'} element={<AllSubject />} />
-        <Route path={'/createstudent'} element={<CreateStudent />} />
-        <Route path={'/updatestudent'} element={<UpdateStudent />} />
-        <Route path={'/createsubject'} element={<CreateSubject />} />
-        <Route path={'/updatesubject'} element={<UpdateSubject />} />
-        <Route path="/createteacher" element={<CreateTeacher />} />
-        <Route path="/updateteacher/:id" element={<UpdateTeacher />} />
+        <Route path={'/teacherdashboard'} element={<ProtectedRoute>
+          <TeacherDashboard />
+        </ProtectedRoute> }/>
+        <Route path={'/dashboard'} element={<ProtectedRoute>
+          < Dashboard/>
+        </ProtectedRoute>} />
+        <Route path={'/allstudent'} element={<ProtectedRoute>
+          < AllStudent/>
+        </ProtectedRoute>} />
+        <Route path={'/allteacher'} element={<ProtectedRoute>
+          <AllTeacher />
+        </ProtectedRoute>} />
+        <Route path={'/allsubject'} element={<ProtectedRoute>
+          < AllSubject/>
+        </ProtectedRoute>} />
+        <Route path={'/createstudent'} element={<ProtectedRoute>
+          < CreateStudent/>
+        </ProtectedRoute>} />
+        <Route path={'/updatestudent'} element={<ProtectedRoute>
+          < UpdateStudent/>
+        </ProtectedRoute>} />
+        <Route path={'/createsubject'} element={<ProtectedRoute>
+          < CreateSubject/>
+        </ProtectedRoute>} />
+        <Route path={'/updatesubject'} element={<ProtectedRoute>
+          < UpdateSubject/>
+        </ProtectedRoute>} />
+        <Route path="/createteacher" element={<ProtectedRoute>
+          < CreateTeacher/>
+        </ProtectedRoute>} />
+        <Route path="/updateteacher/:id" element={<ProtectedRoute>
+          < UpdateTeacher/>
+        </ProtectedRoute>} />
         <Route path="/alert" element={<Alert/>}/>
         <Route path="*" element={<ErrMsg />} />
       </Routes>
