@@ -155,7 +155,7 @@ router.post('/complaints',isauthenticated, async (req, res) => {
     // Save the new complaint to the database
     const savedComplaint = await newComplaint.save();
 
-    res.status(201).json({ message: 'Complaint sent successfully', complaint: savedComplaint });
+    res.status(200).json({ message: 'Complaint sent successfully', complaint: savedComplaint });
   } catch (error) {
     console.error('Error sending complaint:', error);
     res.status(500).json({ message: 'Internal server error' });

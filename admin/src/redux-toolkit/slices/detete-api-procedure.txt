@@ -1,0 +1,24 @@
+here i will tell you how to call a delete api on frontend
+
+import { useDispatch, useSelector } from 'react-redux'; //these are hooks
+import { include the api file having async in there name  dispatch the action using this } from '../../../redux-toolkit/slices/fetchdetailslice';  // include this file before dispatching action through this file
+            const dispatch=useDispatch();
+  
+  useEffect(() => {
+    const unsub=async()=>{
+      try{
+
+        await dispatch(detetestudentasync("pass the id in string to delete"));
+
+      }catch(error){
+          console.log(error);
+      }
+    }
+   
+    unsub();
+   }, [])
+  
+  const dataofstudent=useSelector((state)=>state.crudstudent);  // go to store and select the correct reducer name in this case we have crudstudent
+
+  now you can fetch the data error message or anything you have to show on frontend;
+  console.log(dataofstudent);

@@ -33,7 +33,7 @@ export const changeSubjectTimetableAsync = createAsyncThunk('subjectCRUD/changeS
     console.log(payload);
     // if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
     // {
-    const response = await axios.put(`api/admin/changesubjecttimetable/${payload.ID}`, payload.data);
+    const response = await axios.post(`api/admin/changesubjecttimetable/${payload.ID}`, payload.data);
     const msg = response.data.message;
 
     if (response.status === 200)
@@ -53,7 +53,7 @@ export const updateSubjectAsync = createAsyncThunk('subjectCRUD/updateSubjectAsy
     console.log(payload);
     // if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
     // {
-    const response = await axios.put(`api/admin/updatesubject/${payload.ID}`, payload.data);
+    const response = await axios.post(`api/admin/updatesubject/${payload.ID}`, payload.data);
     const msg = response.data.message;
 
     if (response.status === 200)
@@ -73,7 +73,7 @@ export const extraLectureAsync = createAsyncThunk('subjectCRUD/extraLectureAsync
     console.log(payload);
     // if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
     // {
-        const response = await axios.put(`api/admin/extralecture/${payload.ID}`, payload.data);
+        const response = await axios.post(`api/admin/extralecture/${payload.ID}`, payload.data);
     const msg = response.data.message;
 
     if (response.status === 200)

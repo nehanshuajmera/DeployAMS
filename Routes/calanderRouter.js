@@ -42,7 +42,7 @@ router.post("/create-academic-calendar",isAdmin, async (req, res) => {
 
     await AcademicCalendar.insertMany(academicCalendarEntries);
 
-    return res.status(201).json({ message: "Academic calendar entries created successfully" });
+    return res.status(200).json({ message: "Academic calendar entries created successfully" });
   } catch (error) {
     console.error("Error creating academic calendar entries:", error);
     return res.status(500).json({ message: "Internal server error" });

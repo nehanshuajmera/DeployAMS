@@ -22,7 +22,7 @@ router.get("/", isauthenticated, async(req, res) => {
     }
 
     if (teacher.admin_role !== "Admin") {
-      return res.status(403).json({ message: "teacher" });
+      return res.status(200).json({ message: "teacher" });
     }
 
     // Send the user_role in the response

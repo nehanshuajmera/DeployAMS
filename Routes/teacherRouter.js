@@ -135,7 +135,7 @@ router.get("/hasclasstoday/:id", isauthenticated,isTeacher , async (req, res) =>
     isclasstoday=isclasstoday?.lecture_dates?.find(d => d.date.getFullYear() === today.getFullYear() && d.date.getMonth() === today.getMonth() && d.date.getDate() === today.getDate());
     // console.log({isclasstoday})
     if (!isclasstoday) {
-      return res.status(403).json({ message: "No Class Today" });
+      return res.status(200).json({ message: "No Class Today" });
     }
     return res.status(200).json({ message: "Class Today" , count : isclasstoday.count });
   } catch (error) {

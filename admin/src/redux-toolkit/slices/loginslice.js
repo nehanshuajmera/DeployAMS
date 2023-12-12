@@ -21,12 +21,13 @@ export const loginAsync = createAsyncThunk('login/loginAsync', async (payload, {
 
         const msg = response.data.message;
 
-        if (msg === 'Authentication successful') {
+        if (response.status === 200) {
             const authResponse = await axios.get('api/authentic');
 
             if (authResponse.data.message === 'teacher'||authResponse.data.message === 'Admin') {
                 return authResponse.data.message;
             }
+            return rejectWithValue(authResponse.data.message);
         }
 
         // Return undefined or an error object if the authentication fails

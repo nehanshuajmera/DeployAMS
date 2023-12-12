@@ -7,6 +7,14 @@ import academicCalenderslice from '../slices/academicCalenderslice';
 import crudstudentslice from '../slices/crudstudentslice';
 import crudteacherslice from '../slices/crudteacherslice';
 import crudsubjectslice from '../slices/crudsubjectslice';
+import permissionslice from '../slices/acceptRejectPermission'
+import logslice from '../slices/logslice';
+import particularattendanceslice from '../slices/teacherAPIslice/seeparticularatendanceslice'
+import checkclassslice from '../slices/teacherAPIslice/checkclassSlice'
+import attendanceUpdationslice from '../slices/teacherAPIslice/insertUpdateattendanceSlice'
+import passwordslice from '../slices/teacherAPIslice/passwordslice';
+import pastattendanceslice from '../slices/teacherAPIslice/pastattendanceslice'
+import updateattendancebypermissionslice from '../slices/teacherAPIslice/updateattendancebypermissionslice'
 export const store = configureStore({
   reducer: {
     login: loginslice,
@@ -16,6 +24,14 @@ export const store = configureStore({
     crudstudent:crudstudentslice,
     crudteacher:crudteacherslice,
     crudsubject:crudsubjectslice,
+    permission:permissionslice,
+    logdetail:logslice,
+    particularattendanceDetail:particularattendanceslice,
+    checkClass:checkclassslice,
+    updateAttendance:attendanceUpdationslice,
+    password:passwordslice,
+    pastattendancepermission:pastattendanceslice,
+    updateAttendancebypermission:updateattendancebypermissionslice,
   },
   
 });

@@ -31,7 +31,7 @@ router.post('/request',isauthenticated,isTeacher, async (req, res) => {
         // Save the request to the database
         const savedRequest = await request.save();
 
-        return res.status(201).json({ message: 'Rescheduling request created successfully', requestId: savedRequest._id });
+        return res.status(200).json({ message: 'Rescheduling request created successfully', requestId: savedRequest._id });
     } catch (error) {
         return res.status(500).json({ message: 'Internal server error , error in /post Schedulerequest Schema ' });
     }
