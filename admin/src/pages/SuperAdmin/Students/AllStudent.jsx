@@ -1,38 +1,36 @@
 import React, { useContext, useEffect, useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
 import { useDispatch, useSelector } from 'react-redux';
 import GlobalFiltering from '../../../components/GlobalFiltering';
-import TopOfPage from '../../../components/TopOfPage';
-// import SearchBar from '../../../components/SearchBar';
 import './AllStudent.css'
 import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
 import { useLocation } from 'react-router-dom';
 
 export default function AllStudent() {
-  const dispatch=useDispatch();
-  const [dataofstud,setdataofstud]=useState({details:[]});
+  const dispatch = useDispatch();
+  const [dataofstud, setdataofstud] = useState({ details: [] });
   useEffect(() => {
-    const unsub=async()=>{
-      try{
+    const unsub = async () => {
+      try {
 
-        await dispatch(fetchdetailasync({apiname:"allstudents"}));
-      }catch(error){
+        await dispatch(fetchdetailasync({ apiname: "allstudents" }));
+      } catch (error) {
         console.log(error);
       }
     }
     unsub();
   }, [])
   // setdataofstudent(useSelector((state)=>state.fetchDetail));
-  
-  const dataofstudent=useSelector((state)=>state.fetchDetail);
+
+  const dataofstudent = useSelector((state) => state.fetchDetail);
   useEffect(() => {
-     console.log("data is comming",dataofstudent);
-     setdataofstud(dataofstudent)
+    console.log("data is comming", dataofstudent);
+    setdataofstud(dataofstudent)
   }, [dataofstudent])
-  
-  const data = React.useMemo(() =>dataofstud.details, [dataofstud.details]);
-  
+
+  const data = React.useMemo(() => dataofstud.details, [dataofstud.details]);
+
   const columns = React.useMemo(
     () => [
       {
@@ -120,7 +118,6 @@ export default function AllStudent() {
 
   return (
     <div className='allStudentMain'>
-      <TopOfPage pageName={"Student"} pagePath={"student"}/>
       <h2>All Students List</h2>
       <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
       <div className="allStudentTable">
@@ -144,7 +141,7 @@ export default function AllStudent() {
               prepareRow(row);
               console.log(row)
               return (
-                <tr className='adminStudentTableRow' {...row.getRowProps()} onClick={()=>gotoUpdate(row)}>
+                <tr className='adminStudentTableRow' {...row.getRowProps()} onClick={() => gotoUpdate(row)}>
                   {row.cells.map((cell) => (
                     <td className='adminStudentTableData' {...cell.getCellProps()}>
                       {cell.render("Cell")}

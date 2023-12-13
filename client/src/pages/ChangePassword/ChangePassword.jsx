@@ -34,7 +34,7 @@ export default function ChangePassword() {
   }
   
   return (
-    <div>
+    <div className='border-2 p-8 border-gray-600 rounded'>
         <form onSubmit={handleSubmit}>
       <div className="relative z-0 w-full mb-6 group">
 
