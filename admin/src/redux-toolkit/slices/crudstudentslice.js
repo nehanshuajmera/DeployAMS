@@ -50,7 +50,7 @@ export const updateStudentasync = createAsyncThunk('studentCRUD/updateStudentasy
         return rejectWithValue(error.message);
     }
 });
-export const deleteTeacherAsync = createAsyncThunk('teacherCRUD/deleteTeacherAsync', async (teacherId, { rejectWithValue }) => {
+export const deleteStudentAsync = createAsyncThunk('studentCRUD/deleteStudentAsync', async (teacherId, { rejectWithValue }) => {
     try {
         // if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
         // {
@@ -90,6 +90,15 @@ export const crudstudentslice = createSlice(
                     state.message=action.payload;
                 })
                 .addCase(updateStudentasync.rejected, (state, action) => {
+                    state.isErr = true;
+                    state.errMsg =  action.payload
+                })
+                .addCase(deleteStudentAsync.fulfilled, (state, action) => {
+    
+                    state.change = true;
+                    state.message=action.payload;
+                })
+                .addCase(deleteStudentAsync.rejected, (state, action) => {
                     state.isErr = true;
                     state.errMsg =  action.payload
                 })
