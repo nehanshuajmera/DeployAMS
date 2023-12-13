@@ -1,12 +1,32 @@
-import React, { useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
-// import AdminContext from '../../../context/AdminContext';
+import { useDispatch, useSelector } from 'react-redux';
 import GlobalFiltering from '../../../components/GlobalFiltering';
-// import './MarkAttendence.css'
+import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
 
 export default function MarkAttendence() {
-  // const { allStudent } = useContext(AdminContext);
-  const data = React.useMemo(() => allStudent, [allStudent]);
+  const dispatch = useDispatch();
+  const [dataofstud, setdataofstud] = useState({ details: [] });
+  useEffect(() => {
+    const unsub = async () => {
+      try {
+        await dispatch(fetchdetailasync({ apiname: "allstudents" }));
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+    unsub();
+  }, [])
+  // setdataofstudent(useSelector((state)=>state.fetchDetail));
+
+  const dataofstudent = useSelector((state) => state.fetchDetail);
+  useEffect(() => {
+    console.log("data is comming", dataofstudent);
+    setdataofstud(dataofstudent)
+  }, [dataofstudent])
+
+  const data = React.useMemo(() => dataofstud.details, [dataofstud.details]);
 
   const columns = React.useMemo(
     () => [
@@ -14,14 +34,18 @@ export default function MarkAttendence() {
         Header: "Enrollment No.",
         accessor: "enrollment_no",
       },
+      // {
+      //   Header: "Scholar No.",
+      //   accessor: "scholar_no",
+      // },
       {
         Header: "Name",
         accessor: "name",
       },
-      // {
-      //   Header: "",
-      //   accessor: "",
-      // },
+      {
+        Header: "Today's Addendence",
+        accessor: "attendence",
+      },
       {
         Header: 'Actions',
         Cell: (tableInstance) => {
@@ -29,10 +53,7 @@ export default function MarkAttendence() {
           return (
             <div>
               <button className='actionBtn' onClick={() => console.log(index)}>
-                Present
-              </button>
-              <button className='actionBtn' onClick={() => console.log(index)}>
-                Absent
+                <img src="https://cdn-icons-png.flaticon.com/512/4553/4553011.png" alt="" />
               </button>
             </div>
           )
@@ -43,7 +64,7 @@ export default function MarkAttendence() {
   );
 
   const initialState = {
-    pageSize: 100
+    pageSize: 20
   }
 
   const {
@@ -70,16 +91,16 @@ export default function MarkAttendence() {
   const { pageIndex, globalFilter } = state;
 
   return (
-    <div className='markAttendenceMain'>
+    <div className='allStudentMain'>
       <h2>Attendence Sheet</h2>
       <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
-      <div className="markAttendenceTable">
-        <table className='markTable' {...getTableProps()}>
+      <div className="allStudentTable">
+        <table className='adminStudentTable' {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
-              <tr className='markAttendenceTableRow' {...headerGroup.getHeaderGroupProps()}>
+              <tr className='adminStudentTableRow' {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th className='markAttendenceTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <th className='adminStudentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
                     <span>
                       {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
@@ -92,10 +113,11 @@ export default function MarkAttendence() {
           <tbody {...getTableBodyProps()}>
             {page.map((row) => {
               prepareRow(row);
+              console.log(row)
               return (
-                <tr className='markAttendenceTableRow' {...row.getRowProps()}>
+                <tr className='adminStudentTableRow' {...row.getRowProps()} onClick={() => gotoUpdate(row)}>
                   {row.cells.map((cell) => (
-                    <td className='markAttendenceTableData' {...cell.getCellProps()}>
+                    <td className='adminStudentTableData' {...cell.getCellProps()}>
                       {cell.render("Cell")}
                     </td>
                   ))}
