@@ -22,67 +22,67 @@ export default function AllSubject() {
   
   const dataofsubjec=useSelector((state)=>state.fetchDetail.details);
   console.log(dataofsubjec);
-  // const columns = React.useMemo(
-  //   () => [
-  //     {
-  //       Header: "Subject Name",
-  //       accessor: "subject_name",
-  //     },
-  //     {
-  //       Header: "Course Code",
-  //       accessor: "course_code",
-  //     },
-  //     {
-  //       Header: 'Actions',
-  //       Cell: (tableInstance) => {
-  //         const { row: index } = tableInstance;
-  //         return (
-  //           <div>
-  //             <button className='actionBtn' onClick={() => console.log(index)}>
-  //               <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
-  //             </button>
-  //             <button className='actionBtn' onClick={() => console.log(index)}>
-  //               <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
-  //             </button>
-  //           </div>
-  //         )
-  //       }
-  //     }
-  //   ],
-  //   []
-  // );
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Subject Name",
+        accessor: "subject_name",
+      },
+      {
+        Header: "Course Code",
+        accessor: "course_code",
+      },
+      {
+        Header: 'Actions',
+        Cell: (tableInstance) => {
+          const { row: index } = tableInstance;
+          return (
+            <div>
+              <button className='actionBtn' onClick={() => console.log(index)}>
+                <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
+              </button>
+              <button className='actionBtn' onClick={() => console.log(index)}>
+                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
+              </button>
+            </div>
+          )
+        }
+      }
+    ],
+    []
+  );
 
-  // const initialState = {
-  //   pageSize: 20
-  // }
+  const initialState = {
+    pageSize: 20
+  }
 
-  // const {
-  //   getTableProps,
-  //   getTableBodyProps,
-  //   headerGroups,
-  //   page,
-  //   nextPage,
-  //   previousPage,
-  //   canNextPage,
-  //   canPreviousPage,
-  //   pageOptions,
-  //   state,
-  //   setGlobalFilter,
-  //   prepareRow
-  // } = useTable(
-  //   {
-  //     columns,
-  //     data,
-  //     initialState,
-  //     enableEditing: true
-  //   }, useGlobalFilter, useSortBy, usePagination);
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageOptions,
+    state,
+    setGlobalFilter,
+    prepareRow
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState,
+      enableEditing: true
+    }, useGlobalFilter, useSortBy, usePagination);
 
-  // const { pageIndex, globalFilter } = state;
+  const { pageIndex, globalFilter } = state;
 
   return (
     <div className='allSubjectMain'>
       <h2>All Subjects List</h2>
-      {/* <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
+      <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
       <div className="allSubjectTable">
         <table className='adminSubjectTable' {...getTableProps()}>
           <thead>
@@ -126,7 +126,7 @@ export default function AllSubject() {
           </span>
           <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
         </div>
-        : <h2 className="noData">No Data</h2>} */}
+        : <h2 className="noData">No Data</h2>}
     </div>
   )
 }

@@ -17,48 +17,50 @@ import TeacherDashboard from "./pages/Admin/Dashboard/TeacherDashboard"
 import ProtectedRoute from "./protectrouter/ProtectedRoute"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
+import Header from "./Universal/header"
 
 function App() {
-  
+
   return (
     <div className="w-full overflow-hidden bg-dimWhite ">
-     
+
       <Routes>
         <Route path={'/'} element={<Login />} />
         <Route path={'/teacherdashboard'} element={<ProtectedRoute>
           <TeacherDashboard />
-        </ProtectedRoute> }/>
+        </ProtectedRoute>} />
         <Route path={'/dashboard'} element={<ProtectedRoute>
-          < Dashboard/>
+          < Dashboard />
         </ProtectedRoute>} />
         <Route path={'/allstudent'} element={<ProtectedRoute>
-          < AllStudent/>
+          < AllStudent />
         </ProtectedRoute>} />
         <Route path={'/allteacher'} element={<ProtectedRoute>
           <AllTeacher />
         </ProtectedRoute>} />
         <Route path={'/allsubject'} element={<ProtectedRoute>
-          < AllSubject/>
+          < AllSubject />
         </ProtectedRoute>} />
         <Route path={'/createstudent'} element={<ProtectedRoute>
-          < CreateStudent/>
+          < CreateStudent />
         </ProtectedRoute>} />
         <Route path={'/updatestudent'} element={<ProtectedRoute>
-          < UpdateStudent/>
+          < UpdateStudent />
         </ProtectedRoute>} />
         <Route path={'/createsubject'} element={<ProtectedRoute>
-          < CreateSubject/>
+          < CreateSubject />
         </ProtectedRoute>} />
         <Route path={'/updatesubject'} element={<ProtectedRoute>
-          < UpdateSubject/>
+          < UpdateSubject />
         </ProtectedRoute>} />
         <Route path="/createteacher" element={<ProtectedRoute>
-          < CreateTeacher/>
+          < CreateTeacher />
         </ProtectedRoute>} />
         <Route path="/updateteacher/:id" element={<ProtectedRoute>
-          < UpdateTeacher/>
+          < UpdateTeacher />
         </ProtectedRoute>} />
-        <Route path="/alert" element={<Alert/>}/>
+        <Route path="/markattendence" element={<MarkAttendence />} />
+        <Route path="/alert" element={<Alert />} />
         <Route path="*" element={<ErrMsg />} />
       </Routes>
 

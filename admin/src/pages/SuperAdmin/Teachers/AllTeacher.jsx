@@ -23,84 +23,84 @@ export default function AllTeacher() {
   
   const dataofteacher=useSelector((state)=>state.fetchDetail.details);
   console.log(dataofteacher);
-  // const data = React.useMemo(() =>dataofteacher, [dataofteacher]);
-  // const columns = React.useMemo(
-  //   () => [
-  //     {
-  //       Header: "Name",
-  //       accessor: "name",
-  //     },
-  //     {
-  //       Header: "Teacher Id",
-  //       accessor: "teacher_id",
-  //     },
-  //     {
-  //       Header: "Department",
-  //       accessor: "department",
-  //     },
-  //     {
-  //       Header: "Faculty",
-  //       accessor: "faculty",
-  //     },
-  //     {
-  //       Header: "Email",
-  //       accessor: "email",
-  //     },
-  //     {
-  //       Header: "Phone No.",
-  //       accessor: "phone_no",
-  //     },
-  //     {
-  //       Header: 'Actions',
-  //       Cell: (tableInstance) => {
-  //         const { row: index } = tableInstance;
-  //         return (
-  //           <div>
-  //             <button className='actionBtn' onClick={() => console.log(index)}>
-  //               <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
-  //             </button>
-  //             <button className='actionBtn' onClick={() => console.log(index)}>
-  //               <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
-  //             </button>
-  //           </div>
-  //         )
-  //       }
-  //     }
-  //   ],
-  //   []
-  // );
+  const data = React.useMemo(() =>dataofteacher, [dataofteacher]);
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Name",
+        accessor: "name",
+      },
+      {
+        Header: "Teacher Id",
+        accessor: "teacher_id",
+      },
+      {
+        Header: "Department",
+        accessor: "department",
+      },
+      {
+        Header: "Faculty",
+        accessor: "faculty",
+      },
+      {
+        Header: "Email",
+        accessor: "email",
+      },
+      {
+        Header: "Phone No.",
+        accessor: "phone_no",
+      },
+      {
+        Header: 'Actions',
+        Cell: (tableInstance) => {
+          const { row: index } = tableInstance;
+          return (
+            <div>
+              <button className='actionBtn' onClick={() => console.log(index)}>
+                <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
+              </button>
+              <button className='actionBtn' onClick={() => console.log(index)}>
+                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
+              </button>
+            </div>
+          )
+        }
+      }
+    ],
+    []
+  );
 
-  // const initialState = {
-  //   pageSize: 20
-  // }
+  const initialState = {
+    pageSize: 20
+  }
 
-  // const {
-  //   getTableProps,
-  //   getTableBodyProps,
-  //   headerGroups,
-  //   page,
-  //   nextPage,
-  //   previousPage,
-  //   canNextPage,
-  //   canPreviousPage,
-  //   pageOptions,
-  //   state,
-  //   setGlobalFilter,
-  //   prepareRow
-  // } = useTable(
-  //   {
-  //     columns,
-  //     data,
-  //     initialState,
-  //     enableEditing: true
-  //   }, useGlobalFilter, useSortBy, usePagination);
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageOptions,
+    state,
+    setGlobalFilter,
+    prepareRow
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState,
+      enableEditing: true
+    }, useGlobalFilter, useSortBy, usePagination);
 
-  // const { pageIndex, globalFilter } = state;
+  const { pageIndex, globalFilter } = state;
 
   return (
     <div className='allTeacherMain'>
        <h2>All Teacher List</h2>
-     {/* <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
+     <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
       <div className="allTeacherTable">
         <table className='adminTeacherTable' {...getTableProps()}>
           <thead>
@@ -144,7 +144,7 @@ export default function AllTeacher() {
           </span>
           <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
         </div>
-        : <h2 className="noData">No Data</h2>} */}
+        : <h2 className="noData">No Data</h2>}
     </div>
   )
 }
