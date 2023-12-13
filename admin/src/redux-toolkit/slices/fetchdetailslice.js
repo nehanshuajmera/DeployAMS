@@ -28,7 +28,7 @@ const initialState={
     value:false,
     isErr:false,
     errMsg:"",
-    details:"",
+    details:[],
 }
 
 export const fetchdetailasync = createAsyncThunk('fetchDetail/fetchdetailasync', async (payload, { rejectWithValue }) => {

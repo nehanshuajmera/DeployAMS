@@ -8,117 +8,121 @@ import TopOfPage from '../../../components/TopOfPage';
 import './AllStudent.css'
 import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
 import { useLocation } from 'react-router-dom';
+
 export default function AllStudent() {
   const dispatch=useDispatch();
-  
+  const [dataofstud,setdataofstud]=useState({details:[]});
   useEffect(() => {
     const unsub=async()=>{
       try{
 
         await dispatch(fetchdetailasync({apiname:"allstudents"}));
-
       }catch(error){
-          console.log(error);
+        console.log(error);
       }
     }
-   
     unsub();
-   }, [])
+  }, [])
+  // setdataofstudent(useSelector((state)=>state.fetchDetail));
   
   const dataofstudent=useSelector((state)=>state.fetchDetail);
-  console.log(dataofstudent);
-  const data = React.useMemo(() =>dataofstudent.details, [dataofstudent.details]);
+  useEffect(() => {
+     console.log("data is comming",dataofstudent);
+     setdataofstud(dataofstudent)
+  }, [dataofstudent])
   
-  // const columns = React.useMemo(
-  //   () => [
-  //     {
-  //       Header: "Name",
-  //       accessor: "name",
-  //     },
-  //     {
-  //       Header: "Enrollment No.",
-  //       accessor: "enrollment_no",
-  //     },
-  //     {
-  //       Header: "Scholar No.",
-  //       accessor: "scholar_no",
-  //     },
-  //     {
-  //       Header: "Year",
-  //       accessor: "year",
-  //     },
-  //     {
-  //       Header: "Branch",
-  //       accessor: "branch",
-  //     },
-  //     {
-  //       Header: "Section",
-  //       accessor: "section",
-  //     },
-  //     {
-  //       Header: "Specialization",
-  //       accessor: "specialisation",
-  //     },
-  //     // {
-  //     //   Header: "Faculty",
-  //     //   accessor: "faculty",
-  //     // },
-  //     {
-  //       Header: "Programme",
-  //       accessor: "programme",
-  //     },
-  //     {
-  //       Header: 'Actions',
-  //       Cell: (tableInstance) => {
-  //         const { row: index } = tableInstance;
-  //         return (
-  //           <div>
-  //             <button className='actionBtn' onClick={() => console.log(index)}>
-  //               <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
-  //             </button>
-  //             <button className='actionBtn' onClick={() => console.log(index)}>
-  //               <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
-  //             </button>
-  //           </div>
-  //         )
-  //       }
-  //     }
-  //   ],
-  //   []
-  // );
+  const data = React.useMemo(() =>dataofstud.details, [dataofstud.details]);
+  
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Name",
+        accessor: "name",
+      },
+      {
+        Header: "Enrollment No.",
+        accessor: "enrollment_no",
+      },
+      {
+        Header: "Scholar No.",
+        accessor: "scholar_no",
+      },
+      {
+        Header: "Year",
+        accessor: "year",
+      },
+      {
+        Header: "Branch",
+        accessor: "branch",
+      },
+      {
+        Header: "Section",
+        accessor: "section",
+      },
+      {
+        Header: "Specialization",
+        accessor: "specialisation",
+      },
+      // {
+      //   Header: "Faculty",
+      //   accessor: "faculty",
+      // },
+      {
+        Header: "Programme",
+        accessor: "programme",
+      },
+      {
+        Header: 'Actions',
+        Cell: (tableInstance) => {
+          const { row: index } = tableInstance;
+          return (
+            <div>
+              <button className='actionBtn' onClick={() => console.log(index)}>
+                <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
+              </button>
+              <button className='actionBtn' onClick={() => console.log(index)}>
+                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
+              </button>
+            </div>
+          )
+        }
+      }
+    ],
+    []
+  );
 
-  // const initialState = {
-  //   pageSize: 20
-  // }
+  const initialState = {
+    pageSize: 20
+  }
 
-  // const {
-  //   getTableProps,
-  //   getTableBodyProps,
-  //   headerGroups,
-  //   page,
-  //   nextPage,
-  //   previousPage,
-  //   canNextPage,
-  //   canPreviousPage,
-  //   pageOptions,
-  //   state,
-  //   setGlobalFilter,
-  //   prepareRow
-  // } = useTable(
-  //   {
-  //     columns,
-  //     data,
-  //     initialState,
-  //     enableEditing: true
-  //   }, useGlobalFilter, useSortBy, usePagination);
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
+    pageOptions,
+    state,
+    setGlobalFilter,
+    prepareRow
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState,
+      enableEditing: true
+    }, useGlobalFilter, useSortBy, usePagination);
 
-  // const { pageIndex, globalFilter } = state;
+  const { pageIndex, globalFilter } = state;
 
   return (
     <div className='allStudentMain'>
       <TopOfPage pageName={"Student"} pagePath={"student"}/>
       <h2>All Students List</h2>
-      {/* <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
+      <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
       <div className="allStudentTable">
         <table className='adminStudentTable' {...getTableProps()}>
           <thead>
@@ -163,7 +167,7 @@ export default function AllStudent() {
           </span>
           <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
         </div>
-        : <h2 className="noData">No Data</h2>} */}
+        : <h2 className="noData">No Data</h2>}
     </div>
   )
 }
