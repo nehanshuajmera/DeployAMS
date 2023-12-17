@@ -274,7 +274,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
           </div>
         </div>
       </div>
-      <SearchBar  />
+      {/* <SearchBar  /> */}
       <div className="flex justify-end items-center">
         <button className="button1" onClick={() => HandleClick()}>
           Save
@@ -299,103 +299,103 @@ const SubjectCollection = ({ subject, removeSubject }) => {
 };
 
 
-const SubjectSearch = ({selectedSubject})=>{
-  const {allSubject} = useAdmin()
-  const listOfSubject = [...allSubject]
-  return(
-    <div>
-      {
-        listOfSubject.map(subject=>{
-          return(
-            <div key={subject}>
-              {subject}
-            </div>
-          )
-        })
-      }
-    </div>
-  )
-}
+// const SubjectSearch = ({selectedSubject})=>{
+//   const {allSubject} = useAdmin()
+//   const listOfSubject = [...allSubject]
+//   return(
+//     <div>
+//       {
+//         listOfSubject.map(subject=>{
+//           return(
+//             <div key={subject}>
+//               {subject}
+//             </div>
+//           )
+//         })
+//       }
+//     </div>
+//   )
+// }
 
 
-const SearchBar = () => {
+// const SearchBar = () => {
 
-  const {allSubject} = useAdmin()
-  const [searchResult, setSearchResult] = useState([...allSubject]);
-  const [search, setSearch] = useState('');
+//   // const {allSubject} = useAdmin()
+//   const [searchResult, setSearchResult] = useState([...allSubject]);
+//   const [search, setSearch] = useState('');
     
-  const searchFunc = (e)=>{
-      setSearch(e.target.value)
-      console.log(search)
-      if(search===''){
-        setSearchResult([...allSubject])
-      }
-      else{
+//   const searchFunc = (e)=>{
+//       setSearch(e.target.value)
+//       console.log(search)
+//       if(search===''){
+//         setSearchResult([...allSubject])
+//       }
+//       else{
 
-        const resultOfSearch = searchResult.filter(item=>{
-          console.log(item.subject_name.toLowerCase())
-          // filter out content either have same name or id
-          // return (item.name.toLowerCase.include(search.toLowerCase) || item.course_code.toLowerCase.include(search.toLowerCase))
+//         const resultOfSearch = searchResult.filter(item=>{
+//           console.log(item.subject_name.toLowerCase())
+//           // filter out content either have same name or id
+//           // return (item.name.toLowerCase.include(search.toLowerCase) || item.course_code.toLowerCase.include(search.toLowerCase))
           
-          return (item.subject_name).toLowerCase().includes(search.toLowerCase())
-        })        
-        setSearchResult([...resultOfSearch])
-      }
-  }
+//           return (item.subject_name).toLowerCase().includes(search.toLowerCase())
+//         })        
+//         setSearchResult([...resultOfSearch])
+//       }
+//   }
   
-  // to set new result when allSubject changes
-  useEffect(() => {
-    setSearchResult([...allSubject])  
-   console.log("useEffect")
-  }, [allSubject])
+//   // to set new result when allSubject changes
+//   useEffect(() => {
+//     setSearchResult([...allSubject])  
+//    console.log("useEffect")
+//   }, [allSubject])
 
 
-  useEffect(()=>{
+//   useEffect(()=>{
     
-    (()=>{
+//     (()=>{
       
-      if(search===''){
-        setSearchResult([...allSubject])
-      }
-      else{
+//       if(search===''){
+//         setSearchResult([...allSubject])
+//       }
+//       else{
         
-        const resultOfSearch = searchResult.filter(item=>{
-          console.log(item.subject_name.toLowerCase())
-          // filter out content either have same name or id
-          // return (item.name.toLowerCase.include(search.toLowerCase) || item.course_code.toLowerCase.include(search.toLowerCase))
+//         const resultOfSearch = searchResult.filter(item=>{
+//           console.log(item.subject_name.toLowerCase())
+//           // filter out content either have same name or id
+//           // return (item.name.toLowerCase.include(search.toLowerCase) || item.course_code.toLowerCase.include(search.toLowerCase))
           
-          return (item.subject_name).toLowerCase().includes(search.toLowerCase())
-        })        
-        setSearchResult([...resultOfSearch])
-      }
-    })()
-  },[search,allSubject])
+//           return (item.subject_name).toLowerCase().includes(search.toLowerCase())
+//         })        
+//         setSearchResult([...resultOfSearch])
+//       }
+//     })()
+//   },[search,allSubject])
 
-return (
-  <div>
-      <div className="relative w-[300px] md:w-[400px]">
-          <input type="text" name="search" id="search" className="inputBox border-[1px] border-gray-500 w-[300px] md:w-[400px] peer/search" 
-          value={search ||''}
-          onChange={(e)=>searchFunc(e)}
-          />
-          {/* dropdown */}
-          <div className="absolute w-full h-[170px] bg-[#FFFBF5] left-0  hidden peer-focus/search:block">
-              <div className="flexStart flex-col">
-                  {
-                    searchResult.map(data=>{
-                      console.log(data.subject_name)
-                      return(
-                        <div key={data._id} className="text-black ">
-                          {data.subject_name}
-                        </div>
-                      )
-                    })
-                  }
-              </div>
-          </div>
-      </div>
-  </div>
-)
-}
+// return (
+//   <div>
+//       <div className="relative w-[300px] md:w-[400px]">
+//           <input type="text" name="search" id="search" className="inputBox border-[1px] border-gray-500 w-[300px] md:w-[400px] peer/search" 
+//           value={search ||''}
+//           onChange={(e)=>searchFunc(e)}
+//           />
+//           {/* dropdown */}
+//           <div className="absolute w-full h-[170px] bg-[#FFFBF5] left-0  hidden peer-focus/search:block">
+//               <div className="flexStart flex-col">
+//                   {
+//                     searchResult.map(data=>{
+//                       console.log(data.subject_name)
+//                       return(
+//                         <div key={data._id} className="text-black ">
+//                           {data.subject_name}
+//                         </div>
+//                       )
+//                     })
+//                   }
+//               </div>
+//           </div>
+//       </div>
+//   </div>
+// )
+// }
 
 export default StudentForm;

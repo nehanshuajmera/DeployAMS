@@ -33,13 +33,13 @@ const CreateStudent = () => {
 
   
   const HandleClick = ()=>{
-    if(studentFieldVerify(student)){
-      createItem({API:API_Type.student,data:student})
-    }
-    else{
-      let msg = "Fill all required fields"
-      setMsg({msg,msgType:msgType.WARNING})
-    }
+    // if(studentFieldVerify(student)){
+    //   createItem({API:API_Type.student,data:student})
+    // }
+    // else{
+    //   let msg = "Fill all required fields"
+    //   setMsg({msg,msgType:msgType.WARNING})
+    // }
   }
 
 
