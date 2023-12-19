@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useTable, useSortBy, useGlobalFilter, usePagination } from 'react-table'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
@@ -9,19 +9,41 @@ import { useEffect } from 'react';
 export default function AllSubject() {
   const dispatch=useDispatch();
   
-  const logdata=useSelector((state)=>state.login)
-  useEffect(() => {
-    const unsub=()=>{
-       dispatch(fetchdetailasync({apiname:"allsubjects"}));
-    }
+  // const logdata=useSelector((state)=>state.login)
+  // useEffect(() => {
+  //   const unsub=()=>{
+  //      dispatch(fetchdetailasync({apiname:"allsubjects"}));
+  //   }
    
-     return () => {
-       unsub()
-     }
-   }, [logdata])
+  //    return () => {
+  //      unsub()
+  //    }
+  //  }, [logdata])
   
-  const dataofsubjec=useSelector((state)=>state.fetchDetail.details);
-  console.log(dataofsubjec);
+  // const dataofsubjec=useSelector((state)=>state.fetchDetail.details);
+  // console.log(dataofsubjec);
+  const [dataofstud, setdataofstud] = useState({ details: [] });
+  useEffect(() => {
+    const unsub = async () => {
+      try {
+        await dispatch(fetchdetailasync({ apiname: "allsubjects" }));
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+    unsub();
+  }, [])
+  // setdataofstudent(useSelector((state)=>state.fetchDetail));
+
+  const dataofstudent = useSelector((state) => state.fetchDetail);
+  useEffect(() => {
+    console.log("data is comming", dataofstudent);
+    setdataofstud(dataofstudent)
+  }, [dataofstudent])
+
+  const data = React.useMemo(() => dataofstud.details, [dataofstud.details]);
+
   const columns = React.useMemo(
     () => [
       {
