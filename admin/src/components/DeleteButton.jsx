@@ -1,9 +1,18 @@
+import { useDispatch } from "react-redux"
+import { deleteStudentAsync } from "../redux-toolkit/slices/crudstudentslice"
 
 
-const DeleteButton = ({API,itemId}) => {
- 
+const DeleteButton = ({itemId}) => {
+  const dispatch = useDispatch()
+  const handleDelete = async()=>{
+    try {
+      await dispatch(deleteStudentAsync(itemId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
-    <div onClick={()=>deleteItem({API,itemId})} className="button1 hover:button2">
+    <div onClick={()=>handleDelete()} className="button1 hover:button2">
       Delete
     </div>
   )

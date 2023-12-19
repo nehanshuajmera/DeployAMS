@@ -5,6 +5,9 @@ import TopOfPage from "../../../components/TopOfPage";
 
 
 import DeleteButton from "../../../components/DeleteButton";
+import { subjectFieldVerify } from "../../../action/InputFieldVerification";
+import { updateSubjectAsync } from "../../../redux-toolkit/slices/crudsubjectslice";
+import { useDispatch } from "react-redux";
 
 
 const data = {
@@ -19,17 +22,25 @@ const data = {
 
 
 const UpdateSubject = () => {
-  const {createItem,setMsg} = useAllData()
   const [subject, setSubject] = useState(data);
+  const dispatch = useDispatch();
 
   
   const HandleClick = ()=>{
+    const itemId =''
     if(subjectFieldVerify(subject)){
-      createItem({API:API_Type.subject,data:subject})
+      try {
+        ;(async()=>{
+          await dispatch(updateSubjectAsync({Id:itemId,data:subject}))
+        })()
+        
+      } catch (error) {
+        console.log(error)
+      }
     }
     else{
       let msg = "Fill all required fields"
-      setMsg({msg,msgType:msgType.WARNING})
+      // setMsg({msg,msgType:msgType.WARNING})
     }
   }
 
@@ -39,7 +50,7 @@ const UpdateSubject = () => {
       <TopOfPage pagePath={"Dashboard >> Subject >> Update"} pageName={"Update Subject"}/>
       <SubjectForm subject={subject} setSubject={setSubject}  HandleClick={HandleClick}/>
       <div className="flex justify-end px-3">
-        <DeleteButton API={API_Type.student} itemId={''} />
+        <DeleteButton  itemId={subject.id} />
       </div>
     </div>
   )

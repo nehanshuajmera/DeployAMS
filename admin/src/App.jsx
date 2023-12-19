@@ -5,8 +5,8 @@ import Dashboard from "./pages/SuperAdmin/Dashboard/Dashboard"
 import AllStudent from "./pages/SuperAdmin/Students/AllStudent"
 import AllTeacher from "./pages/SuperAdmin/Teachers/AllTeacher"
 import AllSubject from "./pages/SuperAdmin/Subjects/AllSubject"
-import CreateStudent from './pages/CreateStudent'
-import UpdateStudent from './pages/UpdateStudent'
+import CreateStudent from './pages/SuperAdmin/Students/CreateStudent'
+import UpdateStudent from './pages/SuperAdmin/Students/UpdateStudent'
 import UpdateTeacher from "./pages/SuperAdmin/Teachers/UpdateTeacher"
 import CreateTeacher from "./pages/SuperAdmin/Teachers/CreateTeacher"
 import UpdateSubject from "./pages/SuperAdmin/Subjects/UpdateSubject"
@@ -44,13 +44,13 @@ function App() {
         <Route path={'/createstudent'} element={<ProtectedRoute>
           < CreateStudent />
         </ProtectedRoute>} />
-        <Route path={'/updatestudent'} element={<ProtectedRoute>
+        <Route path={'/updatestudent/:id'} element={<ProtectedRoute>
           < UpdateStudent />
         </ProtectedRoute>} />
         <Route path={'/createsubject'} element={<ProtectedRoute>
           < CreateSubject />
         </ProtectedRoute>} />
-        <Route path={'/updatesubject'} element={<ProtectedRoute>
+        <Route path={'/updatesubject/:id'} element={<ProtectedRoute>
           < UpdateSubject />
         </ProtectedRoute>} />
         <Route path="/createteacher" element={<ProtectedRoute>

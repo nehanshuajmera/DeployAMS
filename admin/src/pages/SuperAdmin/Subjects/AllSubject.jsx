@@ -1,27 +1,53 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useTable, useSortBy, useGlobalFilter, usePagination } from 'react-table'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
 import GlobalFiltering from '../../../components/GlobalFiltering';
 import './AllSubject.css'
 import { useEffect } from 'react';
+import {useNavigate} from 'react-router-dom'
 
 export default function AllSubject() {
   const dispatch=useDispatch();
+  const navigate = useNavigate();
   
-  const logdata=useSelector((state)=>state.login)
-  useEffect(() => {
-    const unsub=()=>{
-       dispatch(fetchdetailasync({apiname:"allsubjects"}));
-    }
+  // const logdata=useSelector((state)=>state.login)
+  // useEffect(() => {
+  //   const unsub=()=>{
+  //      dispatch(fetchdetailasync({apiname:"allsubjects"}));
+  //   }
    
-     return () => {
-       unsub()
-     }
-   }, [logdata])
+  //    return () => {
+  //      unsub()
+  //    }
+  //  }, [logdata])
   
-  const dataofsubjec=useSelector((state)=>state.fetchDetail.details);
-  console.log(dataofsubjec);
+  // const dataofsubjec=useSelector((state)=>state.fetchDetail.details);
+  // console.log(dataofsubjec);
+
+  
+  const [dataofsubjec, setdataofsubjec] = useState({ details: [] });
+  useEffect(() => {
+    const unsub = async () => {
+      try {
+        await dispatch(fetchdetailasync({ apiname: "allsubjects" }));
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+    unsub();
+  }, [])
+  // setdataofsubjec(useSelector((state)=>state.fetchDetail));
+
+  const dataofsubject = useSelector((state) => state.fetchDetail);
+  useEffect(() => {
+    console.log("data is comming", dataofsubjec);
+    setdataofsubjec(dataofsubject)
+  }, [dataofsubject])
+
+  const data = React.useMemo(() => dataofsubjec.details, [dataofsubjec.details]);
+
   const columns = React.useMemo(
     () => [
       {
@@ -38,7 +64,7 @@ export default function AllSubject() {
           const { row: index } = tableInstance;
           return (
             <div>
-              <button className='actionBtn' onClick={() => console.log(index)}>
+              <button className='actionBtn' onClick={() => navigate(`/upadatesubject/${index.id}`)}>
                 <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
               </button>
               <button className='actionBtn' onClick={() => console.log(index)}>
