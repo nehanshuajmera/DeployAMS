@@ -1,34 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React from 'react'
 import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
 import { useDispatch, useSelector } from 'react-redux';
-import GlobalFiltering from '../../../components/GlobalFiltering';
-import './AllStudent.css'
 import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
+import GlobalFiltering from '../../../components/GlobalFiltering';
+import { useEffect } from 'react';
 
-export default function AllStudent() {
+export default function SubstituteTeacher() {
+
   const dispatch = useDispatch();
-  const [dataofstud, setdataofstud] = useState({ details: [] });
+
+  const logdata = useSelector((state) => state.login)
   useEffect(() => {
-    const unsub = async () => {
-      try {
-        await dispatch(fetchdetailasync({ apiname: "allstudents" }));
-      }
-      catch (error) {
-        console.log(error);
-      }
+    const unsub = () => {
+      dispatch(fetchdetailasync({ apiname: "allteachers" }));
     }
-    unsub();
-  }, [])
-  // setdataofstudent(useSelector((state)=>state.fetchDetail));
 
-  const dataofstudent = useSelector((state) => state.fetchDetail);
-  useEffect(() => {
-    console.log("data is comming", dataofstudent);
-    setdataofstud(dataofstudent)
-  }, [dataofstudent])
+    return () => {
+      unsub()
+    }
+  }, [logdata])
 
-  const data = React.useMemo(() => dataofstud.details, [dataofstud.details]);
-
+  const dataofteacher = useSelector((state) => state.fetchDetail.details);
+  console.log(dataofteacher);
+  const data = React.useMemo(() => dataofteacher, [dataofteacher]);
   const columns = React.useMemo(
     () => [
       {
@@ -36,36 +30,16 @@ export default function AllStudent() {
         accessor: "name",
       },
       {
-        Header: "Enrollment No.",
-        accessor: "enrollment_no",
+        Header: "Teacher Id",
+        accessor: "teacher_id",
       },
       {
-        Header: "Scholar No.",
-        accessor: "scholar_no",
+        Header: "Department",
+        accessor: "department",
       },
       {
-        Header: "Year",
-        accessor: "year",
-      },
-      {
-        Header: "Branch",
-        accessor: "branch",
-      },
-      {
-        Header: "Section",
-        accessor: "section",
-      },
-      {
-        Header: "Specialization",
-        accessor: "specialisation",
-      },
-      // {
-      //   Header: "Faculty",
-      //   accessor: "faculty",
-      // },
-      {
-        Header: "Programme",
-        accessor: "programme",
+        Header: "Phone No.",
+        accessor: "phone_no",
       },
       {
         Header: 'Actions',
@@ -74,10 +48,7 @@ export default function AllStudent() {
           return (
             <div>
               <button className='actionBtn' onClick={() => console.log(index)}>
-                <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
-              </button>
-              <button className='actionBtn' onClick={() => console.log(index)}>
-                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
+                <img src="/substituteAlarm.png" alt="" />
               </button>
             </div>
           )
@@ -115,19 +86,19 @@ export default function AllStudent() {
   const { pageIndex, globalFilter } = state;
 
   return (
-    <div className='allStudentMain'>
-      <h2>All Students List</h2>
+    <div className='allTeacherMain'>
+      <h2>Substitute Teachers List</h2>
       <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
-      <div className="allStudentTable">
-        <table className='adminStudentTable' {...getTableProps()}>
+      <div className="allTeacherTable">
+        <table className='adminTeacherTable' {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
-              <tr className='adminStudentTableRow' {...headerGroup.getHeaderGroupProps()}>
+              <tr className='adminTeacherTableRow' {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th className='adminStudentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <th className='adminTeacherTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
                     <span>
-                      {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
+                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' ↕️'}
                     </span>
                   </th>
                 ))}
@@ -137,11 +108,10 @@ export default function AllStudent() {
           <tbody {...getTableBodyProps()}>
             {page.map((row) => {
               prepareRow(row);
-              console.log(row)
               return (
-                <tr className='adminStudentTableRow' {...row.getRowProps()} onClick={() => gotoUpdate(row)}>
+                <tr className='adminTeacherTableRow' {...row.getRowProps()} onClick={() => gotoUpdate(row)}>
                   {row.cells.map((cell) => (
-                    <td className='adminStudentTableData' {...cell.getCellProps()}>
+                    <td className='adminTeacherTableData' {...cell.getCellProps()}>
                       {cell.render("Cell")}
                     </td>
                   ))}
