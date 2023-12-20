@@ -11,10 +11,12 @@ import { useDispatch } from "react-redux";
 const data = {
     teacher_id:"",
     name:"",
+    department: "",
+  faculty: "",
     email:"",
     phone_no:"",
     subjects:[],
-    password:"",
+    password:"medicaps",
 }
 
 
@@ -24,7 +26,7 @@ const CreateTeacher = () => {
 
   
   const HandleClick = ()=>{
-    if(teacherFieldVerify(subject)){
+    if(teacherFieldVerify(teacher)){
       try {
         ;(async()=>{
           await dispatch(createTeacherAsync({...teacher}))

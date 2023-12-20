@@ -19,11 +19,25 @@ export default function Login() {
   // const changestate= useSelector((state) => state.changePassword)
   const navigate= useNavigate();
   const dispatch = useDispatch();
-  
-  const handellogin=()=>{
-    dispatch(loginAsync(loginData));
-    navigate("/studentattandence");
+  function check() {
+    const isLoggedIn = useSelector((state) => state.login.isLogin);
+    return isLoggedIn;
+  }
+  const handellogin=async ()=>{
+    try {
+      
+      await dispatch(loginAsync(loginData));
+      
+
+      if (check) {
+        // User is successfully logged in, navigate to the desired page
+        navigate("/studentattandence");
+     
       }
+    } catch (error) {
+      console.log(error);
+    }
+    }
       
       
    let iserror=false

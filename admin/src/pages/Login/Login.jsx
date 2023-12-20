@@ -24,6 +24,11 @@ export default function Login() {
       [name]: value,
     }));
   };
+        function check() {
+          const isLoggedIn = useSelector((state) => state.login.isLogin);
+          return isLoggedIn;
+        }
+
   const handelsubmit = async (e) => {
     e.preventDefault();
   
@@ -32,13 +37,17 @@ export default function Login() {
       await dispatch(loginAsync(loginData));
   
       // Additional logic after successful login if needed
-  
+      
+
+      if (check) {
       // Navigate to the dashboard
       navigate('/teacherdashboard');
+      }
     } catch (error) {
       // Handle login error
       console.error('Login error:', error);
     }
+    
   };
   const isError = false;
   return (
