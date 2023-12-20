@@ -10,7 +10,7 @@ const initialState = {
 
 export const changePasswordAsync = createAsyncThunk('password/changePasswordAsync', async (payload, { rejectWithValue }) => {
     try {
-        const response = await axios.post('api/teacher/changepassword', payload);
+        const response = await axios.post('/api/teacher/changepassword', payload);
         const msg = response.data.message;
 
         if (response.status === 200)
