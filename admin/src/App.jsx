@@ -23,6 +23,7 @@ import PreviousAttendence from "./pages/Admin/PreviousAttendance/PreviousAttenda
 import SubstituteTeacher from "./pages/Admin/Substitute Teacher/SubstituteTeacher"
 import ArangementClass from "./pages/Admin/ArangementClass/ArangementClass"
 import LoginRoute from "./protectrouter/LoginRoute"
+import PermissionGranted from "./pages/Admin/GrantedPermission/PermissionGranted"
 // import Header from "./Universal/header"
 
 function App() {
@@ -46,6 +47,9 @@ function App() {
         </ProtectedRoute>} />
         <Route path={'/arangementclass'} element={<ProtectedRoute>
           <ArangementClass />
+        </ProtectedRoute>} />
+        <Route path={'/grantedpermission'} element={<ProtectedRoute>
+          <PermissionGranted />
         </ProtectedRoute>} />
         <Route path={'/dashboard'} element={<ProtectedRoute>
           < Dashboard />
