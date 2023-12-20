@@ -46,6 +46,7 @@ const TeacherForm = ({ teacher, setTeacher, HandleClick }) => {
               value={teacher.name}
               onChange={(e) => ChangeHandler(e)}
             />
+                      <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
         {/* teacher_id field */}
@@ -66,6 +67,50 @@ const TeacherForm = ({ teacher, setTeacher, HandleClick }) => {
               onChange={(e) => ChangeHandler(e)}
               placeholder="teacher_id"
             />
+                      <span className="ml-2 text-lg text-primary">*</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex justify-center items-center flex-col md:flex-row gap-5 flex-1">
+        {/* department field */}
+        <div className="relative w-full grid grid-cols-3 flex-1 ">
+          <label
+            htmlFor="department"
+            className={`px-3 py-2 text-secondary text-xl col-span-1 `}
+          >
+            Department
+          </label>
+          <div className="relative col-span-2">
+            <input
+              type="text"
+              name="department"
+              id="department"
+              className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/department focus:border-primary focus:border-[1px] "
+              value={teacher.department}
+              onChange={(e) => ChangeHandler(e)}
+            />
+                      <span className="ml-2 text-lg text-primary">*</span>
+          </div>
+        </div>
+        {/* faculty field */}
+        <div className="relative w-full grid grid-cols-3 flex-1">
+          <label
+            htmlFor="faculty"
+            className={`px-3 py-2 text-secondary text-xl col-span-1 `}
+          >
+            Faculty
+          </label>
+          <div className="relative col-span-2">
+            <input
+              type="text"
+              name="faculty"
+              id="faculty"
+              className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/faculty focus:border-primary focus:border-[1px] "
+              value={teacher.faculty}
+              onChange={(e) => ChangeHandler(e)}
+            />
+          <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
       </div>
@@ -88,6 +133,7 @@ const TeacherForm = ({ teacher, setTeacher, HandleClick }) => {
               value={teacher.email}
               onChange={(e) => ChangeHandler(e)}
             />
+                      <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
         {/* phone no field */}
@@ -107,6 +153,7 @@ const TeacherForm = ({ teacher, setTeacher, HandleClick }) => {
               value={teacher.phone_no}
               onChange={(e) => ChangeHandler(e)}
             />
+                      <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
       </div>

@@ -41,6 +41,7 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
               value={subject.subject_name}
               onChange={(e) => ChangeHandler(e)}
             />
+                      <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
         {/* teacher_id field */}
@@ -60,6 +61,7 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
               value={subject.teacher_id}
               onChange={(e) => ChangeHandler(e)}
             />
+                      <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
       </div>
@@ -82,6 +84,7 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
               value={subject.course_code}
               onChange={(e) => ChangeHandler(e)}
             />
+                      <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
         {/* branch field */}
@@ -101,6 +104,7 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
               value={subject.branch}
               onChange={(e) => ChangeHandler(e)}
             />
+                      <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
       </div>
@@ -123,6 +127,7 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
               value={subject.section}
               onChange={(e) => ChangeHandler(e)}
             />
+                      <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
         {/* Batch field */}
@@ -142,6 +147,8 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
               value={subject.batch}
               onChange={(e) => ChangeHandler(e)}
             />
+                      <span className="ml-2 text-lg text-primary">*</span>
+
           </div>
         </div>
       </div>

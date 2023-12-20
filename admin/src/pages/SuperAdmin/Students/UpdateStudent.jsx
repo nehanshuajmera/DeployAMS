@@ -3,52 +3,53 @@ import StudentForm from "../../../components/StudentForm";
 
 
 import DeleteButton from "../../../components/DeleteButton";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import TopOfPage from "../../../components/TopOfPage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateStudentasync } from "../../../redux-toolkit/slices/crudstudentslice";
 import { studentFieldVerify } from "../../../action/InputFieldVerification";
 
 
 
-const data = {
-  name: "",
-  enrollment_no: "",
-  scholar_no: "",
-  email: "",
-  programme:'',
-      faculty:'',
-      specialisation:'',
-      year:'',
-  phone_no: "",
-  branch: "",
-  section: "",
-  batch: "",
-  password: "",
-  subjects: [
-    // {
-    //   name: "OS",
-    //   id: 1,
-    // },
-    // {
-    //   name: "DBMS",
-    //   id: 2,
-    // },
-  ],
-};
+// const data = {
+//   name: "",
+//   enrollment_no: "",
+//   scholar_no: "",
+//   email: "",
+//   programme:'',
+//       faculty:'',
+//       specialisation:'',
+//       year:'',
+//   phone_no: "",
+//   branch: "",
+//   section: "",
+//   batch: "",
+//   password: "",
+//   subjects: [
+//     // {
+//     //   name: "OS",
+//     //   id: 1,
+//     // },
+//     // {
+//     //   name: "DBMS",
+//     //   id: 2,
+//     // },
+//   ],
+// };
 
 const UpdateStudent = () => {
   const {state} = useLocation()
   const dispatch = useDispatch()
-  // const [student, setStudent] = useState(data);
+  const {id} = useParams()
+  // const [student, setStudent] = useState({...data});
   const [student, setStudent] = useState({...state});
-  
+  // const dataofstudent = useSelector((state) => state.fetchDetail);
+  // console.log(dataofstudent)
   const HandleClick = ()=>{
-    const itemId =''
     if(studentFieldVerify(student)){
       try {
         ;(async()=>{
-          await dispatch(updateStudentasync({Id:itemId,data:student}))
+          await dispatch(updateStudentasync({ID:id,data:student}))
         })()
         
       } catch (error) {
@@ -63,7 +64,7 @@ const UpdateStudent = () => {
   return (
     <div>
       <TopOfPage pagePath={"Dashboard >> Student >> Update"} pageName={"Update Student"}/>
-      <StudentForm student={student} setSubject={setStudent}  HandleClick={HandleClick}/>
+      <StudentForm student={student} setStudent={setStudent}  HandleClick={HandleClick}/>
       <div className="flex justify-end px-3">
         <DeleteButton itemId={student.id} />
       </div>
