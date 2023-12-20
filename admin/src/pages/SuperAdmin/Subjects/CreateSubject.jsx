@@ -23,14 +23,14 @@ const data = {
 const CreateSubject = () => {
   const [subject, setSubject] = useState(data);
   const dispatch = useDispatch();
-  
+
   
   const HandleClick = ()=>{
     if(subjectFieldVerify(subject)){
       try {
         ;(async()=>{
           await dispatch(createSubjectAsync({...subject}))
-
+          
         })()
         
       } catch (error) {

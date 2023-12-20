@@ -12,6 +12,7 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
     });
   };
 
+
   const changeDayObj = (dayObj) =>{
     setSubject((prev) => {
       return {
@@ -163,7 +164,7 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
             Select the day and count
           </p>
         
-            <DaysSelection changeDayObj={changeDayObj}/>          
+            <DaysSelection changeDayObj={changeDayObj} dayArr={subject.day}/>          
         </div>
       </div>
       <div className="flex justify-end items-center">
@@ -175,46 +176,64 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
   );
 };
 
-const DaysSelection = ({changeDayObj}) => {
-  const [weekDays, setWeekDays] = useState([
-    {
-      name:"Monday",
-      count: 0,
-    },
-    {
-      name:"Tuesday",
-      count: 0,
-    },
-    {
-      name:"Wednesday",
-      count: 0,
-    },
-    {
-      name:"Thursday",
-      count: 0,
-    },
-    {
-      name:"Friday",
-      count: 0,
-    },
-    {
-      name:"Saturday",
-      count: 0,
-    },
-    {
-      name:"Sunday",
-      count: 0,
-    },
-  ]);
+const DaysSelection = ({changeDayObj,dayArr}) => {
+  console.log(dayArr)
+  // const [weekDays, setWeekDays] = useState([
+  //   {
+  //     name:"Monday",
+  //     count: 0,
+  //   },
+  //   {
+  //     name:"Tuesday",
+  //     count: 0,
+  //   },
+  //   {
+  //     name:"Wednesday",
+  //     count: 0,
+  //   },
+  //   {
+  //     name:"Thursday",
+  //     count: 0,
+  //   },
+  //   {
+  //     name:"Friday",
+  //     count: 0,
+  //   },
+  //   {
+  //     name:"Saturday",
+  //     count: 0,
+  //   },
+  //   {
+  //     name:"Sunday",
+  //     count: 0,
+  //   },
+  // ]);
   // const weekDays = [
-  //   "Monday",
-  //   "Tuesday",
-  //   "Wednesday",
-  //   "Thursday",
-  //   "Friday",
-  //   "Saturday",
-  //   "Sunday",
-  // ];
+    //   "Monday",
+    //   "Tuesday",
+    //   "Wednesday",
+    //   "Thursday",
+    //   "Friday",
+    //   "Saturday",
+    //   "Sunday",
+    // ];
+    
+    const result = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ].map((day)=>{
+      let index = dayArr.findIndex(e=>e.name==day)
+      return {
+        name:day,
+        count:(index)=== -1 ?0:dayArr[index].count
+      }
+    })
+    const [weekDays, setWeekDays] = useState([...result])
   
   const countChange = (e)=>{
     const indexOfDay = weekDays.findIndex(item=>(item.name===e.target.name))
