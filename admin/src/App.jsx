@@ -22,6 +22,7 @@ import AttendancePermission from "./pages/SuperAdmin/AttendancePermission/Attend
 import PreviousAttendence from "./pages/Admin/PreviousAttendance/PreviousAttendance"
 import SubstituteTeacher from "./pages/Admin/Substitute Teacher/SubstituteTeacher"
 import ArangementClass from "./pages/Admin/ArangementClass/ArangementClass"
+import LoginRoute from "./protectrouter/LoginRoute"
 // import Header from "./Universal/header"
 
 function App() {
@@ -30,7 +31,10 @@ function App() {
     <div className="w-full overflow-hidden bg-dimWhite ">
       {/* <Header /> */}
       <Routes>
-        <Route path={'/'} element={<Login />} />
+        <Route path={'/'} element={<LoginRoute>
+         <Login />
+         </LoginRoute>
+         } />
         <Route path={'/teacherdashboard'} element={<ProtectedRoute>
           <TeacherDashboard />
         </ProtectedRoute>} />
