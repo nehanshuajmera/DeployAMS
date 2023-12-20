@@ -3,11 +3,28 @@
     width: 100%;
     color: #000;
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
     box-sizing: border-box;
 }
 
-.attendenceFormat h2 {
+.sheet{
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-around;
+}
+
+.attendenceFormat{
+    width: 60vw;
+    /* border: 1px solid green; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.markAttendanceMain h2 {
     text-align: center;
     font-size: 1.5rem;
     font-weight: 500;
@@ -16,15 +33,10 @@
 }
 
 .studentAttendanceTable {
-    align-self: center;
-    max-width: 95vw;
-    /* width: 90%; */
-    /* border: 1px solid red; */
+    max-width: 90%;
+    /* border: 1px solid green; */
     padding: 0.5rem;
     margin: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 /* .adminStudentTable{
@@ -52,7 +64,7 @@
 
 .studentTableData {
     /* border: 1px solid greenyellow; */
-    min-width: 6vw;
+    min-width: 8vw;
     padding: 1rem;
     text-align: center;
     /* font-size: 1rem; */
@@ -61,6 +73,7 @@
 
 .tablePageButtons{
     /* border: 1px solid gold; */
+    width: fit-content;
     padding: 1rem;
     margin: 0.5rem;
     display: flex;
@@ -69,7 +82,7 @@
 }
 
 .nAndpButtons{
-    margin: 0.2rem 3rem;
+    margin: 0.2rem 1rem;
     padding: 0.5rem;
     text-align: center;
     background-color: #000;
@@ -80,7 +93,7 @@
 }
 
 .pageNoDetails{
-    margin: 0.2rem 2rem;
+    margin: 0.2rem 0.5rem;
     padding: 0.5rem;
     text-align: center;
     font-weight: 500;
@@ -97,4 +110,74 @@
 .actionBtn img{
     height: 100%;
     width: 100%;
+}
+
+.moreFeatures{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5rem;
+}
+
+.previousAttendance{
+    border: 2px solid gray;
+    border-radius: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.previousAttendance button{
+    margin: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    /* border: 2px solid black; */
+    border-radius: 0.4rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.askForPermission{
+    /* width: 30vw; */
+    height: 40vh;
+    border: 2px solid gray;
+    border-radius: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.askForPermission h2{
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0.2rem;
+    padding: 0.2rem;
+}
+
+.askForPermissionText textarea{
+    display: flex;
+    font-size: 0.8rem;
+    border: 2px solid gray;
+    border-radius: 0.4rem;
+    margin: 0.2rem;
+    padding: 0.2rem;
+}
+
+.askForPermissionBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    border: 2px solid black;
+    border-radius: 0.4rem;
+}
+
+.askForPermissionBtn Button{
+    font-size: 1rem;
+    font-weight: 500;
 }

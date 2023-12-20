@@ -93,63 +93,70 @@ export default function MarkAttendance() {
 
   return (
     <div className='markAttendanceMain'>
-      <div className='attendenceFormat'>
-        <h2>Attendence Sheet</h2>
-        <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
-        <div className="studentAttendanceTable">
-          <table className='studentTable' {...getTableProps()}>
-            <thead>
-              {headerGroups.map((headerGroup) => (
-                <tr className='studentTableRow' {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <th className='studentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
-                      {column.render("Header")}
-                      <span>
-                        {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
-                      </span>
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-              {page.map((row) => {
-                prepareRow(row);
-                console.log(row)
-                return (
-                  <tr className='studentTableRow' {...row.getRowProps()} onClick={() => gotoUpdate(row)}>
-                    {row.cells.map((cell) => (
-                      <td className='studentTableData' {...cell.getCellProps()}>
-                        {cell.render("Cell")}
-                      </td>
+      <h2>Attendence Sheet</h2>
+      <div className='sheet'>
+        <div className='attendenceFormat'>
+          <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
+          <div className="studentAttendanceTable">
+            <table className='studentTable' {...getTableProps()}>
+              <thead>
+                {headerGroups.map((headerGroup) => (
+                  <tr className='studentTableRow' {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map((column) => (
+                      <th className='studentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
+                        {column.render("Header")}
+                        <span>
+                          {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
+                        </span>
+                      </th>
                     ))}
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        {page.length ?
-          <div className="tablePageButtons">
-            <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
-            <span className="pageNoDetails">
-              {' '}Page{' '}
-              <strong>
-                {pageIndex + 1} of {pageOptions.length}
-              </strong>
-            </span>
-            <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
+                ))}
+              </thead>
+              <tbody {...getTableBodyProps()}>
+                {page.map((row) => {
+                  prepareRow(row);
+                  console.log(row)
+                  return (
+                    <tr className='studentTableRow' {...row.getRowProps()} onClick={() => gotoUpdate(row)}>
+                      {row.cells.map((cell) => (
+                        <td className='studentTableData' {...cell.getCellProps()}>
+                          {cell.render("Cell")}
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
-          : <h2 className="noData">No Data</h2>}
-      </div>
-
-      <div className="askForPermission">
-        <div className="askForPermissionText">
-          <h2>Ask For Permission</h2>
-          <p>Please grant me permission to retake the attendence for Class Name of date</p>
+          {page.length ?
+            <div className="tablePageButtons">
+              <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
+              <span className="pageNoDetails">
+                {' '}Page{' '}
+                <strong>
+                  {pageIndex + 1} of {pageOptions.length}
+                </strong>
+              </span>
+              <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
+            </div>
+            : <h2 className="noData">No Data</h2>}
         </div>
-        <div className="askForPermissionBtn">
-          <button>Ask</button>
+
+        <div className='moreFeatures'>
+          <div className="askForPermission">
+            <h2>Ask For Permission</h2>
+            <div className="askForPermissionText">
+              <textarea name="permission" id="permission" cols="40" rows="5" placeholder='Type here to ask for Updating Attendance....'></textarea>
+            </div>
+            <div className="askForPermissionBtn">
+              <button>Ask</button>
+            </div>
+          </div>
+          <div className="previousAttendance">
+            <button>See Previous Attendance</button>
+          </div>
         </div>
       </div>
     </div>
