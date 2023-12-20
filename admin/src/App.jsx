@@ -17,13 +17,13 @@ import TeacherDashboard from "./pages/Admin/Dashboard/TeacherDashboard"
 import ProtectedRoute from "./protectrouter/ProtectedRoute"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
-import Header from "./Universal/header"
+// import Header from "./Universal/header"
 
 function App() {
 
   return (
     <div className="w-full overflow-hidden bg-dimWhite ">
-
+      {/* <Header /> */}
       <Routes>
         <Route path={'/'} element={<Login />} />
         <Route path={'/teacherdashboard'} element={<ProtectedRoute>
@@ -59,7 +59,9 @@ function App() {
         <Route path="/updateteacher/:id" element={<ProtectedRoute>
           < UpdateTeacher />
         </ProtectedRoute>} />
-        <Route path="/markattendence" element={<MarkAttendence />} />
+        <Route path="/markattendance" element={<ProtectedRoute>
+          < MarkAttendence />
+        </ProtectedRoute>} />
         <Route path="/alert" element={<Alert />} />
         <Route path="*" element={<ErrMsg />} />
       </Routes>
