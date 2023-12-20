@@ -5,9 +5,12 @@ import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice
 import GlobalFiltering from '../../../components/GlobalFiltering';
 import './AllSubject.css'
 import { useEffect } from 'react';
+import {useNavigate} from 'react-router-dom'
+import { deleteStudentAsync } from '../../../redux-toolkit/slices/crudstudentslice';
 
 export default function AllSubject() {
   const dispatch=useDispatch();
+  const navigate = useNavigate();
   
   // const logdata=useSelector((state)=>state.login)
   // useEffect(() => {
@@ -22,7 +25,9 @@ export default function AllSubject() {
   
   // const dataofsubjec=useSelector((state)=>state.fetchDetail.details);
   // console.log(dataofsubjec);
-  const [dataofstud, setdataofstud] = useState({ details: [] });
+
+  
+  const [dataofsubjec, setdataofsubjec] = useState({ details: [] });
   useEffect(() => {
     const unsub = async () => {
       try {
@@ -34,15 +39,15 @@ export default function AllSubject() {
     }
     unsub();
   }, [])
-  // setdataofstudent(useSelector((state)=>state.fetchDetail));
+  // setdataofsubjec(useSelector((state)=>state.fetchDetail));
 
-  const dataofstudent = useSelector((state) => state.fetchDetail);
+  const dataofsubject = useSelector((state) => state.fetchDetail);
   useEffect(() => {
-    console.log("data is comming", dataofstudent);
-    setdataofstud(dataofstudent)
-  }, [dataofstudent])
+    console.log("data is comming", dataofsubjec);
+    setdataofsubjec(dataofsubject)
+  }, [dataofsubject])
 
-  const data = React.useMemo(() => dataofstud.details, [dataofstud.details]);
+  const data = React.useMemo(() => dataofsubjec.details, [dataofsubjec.details]);
 
   const columns = React.useMemo(
     () => [
@@ -58,12 +63,13 @@ export default function AllSubject() {
         Header: 'Actions',
         Cell: (tableInstance) => {
           const { row: index } = tableInstance;
+          const {_id:itemId} = index.original
           return (
             <div>
-              <button className='actionBtn' onClick={() => console.log(index)}>
+              <button className='actionBtn' onClick={() => navigate(`/updatesubject/`+itemId,{state:{...index.original}})}>
                 <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
               </button>
-              <button className='actionBtn' onClick={() => console.log(index)}>
+              <button className='actionBtn' onClick={() => handleDelete(itemId)}>
                 <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
               </button>
             </div>
@@ -100,6 +106,15 @@ export default function AllSubject() {
     }, useGlobalFilter, useSortBy, usePagination);
 
   const { pageIndex, globalFilter } = state;
+
+    // delete the subject, api call function
+  const handleDelete = async(itemId)=>{
+    try {
+      await dispatch(deleteStudentAsync(itemId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className='allSubjectMain'>

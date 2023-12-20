@@ -2,6 +2,9 @@ import { useState } from "react";
 import SubjectForm from "../../../components/SubjectForm";
 
 import TopOfPage from "../../../components/TopOfPage";
+import { subjectFieldVerify } from "../../../action/InputFieldVerification";
+import { createSubjectAsync } from "../../../redux-toolkit/slices/crudsubjectslice";
+import { useDispatch } from "react-redux";
 
 
 
@@ -18,17 +21,24 @@ const data = {
 
 
 const CreateSubject = () => {
-  const {createItem,setMsg} = useAllData()
   const [subject, setSubject] = useState(data);
+  const dispatch = useDispatch();
 
   
   const HandleClick = ()=>{
     if(subjectFieldVerify(subject)){
-      createItem({API:API_Type.subject,data:subject})
+      try {
+        ;(async()=>{
+          await dispatch(createSubjectAsync({...subject}))
+        })()
+        
+      } catch (error) {
+        console.log(error)
+      }
     }
     else{
       let msg = "Fill all required fields"
-      setMsg({msg,msgType:msgType.WARNING})
+      // setMsg({msg,msgType:msgType.WARNING})
     }
   }
 

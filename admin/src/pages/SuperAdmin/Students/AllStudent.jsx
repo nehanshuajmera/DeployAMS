@@ -4,9 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import GlobalFiltering from '../../../components/GlobalFiltering';
 import './AllStudent.css'
 import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
+import { deleteStudentAsync } from '../../../redux-toolkit/slices/crudstudentslice';
+import { useNavigate } from 'react-router-dom';
 
 export default function AllStudent() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [dataofstud, setdataofstud] = useState({ details: [] });
   useEffect(() => {
     const unsub = async () => {
@@ -71,12 +74,13 @@ export default function AllStudent() {
         Header: 'Actions',
         Cell: (tableInstance) => {
           const { row: index } = tableInstance;
+          const {id:itemId} = index.original
           return (
             <div>
-              <button className='actionBtn' onClick={() => console.log(index)}>
+              <button className='actionBtn' onClick={() => navigate(`/updatestudent/`+itemId,{state:{...index.original}})}>
                 <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
               </button>
-              <button className='actionBtn' onClick={() => console.log(index)}>
+              <button className='actionBtn' onClick={() => handleDelete(itemId)}>
                 <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
               </button>
             </div>
@@ -114,6 +118,14 @@ export default function AllStudent() {
 
   const { pageIndex, globalFilter } = state;
 
+  const handleDelete = async(itemId)=>{
+    try {
+      await dispatch(deleteStudentAsync(itemId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className='allStudentMain'>
       <h2>All Students List</h2>
@@ -139,7 +151,7 @@ export default function AllStudent() {
               prepareRow(row);
               console.log(row)
               return (
-                <tr className='adminStudentTableRow' {...row.getRowProps()} onClick={() => gotoUpdate(row)}>
+                <tr className='adminStudentTableRow' {...row.getRowProps()}>
                   {row.cells.map((cell) => (
                     <td className='adminStudentTableData' {...cell.getCellProps()}>
                       {cell.render("Cell")}
