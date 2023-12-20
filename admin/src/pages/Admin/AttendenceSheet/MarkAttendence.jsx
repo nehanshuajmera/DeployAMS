@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import GlobalFiltering from '../../../components/GlobalFiltering';
 import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
 
-export default function MarkAttendence() {
+export default function MarkAttendance() {
   const dispatch = useDispatch();
   const [dataofstud, setdataofstud] = useState({ details: [] });
   useEffect(() => {
