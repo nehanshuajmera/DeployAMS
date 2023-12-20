@@ -10,7 +10,7 @@ const initialState = {
 
 export const updateAttendanceByPermissionAsync = createAsyncThunk('updateattendancebypermission/updateAttendanceByPermissionAsync', async (payload, { rejectWithValue }) => {
     try {
-        const response = await axios.post(`api/teacher/updateattendancebypermission/${payload.ID}`, payload.data);
+        const response = await axios.post(`/api/teacher/updateattendancebypermission/${payload.ID}`, payload.data);
         const msg = response.data.message;
 
         if (response.status === 200)

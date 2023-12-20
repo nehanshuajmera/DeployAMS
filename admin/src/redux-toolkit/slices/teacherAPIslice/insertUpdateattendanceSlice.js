@@ -10,7 +10,7 @@ const initialState = {
 
 export const updateAttendanceAsync = createAsyncThunk('attendanceUpdation/updateAttendanceAsync', async (payload, { rejectWithValue }) => {
   try {
-    const response = await axios.post('api/teacher/updateattendance', payload.data);
+    const response = await axios.post('/api/teacher/updateattendance', payload.data);
     const msg = response.data.message;
 
     if (response.status === 200)

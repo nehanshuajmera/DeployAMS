@@ -12,7 +12,7 @@ export const checkclassasync = createAsyncThunk('checkclass/checkclassasync', as
     try {
       
         
-            const response = await axios.get(`api/teacher/hasclasstoday/${payload.ID}`);
+            const response = await axios.get(`/api/teacher/hasclasstoday/${payload.ID}`);
             const msg = response.data.message;
 
               if(response.status===200)      
