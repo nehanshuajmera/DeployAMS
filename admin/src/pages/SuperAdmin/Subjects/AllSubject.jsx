@@ -6,6 +6,7 @@ import GlobalFiltering from '../../../components/GlobalFiltering';
 import './AllSubject.css'
 import { useEffect } from 'react';
 import {useNavigate} from 'react-router-dom'
+import { deleteStudentAsync } from '../../../redux-toolkit/slices/crudstudentslice';
 
 export default function AllSubject() {
   const dispatch=useDispatch();
@@ -62,12 +63,13 @@ export default function AllSubject() {
         Header: 'Actions',
         Cell: (tableInstance) => {
           const { row: index } = tableInstance;
+          const {_id:itemId} = index.original
           return (
             <div>
-              <button className='actionBtn' onClick={() => navigate(`/upadatesubject/${index.id}`)}>
+              <button className='actionBtn' onClick={() => navigate(`/updatesubject/`+itemId,{state:{...index.original}})}>
                 <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
               </button>
-              <button className='actionBtn' onClick={() => console.log(index)}>
+              <button className='actionBtn' onClick={() => handleDelete(itemId)}>
                 <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
               </button>
             </div>
@@ -104,6 +106,15 @@ export default function AllSubject() {
     }, useGlobalFilter, useSortBy, usePagination);
 
   const { pageIndex, globalFilter } = state;
+
+    // delete the subject, api call function
+  const handleDelete = async(itemId)=>{
+    try {
+      await dispatch(deleteStudentAsync(itemId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className='allSubjectMain'>

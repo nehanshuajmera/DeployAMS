@@ -8,6 +8,7 @@ import DeleteButton from "../../../components/DeleteButton";
 import { subjectFieldVerify } from "../../../action/InputFieldVerification";
 import { updateSubjectAsync } from "../../../redux-toolkit/slices/crudsubjectslice";
 import { useDispatch } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 
 
 const data = {
@@ -22,16 +23,18 @@ const data = {
 
 
 const UpdateSubject = () => {
-  const [subject, setSubject] = useState(data);
   const dispatch = useDispatch();
-
+  const {id} = useParams()
+  const {state} = useLocation()
   
+  // const [subject, setSubject] = useState(data);
+  const [subject, setSubject] = useState(state);
+
   const HandleClick = ()=>{
-    const itemId =''
     if(subjectFieldVerify(subject)){
       try {
         ;(async()=>{
-          await dispatch(updateSubjectAsync({Id:itemId,data:subject}))
+          await dispatch(updateSubjectAsync({ID:id,data:subject}))
         })()
         
       } catch (error) {

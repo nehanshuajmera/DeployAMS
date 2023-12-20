@@ -5,10 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
 import GlobalFiltering from '../../../components/GlobalFiltering';
 import { useEffect } from 'react';
+import { deleteTeacherAsync } from '../../../redux-toolkit/slices/crudteacherslice';
+import { useNavigate } from 'react-router-dom';
 
 export default function AllTeacher() {
 
   const dispatch=useDispatch();
+  const navigate = useNavigate();
   
   const logdata=useSelector((state)=>state.login)
   useEffect(() => {
@@ -54,12 +57,13 @@ export default function AllTeacher() {
         Header: 'Actions',
         Cell: (tableInstance) => {
           const { row: index } = tableInstance;
+          const {_id:itemId} = index.original
           return (
             <div>
-              <button className='actionBtn' onClick={() => console.log(index)}>
+              <button className='actionBtn' onClick={() => navigate(`/updateteacher/`+itemId,{state:{...index.original}})}>
                 <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
               </button>
-              <button className='actionBtn' onClick={() => console.log(index)}>
+              <button className='actionBtn' onClick={() => handleDelete(itemId)}>
                 <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
               </button>
             </div>
@@ -96,6 +100,14 @@ export default function AllTeacher() {
     }, useGlobalFilter, useSortBy, usePagination);
 
   const { pageIndex, globalFilter } = state;
+
+  const handleDelete = async(itemId)=>{
+    try {
+      await dispatch(deleteTeacherAsync(itemId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className='allTeacherMain'>
