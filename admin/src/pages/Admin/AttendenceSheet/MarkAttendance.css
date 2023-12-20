@@ -71,8 +71,7 @@
     font-weight: 500;
 }
 
-.tablePageButtons{
-    /* border: 1px solid gold; */
+.tablePageButtons_MarkAttendance{
     width: fit-content;
     padding: 1rem;
     margin: 0.5rem;
@@ -81,7 +80,7 @@
     align-items: center;
 }
 
-.nAndpButtons{
+.nAndpButtons_MarkAttendance{
     margin: 0.2rem 1rem;
     padding: 0.5rem;
     text-align: center;
@@ -92,7 +91,7 @@
     font-weight: 500;
 }
 
-.pageNoDetails{
+.pageNoDetails_MarkAttendance{
     margin: 0.2rem 0.5rem;
     padding: 0.5rem;
     text-align: center;

@@ -19,6 +19,9 @@ import Calendar from "./pages/SuperAdmin/Calendar/Calendar"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import AttendancePermission from "./pages/SuperAdmin/AttendancePermission/AttendancePermission"
+import PreviousAttendence from "./pages/Admin/PreviousAttendance/PreviousAttendance"
+import SubstituteTeacher from "./pages/Admin/Substitute Teacher/SubstituteTeacher"
+import ArangementClass from "./pages/Admin/ArangementClass/ArangementClass"
 // import Header from "./Universal/header"
 
 function App() {
@@ -30,6 +33,15 @@ function App() {
         <Route path={'/'} element={<Login />} />
         <Route path={'/teacherdashboard'} element={<ProtectedRoute>
           <TeacherDashboard />
+        </ProtectedRoute>} />
+        <Route path={'/previousattendance'} element={<ProtectedRoute>
+          <PreviousAttendence />
+        </ProtectedRoute>} />
+        <Route path={'/substituteteacher'} element={<ProtectedRoute>
+          <SubstituteTeacher />
+        </ProtectedRoute>} />
+        <Route path={'/arangementclass'} element={<ProtectedRoute>
+          <ArangementClass />
         </ProtectedRoute>} />
         <Route path={'/dashboard'} element={<ProtectedRoute>
           < Dashboard />

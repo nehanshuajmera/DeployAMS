@@ -1,28 +1,31 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
 import GlobalFiltering from '../../../components/GlobalFiltering';
 import { useEffect } from 'react';
+// import { deleteTeacherAsync } from '../../../redux-toolkit/slices/crudteacherslice';
+import { useNavigate } from 'react-router-dom';
 
 export default function SubstituteTeacher() {
 
-  const dispatch = useDispatch();
-
-  const logdata = useSelector((state) => state.login)
+  const dispatch=useDispatch();
+  const navigate = useNavigate();
+  
+  const logdata=useSelector((state)=>state.login)
   useEffect(() => {
-    const unsub = () => {
-      dispatch(fetchdetailasync({ apiname: "allteachers" }));
+    const unsub=()=>{
+       dispatch(fetchdetailasync({apiname:"allteachers"}));
     }
-
-    return () => {
-      unsub()
-    }
-  }, [logdata])
-
-  const dataofteacher = useSelector((state) => state.fetchDetail.details);
+   
+     return () => {
+       unsub()
+     }
+   }, [logdata])
+  
+  const dataofteacher=useSelector((state)=>state.fetchDetail.details);
   console.log(dataofteacher);
-  const data = React.useMemo(() => dataofteacher, [dataofteacher]);
+  const data = React.useMemo(() =>dataofteacher, [dataofteacher]);
   const columns = React.useMemo(
     () => [
       {
@@ -85,10 +88,18 @@ export default function SubstituteTeacher() {
 
   const { pageIndex, globalFilter } = state;
 
+  const handleDelete = async(itemId)=>{
+    try {
+      await dispatch(deleteTeacherAsync(itemId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className='allTeacherMain'>
-      <h2>Substitute Teachers List</h2>
-      <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
+       <h2>All Teacher List</h2>
+     <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
       <div className="allTeacherTable">
         <table className='adminTeacherTable' {...getTableProps()}>
           <thead>
@@ -109,7 +120,7 @@ export default function SubstituteTeacher() {
             {page.map((row) => {
               prepareRow(row);
               return (
-                <tr className='adminTeacherTableRow' {...row.getRowProps()} onClick={() => gotoUpdate(row)}>
+                <tr className='adminTeacherTableRow' {...row.getRowProps()} onClick={()=>gotoUpdate(row)}>
                   {row.cells.map((cell) => (
                     <td className='adminTeacherTableData' {...cell.getCellProps()}>
                       {cell.render("Cell")}
