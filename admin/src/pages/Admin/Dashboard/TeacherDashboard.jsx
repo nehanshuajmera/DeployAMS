@@ -36,10 +36,10 @@ export default function TeacherDashboard() {
           <div onClick={() => navigate("")}>CSE-3E</div>
           <div onClick={() => navigate("")}>CSE-5F</div>
         </div>
-        {/* <div className="teacherExtra">
+        <div className="teacherExtra">
           <div onClick={() => navigate("")}>Arrangement Class</div>
           <div onClick={() => navigate("")}>Notify Substitute Teacher</div>
-        </div> */}
+        </div>
       </div>
     </div>
   )
