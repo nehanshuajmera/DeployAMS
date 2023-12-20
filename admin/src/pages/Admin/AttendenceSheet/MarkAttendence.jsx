@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import GlobalFiltering from '../../../components/GlobalFiltering';
 import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
 import './MarkAttendance.css'
+import { useNavigate } from 'react-router-dom';
 
 export default function MarkAttendance() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [dataofstud, setdataofstud] = useState({ details: [] });
   useEffect(() => {
     const unsub = async () => {
@@ -131,15 +133,15 @@ export default function MarkAttendance() {
             </table>
           </div>
           {page.length ?
-            <div className="tablePageButtons">
-              <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
-              <span className="pageNoDetails">
+            <div className="tablePageButtons_MarkAttendance">
+              <button className='nAndpButtons_MarkAttendance' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
+              <span className="pageNoDetails_MarkAttendance">
                 {' '}Page{' '}
                 <strong>
                   {pageIndex + 1} of {pageOptions.length}
                 </strong>
               </span>
-              <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
+              <button className='nAndpButtons_MarkAttendance' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
             </div>
             : <h2 className="noData">No Data</h2>}
         </div>
@@ -148,14 +150,14 @@ export default function MarkAttendance() {
           <div className="askForPermission">
             <h2>Ask For Permission</h2>
             <div className="askForPermissionText">
-              <textarea name="permission" id="permission" cols="40" rows="5" placeholder='Type here to ask for Updating Attendance....'></textarea>
+              <textarea className='bg-dimwhite' name="permission" id="permission" cols="40" rows="5" placeholder='Type here to ask for Updating Attendance....'></textarea>
             </div>
             <div className="askForPermissionBtn">
               <button>Ask</button>
             </div>
           </div>
           <div className="previousAttendance">
-            <button>See Previous Attendance</button>
+            <button onClick={() => navigate("/previousattendance")}>See Previous Attendance</button>
           </div>
         </div>
       </div>
