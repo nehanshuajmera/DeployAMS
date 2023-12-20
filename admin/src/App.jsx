@@ -15,8 +15,10 @@ import Alert from "./pages/SuperAdmin/Alert&Notice/Alert"
 import MarkAttendence from "./pages/Admin/AttendenceSheet/MarkAttendence"
 import TeacherDashboard from "./pages/Admin/Dashboard/TeacherDashboard"
 import ProtectedRoute from "./protectrouter/ProtectedRoute"
+import Calendar from "./pages/SuperAdmin/Calendar/Calendar"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
+import AttendancePermission from "./pages/SuperAdmin/AttendancePermission/AttendancePermission"
 // import Header from "./Universal/header"
 
 function App() {
@@ -61,6 +63,12 @@ function App() {
         </ProtectedRoute>} />
         <Route path="/markattendance" element={<ProtectedRoute>
           < MarkAttendence />
+        </ProtectedRoute>} />
+        <Route path="/academiccalendar" element={<ProtectedRoute>
+          < Calendar />
+        </ProtectedRoute>} />
+        <Route path="/attendancepermission" element={<ProtectedRoute>
+          < AttendancePermission />
         </ProtectedRoute>} />
         <Route path="/alert" element={<Alert />} />
         <Route path="*" element={<ErrMsg />} />
