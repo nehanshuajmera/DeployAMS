@@ -14,7 +14,7 @@ export const createStudentasync = createAsyncThunk('studentCRUD/createStudentasy
         console.log(payload);
         // if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
         // {
-            const response = await axios.post('api/admin/createstudent',payload);
+            const response = await axios.post('/api/admin/createstudent',payload);
             const msg = response.data.message;
               
             if(response.status===200)      
@@ -34,7 +34,7 @@ export const updateStudentasync = createAsyncThunk('studentCRUD/updateStudentasy
         console.log(payload);
         // if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
         // {
-            const response = await axios.post('api/admin/updatestudent/'+ payload.ID,payload.data);
+            const response = await axios.post('/api/admin/updatestudent/'+ payload.ID,payload.data);
             //pass payload data as json format { id:"fghveuhfu",data:{updation data in json format}}
             const msg = response.data.message;
               
@@ -50,11 +50,11 @@ export const updateStudentasync = createAsyncThunk('studentCRUD/updateStudentasy
         return rejectWithValue(error.message);
     }
 });
-export const deleteStudentAsync = createAsyncThunk('studentCRUD/deleteStudentAsync', async (teacherId, { rejectWithValue }) => {
+export const deleteStudentAsync = createAsyncThunk('studentCRUD/deleteStudentAsync', async (studentId, { rejectWithValue }) => {
     try {
         // if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
         // {
-            const response = await axios.get(`api/admin/deletstudent/${teacherId}`);
+            const response = await axios.get(`/api/admin/deletestudent/${studentId}`);
             const msg = response.data.message;
             
             if(response.status === 200)       

@@ -14,7 +14,7 @@ export const createTeacherAsync = createAsyncThunk('teacherCRUD/createTeacherAsy
         console.log(payload);
         // if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
         // {
-            const response = await axios.post('api/admin/createteacher', payload);
+            const response = await axios.post('/api/admin/createteacher', payload);
             const msg = response.data.message;
               
             if(response.status === 200)      
@@ -34,7 +34,7 @@ export const updateTeacherAsync = createAsyncThunk('teacherCRUD/updateTeacherAsy
         console.log(payload);
         // if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
         // {
-            const response = await axios.post(`api/admin/updateteacher/${payload.ID}`, payload.data);
+            const response = await axios.post(`/api/admin/updateteacher/${payload.ID}`, payload.data);
             // pass payload data as JSON format { id: "fghveuhfu", data: {updation data in JSON format}}
             const msg = response.data.message;
               
@@ -56,7 +56,7 @@ export const deleteTeacherAsync = createAsyncThunk('teacherCRUD/deleteTeacherAsy
     try {
         // if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
         // {
-            const response = await axios.get(`api/admin/deleteteacher/${teacherId}`);
+            const response = await axios.get(`/api/admin/deleteteacher/${teacherId}`);
             const msg = response.data.message;
             
             if(response.status === 200)       

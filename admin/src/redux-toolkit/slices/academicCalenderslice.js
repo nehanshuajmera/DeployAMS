@@ -14,7 +14,7 @@ const initialState = {
 // Async thunk for creating
 export const createAcademicAsync = createAsyncThunk('AcademicCalender/createAcademicAsync', async (payload, { rejectWithValue }) => {
     try {
-        const response = await axios.post('api/calander/create-academic-calendar', {
+        const response = await axios.post('/api/calander/create-academic-calendar', {
             startDate:payload.startDate,
             endDate:payload.endDate
         });
@@ -37,7 +37,7 @@ export const createAcademicAsync = createAsyncThunk('AcademicCalender/createAcad
 // Async thunk for updating holiday
 export const updateHolidayAsync = createAsyncThunk('AcademicCalender/updateHolidayAsync', async (payload, { rejectWithValue }) => {
     try {
-        const response = await axios.post('api/calander/create-academic-calendar', {
+        const response = await axios.post('/api/calander/create-academic-calendar', {
             date:payload.date,
             holiday:payload.holiday,
             event:payload.event
@@ -62,7 +62,7 @@ export const updateHolidayAsync = createAsyncThunk('AcademicCalender/updateHolid
 export const fetchAcademicAsync = createAsyncThunk('AcademicCalender/fetchAcademicAsync', async (payload, { rejectWithValue }) => {
     try {
 
-        const response = await axios.get('api/calander/academiccalendar');
+        const response = await axios.get('/api/calander/academiccalendar');
        const msg = response.data.message
         
         if (msg !== 'No academic calendar entries found')
