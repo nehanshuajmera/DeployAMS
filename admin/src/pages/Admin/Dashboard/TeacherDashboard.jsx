@@ -9,8 +9,7 @@ export default function TeacherDashboard() {
 
   const handellogout = () => {
     dispatch(logoutAsync());
-
-    navigate("/")
+navigate("/")
   }
   return (
     <div className='teacherDashboard'>
