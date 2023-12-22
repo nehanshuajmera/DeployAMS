@@ -13,7 +13,10 @@ export default function LoginRoute({ children }) {
     if (user) {
       navigate('/teacherdashboard'); // Redirect to login page if not logged in
     }
-  }, [datastate.isLogin, navigate]);
+    else{
+      navigate('/')
+    }
+  }, [datastate, navigate]);
 
   return children; // Render the Login content if logged in
 }

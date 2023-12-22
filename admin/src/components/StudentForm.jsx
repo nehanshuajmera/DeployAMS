@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
+import SubjectSearch from "./SubjectSearch";
 
 // import { useAdmin } from "../context/AdminContext";
 
@@ -15,6 +16,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
     });
   };
 
+  // remove subject
   const removeSubject = (id) => {
     const newList = student.subjects.filter((subject) => {
       return subject.id != id;
@@ -23,6 +25,16 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
       return {
         ...prev,
         subjects: newList,
+      };
+    });
+  };
+
+  // change the subject's array
+  const changeSubjectList = (subjectsList) => {
+    setStudent((prev) => {
+      return {
+        ...prev,
+        subjects: subjectsList,
       };
     });
   };
@@ -366,6 +378,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
         </div>
       </div>
       {/* <SearchBar  /> */}
+      <SubjectSearch subjects={student.subjects} changeSubjectList={changeSubjectList} />
       <div className="flex justify-end items-center">
         <button className="button1" onClick={() => HandleClick()}>
           Save

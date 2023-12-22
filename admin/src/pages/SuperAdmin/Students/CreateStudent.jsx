@@ -22,14 +22,14 @@ const data = {
   batch: "",
   password: "",
   subjects: [
-    // {
-    //   name: "OS",
-    //   id: 1,
-    // },
-    // {
-    //   name: "DBMS",
-    //   id: 2,
-    // },
+    {
+      name: "OS",
+      id: 1,
+    },
+    {
+      name: "DBMS",
+      id: 2,
+    },
   ],
 };
 
