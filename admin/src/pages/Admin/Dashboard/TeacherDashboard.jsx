@@ -37,7 +37,7 @@ export default function TeacherDashboard() {
           <div onClick={() => navigate("")}>CSE-5F</div>
         </div>
         <div className="teacherExtra">
-          <div onClick={() => navigate("/grantedpermission")}>Permission Granted</div>
+          {/* <div onClick={() => navigate("/grantedpermission")}>Permission Granted</div> */}
           <div onClick={() => navigate("/arangementclass")}>Arrangement Class</div>
           <div onClick={() => navigate("/substituteteacher")}>Notify Substitute Teacher</div>
         </div>
