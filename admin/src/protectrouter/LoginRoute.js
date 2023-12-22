@@ -7,11 +7,6 @@ export default function LoginRoute({ children }) {
   const login = useSelector((state) => state.login);
 
   const datastate = JSON.parse(localStorage.getItem('reduxState'));
-
-  if (datastate === null) {
-    localStorage.setItem("reduxState", JSON.stringify({isLogin: false,isAuthenticated: false,iserror: false,usertype: '', errmsg: ''  }));
-  }
-
   const user = datastate === null ? login.isLogin : datastate.isLogin;
   useEffect(() => {
 
