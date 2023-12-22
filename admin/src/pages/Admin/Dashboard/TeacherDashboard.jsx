@@ -9,7 +9,8 @@ export default function TeacherDashboard() {
 
   const handellogout = () => {
     dispatch(logoutAsync());
-navigate("/")
+
+    navigate("/")
   }
   return (
     <div className='teacherDashboard'>
@@ -36,7 +37,6 @@ navigate("/")
           <div onClick={() => navigate("")}>CSE-5F</div>
         </div>
         <div className="teacherExtra">
-          {/* <div onClick={() => navigate("/grantedpermission")}>Permission Granted</div> */}
           <div onClick={() => navigate("/arangementclass")}>Arrangement Class</div>
           <div onClick={() => navigate("/substituteteacher")}>Notify Substitute Teacher</div>
         </div>
