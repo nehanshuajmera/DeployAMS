@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { setWithExpiry } from '../../protectrouter/handelttl';
 
 const storedState = JSON.parse(localStorage.getItem('reduxState'));
 const initialState = {
@@ -73,7 +74,8 @@ export const loginslice = createSlice({
                 console.log("seting value");
                 console.log(state);
                 // localStorage.clear();
-                localStorage.setItem('reduxState', JSON.stringify(state));
+                setWithExpiry('reduxState',state)
+               
                 
             })
             .addCase(loginAsync.rejected, (state, action) => {
@@ -86,7 +88,7 @@ export const loginslice = createSlice({
                         console.log('out');
                 state={...initialState}
                localStorage.clear;
-                localStorage.setItem('reduxState',JSON.stringify(initialState));
+               setWithExpiry('reduxState',initialState)
              
             })
             .addCase(logoutAsync.rejected, (state,action) => {
