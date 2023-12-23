@@ -1,28 +1,51 @@
 import { useEffect, useReducer, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IoIosClose } from "react-icons/io";
+import { fetchdetailasync } from "../redux-toolkit/slices/fetchdetailslice";
 
 const SubjectSearch = ({ subjects, changeSubjectList }) => {
-  const subjectData = useSelector((state) => state.fetchDetail.details);
-  console.log(subjectData);
-  const [searchResult, setSearchResult] = useState([...subjectData]);
+  const dispatch = useDispatch()
   const [search, setSearch] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState(subjects);
+  const [selectedSubject, setSelectedSubject] = useState([...subjects]);
+  // console.log(`"selectedSubject" ${selectedSubject}`)
+  
+  // fetch all subjects 
+  useEffect(() => {
+    const unsub=async()=>{
+      try{
+
+        await dispatch(fetchdetailasync({apiname:"/allsubjects"}));
+
+      }catch(error){
+          console.log(error);
+      }
+    }
+   
+    unsub();
+   }, [])
+
+  const allSubjectData = useSelector(state=>state.fetchDetail.details)  
+  
+  const [searchResult, setSearchResult] = useState([...allSubjectData]);
 
   //   add subject
-  const addSubject = (id) => {
-    const index = searchResult.findIndex((e) => e.id === id);
-    const newSub = subjectData[index];
+  const addSubject = (sub_id) => {
+    // check if subject is already in the Selected Array 
+    if(selectedSubject.find(ele=>ele._id===sub_id)){
+      return
+    }
+    // add new Subject
+    const newSub = searchResult.filter(element=>element._id==sub_id);
     setSelectedSubject((prev) => {
-      prev.push(newSub);
+       return [...prev,...newSub];
     });
-    changeSubjectList([...selectedSubject]);
   };
 
   // remove subject
-  const removeSubject = (id) => {
+  const removeSubject = (sub_id) => {
+    console.log(sub_id)
     const newList = selectedSubject.filter((subject) => {
-      return subject.id != id;
+      return subject._id != sub_id;
     });
     setSelectedSubject(newList);
   };
@@ -31,7 +54,7 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
     setSearch(e.target.value);
     console.log(search);
     if (search === "") {
-      setSearchResult([...subjectData]);
+      setSearchResult([...allSubjectData]);
     } else {
       const resultOfSearch = searchResult.filter((item) => {
         console.log(item.subject_name.toLowerCase());
@@ -44,17 +67,16 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
     }
   };
 
-  // to set new result when subjectData changes
+  // to set new result when allSubjectData changes
   useEffect(() => {
-    setSearchResult([...subjectData]);
-    console.log("useEffect");
-  }, [subjectData]);
+    setSearchResult([...allSubjectData]);
+  }, [allSubjectData]);
 
-  //   update dropdown list on every search and on update of subjectData collection
+  //   update dropdown list on every search and on update of allSubjectData collection
   useEffect(() => {
     (() => {
       if (search === "") {
-        setSearchResult([...subjectData]);
+        setSearchResult([...allSubjectData]);
       } else {
         const resultOfSearch = searchResult.filter((item) => {
           console.log(item.subject_name.toLowerCase());
@@ -66,41 +88,53 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
         setSearchResult([...resultOfSearch]);
       }
     })();
-  }, [search, subjectData]);
+  }, [search, allSubjectData]);
 
   //   change selectedSubject state on change of subjects array
+  // useEffect(() => {
+  //   setSelectedSubject(subjects);
+  // }, [subjects]);
+ 
+  //   change the of subjects array 
   useEffect(() => {
-    setSelectedSubject(subjects);
-  }, [subjects]);
+    console.log(selectedSubject)
+    changeSubjectList([...selectedSubject]);
+  }, [selectedSubject]);
+
+
 
   return (
     <div className="flex flex-col gap-3 col-span-2  ">
       <div className="relative w-[300px] md:w-[400px]">
-        <input
-          type="text"
+        <select
+          // type="text"
           name="search"
           id="search"
           className="inputBox border-[1px] border-gray-500 w-[300px] md:w-[400px] peer/search"
-          value={search || ""}
-          onChange={(e) => searchFunc(e)}
-        />
+          // value={search}
+          onChange={(e) => addSubject(e.target.value)}
+        >
         {/* dropdown */}
-        <div className="absolute w-full h-[95px] bg-[#FFFBF5] left-0  hidden peer-focus/search:block">
-          <div className="flexStart flex-col">
+        {/* <div className="absolute w-full h-[95px] bg-[#FFFBF5] left-0  hidden peer-focus/search:block peer-active/search:block"> */}
+          {/* <div className="flexStart flex-col"> */}
+          <option value={null}>Add new Subject</option>
             {searchResult.map((data) => {
-              console.log(data.subject_name);
               return (
-                <div
+                <option
                   key={data._id}
-                  className="text-black "
-                  onClick={() => addSubject(data._id)}
+                  className="text-black cursor-pointer"
+                  value={data._id}
+                  // onClick={() => addSubject(data._id)}
+                  // onSelect={() => addSubject(data._id)}
+                  // onSelect={() => console.log(data._id)}
                 >
-                  {data.subject_name}
-                </div>
+                  {data.subject_name} - {data.course_code}
+                </option>
               );
             })}
-          </div>
-        </div>
+          {/* </div> */}
+        {/* </div> */}
+        </select>
       </div>
       {/* list of selected subject */}
       <div className="flex gap-3 flex-wrap mt-[100px] w-[300px] md:w-[400px]">
@@ -119,13 +153,13 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
               selectedSubject.map((subject) => {
                 return (
                   <tr key={subject.id} className="grid grid-cols-6">
-                    <td className="col-span-3 text-center">{subject.name}</td>
+                    <td className="col-span-3 text-center">{subject.subject_name}</td>
                     <td className="col-span-2 text-center">
-                      {subject.courseCode}
+                      {subject.course_code}
                     </td>
                     <td
                       className="col-span-1 text-center right-2 text-3xl flexCenter cursor-pointer"
-                      onClick={() => removeSubject(subject.id)}
+                      onClick={() => removeSubject(subject._id)}
                     >
                       <IoIosClose />
                     </td>
