@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import GlobalFiltering from '../../../components/GlobalFiltering';
 import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
 import './MarkAttendance.css'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function MarkAttendance() {
+  const sub_id = useParams()
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [dataofstud, setdataofstud] = useState({ details: [] });
@@ -23,12 +24,14 @@ export default function MarkAttendance() {
   }, [])
   // setdataofstudent(useSelector((state)=>state.fetchDetail));
 
-  const dataofstudent = useSelector((state) => state.fetchDetail);
+  const dataofstudent = useSelector((state) => state.fetchDetail).filter(student=>student.subjects.find(subject=>subject._id === sub_id));
+
   useEffect(() => {
     console.log("data is comming", dataofstudent);
     setdataofstud(dataofstudent)
   }, [dataofstudent])
 
+  
   const data = React.useMemo(() => dataofstud.details, [dataofstud.details]);
 
   const columns = React.useMemo(
