@@ -125,21 +125,39 @@ const all_students=async (req, res) => {
       // Map students and get their subjects and teacher details
       const studentsWithSubjectsAndTeachers = await Promise.all(
         students.map(async (student) => {
-          const subjects = await Subject.find({ subject_id: { $in: student.subjects.map(sub => sub.subject_id) } }).populate('teacher_id');
+          // const subjects = await Subject.find({ subject_id: { $in: student.subjects.map(sub => sub.subject_id) } }).populate('teacher_id');
           
-          const studentSubjects = subjects.map(subject => ({
-            subject_id: subject.subject_id,
-            subject_name: subject.subject_name,
-            course_code: subject.course_code,
+          // const studentSubjects = subjects.map(subject => ({
+          //   subject_id: subject.subject_id,
+          //   subject_name: subject.subject_name,
+          //   course_code: subject.course_code,
             
-            teacher: {
-              teacher_id: subject.teacher_id.teacher_id,
-              name: subject.teacher_id.name,
-              email: subject.teacher_id.email,
-              phone_no: subject.teacher_id.phone_no,
-            },
-          }));
+          //   teacher: {
+          //     teacher_id: subject.teacher_id.teacher_id,
+          //     name: subject.teacher_id.name,
+          //     email: subject.teacher_id.email,
+          //     phone_no: subject.teacher_id.phone_no,
+          //   },
+          // }));
           
+          
+          // return {
+          //   id: student._id,
+          //   name: student.name,
+          //   enrollment_no: student.enrollment_no,
+          //   scholar_no: student.scholar_no,
+          //   email: student.email,
+          //   phone_no: student.phone_no,
+          //   branch: student.branch,
+          //   section: student.section,
+          //   batch: student.batch,
+          //   year: student.year,
+          //   programme: student.programme,
+          //   faculty: student.faculty,
+          //   specialisation: student.specialisation,
+          //   subjects: studentSubjects,
+          // };
+
           return {
             id: student._id,
             name: student.name,
@@ -154,7 +172,7 @@ const all_students=async (req, res) => {
             programme: student.programme,
             faculty: student.faculty,
             specialisation: student.specialisation,
-            subjects: studentSubjects,
+            subjects: student.subjects,
           };
         })
       );
