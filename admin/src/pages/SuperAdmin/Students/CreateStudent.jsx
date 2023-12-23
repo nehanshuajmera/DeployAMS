@@ -46,6 +46,7 @@ const CreateStudent = () => {
       try{
 
         await dispatch(createStudentasync({...student}));
+        // const studentState = useSelector(state=>state.crudstudent)
 
       }catch(error){
           console.log(error);
