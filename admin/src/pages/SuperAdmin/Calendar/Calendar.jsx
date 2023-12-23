@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useImperativeHandle, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { createAcademicAsync } from '../../../redux-toolkit/slices/academicCalenderslice'
+import { createAcademicAsync, updateHolidayAsync } from '../../../redux-toolkit/slices/academicCalenderslice'
 import './Calendar.css'
 
 const semDate = {
@@ -8,8 +8,20 @@ const semDate = {
   endDate: '',
 }
 
+const holidayDetail = {
+  Date: '',
+  holiday: true,
+  event: '',
+}
+
+
+
 export default function Calendar() {
   const [dates, setDates] = useState(semDate)
+  const [holiday , setHoliday] = useState(holidayDetail)
+  
+
+
   const dispatch = useDispatch()
 
   const changeHandler = (e) => {
@@ -21,8 +33,17 @@ export default function Calendar() {
     })
     console.log(dates)
   }
+  const HolidaychangeHandler = (e) => {
+    setHoliday(prev => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      }
+    })
+    console.log(holiday)
+  }
 
-  const HandleClick = () => {
+  const CreateSemester = () => {
 
     ; (async () => {
       try {
@@ -35,9 +56,34 @@ export default function Calendar() {
 
   }
 
+  const UpdateHoliday = () => {
+console.log("updateHoliday")
+    ; (async () => {
+      try {
+        await dispatch(updateHolidayAsync({ ...holiday }));
+       
+      } catch (error) {
+        console.log(error);
+      }
+    })()
+    
+  }
+  useEffect(() => { 
+    ; (async () => {
+      try {
+        await dispatch(fetchAcademicAsync());
+       
+      } catch (error) {
+        console.log(error);
+      }
+    })()
+    
+  },[])
+  const fetchcalendar=useSelector((state)=>state.academicCalender.detail.message)
+  
   return (
     <div className='flex justify-center w-full flex-col bg-dimWhite'>
-      {/* Semister start-end Form  */}
+      {/* Semester start-end Form  */}
       <div className="addDateSide flex p-1 justify-center items-center">
         <div className='w-1/3 m-10 p-4 flex flex-col items-center justify-center'>
           <h3 className='m-1 p-1 text-center font-bold text-lg'>Academic Calendar</h3>
@@ -59,34 +105,41 @@ export default function Calendar() {
               <input className='p-1 m-1' type="date" id="endDate" name="endDate" value={dates.endDate} onChange={(e) => changeHandler(e)} />
             </div>
           </div>
-          <div className='button1 cursor-pointer mt-4 w-fit self-center' onClick={() => HandleClick()}>Submit</div>
+          <div className='button1 cursor-pointer mt-4 w-fit self-center' onClick={() => CreateSemester()}>Submit</div>
         </div>
+        {/* add holiday form */}
         <div>
           <h3 className='m-1 p-1 text-center font-bold text-lg'>Add Holiday</h3>
           <div className="holidayDate">
             <div >
-              <label className='p-1 m-1' htmlFor="startDate">Holiday Date:</label>
-              <input className='p-1 m-1' type="date" id="startDate" name="startDate" value={dates.startDate} onChange={(e) => changeHandler(e)} />
+              <label className='p-1 m-1' htmlFor="Date">Holiday Date:</label>
+              <input className='p-1 m-1' type="date" id="Date" name="Date" value={holiday.Date} onChange={(e) => HolidaychangeHandler(e)} />
             </div>
             <div>
               <label className='p-1 m-1' for="holiday">Holiday name:</label>
-              <input className='p-1 m-1 border-2 border-gray-600 rounded' type="text" id="holiday" name="holiday"></input>
+              <input className='p-1 m-1 border-2 border-gray-600 rounded' type="text" id="event" name="event" value={holiday.event} onChange={(e) => HolidaychangeHandler(e)} />
             </div>
           </div>
-          <div className='button1 cursor-pointer mt-4 w-fit self-center' onClick={() => HandleClick()}>Submit</div>
+          <div className='button1 cursor-pointer mt-4 w-fit self-center' onClick={() => UpdateHoliday()}>Submit</div>
         </div>
       </div>
       <div className="addHolidayInCalender">
-        <div className="dateRelatedData rounded">
-          <h4>Date</h4>
-          <h4>Day</h4>
-          <h4>Name Of Holiday</h4>
-        </div>
-        <div className="dateRelatedData rounded">
-          <h4>Date</h4>
-          <h4>Day</h4>
-          <h4>Name Of Holiday</h4>
-        </div>
+        
+          {
+            fetchcalendar&&
+            fetchcalendar.map( date =>{
+              return(
+
+                <div key={date._id} className="dateRelatedData rounded">
+            <h4> {date.Date} </h4>
+            <h4>{date.day}</h4>
+            <h4>{date.event}</h4>
+          </div>
+              )
+            })
+          }
+       
+       
         <div className="dateRelatedData rounded">
           <h4>Date</h4>
           <h4>Day</h4>
