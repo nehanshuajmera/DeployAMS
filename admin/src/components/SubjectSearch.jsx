@@ -6,27 +6,29 @@ import { fetchdetailasync } from "../redux-toolkit/slices/fetchdetailslice";
 const SubjectSearch = ({ subjects, changeSubjectList }) => {
   const dispatch = useDispatch()
   const [search, setSearch] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState([...subjects]);
-  // console.log(`"selectedSubject" ${selectedSubject}`)
   
+  // console.log(`"selectedSubject" ${selectedSubject}`)
   // fetch all subjects 
   useEffect(() => {
     const unsub=async()=>{
       try{
-
+        
         await dispatch(fetchdetailasync({apiname:"/allsubjects"}));
-
+        
       }catch(error){
           console.log(error);
       }
     }
-   
+    
     unsub();
-   }, [])
-
+  }, [])
+  
   const allSubjectData = useSelector(state=>state.fetchDetail.details)  
   
   const [searchResult, setSearchResult] = useState([...allSubjectData]);
+
+  const [selectedSubject, setSelectedSubject] = useState(allSubjectData.filter(subj=>subjects.find(elem=>elem._id==subj._id)));
+
 
   //   add subject
   const addSubject = (sub_id) => {

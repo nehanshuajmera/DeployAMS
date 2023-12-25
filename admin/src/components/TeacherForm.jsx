@@ -4,7 +4,7 @@ import SubjectSearch from "./SubjectSearch";
 
 const TeacherForm = ({ teacher, setTeacher, HandleClick }) => {
 
-  
+  console.log(teacher)
   const ChangeHandler = (e) => {
     setTeacher((prev) => {
       return {
