@@ -1,6 +1,6 @@
 import React, { useEffect, useImperativeHandle, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { createAcademicAsync, updateHolidayAsync } from '../../../redux-toolkit/slices/academicCalenderslice'
+import { useDispatch, useSelector } from 'react-redux'
+import { createAcademicAsync, fetchAcademicAsync, updateHolidayAsync } from '../../../redux-toolkit/slices/academicCalenderslice'
 import './Calendar.css'
 
 const semDate = {
@@ -19,6 +19,8 @@ const holidayDetail = {
 export default function Calendar() {
   const [dates, setDates] = useState(semDate)
   const [holiday , setHoliday] = useState(holidayDetail)
+  // below option is for conversion of date from "2024-01-01T00:00:00.000Z" to " 1 jan 2024 "
+  const options = { year: 'numeric', month: 'short', day: 'numeric' };
   
 
 
@@ -68,19 +70,38 @@ console.log("updateHoliday")
     })()
     
   }
-  useEffect(() => { 
-    ; (async () => {
-      try {
+  useEffect(() => {
+    const unsub=async()=>{
+      try{
+
         await dispatch(fetchAcademicAsync());
-       
-      } catch (error) {
-        console.log(error);
+
+      }catch(error){
+          console.log(error);
       }
-    })()
-    
-  },[])
-  const fetchcalendar=useSelector((state)=>state.academicCalender.detail.message)
+    }
+   
+    unsub();
+   }, [])
+
+   const convertDate = (inputDate)=>{
+    const dateObj = new Date(inputDate);
+
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const formattedDate = dateObj.toLocaleDateString('en-US', options);
+    return formattedDate
+   }
   
+  const fetchcalendar=useSelector((state)=>state.academicCalender.detail)
+  
+  const [calender,setCalender] = useState([...fetchcalendar])
+
+  useEffect(()=>{
+     setCalender( calender.sort((a, b) => new Date(a.date) - new Date(b.date)))
+     console.log(fetchcalendar)
+    console.log(calender)
+  },[fetchcalendar])
+
   return (
     <div className='flex justify-center w-full flex-col bg-dimWhite'>
       {/* Semester start-end Form  */}
@@ -123,24 +144,25 @@ console.log("updateHoliday")
           <div className='button1 cursor-pointer mt-4 w-fit self-center' onClick={() => UpdateHoliday()}>Submit</div>
         </div>
       </div>
-      <div className="addHolidayInCalender">
-        
+      {/* calender  */}
+      <div className="addHolidayInCalender">        
           {
-            fetchcalendar&&
-            fetchcalendar.map( date =>{
+            calender&&
+            calender.map( Date =>{
               return(
-
-                <div key={date._id} className="dateRelatedData rounded">
-            <h4> {date.Date} </h4>
-            <h4>{date.day}</h4>
-            <h4>{date.event}</h4>
-          </div>
+                <div key={Date._id} className="dateRelatedData rounded">                 
+                  <h4> {convertDate(Date.date)} </h4>
+                  <h4>{Date.day}</h4>
+                  {
+                    Date.event=="No event"?<></>:<h4>{Date.event}</h4>
+                  }
+                </div>
               )
             })
           }
        
        
-        <div className="dateRelatedData rounded">
+        {/* <div className="dateRelatedData rounded">
           <h4>Date</h4>
           <h4>Day</h4>
           <h4>Name Of Holiday</h4>
@@ -449,7 +471,7 @@ console.log("updateHoliday")
           <h4>Date</h4>
           <h4>Day</h4>
           <h4>Name Of Holiday</h4>
-        </div>
+        </div> */}
       </div>
     </div>
   )
