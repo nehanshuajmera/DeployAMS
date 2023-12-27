@@ -77,7 +77,7 @@ function App() {
         <Route path="/updateteacher/:id" element={<ProtectedRoute>
           < UpdateTeacher />
         </ProtectedRoute>} />
-        <Route path="/markattendance" element={<ProtectedRoute>
+        <Route path="/markattendance/:id" element={<ProtectedRoute>
           < MarkAttendence />
         </ProtectedRoute>} />
         <Route path="/academiccalendar" element={<ProtectedRoute>

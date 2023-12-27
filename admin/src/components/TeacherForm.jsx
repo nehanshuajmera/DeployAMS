@@ -1,9 +1,10 @@
 import { useState } from "react";
+import SubjectSearch from "./SubjectSearch";
 // import { useAdmin } from "../context/AdminContext";
 
 const TeacherForm = ({ teacher, setTeacher, HandleClick }) => {
-
-
+  console.log(teacher)
+  console.log(teacher)
   const ChangeHandler = (e) => {
     setTeacher((prev) => {
       return {
@@ -21,6 +22,16 @@ const TeacherForm = ({ teacher, setTeacher, HandleClick }) => {
       return {
         ...prev,
         subjects: newList,
+      };
+    });
+  };
+
+  // change the subject's array
+  const changeSubjectList = (subjectsList) => {
+    setTeacher((prev) => {
+      return {
+        ...prev,
+        subjects: subjectsList,
       };
     });
   };
@@ -168,31 +179,11 @@ const TeacherForm = ({ teacher, setTeacher, HandleClick }) => {
           >
             Subjects
           </label>
-          <div className="flex flex-col gap-3 col-span-2 ">
-            <input
-              type="text"
-              name="subjects"
-              id="subjects"
-              className="inputBox md:w-[340px] outline-none bg-dimGray  border-secondary peer/subjects focus:border-primary focus:border-[1px] "
-              // value={teacher.subject}
-              // onChange={(e) => ChangeHandler(e)}
-              // value={subject}
-              // onChange={(e) => setSubject(e.target.value)}
-              placeholder="Subject"
-            />
-            <div className="flex gap-3 flex-wrap">
-              {teacher.subjects.map((subject) => (
-                <SubjectCollection
-                  key={subject.id}
-                  subject={subject}
-                  removeSubject={removeSubject}
-                />
-              ))}
-            </div>
-          </div>
+          {/* <SearchBar  /> */}
+          <SubjectSearch subjects={teacher.subjects} changeSubjectList={changeSubjectList} />
+          
         </div>
       </div>
-      
       <div className="flex justify-end items-center">
         <button className="button1" onClick={HandleClick}>
           Save
@@ -207,10 +198,10 @@ const TeacherForm = ({ teacher, setTeacher, HandleClick }) => {
 const SubjectCollection = ({ subject, removeSubject }) => {
   return (
     <div className="bg-primary relative text-white pl-3 py-2 rounded-3xl flex justify-between items-center gap-1">
-      <p>{subject.name}</p>
+      <p>{subject.subject_name}</p>
       <div
         className=" right-2 text-3xl flexCenter cursor-pointer"
-        onClick={() => removeSubject(subject.id)}
+        onClick={() => removeSubject(subject._id)}
       >
         <IoIosClose />
       </div>
@@ -219,23 +210,6 @@ const SubjectCollection = ({ subject, removeSubject }) => {
 };
 
 
-const SubjectSearch = ({selectedSubject})=>{
-  const {allsubject} = useAdmin()
-  const listOfSubject = [...allsubject]
-  return(
-    <div>
-      {
-        listOfSubject.map(subject=>{
-          return(
-            <div key={subject}>
-              {subject}
-            </div>
-          )
-        })
-      }
-    </div>
-  )
-}
 
 
 
