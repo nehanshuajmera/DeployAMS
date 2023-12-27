@@ -365,15 +365,6 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               onChange={(e) => setSubject(e.target.value)}
               placeholder="Subject"
             />
-            <div className="flex gap-3 flex-wrap">
-              {student.subjects.map((subject) => (
-                <SubjectCollection
-                  key={subject._id}
-                  subject={subject}
-                  removeSubject={removeSubject}
-                />
-              ))}
-            </div>
           </div>
         </div>
       </div>
@@ -383,20 +374,6 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
         <button className="button1" onClick={() => HandleClick()}>
           Save
         </button>
-      </div>
-    </div>
-  );
-};
-
-const SubjectCollection = ({ subject, removeSubject }) => {
-  return (
-    <div className="bg-primary relative text-white pl-3 py-2 rounded-3xl flex justify-between items-center gap-1">
-      <p>{subject.subject_name}</p>
-      <div
-        className=" right-2 text-3xl flexCenter cursor-pointer"
-        onClick={() => removeSubject(subject._id)}
-      >
-        <IoIosClose />
       </div>
     </div>
   );

@@ -6,8 +6,9 @@ import { fetchdetailasync } from "../redux-toolkit/slices/fetchdetailslice";
 const SubjectSearch = ({ subjects, changeSubjectList }) => {
   const dispatch = useDispatch()
   const [search, setSearch] = useState("");
+  const [detailsofSelectedSubject, setDetailsofSelectedSubject ] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState([...subjects]);
-  
+  console.log(selectedSubject)
   // console.log(`"detailsofSelectedSubject" ${detailsofSelectedSubject}`)
   // fetch all subjects 
   useEffect(() => {
@@ -28,7 +29,6 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
   
   const [searchResult, setSearchResult] = useState([...allSubjectData]);
 
-  const [detailsofSelectedSubject, setDetailsofSelectedSubject ] = useState([]);
 
   //   add subject
   const addSubject = (sub_id) => {

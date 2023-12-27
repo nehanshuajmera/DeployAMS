@@ -34,7 +34,7 @@ export default function MarkAttendance() {
   }, [dataofstudent])
 
   
-  const data = React.useMemo(() => dataofstud.details, [dataofstud.details]);
+  const data = React.useMemo(() => dataofstud.details, [dataofstud]);
   console.log(dataofstud)
   const columns = React.useMemo(
     () => [
