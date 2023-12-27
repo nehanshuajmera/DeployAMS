@@ -14,6 +14,7 @@ import { studentdetailasync } from '../../redux-toolkit/slicees/studentdataslice
 export default function SingleAttendence(props) {
 const dispatch=useDispatch()
 const data=useSelector((state)=>state.login)
+// console.log(data)
 useEffect(() => {
  const unsub=()=>{
   dispatch(studentdetailasync());
@@ -31,7 +32,7 @@ useEffect(() => {
 // }
 
 const detail=useSelector((state)=>state.studentDetail);
-  console.log(detail);
+  console.log(detail.details.subjects.attendance);
   
   const navigate = useNavigate();
  const handellogout=async()=>{
@@ -40,6 +41,12 @@ const detail=useSelector((state)=>state.studentDetail);
       navigate("/login");
       
   }
+  // for (var j = 0; j < detail.details.subjects.length; j++){
+
+  //   console.log(detail.details.subjects[j]);
+    
+  //   }
+  
   
   return (
     <div className="singleStudentMain">
@@ -76,7 +83,7 @@ const detail=useSelector((state)=>state.studentDetail);
           <tbody className='subjectTableBody'>
             <tr>
               <td className='dataForStudents'>CB3CO12</td>
-              <td className='dataForStudents'>Object Oriented Programming</td>
+              <td className='dataForStudents'>Object Oriented Programming {detail.details.subjects} </td>
               <td className='dataForStudents'>65%</td>
             </tr>
             <tr>
