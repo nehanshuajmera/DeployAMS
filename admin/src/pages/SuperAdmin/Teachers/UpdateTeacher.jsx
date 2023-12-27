@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TopOfPage from "../../../components/TopOfPage";
 import TeacherForm from "../../../components/TeacherForm";
 import DeleteButton from "../../../components/DeleteButton";
@@ -6,7 +6,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { updateTeacherAsync } from "../../../redux-toolkit/slices/crudteacherslice";
 import { useDispatch } from "react-redux";
 import { teacherFieldVerify } from "../../../action/InputFieldVerification";
-
+import cloneDeep from 'lodash/cloneDeep';
 
 // const data = {
 //     teacher_id:"",
@@ -19,10 +19,25 @@ import { teacherFieldVerify } from "../../../action/InputFieldVerification";
 
 
 const UpdateTeacher = () => {
-  const {state} = useLocation()
-  const [teacher, setTeacher] = useState({...state});
   const dispatch = useDispatch();
   const {id} = useParams()
+  const {state} = useLocation()
+  const newVal = {...state}
+  console.log(newVal)
+  // const [teacher, setTeacher] = useState({...state});
+  // const [teacher, setTeacher] = useState({...newVal});
+  const [teacher, setTeacher] = useState(cloneDeep(newVal));
+  useEffect(()=>{
+    setTeacher(prev=>{return{
+      ...prev,
+      subjects:[...state.subjects]
+    }})
+
+    console.log(state.subjects)
+    console.log(teacher.subjects)
+    
+  },[state])
+  
   
   const HandleClick = ()=>{
     if(teacherFieldVerify(teacher)){

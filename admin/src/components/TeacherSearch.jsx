@@ -3,18 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { IoIosClose } from "react-icons/io";
 import { fetchdetailasync } from "../redux-toolkit/slices/fetchdetailslice";
 
-const SubjectSearch = ({ subjects, changeSubjectList }) => {
+const SubjectSearch = ({ teacher, changeTeacher }) => {
   const dispatch = useDispatch()
   const [search, setSearch] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState([...subjects]);
   
-  // console.log(`"detailsofSelectedSubject" ${detailsofSelectedSubject}`)
+  // console.log(`"selectedSubject" ${selectedSubject}`)
   // fetch all subjects 
   useEffect(() => {
     const unsub=async()=>{
       try{
         
-        await dispatch(fetchdetailasync({apiname:"/allsubjects"}));
+        await dispatch(fetchdetailasync({apiname:"/allteachers"}));
         
       }catch(error){
           console.log(error);
@@ -24,40 +23,17 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
     unsub();
   }, [])
   
-  const allSubjectData = useSelector(state=>state.fetchDetail.details)  
+  const allTeachersData = useSelector(state=>state.fetchDetail.details)  
   
-  const [searchResult, setSearchResult] = useState([...allSubjectData]);
+  const [searchResult, setSearchResult] = useState([...allTeachersData]);
 
-  const [detailsofSelectedSubject, setDetailsofSelectedSubject ] = useState([]);
 
-  //   add subject
-  const addSubject = (sub_id) => {
-    // check if subject is already in the Selected Array 
-    if(detailsofSelectedSubject.find(ele=>ele._id===sub_id)){
-      return
-    }
-    // add new Subject
-    // const newSub = searchResult.filter(element=>element._id==sub_id);
-    // setSelectedSubject((prev) => {
-    //    return [...prev,...newSub];
-    // });
-    setSelectedSubject(prev=>[...prev,{subject_id:sub_id}])
-  };
-
-  // remove subject
-  const removeSubject = (sub_id) => {
-    console.log(sub_id)
-    const newList = detailsofSelectedSubject.filter((subject) => {
-      return subject._id != sub_id;
-    });
-    setSelectedSubject(newList);
-  };
 
   const searchFunc = (e) => {
     setSearch(e.target.value);
     console.log(search);
     if (search === "") {
-      setSearchResult([...allSubjectData]);
+      setSearchResult([...allTeachersData]);
     } else {
       const resultOfSearch = searchResult.filter((item) => {
         console.log(item.subject_name.toLowerCase());
@@ -70,16 +46,16 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
     }
   };
 
-  // to set new result when allSubjectData changes
+  // to set new result when allTeachersData changes
   useEffect(() => {
-    setSearchResult([...allSubjectData]);
-  }, [allSubjectData]);
+    setSearchResult([...allTeachersData]);
+  }, [allTeachersData]);
 
-  //   update dropdown list on every search and on update of allSubjectData collection
+  //   update dropdown list on every search and on update of allTeachersData collection
   useEffect(() => {
     (() => {
       if (search === "") {
-        setSearchResult([...allSubjectData]);
+        setSearchResult([...allTeachersData]);
       } else {
         const resultOfSearch = searchResult.filter((item) => {
           console.log(item.subject_name.toLowerCase());
@@ -91,21 +67,13 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
         setSearchResult([...resultOfSearch]);
       }
     })();
-  }, [search, allSubjectData]);
+  }, [search, allTeachersData]);
 
-  //   change detailsofSelectedSubject state on change of subjects array
-  useEffect(() => {
-    let temp = allSubjectData.filter(subj=>selectedSubject.find(elem=>elem.subject_id==subj._id))
-    setDetailsofSelectedSubject(temp);
-    console.log(detailsofSelectedSubject)
-  }, [allSubjectData, selectedSubject]);
+  //   change selectedSubject state on change of subjects array
+  // useEffect(() => {
+  //   setSelectedSubject(subjects);
+  // }, [subjects]);
  
-  //   change the of subjects array 
-  useEffect(() => {
-    console.log(selectedSubject)
-    changeSubjectList([...selectedSubject]);
-  }, [selectedSubject]);
-
 
 
   return (
@@ -152,10 +120,10 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
             </tr>
           </tHead>
           <tbody>
-            {detailsofSelectedSubject.length === 0 ? (
+            {selectedSubject.length === 0 ? (
               <p className="">No Selected subject</p>
             ) : (
-              detailsofSelectedSubject.map((subject) => {
+              selectedSubject.map((subject) => {
                 return (
                   <tr key={subject.id} className="grid grid-cols-6">
                     <td className="col-span-3 text-center">{subject.subject_name}</td>
@@ -174,7 +142,7 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
             )}
           </tbody>
 
-          {detailsofSelectedSubject.map((subject) => (
+          {selectedSubject.map((subject) => (
             <SubjectCollection
               key={subject.id}
               subject={subject}

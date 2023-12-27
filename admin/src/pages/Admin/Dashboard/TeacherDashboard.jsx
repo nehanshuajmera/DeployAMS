@@ -4,10 +4,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom"
 import { logoutAsync } from '../../../redux-toolkit/slices/loginslice';
 import { userdetailasync } from '../../../redux-toolkit/slices/userdetailslice';
+
+
 export default function TeacherDashboard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
   useEffect(()=>{
     ;(async()=>{
       try{
@@ -23,7 +25,12 @@ export default function TeacherDashboard() {
   const userDetail = useSelector(state=>state.userdetail)
   console.log(userDetail)
   
-  const subjects = userDetail.details.subjects
+  let subjects = userDetail.details.subjects
+  useEffect(() => {
+    subjects = userDetail.details.subjects
+    console.log(subjects)
+  }, [userDetail.details])
+  
 
   const handellogout = () => {
     dispatch(logoutAsync());
@@ -51,7 +58,7 @@ export default function TeacherDashboard() {
             subjects && 
             subjects.map(subject=>{
               return(
-                <div key={subject._id} onClick={() => navigate(`/markattendance/${subject._id}`)}>{subject.Section}-{subject.year} {subject.subject_name}</div>                
+              <div key={subject.subject_id._id} onClick={() => navigate(`/markattendance/${subject.subject_id._id}`)}>{subject.subject_id.course_code} - {subject.subject_id.branch} - {subject.subject_id.subject_name}</div>                
                 )
               })
             }

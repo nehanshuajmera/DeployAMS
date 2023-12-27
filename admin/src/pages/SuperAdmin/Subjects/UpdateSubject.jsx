@@ -11,15 +11,15 @@ import { useDispatch } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 
 
-const data = {
-  subject_name:"",
-  course_code:"",
-  branch:"",
-  section:"",
-  batch:"",
-  teacher_id:"",
-  day:[],
-};
+// const data = {
+//   subject_name:"",
+//   course_code:"",
+//   branch:"",
+//   section:"",
+//   batch:"",
+//   teacher_id:"",
+//   day:[],
+// };
 
 
 const UpdateSubject = () => {

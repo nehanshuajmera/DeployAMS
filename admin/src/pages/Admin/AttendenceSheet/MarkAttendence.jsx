@@ -5,16 +5,19 @@ import GlobalFiltering from '../../../components/GlobalFiltering';
 import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
 import './MarkAttendance.css'
 import { useNavigate, useParams } from 'react-router-dom';
+import { ParticularAttendanceasync } from '../../../redux-toolkit/slices/teacherAPIslice/seeparticularatendanceslice';
 
 export default function MarkAttendance() {
   const sub_id = useParams()
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [dataofstud, setdataofstud] = useState({ details: [] });
+  const [dataofstud, setdataofstud] = useState({"details":[]});
+  
+  
   useEffect(() => {
     const unsub = async () => {
       try {
-        await dispatch(fetchdetailasync({ apiname: "allstudents" }));
+        await dispatch(ParticularAttendanceasync({ID:sub_id}));
       }
       catch (error) {
         console.log(error);
@@ -24,16 +27,17 @@ export default function MarkAttendance() {
   }, [])
   // setdataofstudent(useSelector((state)=>state.fetchDetail));
 
-  const dataofstudent = useSelector((state) => state.fetchDetail).filter(student=>student.subjects.find(subject=>subject._id === sub_id));
+  const dataofstudent = useSelector((state) => state.particularattendanceDetail.details)
+  // console.log(dataofstudent)
 
   useEffect(() => {
-    console.log("data is comming", dataofstudent);
-    setdataofstud(dataofstudent)
+    // console.log("data is comming", dataofstudent);
+    setdataofstud({details:dataofstudent})
   }, [dataofstudent])
 
   
   const data = React.useMemo(() => dataofstud.details, [dataofstud.details]);
-
+  // console.log(dataofstud)
   const columns = React.useMemo(
     () => [
       {
@@ -121,7 +125,7 @@ export default function MarkAttendance() {
               <tbody {...getTableBodyProps()}>
                 {page.map((row) => {
                   prepareRow(row);
-                  console.log(row)
+                  // console.log(row)
                   return (
                     <tr className='studentTableRow' {...row.getRowProps()} onClick={() => gotoUpdate(row)}>
                       {row.cells.map((cell) => (
