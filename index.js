@@ -5,8 +5,9 @@ const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 5000;
 const cors = require("cors");
-// const cron = require('node-cron');
-// const calculateTeacherRatings = require("./Controller/rattingcron") 
+const cron = require('node-cron');
+const updateTodayAttendance=require("./Controller/UpdateTodayAttendance");
+
 
 dotenv.config();
 app.use(express.json());
@@ -14,20 +15,21 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: [
-      // "http://localhost:3000",
-      "http://localhost:5173",
-    ],
-    credentials: true,
-  })
+  origin: [
+    "http://localhost:5173",
+  ],
+  credentials: true,
+})
 );
 
 
 // connect to mongoDB
 
+
+
 mongoose.set('strictQuery', false)
 mongoose.connect(process.env.MDB_CONNECT) 
-.then(()=>{console.log('Mongodb connected')});
+.then(()=>{console.log('Mongodb connected'); });
 
 // set up routes
 app.use("/api/calander", require("./Routes/calanderRouter.js"));
@@ -41,11 +43,17 @@ app.use("/api/updateattendance",require("./Routes/updateattendanceRouter"));
 app.use("/api/alert",require("./Routes/alertRouter"));
 
 
-// Schedule the cron job to run at 3 am every day
-// cron.schedule('0 3 * * *', () => {
-//   console.log('Running teacher rating update job...');
-//   calculateTeacherRatings();
-// });
+// Schedule the cron job to run at 5:31 am every day
+cron.schedule('31 5 * * *', async () => {
+  console.log('Running teacher rating update job...');
+  try {
+    const result = await updateTodayAttendance();
+    console.log(result);
+  } catch (error) {
+    console.error('Error updating attendance:', error);
+  }
+});
+
 
 app.listen(PORT, err => {
   if (err) throw err;
