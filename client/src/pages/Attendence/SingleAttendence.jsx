@@ -81,13 +81,14 @@ const detail=useSelector((state)=>state.studentDetail.details);
           {
                 detail?.subjects.map(subject => {
 
-                  return(<>
+                  return(
+                  <><tr>
                    <td className='dataForStudents'>{subject.subject_id.course_code}</td>
                    
                    <td className='dataForStudents'>{subject.subject_id.subject_name}</td>
-                   <td className='dataForStudents'>{subject.attendance}</td>
+                   <td className='dataForStudents'>{subject.attendance.length}</td>
                    <td className='dataForStudents'>{subject.subject_id.lecture_dates.length}</td>
-                    
+                    </tr>
                     </>
                     
                   )
