@@ -6,8 +6,9 @@ import { fetchdetailasync } from "../redux-toolkit/slices/fetchdetailslice";
 const SubjectSearch = ({ subjects, changeSubjectList }) => {
   const dispatch = useDispatch()
   const [search, setSearch] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState([...subjects]);
   
-  // console.log(`"selectedSubject" ${selectedSubject}`)
+  // console.log(`"detailsofSelectedSubject" ${detailsofSelectedSubject}`)
   // fetch all subjects 
   useEffect(() => {
     const unsub=async()=>{
@@ -27,26 +28,26 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
   
   const [searchResult, setSearchResult] = useState([...allSubjectData]);
 
-  const [selectedSubject, setSelectedSubject] = useState(allSubjectData.filter(subj=>subjects.find(elem=>elem._id==subj._id)));
-
+  const [detailsofSelectedSubject, setDetailsofSelectedSubject ] = useState([]);
 
   //   add subject
   const addSubject = (sub_id) => {
     // check if subject is already in the Selected Array 
-    if(selectedSubject.find(ele=>ele._id===sub_id)){
+    if(detailsofSelectedSubject.find(ele=>ele._id===sub_id)){
       return
     }
     // add new Subject
-    const newSub = searchResult.filter(element=>element._id==sub_id);
-    setSelectedSubject((prev) => {
-       return [...prev,...newSub];
-    });
+    // const newSub = searchResult.filter(element=>element._id==sub_id);
+    // setSelectedSubject((prev) => {
+    //    return [...prev,...newSub];
+    // });
+    setSelectedSubject(prev=>[...prev,{subject_id:sub_id}])
   };
 
   // remove subject
   const removeSubject = (sub_id) => {
     console.log(sub_id)
-    const newList = selectedSubject.filter((subject) => {
+    const newList = detailsofSelectedSubject.filter((subject) => {
       return subject._id != sub_id;
     });
     setSelectedSubject(newList);
@@ -92,10 +93,12 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
     })();
   }, [search, allSubjectData]);
 
-  //   change selectedSubject state on change of subjects array
-  // useEffect(() => {
-  //   setSelectedSubject(subjects);
-  // }, [subjects]);
+  //   change detailsofSelectedSubject state on change of subjects array
+  useEffect(() => {
+    let temp = allSubjectData.filter(subj=>selectedSubject.find(elem=>elem.subject_id==subj._id))
+    setDetailsofSelectedSubject(temp);
+    console.log(detailsofSelectedSubject)
+  }, [allSubjectData, selectedSubject]);
  
   //   change the of subjects array 
   useEffect(() => {
@@ -149,10 +152,10 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
             </tr>
           </tHead>
           <tbody>
-            {selectedSubject.length === 0 ? (
+            {detailsofSelectedSubject.length === 0 ? (
               <p className="">No Selected subject</p>
             ) : (
-              selectedSubject.map((subject) => {
+              detailsofSelectedSubject.map((subject) => {
                 return (
                   <tr key={subject.id} className="grid grid-cols-6">
                     <td className="col-span-3 text-center">{subject.subject_name}</td>
@@ -171,7 +174,7 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
             )}
           </tbody>
 
-          {selectedSubject.map((subject) => (
+          {detailsofSelectedSubject.map((subject) => (
             <SubjectCollection
               key={subject.id}
               subject={subject}

@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
 import StudentForm from "../../../components/StudentForm";
 
 
@@ -43,6 +43,17 @@ const UpdateStudent = () => {
   const {id} = useParams()
   // const [student, setStudent] = useState({...data});
   const [student, setStudent] = useState({...state});
+ useEffect(()=>{
+    setStudent(prev=>{return{
+      ...prev,
+      subjects:[...state.subjects]
+    }})
+
+    console.log(state.subjects)
+    console.log(student.subjects)
+    
+  },[state])
+  
   // const dataofstudent = useSelector((state) => state.fetchDetail);
   // console.log(dataofstudent)
   const HandleClick = ()=>{

@@ -106,6 +106,8 @@ router.get("/studentsattendance/:id", isauthenticated, async (req, res) => {
 
     // Check if the teacher is assigned to the requested subject
     const subject = await Subject.findOne({ _id: subjectId, teacher_id: userId });
+    // const subject1 = await Subject.findOne({ _id: subjectId });
+
 
     if (!subject) {
       return res.status(403).json({ message: "Forbidden: Access denied for this subject" });
@@ -116,6 +118,7 @@ router.get("/studentsattendance/:id", isauthenticated, async (req, res) => {
 
     return res.status(200).json({ mesaage: studentsAttendance });
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ message: "Internal server error" });
   }
 });

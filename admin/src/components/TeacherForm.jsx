@@ -3,7 +3,7 @@ import SubjectSearch from "./SubjectSearch";
 // import { useAdmin } from "../context/AdminContext";
 
 const TeacherForm = ({ teacher, setTeacher, HandleClick }) => {
-
+  console.log(teacher)
   console.log(teacher)
   const ChangeHandler = (e) => {
     setTeacher((prev) => {
