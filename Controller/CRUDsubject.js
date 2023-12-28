@@ -10,38 +10,38 @@ const createsubject= async (req, res) => {
       const { subject_name, course_code, branch, section, batch, day } = req.body;
        
       const lecture_dates = [];
-      const today = new Date();
+      // const today = new Date();
       // const today = new Date("2024-01-01");
       // from todays date run a loop till academic calander last date and assign the dates to lecture_dates array in which days match with the day of the week
-      const academicCalander = await AcademicCalander.find();
-      const todayDate = new Date(today);
-      const lastDate = academicCalander[academicCalander.length -1 ].date;  
+      // const academicCalander = await AcademicCalander.find();
+      // const todayDate = new Date(today);
+      // const lastDate = academicCalander[academicCalander.length -1 ].date;  
 
       const checkalreadycreated = await Subject.find({subject_name, course_code, branch, section, batch});
       if(checkalreadycreated.length>0){
         return res.status(400).json({ message: "Subject already created" });
       }
 
-      while(todayDate <= lastDate){
-        // if todayDate is holiday then don't add that day in lecture_dates
-        const date_curr = academicCalander.find(d => new Date(d.date).toDateString() === todayDate.toDateString());
+      // while(todayDate <= lastDate){
+      //   // if todayDate is holiday then don't add that day in lecture_dates
+      //   const date_curr = academicCalander.find(d => new Date(d.date).toDateString() === todayDate.toDateString());
 
 
-        if(date_curr?.holiday){
-          todayDate.setDate(todayDate.getDate() + 1);
-          continue;
-        }
-        // console.log(date_curr)
-        // if todayDate.getDay()  find in array day where array day contain objects {nameof day, count of lectures} has and push to lecture_dates
-        const dayObj = day.find(d => d.name === date_curr.day);
+      //   if(date_curr?.holiday){
+      //     todayDate.setDate(todayDate.getDate() + 1);
+      //     continue;
+      //   }
+      //   // console.log(date_curr)
+      //   // if todayDate.getDay()  find in array day where array day contain objects {nameof day, count of lectures} has and push to lecture_dates
+      //   const dayObj = day.find(d => d.name === date_curr.day);
        
-        // console.log(dayObj)        
-        if(dayObj){
-          lecture_dates.push({date: date_curr.date, count: dayObj.count});
-        }
+      //   // console.log(dayObj)        
+      //   if(dayObj){
+      //     lecture_dates.push({date: date_curr.date, count: dayObj.count});
+      //   }
 
-        todayDate.setDate(todayDate.getDate() + 1);
-      }
+      //   todayDate.setDate(todayDate.getDate() + 1);
+      // }
 
       const newSubject = new Subject({
         subject_name,

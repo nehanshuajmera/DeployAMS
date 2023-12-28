@@ -5,7 +5,70 @@ const initialState={
     value:false,
     isErr:false,
     errMsg:"",
-    details:"",
+    details:{
+        "created_at_and_by": {
+            "timestamp": "2023-12-27T10:10:02.588Z"
+        },
+        "_id": "658bf7fa8ab9ed91c4011aad",
+        "name": "demo stud 1",
+        "enrollment_no": "EN20CS306001",
+        "scholar_no": "978645",
+        "email": "demostudent1@gmail.com",
+        "phone_no": "8795461542",
+        "programme": "Btech",
+        "faculty": "Eng",
+        "specialisation": "CSBS",
+        "year": 1,
+        "branch": "CSE",
+        "section": "b",
+        "batch": "A",
+        "password": "$2b$10$kZlpcPTVdihwZnk5AheWlOVJdLACDzEmEGdRmOgrakZKtJHaNSBr.",
+        "subjects": [
+            {
+                "subject_id": {
+                    "_id": "658bf6d88ab9ed91c401170f",
+                    "subject_name": "demo subj 1",
+                    "course_code": "Democode1",
+                    "branch": "CSE",
+                    "section": "A",
+                    "batch": "B",
+                    "day": [
+                        {
+                            "name": "Monday",
+                            "count": 0,
+                            "_id": "658bf6d88ab9ed91c4011710"
+                        },
+                        {
+                            "name": "Wednesday",
+                            "count": 2,
+                            "_id": "658bf6d88ab9ed91c4011711"
+                        },
+                        {
+                            "name": "Thursday",
+                            "count": 1,
+                            "_id": "658bf6d88ab9ed91c4011712"
+                        }
+                    ],
+                    "lecture_dates": [
+                       
+                    ],
+                    "lecture_dates": [
+                       
+                    ],
+                    "updateAttendance": [],
+                    "extraClass": [],
+                    "rescheduleClass": [],
+                    "__v": 0,
+                    "teacher_id": "658bf74c8ab9ed91c401184a"
+                },
+                "_id": "658bf7fa8ab9ed91c4011aaf",
+                "attendance": []
+            }
+        ],
+        "updated_at": "2023-12-27T10:10:02.588Z",
+        "ratings": [],
+        "__v": 0
+    },
 }
 
 export const studentdetailasync = createAsyncThunk('studentDetail/studentdetailasync', async (payload, { rejectWithValue }) => {
@@ -13,8 +76,8 @@ export const studentdetailasync = createAsyncThunk('studentDetail/studentdetaila
         
             const response = await axios.get('api/student/details');
             const msg = response.data.message;
-            
-              if(msg !== "Unauthorized" ||msg !== "User not found" || msg !== "Forbidden: Access denied for non-student users")      
+            // console.log(msg)
+            //   if(msg !== "Unauthorized" ||msg !== "User not found" || msg !== "Forbidden: Access denied for non-student users")      
             return msg;
             
             
