@@ -77,7 +77,7 @@ const createteacher=async (req, res) => {
 
 const update_teacher_by_id=async (req, res) => {
     try {
-      console.log(req.params.id,req.body)
+      // console.log(req.params.id,req.body)
       const teacherId = req.params.id; // Get the teacher ID from the request parameters
       // addLog(`Teacher updated: ${teacherId}`, userId);
       
@@ -89,6 +89,21 @@ const update_teacher_by_id=async (req, res) => {
         },
         { new: true } // Return the updated teacher
       );
+
+      // req.body has subjects array and teacher_id then update teacher_id in subject schema for all subject_id in subjects array with write permission
+      if(req.body.subjects){
+        for(let i=0; i<req.body.subjects.length; i++){
+          if(req.body.subjects[i].permission === "write"){
+            const updatedSubject = await Subject.findByIdAndUpdate(
+              req.body.subjects[i].subject_id,
+              {
+                $set: { teacher_id: teacherId }, // Use the request body to update teacher details
+              },
+              { new: true } // Return the updated teacher
+            );
+          }
+        }
+      }
   
       if (!updatedTeacher) {
         return res.status(404).json({ message: "Teacher not found" });
