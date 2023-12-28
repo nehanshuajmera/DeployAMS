@@ -167,4 +167,33 @@ router.post('/addmoredays', isAdmin, async (req, res) => {
   }
 });
 
+
+router.post("/updateday",isAdmin,async(req,res)=>{
+  try {
+    const {date,day} = req.body;
+    const oldacademicCalendarEntries = await AcademicCalendar.find();
+    if(oldacademicCalendarEntries.length===0){
+      return res.status(400).json({ message: "Academic calendar not created" });
+    }
+
+    var thatdate=new Date(date);
+
+    const oldday = await AcademicCalendar.findOne({date:thatdate});
+    console.log({oldday,day})
+    if(oldday===day){
+      return res.status(400).json({ message: "Day is already updated" });
+    }
+
+    await AcademicCalendar.findOneAndUpdate(
+      { date },
+      { day},
+    );
+
+    return res.status(200).json({ message: 'Academic calendar updated Successfully' });
+  } catch (error) {
+    console.error('Error updating academic calendar:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 module.exports = router;
