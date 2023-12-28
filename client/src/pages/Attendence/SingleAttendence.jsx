@@ -14,6 +14,7 @@ import { studentdetailasync } from '../../redux-toolkit/slicees/studentdataslice
 export default function SingleAttendence(props) {
 const dispatch=useDispatch()
 const data=useSelector((state)=>state.login)
+// console.log(data)
 useEffect(() => {
  const unsub=()=>{
   dispatch(studentdetailasync());
@@ -30,7 +31,7 @@ useEffect(() => {
 //   dispatch(studentdetailasync());
 // }
 
-const detail=useSelector((state)=>state.studentDetail);
+const detail=useSelector((state)=>state.studentDetail.details);
   console.log(detail);
   
   const navigate = useNavigate();
@@ -40,6 +41,8 @@ const detail=useSelector((state)=>state.studentDetail);
       navigate("/login");
       
   }
+  
+  
   
   return (
     <div className="singleStudentMain">
@@ -58,11 +61,11 @@ const detail=useSelector((state)=>state.studentDetail);
       <hr className="styleHr" />
       <div className="studentDetails">
         <div className="studentProgramme"><h4>Programme: {props.Programme}</h4></div>
-        <div className="studentName"><h4>Name: {detail.details.name}</h4></div>
-        <div className="studentId"><h4>Enrollment No.: {detail.details.enrollment_no}</h4></div>
+        <div className="studentName"><h4>Name: {detail?.name}</h4></div>
+        <div className="studentId"><h4>Enrollment No.: {detail?.enrollment_no}</h4></div>
         <div className="Year"><h4>Year: {props.Year}</h4></div>
-        <div className="cls-sec"><h4>Class & Section: {detail.details.branch}</h4></div>
-        <div className="studentBatch"><h4>Batch: {detail.details.batch}</h4></div>
+        <div className="cls-sec"><h4>Class & Section: {detail?.branch}</h4></div>
+        <div className="studentBatch"><h4>Batch: {detail?.batch}</h4></div>
       </div>
       <div className="subjectAttendence">
         <table className='subjectTable'>
@@ -70,13 +73,34 @@ const detail=useSelector((state)=>state.studentDetail);
             <tr>
               <th className='headingForStudents'>Course Code</th>
               <th className='headingForStudents'>Subject Name</th>
-              <th className='headingForStudents'>Attendence Percentage</th>
+              <th className='headingForStudents'>Total Attendence </th>
+              <th className='headingForStudents'>Attendence </th>
             </tr>
           </thead>
           <tbody className='subjectTableBody'>
-            <tr>
+          {
+                detail?.subjects.map(subject => {
+
+                  return(
+                  <><tr>
+                   <td className='dataForStudents'>{subject.subject_id.course_code}</td>
+                   
+                   <td className='dataForStudents'>{subject.subject_id.subject_name}</td>
+                   <td className='dataForStudents'>{subject.attendance.length}</td>
+                   <td className='dataForStudents'>{subject.subject_id.lecture_dates.length}</td>
+                    </tr>
+                    </>
+                    
+                  )
+
+                  
+                })
+              } 
+            {/* <tr>
               <td className='dataForStudents'>CB3CO12</td>
-              <td className='dataForStudents'>Object Oriented Programming</td>
+              <td className='dataForStudents'>Object Oriented Programming 
+             
+              </td>
               <td className='dataForStudents'>65%</td>
             </tr>
             <tr>
@@ -93,7 +117,7 @@ const detail=useSelector((state)=>state.studentDetail);
               <td className='dataForStudents'>CB3CO12</td>
               <td className='dataForStudents'>OOP's</td>
               <td className='dataForStudents'>65%</td>
-            </tr>
+            </tr> */}
           </tbody>
           {/* <tbody className='subjectTableBody'>
             {Subjects.map((subject) => (
