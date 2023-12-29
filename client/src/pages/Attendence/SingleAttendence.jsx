@@ -42,7 +42,17 @@ const detail=useSelector((state)=>state.studentDetail.details);
       
   }
   
-  
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentDate(new Date()); // Update current date every 24 hours
+    }, 24 * 60 * 60 * 1000); // 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
+
+    return () => {
+      clearInterval(interval); // Clean up interval on component unmount
+    };
+  }, []);
   
   return (
     <div className="singleStudentMain">
@@ -75,19 +85,30 @@ const detail=useSelector((state)=>state.studentDetail.details);
               <th className='headingForStudents'>Subject Name</th>
               <th className='headingForStudents'>Total Attendence </th>
               <th className='headingForStudents'>Attendence </th>
+              <th className='headingForStudents'>Percentage </th>
+              <th className='headingForStudents'>Daily Attendence {currentDate.toLocaleDateString()} </th>
             </tr>
           </thead>
           <tbody className='subjectTableBody'>
           {
-                detail?.subjects.map(subject => {
+                detail?.subjects.map((subject,index) => {
+                  const attendedLectures = subject.attendance.length;
+                  const totalLectures = subject.subject_id.lecture_dates.length;
+                  const percentage = totalLectures > 0 ? ((attendedLectures / totalLectures) * 100).toFixed(2) : 0;
+                 
+                  const ans = subject.attendance.includes(new Date().toLocaleDateString()) ? 'present' : 'Absent';
 
                   return(
-                  <><tr>
+                  <><tr key={index}>
                    <td className='dataForStudents'>{subject.subject_id.course_code}</td>
                    
                    <td className='dataForStudents'>{subject.subject_id.subject_name}</td>
-                   <td className='dataForStudents'>{subject.attendance.length}</td>
-                   <td className='dataForStudents'>{subject.subject_id.lecture_dates.length}</td>
+                   <td className='dataForStudents'>{attendedLectures}</td>
+                   <td className='dataForStudents'>{totalLectures}</td>
+                   <td className='dataForStudents'>{`${percentage}%`}</td>
+                   <td className='dataForStudents'>{ans}</td>
+
+                 
                     </tr>
                     </>
                     
@@ -96,28 +117,6 @@ const detail=useSelector((state)=>state.studentDetail.details);
                   
                 })
               } 
-            {/* <tr>
-              <td className='dataForStudents'>CB3CO12</td>
-              <td className='dataForStudents'>Object Oriented Programming 
-             
-              </td>
-              <td className='dataForStudents'>65%</td>
-            </tr>
-            <tr>
-              <td className='dataForStudents'>CB3CO12</td>
-              <td className='dataForStudents'>OOP's</td>
-              <td className='dataForStudents'>65%</td>
-            </tr>
-            <tr>
-              <td className='dataForStudents'>CB3CO12</td>
-              <td className='dataForStudents'>OOP's</td>
-              <td className='dataForStudents'>65%</td>
-            </tr>
-            <tr>
-              <td className='dataForStudents'>CB3CO12</td>
-              <td className='dataForStudents'>OOP's</td>
-              <td className='dataForStudents'>65%</td>
-            </tr> */}
           </tbody>
           {/* <tbody className='subjectTableBody'>
             {Subjects.map((subject) => (
