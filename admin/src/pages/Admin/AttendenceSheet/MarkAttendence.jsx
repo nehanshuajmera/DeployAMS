@@ -122,13 +122,21 @@ export default function MarkAttendance() {
       // console.log(stud)
       // const woattendacne=stud.subjects.find(st=>st.subject_id=== sub_id.id);
       // console.log(woattendacne.attendance.length)
+      let presentDate = new Date()
+      console.log(presentDate.getDate())
+      let tempAttendanceList = stud.subjects.find(subj=>subj.subject_id === sub_id.id).attendance.reduce((result,ele)=>(result+=ele.count),0)
+      let tempCount = stud.subjects.find(subj=>subj.subject_id === sub_id.id).attendance.find(ele=>{
+        let tempTime = new Date(ele.date)
+        return (tempTime.getDate() === presentDate.getDate() && tempTime.getMonth() === presentDate.getMonth() && tempTime.getFullYear() === presentDate.getFullYear() )
+      })?.count
+      console.log(tempCount)
       array.push({
         studentid: stud._id,
         enrollment_no: stud.enrollment_no,
         name: stud.name,
-        count: 0,
+        count: tempCount?tempCount:0,
         index: idx,
-        // attendance:stud.subjects.find(subj=>subj.subject_id===sub_id.id).attendance.length
+        attendance:tempAttendanceList,
       });
       // console.log(array)
       idx++;
@@ -187,7 +195,7 @@ export default function MarkAttendance() {
                   {maxCount && maxCount > 0 ? (
                     // !(isClassDetails?.message === "No Class Today") &&
                     <>
-                      <button
+                      <div
                         className="button1 cursor-pointer"
                         onClick={() => {
                           changeCount({
@@ -199,7 +207,7 @@ export default function MarkAttendance() {
                         }}
                       >
                         -
-                      </button>
+                      </div>
                       <p>{rowData.original.count}</p>
                       <div
                         className="button1 cursor-pointer"
