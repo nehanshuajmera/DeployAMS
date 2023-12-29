@@ -5,7 +5,7 @@ import StudentForm from "../../../components/StudentForm";
 import DeleteButton from "../../../components/DeleteButton";
 import { useLocation, useParams } from "react-router-dom";
 import TopOfPage from "../../../components/TopOfPage";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateStudentasync } from "../../../redux-toolkit/slices/crudstudentslice";
 import { studentFieldVerify } from "../../../action/InputFieldVerification";
 

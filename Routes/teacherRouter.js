@@ -157,13 +157,13 @@ router.get("/hasclasstoday/:id", isauthenticated, isTeacher, async (req, res) =>
 router.post('/updateattendance', isauthenticated, isTeacher, async (req, res) => {
   try {
     const teacherId = req.user_id; // You should have this information in your authentication middleware
-
+    
+    // console.log(req.body)
     // Get the request data (subject ID, student IDs, attendance date, and count)
     const { subjectId, studentIDs } = req.body;
 
     // Check if the teacher has permission to update attendance for this subject
     const subject = await Subject.findOne({ _id: subjectId, teacher_id: teacherId });
-
 
 
     if (!subject) {
@@ -182,6 +182,7 @@ router.post('/updateattendance', isauthenticated, isTeacher, async (req, res) =>
 
     // [ { studentid: '60f9c9b0e9c9a00f1c0f0e1e', count: 1  }, { studentid: '60f9c9b0e9c9a00f1c0f0e1f', count: 0 }]
     // Update student attendance for each student in the studentIDs array
+    // console.log(studentIDs)
     for (const studentData of studentIDs) {
       const studentId = studentData.studentid;
       const count = studentData.count;
@@ -197,13 +198,13 @@ router.post('/updateattendance', isauthenticated, isTeacher, async (req, res) =>
 
 
       const subjectIndex = student.subjects.findIndex(sub => sub.subject_id.equals(subject._id));
+      // console.log({subjectIndex})
 
       if (subjectIndex !== -1) {
-       
         const subjectAttendance = student.subjects[subjectIndex].attendance;
+        // console.log(subjectAttendance,student.subjects[subjectIndex])
         // Check if the attendance assigned is less than or equal to the subject's count
-        if (subjectAttendance.length) {
-
+        
           // in studentAttendance array find their is todays date present or not if present then update the count else push the new object
           const today = new Date();
           const attendanceIndex = subjectAttendance.findIndex(att => att.date.getFullYear() === today.getFullYear() && att.date.getMonth() === today.getMonth() && att.date.getDate() === today.getDate());
@@ -215,9 +216,12 @@ router.post('/updateattendance', isauthenticated, isTeacher, async (req, res) =>
             }
           }
           else {
-            subjectAttendance.push({ date: new Date(), count, cause: '' });
+            if(count!==0){
+              subjectAttendance.push({ date: new Date(), count, cause: '' });
+            }
+            // console.log({ date: new Date(), count, cause: '' })
           }
-        }
+        
 
         await student.save();
         

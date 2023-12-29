@@ -14,15 +14,23 @@ const holidayDetail = {
   event: '',
 }
 
+const rescheduledDay = {
+  date: '',
+  day:'',
+}
+
+
+
 
 
 export default function Calendar() {
   const [dates, setDates] = useState(semDate)
   const [holiday , setHoliday] = useState(holidayDetail)
+  const [rescheduled, setRescheduled] = useState(rescheduledDay);
   // below option is for conversion of date from "2024-01-01T00:00:00.000Z" to " 1 jan 2024 "
   const options = { year: 'numeric', month: 'short', day: 'numeric' };
   
-
+  const weekday = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
 
   const dispatch = useDispatch()
 
@@ -43,6 +51,15 @@ export default function Calendar() {
       }
     })
     console.log(holiday)
+  }
+
+  const rescheduleDayChangeHandler = (e) => {
+    setRescheduled(prev => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      }
+    })
   }
 
   const CreateSemester = () => {
@@ -70,6 +87,22 @@ console.log("updateHoliday")
     })()
     
   }
+
+  // reschedule form submit
+  const rescheduleSubmit = () => {
+console.log("rescheduleSubmit")
+    // ; (async () => {
+    //   try {
+    //     await dispatch(updateHolidayAsync({ ...holiday }));
+       
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // })()
+    
+  }
+
+
   useEffect(() => {
     const unsub=async()=>{
       try{
@@ -142,6 +175,31 @@ console.log("updateHoliday")
             </div>
           </div>
           <div className='button1 cursor-pointer mt-4 w-fit self-center' onClick={() => UpdateHoliday()}>Submit</div>
+        </div>
+        {/* rescheduled form */}
+        <div>
+          <h3 className='m-1 p-1 text-center font-bold text-lg'>Reschedule Date</h3>
+          <div className="holidayDate">
+            <div >
+              <label className='p-1 m-1' htmlFor="date"> Date:</label>
+              <input className='p-1 m-1' type="date" id="date" name="date" value={rescheduled.date} onChange={(e) => rescheduleDayChangeHandler(e)} />
+            </div>
+            <div>
+              <label className='p-1 m-1' for="day"> Day: </label>
+              <select className='p-1 m-1 border-2 border-gray-600 rounded' name="day" id="day" value={rescheduled.day} onChange={(e) => rescheduleDayChangeHandler(e)}>
+                <option value={null}>Add Day</option>
+                {
+                  weekday.map(day=>{
+                    return(
+                      <option key={day} value={day}>{day}</option>
+                    )
+                  })
+                }
+              </select>
+              {/* <input className='p-1 m-1 border-2 border-gray-600 rounded' type="text" id="day" name="day" value={rescheduled.day} onChange={(e) => rescheduleDayChangeHandler(e)} /> */}
+            </div>
+          </div>
+          <div className='button1 cursor-pointer mt-4 w-fit self-center' onClick={() => rescheduleSubmit()}>Submit</div>
         </div>
       </div>
       {/* calender  */}

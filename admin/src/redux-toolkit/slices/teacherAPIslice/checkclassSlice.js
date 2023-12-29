@@ -11,11 +11,11 @@ const initialState={
 export const checkclassasync = createAsyncThunk('checkclass/checkclassasync', async (payload, { rejectWithValue }) => {
     try {
       
-        
+        console.log(payload.ID)
             const response = await axios.get(`/api/teacher/hasclasstoday/${payload.ID}`);
-            const msg = response.data.message;
+            const msg = response.data;
 
-              if(response.status===200)      
+              if(response.status===200)  
             return msg;
             
             

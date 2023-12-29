@@ -11,9 +11,8 @@ const initialState={
 // see Attendance of particular subject which teacher teach them
 export const ParticularAttendanceasync = createAsyncThunk('ParticularAttendancedetail/ParticularAttendanceasync', async (payload, { rejectWithValue }) => {
     try {
-        // console.log(payload.ID.id)
-        
-            const response = await axios.get(`/api/teacher/studentsattendance/${payload.ID.id}`);
+        // console.log(payload.ID)
+            const response = await axios.get(`/api/teacher/studentsattendance/${payload.ID}`);
             const msg = response.data.message;
             
             if(response.status===200){
