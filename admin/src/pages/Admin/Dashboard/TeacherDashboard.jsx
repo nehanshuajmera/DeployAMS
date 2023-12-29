@@ -25,9 +25,9 @@ export default function TeacherDashboard() {
   const userDetail = useSelector(state=>state.userdetail)
   console.log(userDetail)
   
-  let subjects = userDetail.details.subjects
+  let subjects = userDetail?.details?.subjects
   useEffect(() => {
-    subjects = userDetail.details.subjects
+    subjects = userDetail.details?.subjects
     console.log(subjects)
   }, [userDetail.details])
   
@@ -37,6 +37,12 @@ export default function TeacherDashboard() {
     
     navigate("/")
   }
+
+  // calculate total number of lecture 
+  const gotoSubjectAttendance=(sub_id)=>{
+    // subjects.find(subj=>subj._id=sub_id).reducer()
+  }
+
   return (
     <div className='teacherDashboard'>
       <div className="universalDetailsAdmin">

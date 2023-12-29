@@ -20,7 +20,38 @@ export default function MarkAttendance() {
   const navigate = useNavigate();
   const [dataofstud, setdataofstud] = useState({ details: [] });
   const [attendanceList, setAttendanceList] = useState([]);
-  const [maxCount, setMaxCount] = useState(0); //default maxCount = 0
+  const [maxCount, setMaxCount] = useState(null); //default maxCount = 0
+  const [studentIDs, setstudentIDs] = useState([]);
+
+
+  // check if today is class
+  useLayoutEffect(() => {
+    (async () => {
+      try {
+        await dispatch(checkclassasync({ ID: sub_id.id }));
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  const isClassDetails = useSelector((state) => state.checkClass.message);
+  // console.log(isClassDetails);
+
+  useEffect(() => {
+    // console.log(isClassDetails)
+    if (isClassDetails)
+      if (isClassDetails?.count) {
+        // console.log("no no",isClassDetails.count)
+        setMaxCount(isClassDetails.count);
+        // console.log(maxCount)
+      }
+    // checking if isClassDetails !== undefine
+    // isClassDetails.message === "No Class Today"
+    //   ? setMaxCount(0)
+    //   : setMaxCount(isClassDetails.count);
+    console.log(maxCount)
+  }, [isClassDetails]);
 
   // get all the student of this particular subject
   useLayoutEffect(() => {
@@ -39,98 +70,80 @@ export default function MarkAttendance() {
   const dataofstudent = useSelector(
     (state) => state.particularattendanceDetail.details
   );
-  // console.log(dataofstudent)
+  // console.log(dataofstudent);
 
-  // check if today is class
-  useLayoutEffect(() => {
-    (async () => {
-      try {
-        await dispatch(checkclassasync({ ID: sub_id.id }));
-      } catch (error) {
-        console.log(error);
+  const changeCount = ({ type, stud_id, count, index }) => {
+    // console.log( " change",type, stud_id,count);
+
+    if (type === "increment") {
+      console.log("increment");
+      if (count === maxCount) {
+        console.log(maxCount);
+        count = maxCount;
+      } else {
+        count = count + 1;
       }
-    })();
-  }, []);
+    } else {
+      if (count === 0) {
+        count = 0;
+      } else {
+        count = count - 1;
+      }
+    }
 
-  const isClassDetails = useSelector((state) => state.checkClass.message);
-  console.log(isClassDetails);
+    // console.log({stud_id,count,index})
+    setstudentIDs((prevStudentIDs) => {
+      const updatedStudentIDs = [...prevStudentIDs];
+      updatedStudentIDs[index].count = count;
+      return updatedStudentIDs;
+    });
+    // console.log(studentIDs)
+  };
+
+  const gotoUpdate = () => {};
+
+  // const markCount = ({ stud_id, count,index }) => {
+
+  //   // var array=studentIDs;
+
+  //   // setstudentIDs(array)
+  //   // if(!assign){
+  //   //   studentIDs.push({"studentid":stud_id,"count":count});
+  //   // }
+
+  // };
 
   useEffect(() => {
-    // console.log(isClassDetails)
-    if (isClassDetails)
-      // checking if isClassDetails !== undefine
-      isClassDetails.message == "No Class Today"
-        ? setMaxCount(0)
-        : setMaxCount(isClassDetails.count);
-  }, [isClassDetails]);
-
-  // set the data in variables after fetching and creating attendance list
-  useEffect(() => {
-    // console.log("data is comming", dataofstudent);
-    let studTempList = dataofstudent.map((stud) => {
-      return {
-        ...stud,
+    var array = [];
+    var idx = 0;
+    dataofstudent.map((stud) => {
+      // console.log({"studentid":stud._id,"enrollment_no":stud.enrollment_no,"name":stud.name, "count":0})
+      // console.log(stud)
+      // const woattendacne=stud.subjects.find(st=>st.subject_id=== sub_id.id);
+      // console.log(woattendacne.attendance.length)
+      array.push({
+        studentid: stud._id,
+        enrollment_no: stud.enrollment_no,
+        name: stud.name,
         count: 0,
-      };
+        index: idx,
+        // attendance:stud.subjects.find(subj=>subj.subject_id===sub_id.id).attendance.length
+      });
+      // console.log(array)
+      idx++;
     });
-    // setdataofstud({details:dataofstudent})
-    setdataofstud({ details: studTempList });
-
-    // creating attendance list
-    // let temp = dataofstudent?.map(student=>{
-    //   return{
-    //     studentid:student._id,
-    //     count : maxCount,
-    //   }
-    // })
-    // setAttendanceList(temp)
-    console.log(isClassDetails);
-  }, [dataofstudent, maxCount]);
-
-  const changeCount = ({type,stud_id,count}) => {
-    count = type=='increment'? (count===maxCount?maxCount:count + 1):(count===0?0:count - 1)
-    markCount({stud_id,count})
-  };
-
-  const markCount = ({ stud_id, count }) => {
-    console.log("markcoutn");
-    // console.log(object)
-    let templist = dataofstud.details.map((ele) => {
-      if (ele._id === stud_id) {
-        return {
-          ...ele,
-          count: count,
-        };
-      }
-      return {
-        ...ele,
-      };
-    });
-    
-    setdataofstud({details:templist});
-    
-    
-  };
-  
-  useEffect(() => {
-    // creating attendance list
-    let temp = dataofstud.details.map(student=>{
-      return{
-        studentid:student._id,
-        count : student.count,
-      }
-    })
-    setAttendanceList(temp)
-  }, [dataofstud.details])
-  
+    setstudentIDs(array);
+  }, [dataofstud?.details, dataofstudent]);
 
   // submit handler
   const submitHandler = async () => {
-   
     try {
       let payload = {
-        subjectId: sub_id.id,
-        studentIDs: attendanceList,
+        // subjectId: sub_id.id,
+        data: {
+          subjectId: sub_id.id,
+          studentIDs: studentIDs,
+        },
       };
       console.log(payload);
       await dispatch(updateAttendanceAsync(payload));
@@ -139,7 +152,7 @@ export default function MarkAttendance() {
     }
   };
 
-  const data = React.useMemo(() => dataofstud.details, [dataofstud.details]);
+  const data = React.useMemo(() => studentIDs, [studentIDs]);
   // console.log(dataofstud)
   const columns = React.useMemo(
     () => [
@@ -156,36 +169,55 @@ export default function MarkAttendance() {
         accessor: "name",
       },
       {
-        Header: "Today's Addendence",
-        accessor: "attendence",
+        Header: "Total attendance",
+        accessor: "attendance",
       },
       {
         Header: "Actions",
         Cell: (tableInstance) => {
           const { row: rowData } = tableInstance;
-          
 
+          // const , ] = useState();
           return (
             <div key={rowData.original._id}>
               <>
                 <div>
-                  <div
-                    className="button1 cursor-pointer"
-                    onClick={() => {
-                      changeCount({stud_id:rowData.original._id,type:"decrement",count:rowData.original.count})
-                    }}
-                  >
-                    -
-                  </div>
-                  <p>{rowData.original.count}</p>
-                  <div
-                    className="button1 cursor-pointer"
-                    onClick={() =>
-                      changeCount({stud_id:rowData.original._id,type:"increment",count:rowData.original.count})
-                    }
-                  >
-                    +
-                  </div>
+                {
+                maxCount && (
+            <>
+              <button
+                className="button1 cursor-pointer"
+                onClick={() => {
+                  changeCount({
+                    stud_id: rowData.original.studentid,
+                    type: "decrement",
+                    count: rowData.original.count,
+                    index: rowData.original.index,
+                  });
+                }}
+              >
+                -
+              </button>
+              <p>{rowData.original.count}</p>
+              <div
+                className="button1 cursor-pointer"
+                onClick={() =>
+                  changeCount({
+                    stud_id: rowData.original.studentid,
+                    type: "increment",
+                    count: rowData.original.count,
+                    index: rowData.original.index,
+                  })
+                }
+              >
+                +
+              </div>
+            </>
+          )}
+          {
+            !maxCount &&
+            <div>-</div>
+          }
                 </div>
                 {/* <img src="https://cdn-icons-png.flaticon.com/512/4553/4553011.png" alt="" /> */}
               </>
@@ -231,6 +263,12 @@ export default function MarkAttendance() {
   return (
     <div className="markAttendanceMain w-screen h-screen">
       <h2>Attendence Sheet</h2>
+      {
+        isClassDetails?.message==="No Class Today" &&
+        <div className="w-full p-2 bg-primary text-dimWhite text-center font-semibold">
+          <p>Class is not scheduled for Today, cannot mark the attendance </p>
+        </div>
+      }
       <div className="sheet">
         <div className="attendenceFormat">
           <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
@@ -341,9 +379,12 @@ export default function MarkAttendance() {
           </div>
         </div>
       </div>
+      {
+        maxCount &&
       <div className="button1" onClick={submitHandler}>
         Submit
       </div>
+      }
     </div>
   );
 }

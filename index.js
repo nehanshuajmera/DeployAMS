@@ -17,6 +17,7 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:5173",
+    "http://localhost:5174"
   ],
   credentials: true,
 })
@@ -59,3 +60,6 @@ app.listen(PORT, err => {
   if (err) throw err;
   console.log(`Server started on port: ${PORT}`);
 });
+
+
+// updateTodayAttendance()

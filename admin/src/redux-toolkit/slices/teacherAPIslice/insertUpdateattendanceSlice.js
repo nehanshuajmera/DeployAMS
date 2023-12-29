@@ -10,6 +10,7 @@ const initialState = {
 
 export const updateAttendanceAsync = createAsyncThunk('attendanceUpdation/updateAttendanceAsync', async (payload, { rejectWithValue }) => {
   try {
+    console.log(payload)
     const response = await axios.post('/api/teacher/updateattendance', payload.data);
     const msg = response.data.message;
 
