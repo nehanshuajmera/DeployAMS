@@ -62,4 +62,4 @@ app.listen(PORT, err => {
 });
 
 
-// updateTodayAttendance()
+updateTodayAttendance()

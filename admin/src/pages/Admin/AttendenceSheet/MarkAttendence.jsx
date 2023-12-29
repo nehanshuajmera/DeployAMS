@@ -20,9 +20,8 @@ export default function MarkAttendance() {
   const navigate = useNavigate();
   const [dataofstud, setdataofstud] = useState({ details: [] });
   const [attendanceList, setAttendanceList] = useState([]);
-  const [maxCount, setMaxCount] = useState(null); //default maxCount = 0
+  const [maxCount, setMaxCount] = useState(0); //default maxCount = 0
   const [studentIDs, setstudentIDs] = useState([]);
-
 
   // check if today is class
   useLayoutEffect(() => {
@@ -45,12 +44,14 @@ export default function MarkAttendance() {
         // console.log("no no",isClassDetails.count)
         setMaxCount(isClassDetails.count);
         // console.log(maxCount)
+      } else {
+        setMaxCount(0);
       }
     // checking if isClassDetails !== undefine
-    // isClassDetails.message === "No Class Today"
+    // isClassDetails?.message === "No Class Today"
     //   ? setMaxCount(0)
     //   : setMaxCount(isClassDetails.count);
-    console.log(maxCount)
+    console.log(maxCount, isClassDetails?.count);
   }, [isClassDetails]);
 
   // get all the student of this particular subject
@@ -137,6 +138,7 @@ export default function MarkAttendance() {
 
   // submit handler
   const submitHandler = async () => {
+    // if(!(isClassDetails?.message==="No Class Today" )&&)
     try {
       let payload = {
         // subjectId: sub_id.id,
@@ -182,42 +184,40 @@ export default function MarkAttendance() {
             <div key={rowData.original._id}>
               <>
                 <div>
-                {
-                maxCount && (
-            <>
-              <button
-                className="button1 cursor-pointer"
-                onClick={() => {
-                  changeCount({
-                    stud_id: rowData.original.studentid,
-                    type: "decrement",
-                    count: rowData.original.count,
-                    index: rowData.original.index,
-                  });
-                }}
-              >
-                -
-              </button>
-              <p>{rowData.original.count}</p>
-              <div
-                className="button1 cursor-pointer"
-                onClick={() =>
-                  changeCount({
-                    stud_id: rowData.original.studentid,
-                    type: "increment",
-                    count: rowData.original.count,
-                    index: rowData.original.index,
-                  })
-                }
-              >
-                +
-              </div>
-            </>
-          )}
-          {
-            !maxCount &&
-            <div>-</div>
-          }
+                  {maxCount && maxCount > 0 ? (
+                    // !(isClassDetails?.message === "No Class Today") &&
+                    <>
+                      <button
+                        className="button1 cursor-pointer"
+                        onClick={() => {
+                          changeCount({
+                            stud_id: rowData.original.studentid,
+                            type: "decrement",
+                            count: rowData.original.count,
+                            index: rowData.original.index,
+                          });
+                        }}
+                      >
+                        -
+                      </button>
+                      <p>{rowData.original.count}</p>
+                      <div
+                        className="button1 cursor-pointer"
+                        onClick={() =>
+                          changeCount({
+                            stud_id: rowData.original.studentid,
+                            type: "increment",
+                            count: rowData.original.count,
+                            index: rowData.original.index,
+                          })
+                        }
+                      >
+                        +
+                      </div>
+                    </>
+                  ) : (
+                    <div>-</div>
+                  )}
                 </div>
                 {/* <img src="https://cdn-icons-png.flaticon.com/512/4553/4553011.png" alt="" /> */}
               </>
@@ -226,7 +226,7 @@ export default function MarkAttendance() {
         },
       },
     ],
-    []
+    [maxCount]
   );
 
   const initialState = {
@@ -263,12 +263,11 @@ export default function MarkAttendance() {
   return (
     <div className="markAttendanceMain w-screen h-screen">
       <h2>Attendence Sheet</h2>
-      {
-        isClassDetails?.message==="No Class Today" &&
+      {isClassDetails?.message === "No Class Today" && (
         <div className="w-full p-2 bg-primary text-dimWhite text-center font-semibold">
           <p>Class is not scheduled for Today, cannot mark the attendance </p>
         </div>
-      }
+      )}
       <div className="sheet">
         <div className="attendenceFormat">
           <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
@@ -379,11 +378,15 @@ export default function MarkAttendance() {
           </div>
         </div>
       </div>
+      {console.log(maxCount, "max2")}
       {
-        maxCount &&
-      <div className="button1" onClick={submitHandler}>
-        Submit
-      </div>
+        // maxCount &&
+        // maxCount > 0 &&
+        !(isClassDetails?.message === "No Class Today") && (
+          <div className="button1" onClick={submitHandler}>
+            Submit
+          </div>
+        )
       }
     </div>
   );
