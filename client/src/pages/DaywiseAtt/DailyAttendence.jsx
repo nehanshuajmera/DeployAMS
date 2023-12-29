@@ -90,8 +90,6 @@ useEffect(() => {
                               )
                             })
                           }
-
-
                     </tr>
                     </>
                     
@@ -100,37 +98,7 @@ useEffect(() => {
                   
                 })
               } 
-              {/* <th className='headingForStudents'>2 Nov 23</th>
-              <th className='headingForStudents'>3 Nov 23</th>
-              <th className='headingForStudents'> Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>1 Nov 23</th>
-              <th className='headingForStudents'>34 Nov 23</th> */}
+             
             </tr>
           </thead>
           <tbody className='subjectTableBody'>
@@ -161,7 +129,7 @@ useEffect(() => {
                           //map for lecture dates
                               return(
                             
-                              <th className='headingForStudents'>{attendancee.date}</th>
+                              <th >{convertDate(attendancee.date)}</th>
                               )
                             })
                           }
@@ -173,36 +141,6 @@ useEffect(() => {
               } 
               </td>
 
-              {/* <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td>
-              <td className='dataForStudents'>P</td> */}
             </tr>
           </tbody>
           {/* <tbody className='subjectTableBody'>

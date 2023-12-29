@@ -286,7 +286,7 @@ router.post("/changepassword", isauthenticated, isTeacher, async (req, res) => {
 
 // all leaveTeacherAttendance routes
 router.post("/createleaveTeacherAttendance", isauthenticated, isTeacher, createLeaveTeacherAttendance);
-router.get("/getleaveTeacherAttendance", isauthenticated, isTeacher, getLeaveTeacherAttendanceByteacherId);
+router.get("/getleaveTeacherAttendance/:id", isauthenticated, isTeacher, getLeaveTeacherAttendanceByteacherId);
 router.post("/getassignTeachersubjectallStudentsbydate", isauthenticated, isTeacher, getassignTeachersubjectallStudentsbydate);
 router.post("/markleaveattendanceontoday", isauthenticated, isTeacher, markleaveattendanceontoday);
 
