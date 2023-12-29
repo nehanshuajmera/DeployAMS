@@ -1,45 +1,45 @@
-import React ,{useEffect}from 'react'
+import React, { useEffect } from 'react'
 import "./DailyAttendence.css";
 
 import { useDispatch, useSelector } from 'react-redux';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { logoutAsync } from '../../redux-toolkit/slicees/loginslice';
 import { studentdetailasync } from '../../redux-toolkit/slicees/studentdataslice';
 
 export default function DailyAttendence(props) {
-  const dispatch=useDispatch()
-const data=useSelector((state)=>state.login)
-// console.log(data)
-useEffect(() => {
- const unsub=()=>{
-  dispatch(studentdetailasync());
+  const dispatch = useDispatch()
+  const data = useSelector((state) => state.login)
+  // console.log(data)
+  useEffect(() => {
+    const unsub = () => {
+      dispatch(studentdetailasync());
 
- }
+    }
 
-  return () => {
-   unsub();
-  }
-}, [data])
+    return () => {
+      unsub();
+    }
+  }, [data])
 
 
-  const detail=useSelector((state)=>state.studentDetail.details);
-  console.log(detail);
-  
+  const detail = useSelector((state) => state.studentDetail.details);
+  // console.log(detail);
+
   const navigate = useNavigate();
- const handellogout=async()=>{
-  console.log("logging out");
-      dispatch(logoutAsync());
-      navigate("/login");
-      
+  const handellogout = async () => {
+    // console.log("logging out");
+    dispatch(logoutAsync());
+    navigate("/login");
+
   }
 
-  const convertDate = (inputDate)=>{
+  const convertDate = (inputDate) => {
     const dateObj = new Date(inputDate);
 
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     const formattedDate = dateObj.toLocaleDateString('en-US', options);
     return formattedDate
-   }
+  }
 
   return (
     <div className="attendenceContainer">
@@ -68,72 +68,67 @@ useEffect(() => {
       </div>
 
       <div className="subjectAttendence">
-      {
-                detail?.subjects.map(subject => {
-//map for getting into subject
-            return( <table className='subjectTable'>
-          <thead className="subjectTableHeading">
-            <tr>
-              <th className='headingForStudents'>Course Code</th>
-                 
-                   {/* <td >{subject.subject_id.lecture_dates.length}</td> */}
-                   {
-                       subject.subject_id.lecture_dates.map(lecture_dates => {
-                          //map for lecture dates
-                          
-                              return(
-                            
-                              <th className='headingForStudents'>{convertDate(lecture_dates.date) } ({lecture_dates.count})</th>
-                              )
-                            })
-                          }
-                   
-                    
-                  </tr>
-                </thead>
-                <tbody className='subjectTableBody'>
-                  
-                   <td className='dataForStudents'>{subject.subject_id.course_code}</td> 
-              {/* <td className='dataForStudents' style={{color:"green", fontWeight:"bold", fontSize:"150%"}}>P</td> */}
-                
-                {
-              detail?.subjects.map(subject => {
-//map for getting into subject
-            return(
-                  <>
-                   {
-                       subject.subject_id.lecture_dates.map(attendancee => {
-                          //map for lecture dates
-                              return(
-                            
-                              <td className='dataForStudents' >{convertDate(attendancee.date)}</td>
-                              )
-                            })
-                          }
-                          </>
-                           )
+        {detail?.subjects.map(subject => {
 
-                  
-                })
-              } 
-             
-
-             
-          </tbody>
-          {/* <tbody className='subjectTableBody'>
-            {Subjects.map((subject) => (
+          const formattedAttendance = subject.attendance.map((dates)=> convertDate(dates.date));
+          //map for getting into subject
+          return (<table className='subjectTable'>
+            <thead className="subjectTableHeading">
               <tr>
-                <td className='dataForStudents'>{subject.CourseCode}</td>
-                <td className='dataForStudents'>{subject.Name}</td>
-                <td className='dataForStudents'>{subject.Percent}</td>
-              </tr>
-            ))}
-          </tbody> */}
-        </table>)
+                <th className='headingForStudents'>Course Code</th>
 
-                  
-                })
-              } 
+                {/* <td >{subject.subject_id.lecture_dates.length}</td> */}
+                {
+                  subject.subject_id.lecture_dates.map(lecture_dates => {
+                    //map for lecture dates
+
+                    if (lecture_dates.count === 0) {
+                      return (
+                        <></>
+                      )
+                    }
+                    else{
+                      return (
+  
+                        <th className='headingForStudents'>{convertDate(lecture_dates.date)} ({lecture_dates.count})</th>
+                      )
+                    }
+                  })
+                }
+
+
+              </tr>
+            </thead>
+            <tbody className='subjectTableBody'>
+
+              <td className='dataForStudents'>{subject.subject_id.course_code}</td>
+            
+             
+                      {
+                        subject.subject_id.lecture_dates.map(attendancee => {
+                          //map for lecture dates
+                          if (attendancee.count === 0) {
+                            return (
+                              <></>
+                            )
+                          }
+                          else{
+                          return (
+
+                            <td className='dataForStudents' >{formattedAttendance.includes(convertDate(attendancee.date)) ? 'present' : 'Absent'}</td>
+                          )
+                          }
+                        })
+                      }
+                 
+
+
+
+            </tbody>
+            <br/>
+          </table>)
+        })
+        }
       </div>
     </div>
   )

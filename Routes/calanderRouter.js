@@ -179,7 +179,7 @@ router.post("/updateday",isAdmin,async(req,res)=>{
     var thatdate=new Date(date);
 
     const oldday = await AcademicCalendar.findOne({date:thatdate});
-    console.log({oldday,day})
+    // console.log({oldday,day})
     if(oldday===day){
       return res.status(400).json({ message: "Day is already updated" });
     }
