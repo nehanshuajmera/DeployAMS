@@ -88,7 +88,6 @@ export default function ChangePassword() {
         </label>
       </div>
       <button
-      
         className="text-gray-600 border-2 gray-600 focus:outline-none  font-medium rounded-lg text-sm w-full sm:w-auto px-3 py-2 mx-3 text-center">
         Back
       </button>

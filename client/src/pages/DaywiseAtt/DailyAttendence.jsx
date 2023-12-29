@@ -68,17 +68,14 @@ useEffect(() => {
       </div>
 
       <div className="subjectAttendence">
-        <table className='subjectTable'>
+      {
+                detail?.subjects.map(subject => {
+//map for getting into subject
+            return( <table className='subjectTable'>
           <thead className="subjectTableHeading">
             <tr>
               <th className='headingForStudents'>Course Code</th>
-              
-                {
-                detail?.subjects.map(subject => {
-//map for getting into subject
-            return(
-                  <>
-                  <tr>
+                 
                    {/* <td >{subject.subject_id.lecture_dates.length}</td> */}
                    {
                        subject.subject_id.lecture_dates.map(lecture_dates => {
@@ -86,50 +83,30 @@ useEffect(() => {
                           
                               return(
                             
-                              <th className='headingForStudents'>{convertDate(lecture_dates.date)}</th>
+                              <th className='headingForStudents'>{convertDate(lecture_dates.date) } ({lecture_dates.count})</th>
                               )
                             })
                           }
-                    </tr>
-                    </>
+                   
                     
-                  )
-
+                  </tr>
+                </thead>
+                <tbody className='subjectTableBody'>
                   
-                })
-              } 
-             
-            </tr>
-          </thead>
-          <tbody className='subjectTableBody'>
-            <tr>
-              <td >{
-                detail?.subjects.map(subject => {
-
-                  return(
-                  <><tr>
-                   <td className='dataForStudents'>{subject.subject_id.course_code}</td>
-                    </tr>
-                    </>
-                    
-                  )
-
-                  
-                })
-              } </td>
+                   <td className='dataForStudents'>{subject.subject_id.course_code}</td> 
               {/* <td className='dataForStudents' style={{color:"green", fontWeight:"bold", fontSize:"150%"}}>P</td> */}
-              <td className='dataForStudents'>
+                
                 {
               detail?.subjects.map(subject => {
 //map for getting into subject
             return(
                   <>
                    {
-                       subject.attendance.map(attendancee => {
+                       subject.subject_id.lecture_dates.map(attendancee => {
                           //map for lecture dates
                               return(
                             
-                              <th >{convertDate(attendancee.date)}</th>
+                              <td className='dataForStudents' >{convertDate(attendancee.date)}</td>
                               )
                             })
                           }
@@ -139,9 +116,9 @@ useEffect(() => {
                   
                 })
               } 
-              </td>
+             
 
-            </tr>
+             
           </tbody>
           {/* <tbody className='subjectTableBody'>
             {Subjects.map((subject) => (
@@ -152,7 +129,11 @@ useEffect(() => {
               </tr>
             ))}
           </tbody> */}
-        </table>
+        </table>)
+
+                  
+                })
+              } 
       </div>
     </div>
   )

@@ -54,6 +54,14 @@ const detail=useSelector((state)=>state.studentDetail.details);
     };
   }, []);
   
+  const convertDate = (inputDate)=>{
+    const dateObj = new Date(inputDate);
+
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const formattedDate = dateObj.toLocaleDateString('en-US', options);
+    return formattedDate
+   }
+
   return (
     <div className="singleStudentMain">
       <div className="universalDetails">
@@ -92,11 +100,17 @@ const detail=useSelector((state)=>state.studentDetail.details);
           <tbody className='subjectTableBody'>
           {
                 detail?.subjects.map((subject,index) => {
-                  const attendedLectures = subject.attendance.length;
-                  const totalLectures = subject.subject_id.lecture_dates.length;
+                  const attendedLectures = subject.attendance.reduce((result,ele)=>(result+=ele.count),0);
+                  //.attendance.reduce((result,ele)=>(result+=ele.count),0)
+                  const totalLectures = subject.subject_id.lecture_dates.reduce((result,ele)=>(result+=ele.count),0);
                   const percentage = totalLectures > 0 ? ((attendedLectures / totalLectures) * 100).toFixed(2) : 0;
+              
+                  const formattedAttendance = subject.attendance.map((dates)=>  convertDate(dates.date));
                  
-                  const ans = subject.attendance.includes(new Date().toLocaleDateString()) ? 'present' : 'Absent';
+                  const currentDate = convertDate(new Date().toLocaleDateString());
+                  const allattandance = subject.subject_id.lecture_dates.map((dates)=>  convertDate(dates.date));
+                  var ans = formattedAttendance.includes(currentDate) ? 'present' : '';
+                  ans = allattandance.includes(currentDate) ? ans : 'holiday';
 
                   return(
                   <><tr key={index}>
