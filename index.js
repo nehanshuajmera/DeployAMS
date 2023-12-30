@@ -11,6 +11,7 @@ const backupDatabase = require("./Controller/DBbackup.js")
 const fileUpload = require('express-fileupload');
 const listFilesInBucket = require("./Controller/SeeAllAWSFiles.js");
 const exportToS3 = require("./Controller/SaveFiletoAWS.js");
+const restoreDatabase = require("./Controller/RestoreDBbackup.js");
 
 dotenv.config();
 app.use(express.json());
@@ -58,18 +59,16 @@ mongoose.connect(process.env.MDB_CONNECT)
     cron.schedule('31 5 * * *', async () => {
       console.log('Running teacher rating update job...');
       try {
-        const result = await updateTodayAttendance();
         await backupDatabase();
         await exportToS3();
+        const result = await updateTodayAttendance();
         console.log(result);
       } catch (error) {
         console.error('Error updating attendance:', error);
       }
     });
 
-    // backupDatabase();
-    // listFilesInBucket();
-    
+    // restoreDatabase()
     app.listen(PORT, err => {
       if (err) throw err;
       console.log(`Server started on port: ${PORT}`);
