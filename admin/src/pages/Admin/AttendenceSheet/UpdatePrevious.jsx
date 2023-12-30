@@ -14,55 +14,70 @@ import { ParticularAttendanceasync } from "../../../redux-toolkit/slices/teacher
 import { checkclassasync } from "../../../redux-toolkit/slices/teacherAPIslice/checkclassSlice";
 import { updateAttendanceAsync } from "../../../redux-toolkit/slices/teacherAPIslice/insertUpdateattendanceSlice";
 import AskPermission from "../../../components/AskPermission";
+import { updateAttendanceByPermissionAsync } from "../../../redux-toolkit/slices/teacherAPIslice/updateattendancebypermissionslice";
+import { userdetailasync } from "../../../redux-toolkit/slices/userdetailslice";
 
-export default function MarkAttendance() {
+export default function UpdatePrevious() {
   const sub_id = useParams();
-  const {totalLectures} = useLocation().state
+  const { totalLectures } = useLocation().state;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [dataofstud, setdataofstud] = useState({ details: [] });
   const [attendanceList, setAttendanceList] = useState([]);
   const [maxCount, setMaxCount] = useState(0); //default maxCount = 0
   const [studentIDs, setstudentIDs] = useState([]);
+  const [dateToUpdate, setDateToUpdate] = useState(null);
+  const [lectures, setLectures] = useState(null);
+  useEffect(()=>{
+    ;(async()=>{
+      try{
 
-
-  // check if today is class
-  useLayoutEffect(() => {
-    (async () => {
-      try {
-        await dispatch(checkclassasync({ ID: sub_id.id }));
-      } catch (error) {
+        await dispatch(userdetailasync());
+        // const studentState = useSelector(state=>state.crudstudent)
+        
+      }catch(error){
         console.log(error);
       }
-    })();
-  }, []);
+    })();    
+  },[])
+  
+  const userSubjectData = useSelector(
+    (state) => state.userdetail.details
+  ).subjects
+  
+console.log(userSubjectData)
 
-  const isClassDetails = useSelector((state) => state.checkClass.message);
-  // console.log(isClassDetails);
+  useEffect(()=>{
+    let tempLecturesList = userSubjectData?.find((subj) => subj.subject_id._id === sub_id.id)?.subject_id.lecture_dates
+    setLectures(tempLecturesList)
+    console.log("templectures",tempLecturesList)
+  },[userSubjectData])
 
-  useEffect(() => {
-    // console.log(isClassDetails)
-    if (isClassDetails)
-      if (isClassDetails?.count) {
-        // console.log("no no",isClassDetails.count)
-        setMaxCount(isClassDetails.count);
-        // console.log(maxCount)
-      } else {
-        setMaxCount(0);
-      }
-    // checking if isClassDetails !== undefine
-    // isClassDetails?.message === "No Class Today"
-    //   ? setMaxCount(0)
-    //   : setMaxCount(isClassDetails.count);
-    console.log(maxCount, isClassDetails?.count);
-  }, [isClassDetails]);
+  useEffect(()=>{
+    let tempMaxCount = lectures?.find((ele) => {
+        let tempTime = new Date(ele.date);
+        return (
+          convertDate(tempTime) === convertDate(dateToUpdate)
+        );
+      })?.count
+      console.log("tempMax",tempMaxCount)
+    setMaxCount(tempMaxCount)
+  },[userSubjectData,dateToUpdate])
+
+//   to convert date 
+  const convertDate = (inputDate) => {
+    const dateObj = new Date(inputDate);
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    const formattedDate = dateObj.toLocaleDateString("en-US", options);
+    return formattedDate;
+  };
+  
 
   // get all the student of this particular subject
   useLayoutEffect(() => {
     const unsub = async () => {
       try {
         await dispatch(ParticularAttendanceasync({ ID: sub_id.id }));
-        // await dispatch(checkclassasync({ID:sub_id.id}));
       } catch (error) {
         console.log(error);
       }
@@ -77,7 +92,7 @@ export default function MarkAttendance() {
   // console.log(dataofstudent);
 
   const changeCount = ({ type, stud_id, count, index }) => {
-    // console.log( " change",type, stud_id,count);
+    console.log( " change",type, stud_id,count);
 
     if (type === "increment") {
       console.log("increment");
@@ -120,48 +135,53 @@ export default function MarkAttendance() {
   useEffect(() => {
     var array = [];
     var idx = 0;
+    
     dataofstudent.map((stud) => {
       // console.log({"studentid":stud._id,"enrollment_no":stud.enrollment_no,"name":stud.name, "count":0})
       // console.log(stud)
       // const woattendacne=stud.subjects.find(st=>st.subject_id=== sub_id.id);
       // console.log(woattendacne.attendance.length)
-      let presentDate = new Date()
-      console.log(presentDate.getDate())
       // let tempLecture = stud.subjects.find(subj=>subj.subject_id === sub_id.id).lecture_dates.reduce((result,ele)=>(result+=ele.count),0)
-      let tempAttendanceList = stud.subjects.find(subj=>subj.subject_id === sub_id.id).attendance.reduce((result,ele)=>(result+=ele.count),0)
-      let tempCount = stud.subjects.find(subj=>subj.subject_id === sub_id.id).attendance.find(ele=>{
-        let tempTime = new Date(ele.date)
-        return (tempTime.getDate() === presentDate.getDate() && tempTime.getMonth() === presentDate.getMonth() && tempTime.getFullYear() === presentDate.getFullYear() )
-      })?.count
+      let tempAttendanceList = stud.subjects
+        .find((subj) => subj.subject_id === sub_id.id)
+        .attendance.reduce((result, ele) => (result += ele.count), 0);
+      let tempCount = stud.subjects
+        .find((subj) => subj.subject_id === sub_id.id)
+        .attendance.find((ele) => {
+          let tempTime = new Date(ele.date);
+          return (
+            convertDate(tempTime) === convertDate(dateToUpdate)
+          );
+        })?.count;
       // console.log(tempLecture)
       array.push({
         studentid: stud._id,
         enrollment_no: stud.enrollment_no,
         name: stud.name,
-        count: tempCount?tempCount:0,
+        count: tempCount ? tempCount : 0,
         index: idx,
-        attendance:tempAttendanceList,
-        totalLectures:totalLectures,
+        attendance: tempAttendanceList,
+        totalLectures: totalLectures,
       });
       // console.log(array)
       idx++;
     });
     setstudentIDs(array);
-  }, [dataofstud?.details, dataofstudent]);
+  }, [dataofstud?.details, dataofstudent,dateToUpdate]);
 
   // submit handler
   const submitHandler = async () => {
     // if(!(isClassDetails?.message==="No Class Today" )&&)
     try {
       let payload = {
-        // subjectId: sub_id.id,
+        ID: sub_id.id,
         data: {
-          subjectId: sub_id.id,
+        //   subjectId: sub_id.id,
           studentIDs: studentIDs,
         },
       };
       console.log(payload);
-      await dispatch(updateAttendanceAsync(payload));
+      await dispatch(updateAttendanceByPermissionAsync(payload));
     } catch (error) {
       console.log(error);
     }
@@ -275,12 +295,28 @@ export default function MarkAttendance() {
 
   return (
     <div className="markAttendanceMain w-screen h-screen">
-      <h2>Attendence Sheet</h2>
-      {isClassDetails?.message === "No Class Today" && (
+      <h2>Update Past Attendance</h2>
+      {/* {isClassDetails?.message === "No Class Today" && (
         <div className="w-full p-2 bg-primary text-dimWhite text-center font-semibold">
           <p>Class is not scheduled for Today, cannot mark the attendance </p>
         </div>
-      )}
+      )} */}
+      <div>
+        <h3>Date</h3>
+        <input type="date" name="dateToUpdate" id="dateToUpdate" value={dateToUpdate} onChange={(e)=>setDateToUpdate(e.target.value)}/>
+        <select name="dateToUpdate" id="dateToUpdate" value={dateToUpdate} onChange={(e)=>setDateToUpdate(e.target.value)}>
+            <option value={''}>Date</option>
+            {
+                lectures &&
+                lectures.map(lecture=>{
+                    let dateValue = convertDate(lecture.date)
+                    return(
+                        <option key={dateValue} value={dateValue}>{dateValue}</option>
+                    )
+                })
+            }
+        </select>
+      </div>
       <div className="sheet">
         <div className="attendenceFormat">
           <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
@@ -368,28 +404,20 @@ export default function MarkAttendance() {
         </div>
 
         <div className="moreFeatures">
-          {/* Permission to mark attendance of past date*/}
-          <AskPermission sub_id={sub_id.id}/>
           <div className="previousAttendance">
-            {/* see previous attendance */}
             <button onClick={() => navigate("/previousattendance")}>
               See Previous Attendance
-            </button>
-            {/* update previous attendance */}
-            <button onClick={() => navigate(`/updatepreviousattendace/${sub_id.id}`,{state:{totalLectures}})}>
-              Update Previous Attendance
             </button>
           </div>
         </div>
       </div>
       {
         // maxCount &&
-        // maxCount > 0 &&
-        !(isClassDetails?.message === "No Class Today") && (
-          <div className="button1" onClick={submitHandler}>
-            Submit
-          </div>
-        )
+        maxCount > 0 &&
+        <div className="button1" onClick={submitHandler}>
+          Submit
+        </div>
+        // )
       }
     </div>
   );
