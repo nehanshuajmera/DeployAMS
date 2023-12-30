@@ -37,13 +37,11 @@ app.use((err, req, res, next) => {
 // Use rate limiting middleware
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 1000000, // limit each IP to 100 requests per windowMs
+  max: 10000, // limit each IP to 100 requests per windowMs
   message: "Too many requests from this IP, please try again after 15 minutes"
 });
 
 app.use(limiter);
-
-// connect to mongoDB
 
 // connect to mongoDB
 mongoose.set('strictQuery', false)
@@ -62,16 +60,17 @@ mongoose.connect(process.env.MDB_CONNECT)
     app.use("/api/updateattendance", require("./Routes/updateattendanceRouter"));
     app.use("/api/alert", require("./Routes/alertRouter"));
     app.use("/api/xlsx", require("./Routes/xlsxRouter"));
+    app.use("/api/studentattendancerequest", require("./Routes/attendanceRequestRouter.js"));
     
-    
+
     // Schedule the cron jobs
     cron.schedule('31 5 * * *', async () => {
       console.log('Running teacher rating update job...');
       try {
-        await backupDatabase();
-        await exportToS3();
         const result = await updateTodayAttendance();
         console.log(result);
+        // await backupDatabase();
+        // await exportToS3();
       } catch (error) {
         console.error('Error updating attendance:', error);
       }

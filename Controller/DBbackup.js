@@ -20,7 +20,7 @@ const backupDatabase = async () => {
     const backupFilePath = path.join(backupDir, backupFileName);
 
     await fs.writeFile(backupFilePath, JSON.stringify(backupData, null, 2));
-    console.log('Backup file created successfully:', backupFilePath);
+    console.log('Backup file created successfully');
 
   } catch (error) {
     console.error('Error creating backup:', error);
