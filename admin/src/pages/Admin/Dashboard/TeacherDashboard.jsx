@@ -40,7 +40,9 @@ export default function TeacherDashboard() {
 
   // calculate total number of lecture 
   const gotoSubjectAttendance=(sub_id)=>{
-    // subjects.find(subj=>subj._id=sub_id).reducer()
+    let totalLectures = subjects.find(subj=>subj.subject_id._id===sub_id).subject_id.lecture_dates.reduce((result,ele)=>(result+=ele.count),0)
+    // console.log(totalLectures)
+    navigate(`/markattendance/${sub_id}`,{state:{totalLectures}})
   }
 
   return (
@@ -64,7 +66,7 @@ export default function TeacherDashboard() {
             subjects && 
             subjects.map(subject=>{
               return(
-              <div key={subject.subject_id._id} onClick={() => navigate(`/markattendance/${subject.subject_id._id}`)}>{subject.subject_id.course_code} - {subject.subject_id.branch} - {subject.subject_id.subject_name}</div>                
+              <div key={subject.subject_id._id} onClick={() => gotoSubjectAttendance(subject.subject_id._id)}>{subject.subject_id.course_code} - {subject.subject_id.branch} - {subject.subject_id.subject_name}</div>                
                 )
               })
             }

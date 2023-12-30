@@ -43,11 +43,13 @@ export default function DailyAttendence(props) {
 
   return (
     <div className="attendenceContainer">
-
       <div className="universalDetails">
         <div className="cllgLogo">
           {/* <img src={props.Image} alt="CollegeLogo" /> */}
-          <img src="https://medicaps.ac.in/resources/img/logo-navbar.png" alt="CollegeLogo" />
+          <img
+            src="https://medicaps.ac.in/resources/img/logo-navbar.png"
+            alt="CollegeLogo"
+          />
         </div>
         <div className="studentDepartment">
           <h4>Department of {props.Department}</h4>
@@ -59,12 +61,26 @@ export default function DailyAttendence(props) {
       <hr className="styleHr" />
 
       <div className="studentDetails">
-        <div className="studentProgramme"><h4>Programme: {props.Programme}</h4></div>
-        <div className="studentName"><h4>Name: {detail?.name}</h4></div>
-        <div className="studentId"><h4>Enrollment No.: {detail?.enrollment_no}</h4></div>
-        <div className="Year"><h4>Year: {props.Year}</h4></div>
-        <div className="cls-sec"><h4>Class & Section: {detail?.branch} {detail?.section}</h4></div>
-        <div className="studentBatch"><h4>Batch: {detail?.batch}</h4></div>
+        <div className="studentProgramme">
+          <h4>Programme: {props.Programme}</h4>
+        </div>
+        <div className="studentName">
+          <h4>Name: {detail?.name}</h4>
+        </div>
+        <div className="studentId">
+          <h4>Enrollment No.: {detail?.enrollment_no}</h4>
+        </div>
+        <div className="Year">
+          <h4>Year: {props.Year}</h4>
+        </div>
+        <div className="cls-sec">
+          <h4>
+            Class & Section: {detail?.branch} {detail?.section}
+          </h4>
+        </div>
+        <div className="studentBatch">
+          <h4>Batch: {detail?.batch}</h4>
+        </div>
       </div>
 
       <div className="subjectAttendence">
@@ -131,5 +147,5 @@ export default function DailyAttendence(props) {
         }
       </div>
     </div>
-  )
+  );
 }
