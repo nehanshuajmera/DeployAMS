@@ -142,7 +142,7 @@
 			"response": []
 		},
 		{
-			"name": "Academic Calendar Change Day Name",
+			"name": "Change day Academic Calendar (Change Day Name)",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -196,6 +196,36 @@
 						"api",
 						"calander",
 						"updateholiday"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add More Days In Academic Calander",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dayscnt\":74\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/calander/addmoredays",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"calander",
+						"addmoredays"
 					]
 				}
 			},
@@ -727,6 +757,142 @@
 						"admin",
 						"adminrejectleaveattendance",
 						"  :request Id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Xlsx Bulk student Entry",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/visha/Desktop/Upload Student bulk xslx.xlsx"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/xlsx/addstudentxlsx",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"xlsx",
+						"addstudentxlsx"
+					],
+					"query": [
+						{
+							"key": "files",
+							"value": "file",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Xlsx Bulk teacher Entry",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/visha/Desktop/Upload Student bulk xslx.xlsx"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/xlsx/addteacherxlsx",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"xlsx",
+						"addteacherxlsx"
+					],
+					"query": [
+						{
+							"key": "files",
+							"value": "file",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Xlsx Bulk  Subject Entry",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/visha/Desktop/Upload Student bulk xslx.xlsx"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/xlsx/addsubjectxlsx",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"xlsx",
+						"addsubjectxlsx"
+					],
+					"query": [
+						{
+							"key": "files",
+							"value": "file",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Attendance Report (Not Tested)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/xlsx/attendance-report/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"xlsx",
+						"attendance-report",
+						"all"
 					]
 				}
 			},

@@ -7,31 +7,33 @@ const subjectSchema = new mongoose.Schema({
   branch: String,
   section: String,
   batch: String,
-  // Changed Schema 
-  updateAttendance:[{
-    actualDate:Date,
-    status:Boolean,
-  }],
+  // // Changed Schema 
+  // updateAttendance:[{
+  //   actualDate:Date,
+  //   status:Boolean,
+  // }],
 
-  extraClass:[{
-    dateOfClass:Date,    
-    count:Number
-  }],
+  // extraClass:[{
+  //   dateOfClass:Date,    
+  //   count:Number
+  // }],
   
-  rescheduleClass:[{
-    Day:String,
-    dateOfreschedule:Date
-  }],
+  // rescheduleClass:[{
+  //   Day:String,
+  //   dateOfreschedule:Date
+  // }],
 
-  day: [
-    {
-      name:String ,
-      count:Number
-    }
-    ], // An array of strings representing days of the week (e.g., "Mon")
   teacher_id: mongoose.Schema.Types.ObjectId, // Assuming this references the teacher
   lecture_dates: [{date: Date, count: Number}], // An array of date objects
-  day:[{name: String, count: Number,cause:String}] // for backup no use
+  day:[{name: String, count: Number,cause:String}], // for backup no use
+  created_at_and_by: {
+    admin_name: { type: String, default: 'admin' },
+    date: { type: Date, default: Date.now }
+  },
+  updated_at_and_by: {
+    admin_name: { type: String, default: 'admin' },
+    date: { type: Date, default: Date.now }
+  }
 });
 
 // Create a Subject model
