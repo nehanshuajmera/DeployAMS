@@ -7,10 +7,11 @@ const PORT = process.env.PORT || 5000;
 const cors = require("cors");
 const cron = require('node-cron');
 const updateTodayAttendance=require("./Controller/UpdateTodayAttendance");
-
+const fileUpload = require('express-fileupload');
 
 dotenv.config();
 app.use(express.json());
+app.use(fileUpload());
 
 app.use(cookieParser());
 
@@ -42,6 +43,7 @@ app.use("/api/logs", require("./Routes/logRouter.js"));
 app.use("/api/schedule",require("./Routes/scheduleRouter"));
 app.use("/api/updateattendance",require("./Routes/updateattendanceRouter"));
 app.use("/api/alert",require("./Routes/alertRouter"));
+app.use("/api/xlsx",require("./Routes/xlsxRouter"));
 
 
 // Schedule the cron job to run at 5:31 am every day
