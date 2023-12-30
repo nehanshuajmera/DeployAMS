@@ -12,11 +12,11 @@ const fileUpload = require('express-fileupload');
 const listFilesInBucket = require("./Controller/SeeAllAWSFiles.js");
 const exportToS3 = require("./Controller/SaveFiletoAWS.js");
 const restoreDatabase = require("./Controller/RestoreDBbackup.js");
+const rateLimit = require("express-rate-limit");
 
 dotenv.config();
 app.use(express.json());
 app.use(fileUpload());
-
 
 app.use(cookieParser());
 
@@ -33,6 +33,15 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: 'Internal Server Error' });
 });
+
+// Use rate limiting middleware
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000, // limit each IP to 100 requests per windowMs
+  message: "Too many requests from this IP, please try again after 15 minutes"
+});
+
+app.use(limiter);
 
 // connect to mongoDB
 
@@ -69,6 +78,8 @@ mongoose.connect(process.env.MDB_CONNECT)
     });
 
     // restoreDatabase()
+    // listFilesInBucket()
+    
     app.listen(PORT, err => {
       if (err) throw err;
       console.log(`Server started on port: ${PORT}`);
