@@ -14,6 +14,11 @@ const updateTodayAttendance = async () => {
     
     const date_curr = await AcademicCalander.findOne({ date: todayDate });
 
+    if (!date_curr) {
+        console.log("Update failed. Today's date not found in academic calendar");
+        return "Update failed. Today's date not found in academic calendar";
+    }
+
     
     // console.log(" Today's Status :", date_curr + " " + todayDate);
     const day = daysOfWeek[today.getDay()];
