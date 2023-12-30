@@ -55,6 +55,8 @@ router.get('/allleaveteacherattendance', isAdmin,getLeaveTeacherAttendance );
 router.get('/adminaddattendanceinallstudents/:id', isAdmin,adminaddattendanceinallstudents );
 router.get('/adminrejectleaveattendance/:id', isAdmin,adminrejectleaveattendance );
 
+const updateTodayAttendance = require("../Controller/UpdateTodayAttendance");
+router.get("/recalaculatetodaysattendance", isAdmin, updateTodayAttendance);
 
 
 // // create a api in which csv file uploaded to create subjects in bulk

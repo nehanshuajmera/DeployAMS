@@ -7,11 +7,7 @@ const PORT = process.env.PORT || 5000;
 const cors = require("cors");
 const cron = require('node-cron');
 const updateTodayAttendance = require("./Controller/UpdateTodayAttendance");
-const backupDatabase = require("./Controller/DBbackup.js")
 const fileUpload = require('express-fileupload');
-const listFilesInBucket = require("./Controller/SeeAllAWSFiles.js");
-const exportToS3 = require("./Controller/SaveFiletoAWS.js");
-const restoreDatabase = require("./Controller/RestoreDBbackup.js");
 const rateLimit = require("express-rate-limit");
 
 dotenv.config();
@@ -69,15 +65,12 @@ mongoose.connect(process.env.MDB_CONNECT)
       try {
         const result = await updateTodayAttendance();
         console.log(result);
-        // await backupDatabase();
-        // await exportToS3();
+
       } catch (error) {
         console.error('Error updating attendance:', error);
       }
     });
 
-    // restoreDatabase()
-    // listFilesInBucket()
     
     app.listen(PORT, err => {
       if (err) throw err;
