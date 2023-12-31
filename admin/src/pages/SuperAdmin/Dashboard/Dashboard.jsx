@@ -41,6 +41,7 @@ export default function Dashboard() {
           <div onClick={() => navigate("/academiccalendar")}>Create Academic Calendar</div>
           <div onClick={() => navigate("/attendancepermission")}>Attendance Permission</div>
           <div onClick={() => navigate("/alert")}>Alert & Notice</div>
+          <div onClick={() => navigate("/dataupload")}>Upload Data</div>
         </div>
       </div>
     </div>
