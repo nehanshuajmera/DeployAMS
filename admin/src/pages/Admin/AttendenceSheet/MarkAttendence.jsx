@@ -64,6 +64,7 @@ export default function MarkAttendance() {
     const unsub = async () => {
       try {
         await dispatch(ParticularAttendanceasync({ ID: sub_id.id }));
+        console.log(particularAttendanceStore)
         if(particularAttendanceStore.isErr){
           setMsgType(TYPE.Err)
           setMsg(particularAttendanceStore.Err)
