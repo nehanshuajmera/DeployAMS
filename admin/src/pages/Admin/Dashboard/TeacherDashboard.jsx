@@ -29,7 +29,7 @@ export default function TeacherDashboard() {
     })();    
   },[])
   const userDetail = useSelector(state=>state.userdetail)
-  console.log(userDetail)
+  // console.log(userDetail)
   
   let subjects = userDetail?.details?.subjects
   useEffect(() => {

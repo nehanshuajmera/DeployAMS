@@ -64,6 +64,7 @@ export default function MarkAttendance() {
     const unsub = async () => {
       try {
         await dispatch(ParticularAttendanceasync({ ID: sub_id.id }));
+        console.log(particularAttendanceStore)
         if(particularAttendanceStore.isErr){
           setMsgType(TYPE.Err)
           setMsg(particularAttendanceStore.Err)
@@ -134,7 +135,7 @@ export default function MarkAttendance() {
       // const woattendacne=stud.subjects.find(st=>st.subject_id=== sub_id.id);
       // console.log(woattendacne.attendance.length)
       let presentDate = new Date()
-      console.log(presentDate.getDate())
+      // console.log(presentDate.getDate())
       // let tempLecture = stud.subjects.find(subj=>subj.subject_id === sub_id.id).lecture_dates.reduce((result,ele)=>(result+=ele.count),0)
       let tempAttendanceList = stud.subjects.find(subj=>subj.subject_id === sub_id.id).attendance.reduce((result,ele)=>(result+=ele.count),0)
       let tempCount = stud.subjects.find(subj=>subj.subject_id === sub_id.id).attendance.find(ele=>{
