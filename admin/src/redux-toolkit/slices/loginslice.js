@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const storedState = JSON.parse(localStorage.getItem('reduxState'));
 const initialState = {
     isLogin: false,
     isAuthenticated: false,
@@ -22,6 +21,7 @@ export const loginAsync = createAsyncThunk('login/loginAsync', async (payload, {
         const msg = response.data.message;
 
         if (response.status === 200) {
+            window.location.reload();
             const authResponse = await axios.get('api/authentic');
 
             if (authResponse.data.message === 'teacher'||authResponse.data.message === 'Admin') {
@@ -43,11 +43,10 @@ export const logoutAsync = createAsyncThunk('login/logoutAsync', async (payload,
     try {
 
         const response = await axios.get('/api/authentic/logout');
-       const msg = response.data.message
+        const msg = response.data.message
         console.log("message:",msg);
         if (msg === "Logout successful")
         {
-            
             return msg;
         }
 
@@ -73,7 +72,7 @@ export const loginslice = createSlice({
                 console.log("seting value");
                 console.log(state);
                 // localStorage.clear();
-                localStorage.setItem('reduxState', JSON.stringify(state));
+                // localStorage.setItem('reduxState', JSON.stringify(state));
                 
             })
             .addCase(loginAsync.rejected, (state, action) => {
@@ -85,8 +84,8 @@ export const loginslice = createSlice({
             .addCase(logoutAsync.fulfilled, (state,action) => {
                         console.log('out');
                 state={...initialState}
-               localStorage.clear;
-                localStorage.setItem('reduxState',JSON.stringify(initialState));
+            //    localStorage.clear;
+                // localStorage.setItem('reduxState',JSON.stringify(initialState));
              
             })
             .addCase(logoutAsync.rejected, (state,action) => {

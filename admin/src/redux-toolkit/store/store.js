@@ -15,6 +15,8 @@ import attendanceUpdationslice from '../slices/teacherAPIslice/insertUpdateatten
 import passwordslice from '../slices/teacherAPIslice/passwordslice';
 import pastattendanceslice from '../slices/teacherAPIslice/pastattendanceslice'
 import updateattendancebypermissionslice from '../slices/teacherAPIslice/updateattendancebypermissionslice'
+import authapislice from '../slices/authapislice';
+
 export const store = configureStore({
   reducer: {
     login: loginslice,
@@ -32,6 +34,7 @@ export const store = configureStore({
     password:passwordslice,
     pastattendancepermission:pastattendanceslice,
     updateAttendancebypermission:updateattendancebypermissionslice,
+    auth:authapislice,
   },
   
 });

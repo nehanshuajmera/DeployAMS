@@ -75,7 +75,7 @@ export const loginslice = createSlice({
                 state.enrollment_no = action.payload.enrollment_no;
                 state.usertype = action.payload.usertype;
                 console.log("seting value");
-                localStorage.setItem('reduxState', JSON.stringify(state));
+                // localStorage.setItem('reduxState', JSON.stringify(state));
                 
             })
             .addCase(loginAsync.rejected, (state, action) => {
@@ -86,8 +86,8 @@ export const loginslice = createSlice({
             .addCase(logoutAsync.fulfilled, (state,action) => {
                         
                 state={...initialState}
-               localStorage.removeItem('reduxState');
-                localStorage.setItem('reduxState',JSON.stringify(initialState));
+            //    localStorage.removeItem('reduxState');
+                // localStorage.setItem('reduxState',JSON.stringify(initialState));
              
             })
             .addCase(logoutAsync.rejected, (state,action) => {

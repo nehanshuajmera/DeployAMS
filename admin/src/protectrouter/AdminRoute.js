@@ -2,14 +2,18 @@ import React, { useContext, useEffect } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 
-export default function ProtectedRoute({ children }) {
+export default function AdminRoute({ children }) {
   const navigate = useNavigate();
-  const {IsLogin}=useContext(AuthContext);
+  const {IsLogin, userdata}=useContext(AuthContext);
 
   useEffect(() => {
-    if(IsLogin !== null&&!IsLogin){
-      navigate('/');      
+    if(IsLogin !== null){
+
     }
+    else if(!IsLogin||userdata.admin_role!=='admin'){
+      navigate('/teacherdashboard');      
+    }
+
   }, [IsLogin])
 
   return children; // Render the protected content if logged in

@@ -8,14 +8,18 @@ import { BrowserRouter } from "react-router-dom";
 import { store } from "./redux-toolkit/store/store.js";
 import { Provider } from "react-redux";
 import MsgAndErrProvider from "./context/MsgAndErrContext.jsx";
+import { AuthContextProvider } from "./context/AuthContext.jsx";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <MsgAndErrProvider>
       <BrowserRouter>
         <Provider store={store}>
+          <AuthContextProvider>
           <App />
+        </AuthContextProvider>
         </Provider>
       </BrowserRouter>
     </MsgAndErrProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

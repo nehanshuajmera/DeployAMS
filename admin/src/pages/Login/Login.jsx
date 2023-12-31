@@ -1,8 +1,9 @@
 import './Login.css'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { loginAsync } from '../../redux-toolkit/slices/loginslice';
 import { useNavigate } from 'react-router-dom';
+import  AuthContext  from '../../context/AuthContext';
 
 const initialState = {
   userId: '',
@@ -12,6 +13,16 @@ const initialState = {
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const {IsLogin}=useContext(AuthContext);
+
+    useEffect(() => {
+      if(IsLogin !== null&&IsLogin){
+        navigate('/teacherdashboard');
+      }
+    }, [IsLogin])
+
+
   const userstate = useSelector((state) => { state.login });
 
   const [loginData, setLoginData] = useState(initialState);

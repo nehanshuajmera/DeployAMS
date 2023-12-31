@@ -53,24 +53,7 @@ export default function TeacherDashboard() {
 
   return (
     <div className='teacherDashboard'>
-      <div className="universalDetailsAdmin">
-        <div className="cllgLogo">
-          <img src="https://medicaps.ac.in/resources/img/logo-navbar.png" alt="CollegeLogo" />
-        </div>
-        <>
-        {
-          // if admin then only
-          userDetail?.details?.admin_role === "Admin" &&
-          <div className="logoutButton">
-          <button onClick={() => { navigate('/dashboard') }}>Admin Dashboard</button>
-        </div>
-        }
-        </>
-        <div className="logoutButton">
-          <button onClick={handellogout}>Logout</button>
-        </div>
-      </div>
-      <hr className="styleHr" />
+      
 
       <div className="teacherContentContainer">
         <div className="teacherMain">

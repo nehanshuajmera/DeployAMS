@@ -10,18 +10,15 @@ const initialState={
 
 export const userdetailasync = createAsyncThunk('userDetail/detailasync', async (payload, { rejectWithValue }) => {
     try {
-        if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
-        {
+        
             const response = await axios.get('/api/teacher/details');
             const msg = response.data.message;
             
             if(response.status === 200)      
             return msg;
             
-            
             // Return undefined or an error object if the authentication fails
             return rejectWithValue(msg);
-        }
     } catch (error) {
         // Return undefined or an error object if an error occurs
         return rejectWithValue(error.message);

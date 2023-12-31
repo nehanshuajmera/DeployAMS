@@ -130,9 +130,10 @@ console.log("rescheduleSubmit")
   const [calender,setCalender] = useState([...fetchcalendar])
 
   useEffect(()=>{
-     setCalender( calender.sort((a, b) => new Date(a.date) - new Date(b.date)))
-     console.log(fetchcalendar)
-    console.log(calender)
+    //  setCalender( calender.sort((a, b) => new Date(a.date) - new Date(b.date)))
+    //  console.log(fetchcalendar)
+     setCalender(fetchcalendar)
+    // console.log(calender)
   },[fetchcalendar])
 
   return (
@@ -208,7 +209,7 @@ console.log("rescheduleSubmit")
             calender&&
             calender.map( Date =>{
               return(
-                <div key={Date._id} className="dateRelatedData rounded">                 
+                <div key={Date._id} className={Date.holiday?"dateRelatedData rounded bg-red-500 ":"dateRelatedData rounded"}>                 
                   <h4> {convertDate(Date.date)} </h4>
                   <h4>{Date.day}</h4>
                   {

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const storedState = JSON.parse(localStorage.getItem('reduxState'));
+// const storedState = JSON.parse(localStorage.getItem('reduxState'));
 const initialState = {
     iscreated: false,
     value: false,

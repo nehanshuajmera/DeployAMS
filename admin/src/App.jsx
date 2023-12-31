@@ -16,29 +16,45 @@ import MarkAttendence from "./pages/Admin/AttendenceSheet/MarkAttendence";
 import TeacherDashboard from "./pages/Admin/Dashboard/TeacherDashboard";
 import ProtectedRoute from "./protectrouter/ProtectedRoute";
 import Calendar from "./pages/SuperAdmin/Calendar/Calendar";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AttendancePermission from "./pages/SuperAdmin/AttendancePermission/AttendancePermission";
 import PreviousAttendence from "./pages/Admin/PreviousAttendance/PreviousAttendance";
 import SubstituteTeacher from "./pages/Admin/Substitute Teacher/SubstituteTeacher";
 import ArangementClass from "./pages/Admin/ArangementClass/ArangementClass";
-import LoginRoute from "./protectrouter/LoginRoute";
 import UpdatePrevious from "./pages/Admin/AttendenceSheet/UpdatePrevious";
 import DataUploader from "./pages/Admin/DataUploader/DataUploader";
-// import Header from "./Universal/header"
+import { authasync } from "./redux-toolkit/slices/authapislice";
+import Header from "./Universal/header";
+import AdminRoute from "./protectrouter/AdminRoute";
+import AuthContext from "./context/AuthContext";
 
 function App() {
+
+const dispatch=useDispatch();
+
+  useEffect(() => {
+    const unsub=async()=>{
+      try{
+        await dispatch(authasync());
+      }catch(error){
+          console.log(error);
+      }
+    }
+    unsub();
+   }, [])
+  
+   const {IsLogin}=useContext(AuthContext);
+
   return (
     <div className="w-full overflow-hidden bg-dimWhite ">
-      {/* <Header /> */}
+      {IsLogin? <Header/>:null}
       <ErrMsg/>
       <Routes>
         <Route
           path={"/"}
           element={
-            <LoginRoute>
               <Login />
-            </LoginRoute>
           }
         />
         <Route
@@ -76,89 +92,89 @@ function App() {
         <Route
           path={"/dashboard"}
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <Dashboard />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
         <Route
           path={"/allstudent"}
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <AllStudent />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
         <Route
           path={"/allteacher"}
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <AllTeacher />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
         <Route
           path={"/allsubject"}
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <AllSubject />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
         <Route
           path={"/createstudent"}
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <CreateStudent />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
         <Route
           path={"/updatestudent/:id"}
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <UpdateStudent />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
         <Route
           path={"/createsubject"}
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <CreateSubject />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
         <Route
           path={"/updatesubject/:id"}
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <UpdateSubject />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
         <Route
           path="/createteacher"
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <CreateTeacher />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
         <Route
           path="/updateteacher/:id"
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <UpdateTeacher />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
         <Route
           path="/dataupload"
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <DataUploader />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
         <Route
@@ -180,9 +196,9 @@ function App() {
         <Route
           path="/academiccalendar"
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <Calendar />
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
         <Route
