@@ -24,6 +24,7 @@ import SubstituteTeacher from "./pages/Admin/Substitute Teacher/SubstituteTeache
 import ArangementClass from "./pages/Admin/ArangementClass/ArangementClass";
 import LoginRoute from "./protectrouter/LoginRoute";
 import UpdatePrevious from "./pages/Admin/AttendenceSheet/UpdatePrevious";
+import DataUploader from "./pages/Admin/DataUploader/DataUploader";
 // import Header from "./Universal/header"
 
 function App() {
@@ -149,6 +150,14 @@ function App() {
           element={
             <ProtectedRoute>
               <UpdateTeacher />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dataupload"
+          element={
+            <ProtectedRoute>
+              <DataUploader />
             </ProtectedRoute>
           }
         />
