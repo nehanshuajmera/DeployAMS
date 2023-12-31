@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom"
 import { logoutAsync } from '../../../redux-toolkit/slices/loginslice';
 import { userdetailasync } from '../../../redux-toolkit/slices/userdetailslice';
+import { TYPE, useMsgErr } from '../../../context/MsgAndErrContext';
 
 
 export default function TeacherDashboard() {
+  const {setMsgType,setMsg} = useMsgErr()
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
@@ -15,6 +17,10 @@ export default function TeacherDashboard() {
       try{
 
         await dispatch(userdetailasync());
+        if(userDetail.isErr){
+          setMsgType(TYPE.Err)
+          setMsg(userDetail.errMsg)
+        } 
         // const studentState = useSelector(state=>state.crudstudent)
         
       }catch(error){
@@ -51,9 +57,15 @@ export default function TeacherDashboard() {
         <div className="cllgLogo">
           <img src="https://medicaps.ac.in/resources/img/logo-navbar.png" alt="CollegeLogo" />
         </div>
-        <div className="logoutButton">
+        <>
+        {
+          // if admin then only
+          userDetail?.details?.admin_role === "Admin" &&
+          <div className="logoutButton">
           <button onClick={() => { navigate('/dashboard') }}>Admin Dashboard</button>
         </div>
+        }
+        </>
         <div className="logoutButton">
           <button onClick={handellogout}>Logout</button>
         </div>

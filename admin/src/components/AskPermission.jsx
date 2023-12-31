@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { postAttendancePermissionAsync } from "../redux-toolkit/slices/teacherAPIslice/pastattendanceslice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { TYPE, useMsgErr } from "../context/MsgAndErrContext";
 
 const AskPermission = ({ sub_id }) => {
   const dispatch = useDispatch();
+  const {setMsgType,setMsg} = useMsgErr()
   const [data, setdata] = useState({
     date: "",
   });
@@ -13,10 +15,15 @@ const AskPermission = ({ sub_id }) => {
   const submitHandler = async() => {
     try {
       await dispatch(postAttendancePermissionAsync({ ID: sub_id, data }));
+      if(askForPermissionStore.isErr){
+        setMsgType(TYPE.Err)
+        setMsg(askForPermissionStore.errMsg)
+      }
     } catch (error) {
       console.log(error);
     }
   };
+  const askForPermissionStore = useSelector(state=>state.pastattendancepermission)
   return (
     <>
       <div className="askForPermission">

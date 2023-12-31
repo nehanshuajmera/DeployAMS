@@ -30,6 +30,7 @@ function App() {
   return (
     <div className="w-full overflow-hidden bg-dimWhite ">
       {/* <Header /> */}
+      <ErrMsg/>
       <Routes>
         <Route
           path={"/"}

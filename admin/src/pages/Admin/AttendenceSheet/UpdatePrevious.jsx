@@ -16,8 +16,10 @@ import { updateAttendanceAsync } from "../../../redux-toolkit/slices/teacherAPIs
 import AskPermission from "../../../components/AskPermission";
 import { updateAttendanceByPermissionAsync } from "../../../redux-toolkit/slices/teacherAPIslice/updateattendancebypermissionslice";
 import { userdetailasync } from "../../../redux-toolkit/slices/userdetailslice";
+import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
 
 export default function UpdatePrevious() {
+  const {setMsgType,setMsg} = useMsgErr()
   const sub_id = useParams();
   const { totalLectures } = useLocation().state;
   const dispatch = useDispatch();
@@ -78,6 +80,10 @@ console.log(userSubjectData)
     const unsub = async () => {
       try {
         await dispatch(ParticularAttendanceasync({ ID: sub_id.id }));
+        if(dataofstudent.isErr){
+          setMsgType(TYPE.Err)
+          setMsg(dataofstudent.Err)
+        }
       } catch (error) {
         console.log(error);
       }
@@ -87,9 +93,9 @@ console.log(userSubjectData)
   // setdataofstudent(useSelector((state)=>state.fetchDetail));
 
   const dataofstudent = useSelector(
-    (state) => state.particularattendanceDetail.details
+    (state) => state.particularattendanceDetail
   );
-  // console.log(dataofstudent);
+  // console.log(dataofstudent.details);
 
   const changeCount = ({ type, stud_id, count, index }) => {
     console.log( " change",type, stud_id,count);
@@ -136,7 +142,7 @@ console.log(userSubjectData)
     var array = [];
     var idx = 0;
     
-    dataofstudent.map((stud) => {
+    dataofstudent.details.map((stud) => {
       // console.log({"studentid":stud._id,"enrollment_no":stud.enrollment_no,"name":stud.name, "count":0})
       // console.log(stud)
       // const woattendacne=stud.subjects.find(st=>st.subject_id=== sub_id.id);
@@ -167,7 +173,7 @@ console.log(userSubjectData)
       idx++;
     });
     setstudentIDs(array);
-  }, [dataofstud?.details, dataofstudent,dateToUpdate]);
+  }, [dataofstud?.details, dataofstudent.details,dateToUpdate]);
 
   // submit handler
   const submitHandler = async () => {
@@ -182,10 +188,19 @@ console.log(userSubjectData)
       };
       console.log(payload);
       await dispatch(updateAttendanceByPermissionAsync(payload));
+      if(updateAttendance_Store.isErr){
+        setMsgType(TYPE.Err)
+        setMsg(updateAttendance_Store.errMsg)
+      } 
     } catch (error) {
       console.log(error);
     }
   };
+  const updateAttendance_Store  = useSelector(state=>state.updateAttendancebypermission)   
+  
+  
+  
+  
 
   const data = React.useMemo(() => studentIDs, [studentIDs]);
   // console.log(dataofstud)
