@@ -39,6 +39,7 @@ const updateTodayAttendance = async () => {
 
     // Save each subject separately or use updateMany to save all at once
     await Promise.all(SubjectList.map(subject => subject.save()));
+    console.log("Today's attendance updated");  
 
     return "Today's attendance updated";
 }

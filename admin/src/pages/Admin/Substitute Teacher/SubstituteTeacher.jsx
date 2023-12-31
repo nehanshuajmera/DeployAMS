@@ -90,7 +90,7 @@ export default function SubstituteTeacher() {
 
   const handleDelete = async(itemId)=>{
     try {
-      await dispatch(deleteTeacherAsync(itemId))
+      // await dispatch(deleteTeacherAsync(itemId))
     } catch (error) {
       console.log(error)
     }

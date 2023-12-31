@@ -1200,6 +1200,64 @@
 			"response": []
 		},
 		{
+			"name": "Teacher SEE Student Request for Attendance to teacher  (UNSECURE AND UNTESTED) Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/studentattendancerequest/getrequests/: subject_id ",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"studentattendancerequest",
+						"getrequests",
+						": subject_id "
+					],
+					"variable": [
+						{
+							"key": " subject_id ",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Accept and reject Student Request for Attendance to teacher  (UNSECURE AND UNTESTED) Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{request_id,status}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/studentattendancerequest/acceptorrejectattendance",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"studentattendancerequest",
+						"acceptorrejectattendance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Student API's",
 			"request": {
 				"method": "OPTIONS",
@@ -1349,6 +1407,64 @@
 						"api",
 						"student",
 						"givestar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Student Request for Attendance to teacher  (UNSECURE AND UNTESTED)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{subject_id,reason,message}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/studentattendancerequest/generaterequest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"studentattendancerequest",
+						"generaterequest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Teacher SEE Student Request for Attendance to teacher  (UNSECURE AND UNTESTED) Copy 2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/studentattendancerequest/getmyrequests/:student_id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"studentattendancerequest",
+						"getmyrequests",
+						":student_id"
+					],
+					"variable": [
+						{
+							"key": "student_id",
+							"value": ""
+						}
 					]
 				}
 			},

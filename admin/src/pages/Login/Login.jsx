@@ -26,7 +26,7 @@ export default function Login() {
   };
         function check() {
           const isLoggedIn = useSelector((state) => state.login.isLogin);
-          return isLoggedIn;
+          return isLoggedIn; 
         }
 
   const handelsubmit = async (e) => {
@@ -57,7 +57,7 @@ export default function Login() {
         {
           isError &&
           <div className='text-white bg-red-600 px-6 py-2  z-50 rounded-lg'>
-            {errMsg}
+            {userstate?.errmsg}
           </div>
         }
         <p className="heading">Teacher Login</p>

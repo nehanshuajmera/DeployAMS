@@ -14,9 +14,11 @@ import { ParticularAttendanceasync } from "../../../redux-toolkit/slices/teacher
 import { checkclassasync } from "../../../redux-toolkit/slices/teacherAPIslice/checkclassSlice";
 import { updateAttendanceAsync } from "../../../redux-toolkit/slices/teacherAPIslice/insertUpdateattendanceSlice";
 import AskPermission from "../../../components/AskPermission";
+import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
 
 export default function MarkAttendance() {
   const sub_id = useParams();
+  const {setMsgType,setMsg} = useMsgErr()
   const {totalLectures} = useLocation().state
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -62,8 +64,10 @@ export default function MarkAttendance() {
     const unsub = async () => {
       try {
         await dispatch(ParticularAttendanceasync({ ID: sub_id.id }));
-        // console.log(dataofstudent)
-        // await dispatch(checkclassasync({ID:sub_id.id}));
+        if(particularAttendanceStore.isErr){
+          setMsgType(TYPE.Err)
+          setMsg(particularAttendanceStore.Err)
+        }
       } catch (error) {
         console.log(error);
       }
@@ -72,6 +76,9 @@ export default function MarkAttendance() {
   }, []);
   // setdataofstudent(useSelector((state)=>state.fetchDetail));
 
+  const particularAttendanceStore = useSelector(
+    (state) => state.particularattendanceDetail
+  );
   const dataofstudent = useSelector(
     (state) => state.particularattendanceDetail.details
   );
