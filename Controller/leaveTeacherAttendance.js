@@ -26,7 +26,7 @@ const createLeaveTeacherAttendance = async (req, res) => {
     });
     try {
         const newLeaveTeacherAttendance = await leaveTeacherAttendance.save();
-        res.status(201).json(newLeaveTeacherAttendance);
+        res.status(200).json(newLeaveTeacherAttendance);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

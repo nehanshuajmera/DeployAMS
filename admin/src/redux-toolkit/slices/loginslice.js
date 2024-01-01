@@ -66,23 +66,24 @@ export const loginslice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(loginAsync.fulfilled, (state, action) => {
+                state={...initialState}
                 state.isLogin = true;
                 state.isAuthenticated = true;
                 state.usertype = action.payload;
-                console.log("seting value");
                 console.log(state);
                 // localStorage.clear();
                 // localStorage.setItem('reduxState', JSON.stringify(state));
                 
             })
             .addCase(loginAsync.rejected, (state, action) => {
-
+                state={...initialState}
                 state.iserror = true;
-               
+                
                 state.errmsg ="errocurred";
             })
             .addCase(logoutAsync.fulfilled, (state,action) => {
-                        console.log('out');
+                console.log("seting value");
+                        
                 state={...initialState}
             //    localStorage.clear;
                 // localStorage.setItem('reduxState',JSON.stringify(initialState));
@@ -98,5 +99,4 @@ export const loginslice = createSlice({
 });
 
 export const { login } = loginslice.actions;
-
 export default loginslice.reducer;

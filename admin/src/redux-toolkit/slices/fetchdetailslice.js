@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// use the api for fetching the following request allstudents, allteachers, allsubjects , viewallrequest,allcomplaints  syntax for fetching  follow the below comment
+// use the api for fetching the following request allstudents, allteachers, allsubjects,allleaveteacherattendance,adminaddattendanceinallstudents+ request id,adminrejectleaveattendance+request id, viewallrequest,allcomplaints,(for teacher) getleaveTeacherAttendance  syntax for fetching  follow the below comment
 /* 
 import { useDispatch, useSelector } from 'react-redux'; //these are hooks
 import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';  // include this file before dispatching action through this file

@@ -12,5 +12,5 @@ export default function ProtectedRoute({ children }) {
     }
   }, [IsLogin])
 
-  return children; // Render the protected content if logged in
+  return children; //Render the protected content if logged in
 }
