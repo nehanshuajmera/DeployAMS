@@ -29,6 +29,7 @@ import Header from "./Universal/header";
 import AdminRoute from "./protectrouter/AdminRoute";
 import AuthContext from "./context/AuthContext";
 import UploadBulkData from "./pages/SuperAdmin/UploadData/UploadBulkData";
+import UpdateAttendanceRequestPage from "./pages/Admin/PastAttendance/UpdateAttendanceRequestPage";
 
 function App() {
 
@@ -67,7 +68,7 @@ const dispatch=useDispatch();
           }
         />
         <Route
-          path={"/previousattendance"}
+          path={"/previousattendance/:id"}
           element={
             <ProtectedRoute>
               <PreviousAttendence />
@@ -90,6 +91,15 @@ const dispatch=useDispatch();
             </ProtectedRoute>
           }
         />
+      <Route
+          path={"/pastattendance"}
+          element={
+            <ProtectedRoute>
+              <UpdateAttendanceRequestPage/>
+            </ProtectedRoute>
+          }
+        />
+        
         <Route
           path={"/dashboard"}
           element={

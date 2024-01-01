@@ -104,7 +104,6 @@ router.get("/studentsattendance/:id", isauthenticated, async (req, res) => {
       return res.status(403).json({ message: "Forbidden: Access denied for non-teacher users" });
     }
 
-
     const subjectId = req.params.id; // Get the subject ID from the request parameters
 
     // Check if the teacher is assigned to the requested subject
@@ -116,17 +115,18 @@ router.get("/studentsattendance/:id", isauthenticated, async (req, res) => {
       return res.status(403).json({ message: "Forbidden: Access denied for this subject" });
     }
 
-
     // Fetch attendance data for all students for the specified subject
     const studentsAttendance = await Student.find({ "subjects.subject_id": subjectId });
+
     // console.log(studentsAttendance)
 
-    return res.status(200).json({ message: studentsAttendance });
+    return res.status(200).json({ message: studentsAttendance ,subject:subject});
   } catch (error) {
     console.log(error)
     return res.status(500).json({ message: "Internal server error" });
   }
 });
+
 
 
 // GET /hasclasstoday/:id - Check if the subject with :id has a class scheduled for today

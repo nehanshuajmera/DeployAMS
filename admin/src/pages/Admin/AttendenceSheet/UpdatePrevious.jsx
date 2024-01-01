@@ -142,7 +142,7 @@ console.log(userSubjectData)
     var array = [];
     var idx = 0;
     
-    dataofstudent.details.map((stud) => {
+    dataofstudent.details.message.map((stud) => {
       // console.log({"studentid":stud._id,"enrollment_no":stud.enrollment_no,"name":stud.name, "count":0})
       // console.log(stud)
       // const woattendacne=stud.subjects.find(st=>st.subject_id=== sub_id.id);

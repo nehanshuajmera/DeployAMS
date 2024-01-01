@@ -33,7 +33,7 @@ function App() {
             <ChangePassword/>
             </ProtectedRoute>}/>
             <Route exact path="/" element={<Login />} />
-        {/* <Route path="*" element={<NotFoundPage/>} /> */}
+        <Route path="*" element={<NotFoundPage/>} />
         </Routes>
     
     </div>

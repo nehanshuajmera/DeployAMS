@@ -56,7 +56,7 @@ export default function MarkAttendance() {
     // isClassDetails?.message === "No Class Today"
     //   ? setMaxCount(0)
     //   : setMaxCount(isClassDetails.count);
-    console.log(maxCount, isClassDetails?.count);
+    // console.log(maxCount, isClassDetails?.count);
   }, [isClassDetails]);
 
   // get all the student of this particular subject
@@ -64,7 +64,7 @@ export default function MarkAttendance() {
     const unsub = async () => {
       try {
         await dispatch(ParticularAttendanceasync({ ID: sub_id.id }));
-        console.log(particularAttendanceStore)
+        // console.log(particularAttendanceStore)
         if(particularAttendanceStore.isErr){
           setMsgType(TYPE.Err)
           setMsg(particularAttendanceStore.Err)
@@ -381,7 +381,7 @@ export default function MarkAttendance() {
           <AskPermission sub_id={sub_id.id}/>
           <div className="previousAttendance">
             {/* see previous attendance */}
-            <button onClick={() => navigate("/previousattendance")}>
+            <button onClick={() => navigate(`/previousattendance/${sub_id.id}`)}>
               See Previous Attendance
             </button>
             {/* update previous attendance */}

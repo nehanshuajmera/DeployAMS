@@ -54,7 +54,7 @@ export default function DailyAttendence(props) {
           />
         </div>
         <div className="studentDepartment">
-          <h4>Department of {userdata?.Department}</h4>
+          <h4>Department of {userdata?.faculty}</h4>
         </div>
         <div className="logoutButton">
           <button onClick={()=>logout()}>Logout</button>

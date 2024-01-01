@@ -1,131 +1,76 @@
-import React,{useState,useEffect,useLayoutEffect} from 'react'
-import { useDispatch, useSelector } from "react-redux";
-import './PreviousAttendance.css'
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { ParticularAttendanceasync } from "../../../redux-toolkit/slices/teacherAPIslice/seeparticularatendanceslice";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
+const PreviousAttendance = () => {
+  const { id: sub_id } = useParams();
+  const [dataofstudent, setDataOfStudent] = useState(null);
 
-export default function PreviousAttendance() {
-  
-  const sub_id = useParams();
-  const [dataofstud, setdataofstud] = useState({ details: [] });
-  const dispatch = useDispatch();
-  const [studentIDs, setstudentIDs] = useState([]);
+  const convertDate = (inputDate) => {
+    const dateObj = new Date(inputDate);
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return dateObj.toLocaleDateString('en-US', options);
+  };
 
-   // get all the student of this particular subject
-   useLayoutEffect(() => {
-    const unsub = async () => {
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        await dispatch(ParticularAttendanceasync({ ID: sub_id.id }));
-        console.log(dataofstudent)
-        // await dispatch(checkclassasync({ID:sub_id.id}));
+        const response = await axios.get(`/api/teacher/studentsattendance/${sub_id}`);
+        setDataOfStudent(response.data);
       } catch (error) {
-        console.log(error);
+        console.error('Error fetching data:', error);
       }
     };
-    unsub();
-  }, []);
-  // setdataofstudent(useSelector((state)=>state.fetchDetail));
 
-  const dataofstudent = useSelector(
-    (state) => state.particularattendanceDetail.details
-  );
-
-  const convertDate = (inputDate)=>{
-    const dateObj = new Date(inputDate);
-
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    const formattedDate = dateObj.toLocaleDateString('en-US', options);
-    return formattedDate
-   }
-
+    fetchData();
+  }, [sub_id]);
 
   return (
-    <div >
-       <div className="previousAttendanceContainer">Preivous attendance</div>
-       
-      <div >
-        {dataofstudent.map(student => {
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Previous Attendance</h1>
 
-          // const formattedAttendance = subject.attendance.map((dates)=> convertDate(dates.date));
-          //map for getting into subject
-          return (<table >
-            <thead >
-              <tr>
-                <th >{student.name} </th>
-                {/* <th > attendance percentage  </th> */}
-
-                {
-                  student.subjects.map(name => {
-                    //map for lecture dates
-
-                  
-                      return (
-                        <>
-                      {  name.attendance.map(count => {
-                     
-                        return(
-                          <>
-                         
-                          <th>{convertDate(count.date) }</th>
-                          {/* <th>{count.count}</th> */}
-                           </>
-                        )
-                      })
-                      }
-                        </>
-   
-                        // <th className='headingForStudents'>{convertDate(lecture_dates.date)} ({lecture_dates.count})</th>
-                      )
-                  
-                  })
-                }
-
-
-              </tr>
-            </thead>
-            <tbody >
-
-              {/* <td >{student.name}</td> */}
-                <th >{student.enrollment_no}</th>
-                {/* <th >student</th> */}
-            
-                {
-                  student.subjects.map(name => {
-                    //map for lecture dates
-
-                  
-                      return (
-                        <>
-                      {  name.attendance.map(count => {
-                     
-                        return(
-                          <>
-                         
-                          {/* <th>{count.date }</th> */}
-                          <th>{count.count}</th>
-                           </>
-                        )
-                      })
-                      }
-                        </>
-   
-                        // <th className='headingForStudents'>{convertDate(lecture_dates.date)} ({lecture_dates.count})</th>
-                      )
-                  
-                  })
-                }
-                      
-                 
-
-
-
-            </tbody>
-            <br/>
-          </table>)
-        })
-        }
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-300">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border">Student Name</th>
+              <th className="py-2 px-4 border">Enrollment No.</th>
+              {dataofstudent?.subject?.lecture_dates.length > 0 &&
+                dataofstudent.subject.lecture_dates.map((dates) => (
+                  <th key={dates._id} className="py-2 px-4 border">
+                    {convertDate(dates.date)}
+                  </th>
+                ))}
+            </tr>
+          </thead>
+          <tbody>
+            {dataofstudent?.message.map((student) => {
+              let selectedsubject = student.subjects.find((subject) => subject.subject_id === sub_id);
+              const formattedAttendance = selectedsubject.attendance.map((dates)=> convertDate(dates.date));
+              // console.log(selectedsubject);
+              return (
+                <tr key={student._id}>
+                  <td className="py-2 px-4 border">{student.name}</td>
+                  <td className="py-2 px-4 border">{student.enrollment_no}</td>
+                  {dataofstudent?.subject?.lecture_dates.length > 0 &&
+                dataofstudent.subject.lecture_dates.map((dates) => (
+                  <th key={dates._id} className="py-2 px-4 border">
+                     {formattedAttendance.includes(convertDate(dates.date)) ? (
+                              <td className='dataForStudents bg-green-500 '> present</td>
+                            ) : (
+                              <td className='dataForStudents bg-red-500 ' > Absent</td>
+                            )
+                            }
+                  </th>
+                ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default PreviousAttendance;

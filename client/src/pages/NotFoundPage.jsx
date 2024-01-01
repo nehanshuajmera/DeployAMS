@@ -11,7 +11,7 @@ const NotFoundPage = () => {
     useEffect(() => {
       if(IsLogin !== null&&IsLogin){
         // window.location.href="/studentattandence"
-        navigate('/studentattandence');
+        navigate('/studentattendance');
       }
     }, [IsLogin])
 

@@ -8,7 +8,6 @@ const addLog = require('../Controller/logs');
 const isAdmin = require("../Middleware/checkadmin");
 const isTeacher = require('../Middleware/checkteacher');
 
-// create a api /asktoupdate/:id in which id of subject was passed and date on which attendance was updated was passed by teacher and when admin give permission to update attendance then teacher can update attendance of that subject on that date
 router.post("/asktoupdate/:id",isauthenticated,isTeacher ,async(req,res)=>{
     try{
         const teacher = await Teacher.findById(req.user.user_id);
@@ -42,6 +41,17 @@ router.post("/asktoupdate/:id",isauthenticated,isTeacher ,async(req,res)=>{
         await request.save();
         // addLog(req.user.user_id,`Teacher ${teacher.name} asked to update attendance of subject ${subject.name} on date ${date}`);
         return res.status(200).json({message:"Request sent"});
+    }
+    catch(error){
+        return res.status(500).json({message:"Internal server error"});
+    }
+});
+
+// create a api for teacher to see all the request sent by him to update attendance
+router.get("/viewmyrequest",isauthenticated,isTeacher,async(req,res)=>{
+    try{
+        const requests = await scheduleRequest.find({teacher:req.user.user_id,typeOfRequest:"update"}).populate({path:"subject",model:"Subject",select:"name"}).sort({createdAt:-1});
+        return res.status(200).json({requests});
     }
     catch(error){
         return res.status(500).json({message:"Internal server error"});

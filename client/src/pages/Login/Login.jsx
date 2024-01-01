@@ -17,7 +17,7 @@ export default function Login() {
 
   useEffect(() => {
     if(IsLogin !== null&&IsLogin){
-      navigate('/studentattandence');
+      navigate('/studentattendance');
     }
   }, [IsLogin])
 
@@ -39,7 +39,7 @@ export default function Login() {
 
       if (check) {
         // User is successfully logged in, navigate to the desired page
-        navigate("/studentattandence");
+        navigate("/studentattendance");
      
       }
     } catch (error) {
