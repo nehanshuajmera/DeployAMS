@@ -23,11 +23,12 @@ import PreviousAttendence from "./pages/Admin/PreviousAttendance/PreviousAttenda
 import SubstituteTeacher from "./pages/Admin/Substitute Teacher/SubstituteTeacher";
 import ArangementClass from "./pages/Admin/ArangementClass/ArangementClass";
 import UpdatePrevious from "./pages/Admin/AttendenceSheet/UpdatePrevious";
-import DataUploader from "./pages/Admin/DataUploader/DataUploader";
+
 import { authasync } from "./redux-toolkit/slices/authapislice";
 import Header from "./Universal/header";
 import AdminRoute from "./protectrouter/AdminRoute";
 import AuthContext from "./context/AuthContext";
+import UploadBulkData from "./pages/SuperAdmin/UploadData/UploadBulkData";
 
 function App() {
 
@@ -173,7 +174,7 @@ const dispatch=useDispatch();
           path="/dataupload"
           element={
             <AdminRoute>
-              <DataUploader />
+              <UploadBulkData />
             </AdminRoute>
           }
         />
