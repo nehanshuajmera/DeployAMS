@@ -1,11 +1,11 @@
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
 import StudentForm from "../../../components/StudentForm";
 
 
 import DeleteButton from "../../../components/DeleteButton";
 import { useLocation, useParams } from "react-router-dom";
 import TopOfPage from "../../../components/TopOfPage";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateStudentasync } from "../../../redux-toolkit/slices/crudstudentslice";
 import { studentFieldVerify } from "../../../action/InputFieldVerification";
 
@@ -43,6 +43,17 @@ const UpdateStudent = () => {
   const {id} = useParams()
   // const [student, setStudent] = useState({...data});
   const [student, setStudent] = useState({...state});
+ useEffect(()=>{
+    setStudent(prev=>{return{
+      ...prev,
+      subjects:[...state.subjects]
+    }})
+
+    console.log(state.subjects)
+    console.log(student.subjects)
+    
+  },[state])
+  
   // const dataofstudent = useSelector((state) => state.fetchDetail);
   // console.log(dataofstudent)
   const HandleClick = ()=>{

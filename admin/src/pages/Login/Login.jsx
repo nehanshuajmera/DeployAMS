@@ -1,9 +1,9 @@
 import './Login.css'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { loginAsync } from '../../redux-toolkit/slices/loginslice';
 import { useNavigate } from 'react-router-dom';
-import { authasync } from '../../redux-toolkit/slices/authapislice';
+import  AuthContext  from '../../context/AuthContext';
 
 const initialState = {
   userId: '',
@@ -14,6 +14,16 @@ export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const {IsLogin}=useContext(AuthContext);
+
+    useEffect(() => {
+      if(IsLogin !== null&&IsLogin){
+        navigate('/teacherdashboard');
+      }
+    }, [IsLogin])
+
+
+  const userstate = useSelector((state) => { state.login });
 
   const [loginData, setLoginData] = useState(initialState);
   
@@ -24,10 +34,12 @@ export default function Login() {
       [name]: value,
     }));
   };
-  
-  const {isLogin, isAuthenticated,  iserror,usertype, errmsg}= useSelector((state)=>state.login);
-  
-  const handelsubmit = (e) => {
+        function check() {
+          const isLoggedIn = useSelector((state) => state.login.isLogin);
+          return isLoggedIn; 
+        }
+
+  const handelsubmit = async (e) => {
     e.preventDefault();
     dispatch(loginAsync(loginData)); 
     navigate('/teacherdashboard');
@@ -49,7 +61,7 @@ console.log(isLogin);
         {
           isError &&
           <div className='text-white bg-red-600 px-6 py-2  z-50 rounded-lg'>
-            {errmsg}
+            {userstate?.errmsg}
           </div>
         }
         <p className="heading">Teacher Login</p>

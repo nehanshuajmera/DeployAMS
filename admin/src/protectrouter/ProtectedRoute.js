@@ -1,35 +1,16 @@
-import React, { useEffect } from 'react';
-import { useSelector,useDispatch } from 'react-redux';
-import { Navigate, useNavigate ,useLocation} from 'react-router-dom';
-import { authasync } from '../redux-toolkit/slices/authapislice';
-
-
+import React, { useContext, useEffect } from 'react';
+import {  useNavigate } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
 
 export default function ProtectedRoute({ children }) {
   const navigate = useNavigate();
-  const {value,isErr,errMsg,details}=useSelector((state)=>state.auth)
-  const dispatch=useDispatch();
-  
-  const {isLogin}=useSelector((state)=>state.login)
-  
-  
+  const {IsLogin}=useContext(AuthContext);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await dispatch(authasync());
-        console.log(isLogin, value);
-        if (isLogin === false || value === false) {
-          navigate('/'); // Redirect to the login page if not logged in
-        }
-      } catch (error) {
-        // Handle errors if needed
-        console.error('Error fetching authentication status:', error);
-      }
-    };
-  
-    fetchData();
-    
-  }, []);
+    if(IsLogin !== null&&!IsLogin){
+      navigate('/');      
+    }
+  }, [IsLogin])
 
   return children; //Render the protected content if logged in
 }

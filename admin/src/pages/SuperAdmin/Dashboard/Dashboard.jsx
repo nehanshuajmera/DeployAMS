@@ -15,14 +15,7 @@ export default function Dashboard() {
   return (
     <div className='dashboardMainContainer'>
 
-      <div className="universalDetailsAdmin">
-        <div className="cllgLogo">
-          <img src="https://medicaps.ac.in/resources/img/logo-navbar.png" alt="CollegeLogo" />
-        </div>
-        <div className="logoutButton">
-          <button onClick={handellogout}>Logout</button>
-        </div>
-      </div>
+      
       <hr className="styleHr" />
 
       <div className="adminContentContainer">
@@ -41,6 +34,7 @@ export default function Dashboard() {
           <div onClick={() => navigate("/academiccalendar")}>Create Academic Calendar</div>
           <div onClick={() => navigate("/attendancepermission")}>Attendance Permission</div>
           <div onClick={() => navigate("/alert")}>Alert & Notice</div>
+          <div onClick={() => navigate("/dataupload")}>Upload Data</div>
         </div>
       </div>
     </div>

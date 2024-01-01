@@ -33,7 +33,7 @@ const createLeaveTeacherAttendance = async (req, res) => {
 }
 
 const getLeaveTeacherAttendance = async (req, res) => {
-    try {
+    try { 
         const leaveTeacherAttendance = await LeaveTeacherAttendance.find();
         res.status(200).json(leaveTeacherAttendance);
     } catch (error) {

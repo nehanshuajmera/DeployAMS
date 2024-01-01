@@ -10,6 +10,7 @@ const initialState = {
 
 export const updateAttendanceByPermissionAsync = createAsyncThunk('updateattendancebypermission/updateAttendanceByPermissionAsync', async (payload, { rejectWithValue }) => {
     try {
+        console.log(payload)
         const response = await axios.post(`/api/teacher/updateattendancebypermission/${payload.ID}`, payload.data);
         const msg = response.data.message;
 

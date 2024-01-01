@@ -1,15 +1,25 @@
+import { useEffect } from "react"
+import { TYPE, useMsgErr } from "../context/MsgAndErrContext"
 
 
 const ErrMsg = () => {
-    const errorMsg=false;
+  const {msg,msgType,clearMsg} = useMsgErr()
+  useEffect(() => {
+    
+    setTimeout(()=>{
+      clearMsg()
+    },[5000])
+
+  }, [msg])
+  
   return (
     <>
        {
-              errorMsg &&
+              msg &&
             <div
-              className={`w-full py-1 px-2 rounded-md flexCenter bg-primary `}
+              className={`w-full py-1 px-2 rounded-md flexCenter bg-primary ${msgType===TYPE.Err?'bg-red-400':'bg-green-500'}`}
             >
-              <h4 className="text-center text-white ">{errorMsg}</h4>
+              <h4 className="text-center text-white ">{msg}</h4>
             </div>
 
             }

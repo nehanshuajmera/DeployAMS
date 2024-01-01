@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
+import SubjectSearch from "./SubjectSearch";
 
 // import { useAdmin } from "../context/AdminContext";
 
@@ -15,6 +16,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
     });
   };
 
+  // remove subject
   const removeSubject = (id) => {
     const newList = student.subjects.filter((subject) => {
       return subject.id != id;
@@ -23,6 +25,16 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
       return {
         ...prev,
         subjects: newList,
+      };
+    });
+  };
+
+  // change the subject's array
+  const changeSubjectList = (subjectsList) => {
+    setStudent((prev) => {
+      return {
+        ...prev,
+        subjects: subjectsList,
       };
     });
   };
@@ -353,19 +365,11 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               onChange={(e) => setSubject(e.target.value)}
               placeholder="Subject"
             />
-            <div className="flex gap-3 flex-wrap">
-              {student.subjects.map((subject) => (
-                <SubjectCollection
-                  key={subject.id}
-                  subject={subject}
-                  removeSubject={removeSubject}
-                />
-              ))}
-            </div>
           </div>
         </div>
       </div>
       {/* <SearchBar  /> */}
+      <SubjectSearch subjects={student.subjects} changeSubjectList={changeSubjectList} />
       <div className="flex justify-end items-center">
         <button className="button1" onClick={() => HandleClick()}>
           Save
@@ -375,115 +379,5 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
   );
 };
 
-const SubjectCollection = ({ subject, removeSubject }) => {
-  return (
-    <div className="bg-primary relative text-white pl-3 py-2 rounded-3xl flex justify-between items-center gap-1">
-      <p>{subject.name}</p>
-      <div
-        className=" right-2 text-3xl flexCenter cursor-pointer"
-        onClick={() => removeSubject(subject.id)}
-      >
-        <IoIosClose />
-      </div>
-    </div>
-  );
-};
-
-// const SubjectSearch = ({selectedSubject})=>{
-//   const {allSubject} = useAdmin()
-//   const listOfSubject = [...allSubject]
-//   return(
-//     <div>
-//       {
-//         listOfSubject.map(subject=>{
-//           return(
-//             <div key={subject}>
-//               {subject}
-//             </div>
-//           )
-//         })
-//       }
-//     </div>
-//   )
-// }
-
-// const SearchBar = () => {
-
-//   // const {allSubject} = useAdmin()
-//   const [searchResult, setSearchResult] = useState([...allSubject]);
-//   const [search, setSearch] = useState('');
-
-//   const searchFunc = (e)=>{
-//       setSearch(e.target.value)
-//       console.log(search)
-//       if(search===''){
-//         setSearchResult([...allSubject])
-//       }
-//       else{
-
-//         const resultOfSearch = searchResult.filter(item=>{
-//           console.log(item.subject_name.toLowerCase())
-//           // filter out content either have same name or id
-//           // return (item.name.toLowerCase.include(search.toLowerCase) || item.course_code.toLowerCase.include(search.toLowerCase))
-
-//           return (item.subject_name).toLowerCase().includes(search.toLowerCase())
-//         })
-//         setSearchResult([...resultOfSearch])
-//       }
-//   }
-
-//   // to set new result when allSubject changes
-//   useEffect(() => {
-//     setSearchResult([...allSubject])
-//    console.log("useEffect")
-//   }, [allSubject])
-
-//   useEffect(()=>{
-
-//     (()=>{
-
-//       if(search===''){
-//         setSearchResult([...allSubject])
-//       }
-//       else{
-
-//         const resultOfSearch = searchResult.filter(item=>{
-//           console.log(item.subject_name.toLowerCase())
-//           // filter out content either have same name or id
-//           // return (item.name.toLowerCase.include(search.toLowerCase) || item.course_code.toLowerCase.include(search.toLowerCase))
-
-//           return (item.subject_name).toLowerCase().includes(search.toLowerCase())
-//         })
-//         setSearchResult([...resultOfSearch])
-//       }
-//     })()
-//   },[search,allSubject])
-
-// return (
-//   <div>
-//       <div className="relative w-[300px] md:w-[400px]">
-//           <input type="text" name="search" id="search" className="inputBox border-[1px] border-gray-500 w-[300px] md:w-[400px] peer/search"
-//           value={search ||''}
-//           onChange={(e)=>searchFunc(e)}
-//           />
-//           {/* dropdown */}
-//           <div className="absolute w-full h-[170px] bg-[#FFFBF5] left-0  hidden peer-focus/search:block">
-//               <div className="flexStart flex-col">
-//                   {
-//                     searchResult.map(data=>{
-//                       console.log(data.subject_name)
-//                       return(
-//                         <div key={data._id} className="text-black ">
-//                           {data.subject_name}
-//                         </div>
-//                       )
-//                     })
-//                   }
-//               </div>
-//           </div>
-//       </div>
-//   </div>
-// )
-// }
 
 export default StudentForm;

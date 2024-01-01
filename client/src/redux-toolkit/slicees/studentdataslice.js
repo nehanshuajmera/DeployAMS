@@ -5,7 +5,25 @@ const initialState={
     value:false,
     isErr:false,
     errMsg:"",
-    details:"",
+    details:{
+        "_id": "658bf7fa8ab9ed91c4011aad",
+        "name": "",
+        "enrollment_no": "",
+        "scholar_no": "",
+        "email": "",
+        "phone_no": "",
+        "programme": "",
+        "faculty": "",
+        "specialisation": "CSBS",
+        "year": 2020,
+        "branch": "",
+        "section": "",
+        "batch": "",
+        "password": "",
+        "subjects": [],
+        "ratings": [],
+        "__v": 0
+    },
 }
 
 export const studentdetailasync = createAsyncThunk('studentDetail/studentdetailasync', async (payload, { rejectWithValue }) => {
@@ -13,8 +31,8 @@ export const studentdetailasync = createAsyncThunk('studentDetail/studentdetaila
         
             const response = await axios.get('api/student/details');
             const msg = response.data.message;
-            
-              if(msg !== "Unauthorized" ||msg !== "User not found" || msg !== "Forbidden: Access denied for non-student users")      
+            // console.log(msg)
+            //   if(msg !== "Unauthorized" ||msg !== "User not found" || msg !== "Forbidden: Access denied for non-student users")      
             return msg;
             
             

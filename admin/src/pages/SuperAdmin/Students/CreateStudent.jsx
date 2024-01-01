@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import {  useEffect, useState } from "react";
 import StudentForm from "../../../components/StudentForm";
 
 import TopOfPage from "../../../components/TopOfPage";
@@ -6,6 +6,7 @@ import { studentFieldVerify } from "../../../action/InputFieldVerification";
 
 import { useDispatch, useSelector } from 'react-redux';
 import {createStudentasync} from '../../../redux-toolkit/slices/crudstudentslice'
+import { fetchdetailasync } from "../../../redux-toolkit/slices/fetchdetailslice";
 
 const data = {
   name: "",
@@ -38,12 +39,14 @@ const data = {
 const CreateStudent = () => {
   const [student, setStudent] = useState(data);
   const dispatch = useDispatch();
+
   
   const HandleClick = ()=>{
     const unsub=async()=>{
       try{
 
         await dispatch(createStudentasync({...student}));
+        // const studentState = useSelector(state=>state.crudstudent)
 
       }catch(error){
           console.log(error);
@@ -73,7 +76,7 @@ const CreateStudent = () => {
   return (
     <div>
       <TopOfPage pagePath={"Dashboard >> Student >> create"} pageName={"Create Student"}/>
-      <StudentForm student={student} setStudent={setStudent}  HandleClick={HandleClick}/>
+      <StudentForm student={student} setStudent={setStudent}  HandleClick={HandleClick} />
     </div>
   )
 }

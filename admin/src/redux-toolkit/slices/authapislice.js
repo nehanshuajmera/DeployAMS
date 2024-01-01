@@ -14,8 +14,9 @@ export const authasync = createAsyncThunk('auth/authasync', async (payload, { re
         
         const response = await axios.get('api/authentic');
             const msg = response.data.message;
-
-            if (response.data.message === 'teacher'||response.data.message === 'Admin') {
+            
+            if (response.data.message === 'teacher' || response.data.message === 'Admin') {
+                console.log(response.data);
                 return response.data.message;
             }
             
@@ -36,7 +37,6 @@ export const authslice = createSlice(
         extraReducers: (builder) => {
             builder
                 .addCase(authasync.fulfilled, (state, action) => {
-    
                     state.value = true;
                     state.details=action.payload;
                     state.isErr = false;

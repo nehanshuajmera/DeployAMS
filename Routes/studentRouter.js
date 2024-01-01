@@ -16,7 +16,7 @@ router.post("/login", async (req, res) => {
   try {
     // Find the user by enrollment number
     const student = await Student.findOne({ enrollment_no });
-
+  // console.log(student)
     if (!student) {
       return res.status(401).json({ message: "Invalid enrollment number or password" });
     }
