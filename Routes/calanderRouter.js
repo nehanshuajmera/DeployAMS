@@ -97,26 +97,19 @@ router.post('/updateholiday', isAdmin, async (req, res) => {
   try {
     // Get the date to mark as a holiday from the request body
     let { date,holiday,event } = req.body;
-    // const subjectList = await subject.find();
+    date=(new Date(date));
     
-    // if(subjectList.length>0){
-    //   return res.status(400).json({ message: 'Please use other methods to update dates' });
-    // }
-
     if (date < new Date()) {
       return res.status(400).json({ message: 'Cannot update past dates' });
     }
-
-    if (!date||!holiday||!event) {
+    
+    if (date === undefined || date === null ) {
       return res.status(400).json({ message: 'Date is required to update as a holiday' });
+      
     }
+    
+    // console.log({date,holiday,event})
 
-    date=(new Date(date));
-
-    // date.setHours(date.getHours() + 5);
-    // date.setMinutes(date.getMinutes() + 30);
-    // console.log({date})
-    // Update the academic calendar to mark the date as a holiday
     await AcademicCalendar.findOneAndUpdate(
       { date },
       { holiday, event},
@@ -129,6 +122,7 @@ router.post('/updateholiday', isAdmin, async (req, res) => {
   }
 });
 
+
 // add some more days to academic calendar
 router.post('/addmoredays', isAdmin, async (req, res) => {
   try {
@@ -137,9 +131,13 @@ router.post('/addmoredays', isAdmin, async (req, res) => {
     if(oldacademicCalendarEntries.length===0){
       return res.status(400).json({ message: "Academic calendar not created" });
     }
-    const lastDate=oldacademicCalendarEntries[oldacademicCalendarEntries.length-1].date;
+    var lastDate=oldacademicCalendarEntries[oldacademicCalendarEntries.length-1].date;
+    // lastDate+1 day
+    lastDate=new Date(lastDate);
+    lastDate.setDate(lastDate.getDate()+1);
+    
     const endDate=new Date(lastDate);
-    endDate.setDate(endDate.getDate()+dayscnt);
+    endDate.setDate(endDate.getDate()+dayscnt-1);
     const startDate=lastDate;
     // console.log({startDate,endDate})
     // Calculate the date range

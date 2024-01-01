@@ -17,7 +17,7 @@ export default function Header() {
             alt="CollegeLogo"
             className="h-10"
           />
-          <h1 className="text-2xl font-semibold">Medi-Caps</h1>
+          {/* <h1 className="text-2xl font-semibold">Medi-Caps</h1> */}
         </div>
         <div className="flex items-center space-x-4">
           {userdata?.admin_role==="Admin" ? <button

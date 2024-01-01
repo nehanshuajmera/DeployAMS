@@ -52,7 +52,7 @@ export default function TeacherDashboard() {
   }
 
   return (
-    <div className='teacherDashboard'>
+    <div  style={{ minHeight : 'calc(100vh - 4.50rem)' }} className='teacherDashboard'>
       
 
       <div className="teacherContentContainer">

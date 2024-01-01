@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import TopOfPage from "../../../components/TopOfPage";
+// import TopOfPage from "../../../components/TopOfPage";
 import TeacherForm from "../../../components/TeacherForm";
 import DeleteButton from "../../../components/DeleteButton";
 import { useLocation, useParams } from "react-router-dom";
@@ -59,7 +59,7 @@ const UpdateTeacher = () => {
 
   return (
     <div>
-      <TopOfPage pagePath={"Dashboard >> Teacher >> Update"} pageName={"Update Teacher"}/>
+      {/* <TopOfPage pagePath={"Dashboard >> Teacher >> Update"} pageName={"Update Teacher"}/> */}
       <TeacherForm teacher={teacher} setTeacher={setTeacher}  HandleClick={HandleClick}/>
       <div className="flex justify-end px-3">
         <DeleteButton  itemId={teacher.id} />

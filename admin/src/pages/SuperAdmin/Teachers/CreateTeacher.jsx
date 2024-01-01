@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 
-import TopOfPage from "../../../components/TopOfPage";
+// import TopOfPage from "../../../components/TopOfPage";
 import TeacherForm from "../../../components/TeacherForm";
 import { createTeacherAsync } from "../../../redux-toolkit/slices/crudteacherslice";
 import { teacherFieldVerify } from "../../../action/InputFieldVerification";
@@ -45,7 +45,7 @@ const CreateTeacher = () => {
 
   return (
     <div>
-      <TopOfPage pagePath={"Dashboard >> Teacher >> Create"} pageName={"Create Teacher"}/>
+      {/* <TopOfPage pagePath={"Dashboard >> Teacher >> Create"} pageName={"Create Teacher"}/> */}
       <TeacherForm teacher={teacher} setTeacher={setTeacher}  HandleClick={HandleClick}/>
     </div>
   )

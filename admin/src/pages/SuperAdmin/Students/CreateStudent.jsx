@@ -1,7 +1,7 @@
 import {  useEffect, useState } from "react";
 import StudentForm from "../../../components/StudentForm";
 
-import TopOfPage from "../../../components/TopOfPage";
+// import TopOfPage from "../../../components/TopOfPage";
 import { studentFieldVerify } from "../../../action/InputFieldVerification";
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -75,7 +75,7 @@ const CreateStudent = () => {
 
   return (
     <div>
-      <TopOfPage pagePath={"Dashboard >> Student >> create"} pageName={"Create Student"}/>
+      {/* <TopOfPage pagePath={"Dashboard >> Student >> create"} pageName={"Create Student"}/> */}
       <StudentForm student={student} setStudent={setStudent}  HandleClick={HandleClick} />
     </div>
   )

@@ -13,7 +13,7 @@ export default function Dashboard() {
     navigate("/")
   }
   return (
-    <div className='dashboardMainContainer'>
+    <div className='dashboardMainContainer' style={{ minHeight : 'calc(100vh - 4.50rem)' }}>
 
       
       <hr className="styleHr" />
@@ -34,7 +34,7 @@ export default function Dashboard() {
           <div onClick={() => navigate("/academiccalendar")}>Create Academic Calendar</div>
           <div onClick={() => navigate("/attendancepermission")}>Attendance Permission</div>
           <div onClick={() => navigate("/alert")}>Alert & Notice</div>
-          <div onClick={() => navigate("/dataupload")}>Upload Data</div>
+          <div onClick={() => navigate("/dataupload")}>XLSX Data Upload</div>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SubjectForm from "../../../components/SubjectForm";
 
-import TopOfPage from "../../../components/TopOfPage";
+// import TopOfPage from "../../../components/TopOfPage";
 import { subjectFieldVerify } from "../../../action/InputFieldVerification";
 import { createSubjectAsync } from "../../../redux-toolkit/slices/crudsubjectslice";
 import { useDispatch } from "react-redux";
@@ -46,7 +46,7 @@ const CreateSubject = () => {
 
   return (
     <div>
-      <TopOfPage pagePath={"Dashboard >> subject >> create"} pageName={"Create subject"}/>
+      {/* <TopOfPage pagePath={"Dashboard >> subject >> create"} pageName={"Create subject"}/> */}
       <SubjectForm subject={subject} setSubject={setSubject}  HandleClick={HandleClick}/>
     </div>
   )
