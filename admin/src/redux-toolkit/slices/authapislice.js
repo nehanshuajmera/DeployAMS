@@ -10,13 +10,14 @@ const initialState={
 
 export const authasync = createAsyncThunk('auth/authasync', async (payload, { rejectWithValue }) => {
     try {
-        console.log(payload);
+      
         
         const response = await axios.get('api/authentic');
             const msg = response.data.message;
 
-              if(response.status===200)      
-            return msg;
+            if (response.data.message === 'teacher'||response.data.message === 'Admin') {
+                return response.data.message;
+            }
             
      
             return rejectWithValue(msg);
@@ -40,6 +41,7 @@ export const authslice = createSlice(
                     state.details=action.payload;
                     state.isErr = false;
                     state.errMsg =  "";
+                    console.log("settingvalue",state);
                 })
                 .addCase(authasync.rejected, (state, action) => {
                     state.isErr = true;

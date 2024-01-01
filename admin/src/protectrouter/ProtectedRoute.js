@@ -1,24 +1,35 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { getWithExpiry, setWithExpiry } from './handelttl';
+import { useSelector,useDispatch } from 'react-redux';
+import { Navigate, useNavigate ,useLocation} from 'react-router-dom';
+import { authasync } from '../redux-toolkit/slices/authapislice';
+
+
 
 export default function ProtectedRoute({ children }) {
   const navigate = useNavigate();
-  const login = useSelector((state) => state.login);
-
-  const datastate =getWithExpiry('reduxState');
-  if (datastate === null) {
-    setWithExpiry('reduxState',{isLogin: false,isAuthenticated: false,iserror: false,usertype: '', errmsg: ''  });
-  }
-
-  const user = datastate === null ? login.isLogin : datastate.isLogin;
+  const {value,isErr,errMsg,details}=useSelector((state)=>state.auth)
+  const dispatch=useDispatch();
+  
+  const {isLogin}=useSelector((state)=>state.login)
+  
+  
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await dispatch(authasync());
+        console.log(isLogin, value);
+        if (isLogin === false || value === false) {
+          navigate('/'); // Redirect to the login page if not logged in
+        }
+      } catch (error) {
+        // Handle errors if needed
+        console.error('Error fetching authentication status:', error);
+      }
+    };
+  
+    fetchData();
+    
+  }, []);
 
-    if (!user) {
-      navigate('/'); // Redirect to login page if not logged in
-    }
-  }, [datastate.isLogin, navigate]);
-
-  return children; // Render the protected content if logged in
+  return children; //Render the protected content if logged in
 }

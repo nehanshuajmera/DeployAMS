@@ -13,7 +13,7 @@ export const ParticularAttendanceasync = createAsyncThunk('ParticularAttendanced
     try {
       
         
-            const response = await axios.get(`/api/teacher/studentsattendance/${payload.ID}`,payload.data);
+            const response = await axios.get(`/api/teacher/studentsattendance/${payload.ID}`);
             const msg = response.data.message;
 
               if(response.status===200)      

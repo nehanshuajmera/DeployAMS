@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { setWithExpiry } from '../../protectrouter/handelttl';
+
+
 
 const storedState = JSON.parse(localStorage.getItem('reduxState'));
 const initialState = {
@@ -45,10 +46,9 @@ export const logoutAsync = createAsyncThunk('login/logoutAsync', async (payload,
 
         const response = await axios.get('/api/authentic/logout');
        const msg = response.data.message
-        console.log("message:",msg);
         if (msg === "Logout successful")
         {
-            
+            console.log("logout");
             return msg;
         }
 
@@ -68,27 +68,25 @@ export const loginslice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(loginAsync.fulfilled, (state, action) => {
+                state={...initialState}
                 state.isLogin = true;
                 state.isAuthenticated = true;
                 state.usertype = action.payload;
-                console.log("seting value");
                 console.log(state);
-                // localStorage.clear();
-                setWithExpiry('reduxState',state)
                
                 
             })
             .addCase(loginAsync.rejected, (state, action) => {
-
+                state={...initialState}
                 state.iserror = true;
-               
+                
                 state.errmsg ="errocurred";
             })
             .addCase(logoutAsync.fulfilled, (state,action) => {
-                        console.log('out');
+                console.log("seting value");
+                        
                 state={...initialState}
-               localStorage.clear;
-               setWithExpiry('reduxState',initialState)
+              
              
             })
             .addCase(logoutAsync.rejected, (state,action) => {
@@ -101,5 +99,4 @@ export const loginslice = createSlice({
 });
 
 export const { login } = loginslice.actions;
-
 export default loginslice.reducer;
