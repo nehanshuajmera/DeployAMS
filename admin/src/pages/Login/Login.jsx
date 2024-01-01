@@ -44,11 +44,11 @@ export default function Login() {
     dispatch(loginAsync(loginData)); 
     navigate('/teacherdashboard');
   };
-useEffect(() => {
+// useEffect(() => {
   
 
-console.log(isLogin);
-}, [isLogin])
+// console.log(isLogin);
+// }, [isLogin])
 
   
   const isError = false;
