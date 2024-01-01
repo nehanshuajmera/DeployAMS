@@ -6,42 +6,35 @@ import AttendenceSheet from "./pages/DaywiseAtt/AttendenceSheet"
 import ChangePassword from "./pages/ChangePassword/ChangePassword"
 import ProtectedRoute from "./protectrouter/ProtectedRoute"
 import StudentAttendence from "./pages/Attendence/StudentAttendence"
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { studentdetailasync } from "./redux-toolkit/slicees/studentdataslice"
+import AuthContext from "./context/AuthContext"
+import NotFoundPage from "./pages/NotFoundPage"
 
 
 function App() {
   console.log("hello");
+  const {IsLogin,userdata}=useContext(AuthContext);
   const logindata=useSelector((state)=>state.login)
   const dispatch=useDispatch()
   
   
   return (
     <div className="w-screen overflow-hidden h-screen flex items-center justify-center">
-      <Router>
         <Routes>
-        {/* <Route path="/login" element={<LoginRoute>
-            <Login/>
-            </LoginRoute>}/> */}
-          <Route path="/studentattendance/daywise" element={<ProtectedRoute>
-            <AttendenceSheet/>
-          </ProtectedRoute>}/>
-            <Route path="/studentattendance" element={<ProtectedRoute>
+            <Route exact path="/studentattendance" element={<ProtectedRoute>
             <StudentAttendence/>
             </ProtectedRoute>}/>
-            <Route path="/changepassword" element={<ProtectedRoute>
+          <Route exact path="/studentattendance/daywise" element={<ProtectedRoute>
+            <AttendenceSheet/>
+          </ProtectedRoute>}/>
+            <Route exact path="/changepassword" element={<ProtectedRoute>
             <ChangePassword/>
             </ProtectedRoute>}/>
-            <Route exact path="/" element={<ProtectedRoute>
-             
-            </ProtectedRoute>} />
-            <Route exact path="/login" element={<Login />} />
-        <Route exact path="/changepassword" element={<ChangePassword/>} />
-        <Route exact path="/studentattandence" element={<StudentAttendence />} />
-        <Route exact path="/studentattendance/daywise" element={<AttendenceSheet />} />
+            <Route exact path="/" element={<Login />} />
+        {/* <Route path="*" element={<NotFoundPage/>} /> */}
         </Routes>
-      </Router>
     
     </div>
   )

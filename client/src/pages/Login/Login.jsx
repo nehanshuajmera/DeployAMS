@@ -1,11 +1,10 @@
 import './Login.css'
 
-import { useState,useEffect } from 'react';
+import { useState,useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { loginAsync ,logoutAsync } from '../../redux-toolkit/slicees/loginslice';
 import { useNavigate } from 'react-router-dom';
-
-
+import AuthContext from '../../context/AuthContext';
 
 
 const initialState = {
@@ -14,6 +13,15 @@ const initialState = {
 }
 
 export default function Login() {
+  const {IsLogin}=useContext(AuthContext);
+
+  useEffect(() => {
+    if(IsLogin !== null&&IsLogin){
+      navigate('/studentattandence');
+    }
+  }, [IsLogin])
+
+
   const [loginData, setLoginData] = useState(initialState);
   // const stateofuser = useSelector((state) => state.login);
   // const changestate= useSelector((state) => state.changePassword)

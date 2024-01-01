@@ -1,37 +1,39 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import "./DailyAttendence.css";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logoutAsync } from '../../redux-toolkit/slicees/loginslice';
 import { studentdetailasync } from '../../redux-toolkit/slicees/studentdataslice';
+import AuthContext from '../../context/AuthContext';
 
 export default function DailyAttendence(props) {
-  const dispatch = useDispatch()
-  const data = useSelector((state) => state.login)
-  // console.log(data)
-  useEffect(() => {
-    const unsub = () => {
-      dispatch(studentdetailasync());
+  const {IsLogin,userdata,logout}=useContext(AuthContext);
+  // const dispatch = useDispatch()
+  // const data = useSelector((state) => state.login)
+  // // console.log(data)
+  // useEffect(() => {
+  //   const unsub = () => {
+  //     dispatch(studentdetailasync());
 
-    }
+  //   }
 
-    return () => {
-      unsub();
-    }
-  }, [data])
+  //   return () => {
+  //     unsub();
+  //   }
+  // }, [data])
 
 
-  const detail = useSelector((state) => state.studentDetail.details);
+  // const detail = useSelector((state) => state.studentDetail.details);
   // console.log(detail);
 
   const navigate = useNavigate();
-  const handellogout = async () => {
-    // console.log("logging out");
-    dispatch(logoutAsync());
-    navigate("/login");
+  // const handellogout = async () => {
+  //   // console.log("logging out");
+  //   dispatch(logoutAsync());
+  //   navigate("/login");
 
-  }
+  // }
 
   const convertDate = (inputDate) => {
     const dateObj = new Date(inputDate);
@@ -52,43 +54,43 @@ export default function DailyAttendence(props) {
           />
         </div>
         <div className="studentDepartment">
-          <h4>Department of {props.Department}</h4>
+          <h4>Department of {userdata?.Department}</h4>
         </div>
         <div className="logoutButton">
-          <button onClick={handellogout}>Logout</button>
+          <button onClick={()=>logout()}>Logout</button>
         </div>
       </div>
       <hr className="styleHr" />
 
       <div className="studentDetails">
         <div className="studentProgramme">
-          <h4>Programme: {props.Programme}</h4>
+          <h4>Programme: {userdata?.Programme}</h4>
         </div>
         <div className="studentName">
-          <h4>Name: {detail?.name}</h4>
+          <h4>Name: {userdata?.name}</h4>
         </div>
         <div className="studentId">
-          <h4>Enrollment No.: {detail?.enrollment_no}</h4>
+          <h4>Enrollment No.: {userdata?.enrollment_no}</h4>
         </div>
         <div className="Year">
-          <h4>Year: {props.Year}</h4>
+          <h4>Year: {userdata?.Year}</h4>
         </div>
         <div className="cls-sec">
           <h4>
-            Class & Section: {detail?.branch} {detail?.section}
+            Class & Section: {userdata?.branch} {userdata?.section}
           </h4>
         </div>
         <div className="studentBatch">
-          <h4>Batch: {detail?.batch}</h4>
+          <h4>Batch: {userdata?.batch}</h4>
         </div>
       </div>
 
       <div className="subjectAttendence">
-        {detail?.subjects.map(subject => {
+        {userdata?.subjects.map(subject => {
 
           const formattedAttendance = subject.attendance.map((dates)=> convertDate(dates.date));
           //map for getting into subject
-          return (<table className='subjectTable'>
+          return (<table className='subjectTable' key={subject._id} >
             <thead className="subjectTableHeading">
               <tr>
                 <th className='headingForStudents'>Course Code</th>
@@ -130,8 +132,14 @@ export default function DailyAttendence(props) {
                           }
                           else{
                           return (
-
-                            <td className='dataForStudents' >{formattedAttendance.includes(convertDate(attendancee.date)) ? 'present' : 'Absent'}</td>
+                            <>
+                            {formattedAttendance.includes(convertDate(attendancee.date)) ? (
+                              <td className='dataForStudents bg-green-500 '> present</td>
+                            ) : (
+                              <td className='dataForStudents bg-red-500 ' > Absent</td>
+                            )
+                            }
+                            </>
                           )
                           }
                         })
@@ -141,7 +149,6 @@ export default function DailyAttendence(props) {
 
 
             </tbody>
-            <br/>
           </table>)
         })
         }

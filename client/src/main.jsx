@@ -6,12 +6,16 @@ import './index.css'
 
 import { store } from './redux-toolkit/store/store.js'
 import { Provider } from 'react-redux'
+import { AuthContextProvider } from './context/AuthContext.jsx'
+import { BrowserRouter } from 'react-router-dom'
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <BrowserRouter>
     <Provider store={store}>
-      
+    <AuthContextProvider>
         <App />
-   
+    </AuthContextProvider>
    </Provider>
-  </React.StrictMode>,
+   </BrowserRouter>
+  //  </React.StrictMode>, 
 )
