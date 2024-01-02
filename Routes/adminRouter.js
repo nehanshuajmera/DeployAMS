@@ -46,7 +46,6 @@ router.get("/deletestudent/:id", isAdmin, delete_student_by_id);
 // Complaints API
 router.get('/allcomplaints', isAdmin,all_complaints );
 
-
 router.post("/resheduledate", isAdmin, resheduledate);
 
 

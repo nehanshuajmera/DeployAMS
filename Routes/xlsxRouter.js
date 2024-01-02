@@ -60,7 +60,7 @@ router.post("/addteacherxlsx", isAdmin, async (req, res) => {
         const workbook = xlsx.read(file.data, { type: 'buffer' });
         const sheetName = workbook.SheetNames[0];
         const teachersData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
-        console.log(teachersData)
+        // console.log(teachersData)
 
         const teachers = await Promise.all(teachersData.map(async data => ({
             teacher_id: data.teacher_id,

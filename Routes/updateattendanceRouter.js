@@ -212,7 +212,7 @@ router.post("/updateattendancebypermission/:id", isauthenticated, isTeacher, asy
             }
           } else {
             if (count !== 0) {
-              subjectAttendance.push({ date: new Date(), count, cause: '' });
+              subjectAttendance.push({ date: new Date(date2), count, cause: '' });
             }
           }
   
