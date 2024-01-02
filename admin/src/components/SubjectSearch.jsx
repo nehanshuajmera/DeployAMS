@@ -26,7 +26,6 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
   }, [])
   
   const allSubjectData = useSelector(state=>state.fetchDetail.details)  
-  
   const [searchResult, setSearchResult] = useState([...allSubjectData]);
 
 
@@ -41,7 +40,7 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
     // setSelectedSubject((prev) => {
     //    return [...prev,...newSub];
     // });
-    setSelectedSubject(prev=>[...prev,{subject_id:sub_id}])
+    setSelectedSubject(prev=>[...prev,{subject_id:sub_id,permission:"write"}])
   };
 
   // remove subject
@@ -82,7 +81,7 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
         setSearchResult([...allSubjectData]);
       } else {
         const resultOfSearch = searchResult.filter((item) => {
-          console.log(item.subject_name.toLowerCase());
+          // console.log(item.subject_name.toLowerCase());
           // filter out content either have same name or id
           // return (item.name.toLowerCase.include(search.toLowerCase) || item.course_code.toLowerCase.include(search.toLowerCase))
 
@@ -97,12 +96,12 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
   useEffect(() => {
     let temp = allSubjectData.filter(subj=>selectedSubject.find(elem=>elem.subject_id==subj._id))
     setDetailsofSelectedSubject(temp);
-    console.log(detailsofSelectedSubject)
+    // console.log(detailsofSelectedSubject)
   }, [allSubjectData, selectedSubject]);
  
   //   change the of subjects array 
   useEffect(() => {
-    console.log(selectedSubject)
+    // console.log(selectedSubject)
     changeSubjectList([...selectedSubject]);
   }, [selectedSubject]);
 
