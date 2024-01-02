@@ -9,6 +9,7 @@ const cron = require('node-cron');
 const updateTodayAttendance = require("./Controller/UpdateTodayAttendance");
 const fileUpload = require('express-fileupload');
 const rateLimit = require("express-rate-limit");
+const path=require("path");
 
 dotenv.config();
 app.use(express.json());
@@ -58,8 +59,12 @@ mongoose.connect(process.env.MDB_CONNECT)
     app.use("/api/xlsx", require("./Routes/xlsxRouter"));
     app.use("/api/studentattendancerequest", require("./Routes/attendanceRequestRouter.js"));
     app.use("/api/mapstudentsubject", require("./Routes/combineStudentandSubject.js"));
-
     
+    
+    app.use(express.static('admin/dist'));
+    app.get('*', (req, res) => {
+            res.sendFile(path.resolve('admin','dist','index.html'));
+    });
 
     // Schedule the cron jobs
     cron.schedule('31 5 * * *', async () => {
@@ -78,15 +83,12 @@ mongoose.connect(process.env.MDB_CONNECT)
       if (err) throw err;
       console.log(`Server started on port: ${PORT}`);
     });
-    app.use(express.static('admin/dist'));
-    app.get('*', (req, res) => {
-            res.sendFile(path.resolve('admin','dist','index.html'));
-    });
   })
   .catch(err => {
     console.error('Error connecting to MongoDB:', err);
   });
-
+  
   // const result = updateTodayAttendance();
   // console.log(result);
+  
 
