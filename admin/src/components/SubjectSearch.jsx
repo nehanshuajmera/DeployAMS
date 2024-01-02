@@ -48,7 +48,7 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
   const removeSubject = (sub_id) => {
     console.log(sub_id)
     const newList = detailsofSelectedSubject.filter((subject) => {
-      return subject._id != sub_id;
+      return subject._id !=== sub_id;
     });
     setSelectedSubject(newList);
   };
