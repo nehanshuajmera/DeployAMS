@@ -57,6 +57,8 @@ mongoose.connect(process.env.MDB_CONNECT)
     app.use("/api/alert", require("./Routes/alertRouter"));
     app.use("/api/xlsx", require("./Routes/xlsxRouter"));
     app.use("/api/studentattendancerequest", require("./Routes/attendanceRequestRouter.js"));
+    app.use("/api/mapstudentsubject", require("./Routes/combineStudentandSubject.js"));
+
     
 
     // Schedule the cron jobs
@@ -80,3 +82,6 @@ mongoose.connect(process.env.MDB_CONNECT)
   .catch(err => {
     console.error('Error connecting to MongoDB:', err);
   });
+
+  // const result = updateTodayAttendance();
+  // console.log(result);

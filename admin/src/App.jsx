@@ -30,6 +30,7 @@ import AuthContext from "./context/AuthContext";
 import UploadBulkData from "./pages/SuperAdmin/UploadData/UploadBulkData";
 import UpdateAttendanceRequestPage from "./pages/Admin/PastAttendance/UpdateAttendanceRequestPage";
 import MarkPastAttendance from "./pages/Admin/AttendenceSheet/MarkPastAttendance";
+import MapStudentandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapStudentandSubject";
 
 function App() {
 
@@ -209,6 +210,14 @@ const dispatch=useDispatch();
           element={
             <AdminRoute>
               <Calendar />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/mapstudentandsubject"
+          element={
+            <AdminRoute>
+              <MapStudentandSubject />
             </AdminRoute>
           }
         />

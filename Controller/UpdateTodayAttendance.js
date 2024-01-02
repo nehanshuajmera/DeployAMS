@@ -9,10 +9,15 @@ const updateTodayAttendance = async () => {
     const today = new Date();
     const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const todayDate = new Date(date);
+    // add 5:30 hours to todayDate
+    todayDate.setHours(todayDate.getHours() + 5);
+    todayDate.setMinutes(todayDate.getMinutes() + 30);
 
     // console.log("Today's Date :", todayDate);
     
     const date_curr = await AcademicCalander.findOne({ date: todayDate });
+
+    // console.log("Today's Status :", date_curr);
 
     if (!date_curr) {
         console.log("Update failed. Today's date not found in academic calendar");
