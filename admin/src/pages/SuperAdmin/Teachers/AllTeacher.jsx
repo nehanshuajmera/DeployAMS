@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext,useState } from 'react'
 import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
 import './AllTeacher.css'
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,11 +9,10 @@ import { deleteTeacherAsync } from '../../../redux-toolkit/slices/crudteachersli
 import { useNavigate } from 'react-router-dom';
 
 export default function AllTeacher() {
-
+  const [dataofteach, setdataofteach] = useState({ details: [] });
   const dispatch=useDispatch();
   const navigate = useNavigate();
   
-  const logdata=useSelector((state)=>state.login)
   useEffect(() => {
     const unsub=()=>{
        dispatch(fetchdetailasync({apiname:"allteachers"}));
@@ -22,11 +21,15 @@ export default function AllTeacher() {
      return () => {
        unsub()
      }
-   }, [logdata])
+   }, [])
   
-  const dataofteacher=useSelector((state)=>state.fetchDetail.details);
+  const dataofteacher=useSelector((state)=>state.fetchDetail);
+  useEffect(() => {
+    console.log("data is comming", dataofteacher);
+    setdataofteach(dataofteacher)
+  }, [dataofteacher])
   console.log(dataofteacher);
-  const data = React.useMemo(() =>dataofteacher, [dataofteacher]);
+  const data = React.useMemo(() =>dataofteach.details, [dataofteach.details]);
   const columns = React.useMemo(
     () => [
       {
