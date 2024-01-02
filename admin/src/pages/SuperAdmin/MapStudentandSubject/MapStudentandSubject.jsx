@@ -7,11 +7,14 @@ const MapStudentandSubject = () => {
   const [message, setMessage] = useState('');
   const [students, setStudents] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [filteredStudents, setFilteredStudents] = useState([]);
+  const [filteredSubjects, setFilteredSubjects] = useState([]);
+  const [studentFilter, setStudentFilter] = useState('');
+  const [subjectFilter, setSubjectFilter] = useState('');
 
   useEffect(() => {
-    console.log(studentIds,subjectIds);
- }, [studentIds, subjectIds]);
-
+    console.log(studentIds, subjectIds);
+  }, [studentIds, subjectIds]);
 
   useEffect(() => {
     const fetchStudentsAndSubjects = async () => {
@@ -19,7 +22,9 @@ const MapStudentandSubject = () => {
         const studentsResponse = await axios.get('/api/admin/allstudents');
         const subjectsResponse = await axios.get('/api/admin/allsubjects');
         setStudents(studentsResponse.data.message);
+        setFilteredStudents(studentsResponse.data.message);
         setSubjects(subjectsResponse.data.message);
+        setFilteredSubjects(subjectsResponse.data.message);
       } catch (error) {
         console.error('Error fetching students and subjects:', error);
       }
@@ -30,7 +35,7 @@ const MapStudentandSubject = () => {
 
   const combineSubjectsAndStudents = async () => {
     try {
-        // console.log(studentIds,subjectIds)
+      // console.log(studentIds,subjectIds)
       const response = await axios.post('/api/mapstudentsubject/combinesubjectandstudents', {
         studentIds,
         subjectIds,
@@ -42,37 +47,76 @@ const MapStudentandSubject = () => {
     }
   };
 
+  const handleStudentFilterChange = (e) => {
+    const filterValue = e.target.value.toLowerCase();
+    setStudentFilter(filterValue);
+    const filtered = students.filter(
+      (student) => student.name.toLowerCase().includes(filterValue) || student.enrollment_no.toLowerCase().includes(filterValue)
+    );
+    setFilteredStudents(filtered);
+  };
+
+  const handleSubjectFilterChange = (e) => {
+    const filterValue = e.target.value.toLowerCase();
+    setSubjectFilter(filterValue);
+    const filtered = subjects.filter(
+      (subject) =>
+        subject.course_code.toLowerCase().includes(filterValue) ||
+        subject.subject_name.toLowerCase().includes(filterValue) ||
+        subject.branch.toLowerCase().includes(filterValue) ||
+        subject.section.toLowerCase().includes(filterValue) ||
+        subject.batch.toLowerCase().includes(filterValue)
+    );
+    setFilteredSubjects(filtered);
+  };
+
   return (
     <div className="container mx-auto mt-10 m-4 flex justify-center items-center flex-col ">
       <h1 className="text-2xl font-bold mb-4">Combine Subjects and Students</h1>
 
       <div className="mb-4 m-5">
-        <label className="block text-gray-700 text-sm font-bold mb-2">Select Students:</label>
-        <select
+        <label className="block text-gray-700 text-sm font-bold mb-2">Search Students:</label>
+        <input
+          type="text"
           className="border p-2 w-full"
+          value={studentFilter}
+          onChange={handleStudentFilterChange}
+        />
+        <select
+          className="border p-2 w-full mt-2"
           multiple
           value={studentIds}
-          onChange={(e) => setStudentIds(Array.from(e.target.selectedOptions, (option) => option.value))}
+          onChange={(e) =>
+            setStudentIds(Array.from(e.target.selectedOptions, (option) => option.value))
+          }
         >
-          {students.map((student) => (
+          {filteredStudents.map((student) => (
             <option key={student.id} value={student.id}>
-              {student.name} - {student.enrollment_no}
+              {student.enrollment_no} - {student.name}
             </option>
           ))}
         </select>
       </div>
 
       <div className="mb-4 m-5">
-        <label className="block text-gray-700 text-sm font-bold mb-2">Select Subjects:</label>
-        <select
+        <label className="block text-gray-700 text-sm font-bold mb-2">Search Subjects:</label>
+        <input
+          type="text"
           className="border p-2 w-full"
+          value={subjectFilter}
+          onChange={handleSubjectFilterChange}
+        />
+        <select
+          className="border p-2 w-full mt-2"
           multiple
           value={subjectIds}
-          onChange={(e) => setSubjectIds(Array.from(e.target.selectedOptions, (option) => option.value))}
+          onChange={(e) =>
+            setSubjectIds(Array.from(e.target.selectedOptions, (option) => option.value))
+          }
         >
-          {subjects.map((subject) => (
+          {filteredSubjects.map((subject) => (
             <option key={subject._id} value={subject._id}>
-              {subject.subject_name} - {subject.course_code}
+              {subject.course_code} - {subject.subject_name} - {subject.branch} - {subject.section} - {subject.batch}
             </option>
           ))}
         </select>
