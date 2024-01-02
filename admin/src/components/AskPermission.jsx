@@ -1,29 +1,32 @@
 import React, { useState } from "react";
-import { postAttendancePermissionAsync } from "../redux-toolkit/slices/teacherAPIslice/pastattendanceslice";
-import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import { TYPE, useMsgErr } from "../context/MsgAndErrContext";
 
 const AskPermission = ({ sub_id }) => {
-  const dispatch = useDispatch();
-  const {setMsgType,setMsg} = useMsgErr()
+  const { setMsgType, setMsg } = useMsgErr();
   const [data, setdata] = useState({
     date: "",
   });
+
   const changeHandler = (e) => {
     setdata({ date: e.target.value });
   };
-  const submitHandler = async() => {
+
+  const submitHandler = async () => {
     try {
-      await dispatch(postAttendancePermissionAsync({ ID: sub_id, data }));
-      if(askForPermissionStore.isErr){
-        setMsgType(TYPE.Err)
-        setMsg(askForPermissionStore.errMsg)
-      }
+      const response = await axios.post(`/api/updatepastattendance/asktoupdate/${sub_id}`, {
+        date: data.date,
+      });
+      
+      setMsgType(TYPE.SUCCESS);
+      setMsg(response.data.message);
     } catch (error) {
-      console.log(error);
+      console.error("Error asking for permission:", error);
+      setMsgType(TYPE.ERROR);
+      setMsg("Error asking for permission. Please try again.");
     }
   };
-  const askForPermissionStore = useSelector(state=>state.pastattendancepermission)
+
   return (
     <>
       <div className="askForPermission">

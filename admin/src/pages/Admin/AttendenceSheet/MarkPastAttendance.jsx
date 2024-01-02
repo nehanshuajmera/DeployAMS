@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
   useTable,
@@ -14,192 +15,159 @@ import { ParticularAttendanceasync } from "../../../redux-toolkit/slices/teacher
 import { checkclassasync } from "../../../redux-toolkit/slices/teacherAPIslice/checkclassSlice";
 import { updateAttendanceAsync } from "../../../redux-toolkit/slices/teacherAPIslice/insertUpdateattendanceSlice";
 import AskPermission from "../../../components/AskPermission";
-import { updateAttendanceByPermissionAsync } from "../../../redux-toolkit/slices/teacherAPIslice/updateattendancebypermissionslice";
-import { userdetailasync } from "../../../redux-toolkit/slices/userdetailslice";
 import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
+import { set } from "mongoose";
 
-export default function UpdatePrevious() {
-  const {setMsgType,setMsg} = useMsgErr()
-  const sub_id = useParams();
-  const { totalLectures } = useLocation().state;
-  const dispatch = useDispatch();
+
+export default function MarkPastAttendance() {
+  const req_id = useParams();
   const navigate = useNavigate();
-  const [dataofstud, setdataofstud] = useState({ details: [] });
+  const [subjectId, setSubjectId] = useState("");
+  const [maxCount, setMaxCount] = useState(0);
+  const [isClassScheduled, setIsClassScheduled] = useState(true);
+  const [studentData, setStudentData] = useState([]);
   const [attendanceList, setAttendanceList] = useState([]);
-  const [maxCount, setMaxCount] = useState(0); //default maxCount = 0
-  const [studentIDs, setstudentIDs] = useState([]);
-  const [dateToUpdate, setDateToUpdate] = useState(null);
-  const [lectures, setLectures] = useState(null);
-  useEffect(()=>{
-    ;(async()=>{
-      try{
+  const [totalLectures, settotalLectures] = useState({});
+  const [requestData, setRequestData] = useState({});
 
-        await dispatch(userdetailasync());
-        // const studentState = useSelector(state=>state.crudstudent)
-        
-      }catch(error){
-        console.log(error);
-      }
-    })();    
-  },[])
-  
-  const userSubjectData = useSelector(
-    (state) => state.userdetail.details
-  ).subjects
-  
-console.log(userSubjectData)
 
-  useEffect(()=>{
-    let tempLecturesList = userSubjectData?.find((subj) => subj.subject_id._id === sub_id.id)?.subject_id.lecture_dates
-    setLectures(tempLecturesList)
-    console.log("templectures",tempLecturesList)
-  },[userSubjectData])
-
-  useEffect(()=>{
-    let tempMaxCount = lectures?.find((ele) => {
-        let tempTime = new Date(ele.date);
-        return (
-          convertDate(tempTime) === convertDate(dateToUpdate)
-        );
-      })?.count
-      console.log("tempMax",tempMaxCount)
-    setMaxCount(tempMaxCount)
-  },[userSubjectData,dateToUpdate])
-
-//   to convert date 
-  const convertDate = (inputDate) => {
-    const dateObj = new Date(inputDate);
-    const options = { year: "numeric", month: "short", day: "numeric" };
-    const formattedDate = dateObj.toLocaleDateString("en-US", options);
-    return formattedDate;
-  };
-  
-
-  // get all the student of this particular subject
-  useLayoutEffect(() => {
-    const unsub = async () => {
-      try {
-        await dispatch(ParticularAttendanceasync({ ID: sub_id.id }));
-        if(dataofstudent.isErr){
-          setMsgType(TYPE.Err)
-          setMsg(dataofstudent.Err)
+  useEffect(() => {
+    // Fetch request details and set subject ID
+    axios
+      .get(`/api/updatepastattendance/viewmyrequestdetail/${req_id.id}`)
+      .then((res) => {
+        // console.log("Request data",res.data);
+        if (res.data.request.status === "approved") {
+          setSubjectId(res.data.request.subject);
+          setRequestData(res.data.request);
+          // console.log("Subject id 1",res.data.request.subject);
+          fetchStudentAttendance(res.data.request.subject);
+        } else {
+          // Redirect to teacher dashboard if the request is not approved
+          navigate("/teacherdashboard");
         }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  
+  const [studentIDs, setstudentIDs] = useState([]);
+
+ const [subjectDeatils, setSubjectDeatils] = useState({});
+
+    // Fetch student attendance data based on subject ID
+    const fetchStudentAttendance = async (subject_id) => {
+      try {
+        // console.log("Subject id",subject_id); 
+        const response = await axios.get(`/api/teacher/studentsattendance/${subject_id}`);
+        settotalLectures(response.data.subject.lecture_dates.reduce((result,ele)=>(result+=ele.count),0))
+        // find the maximum count of the lecture
+         // Check if lecture_dates and proposedDateTime are defined before accessing them
+         setSubjectDeatils(response.data.subject);
+         
+        // console.log("Total lectures",response.data.subject.lecture_dates);
+        // console.log("Student data",response.data);
+        setStudentData(response.data.message);
       } catch (error) {
         console.log(error);
       }
     };
-    unsub();
-  }, []);
-  // setdataofstudent(useSelector((state)=>state.fetchDetail));
 
-  const dataofstudent = useSelector(
-    (state) => state.particularattendanceDetail
-  );
-  // console.log(dataofstudent.details);
+    useEffect(() => {
+      const proposedDateTime = requestData?.proposedDateTime;
+      const lectureDates = subjectDeatils.lecture_dates;
+     if (lectureDates && proposedDateTime) {
+       const subject_count =  lectureDates.find((ele) => ele.date === proposedDateTime)?.count;
+       // console.log("Subject count",subject_count);
+       setMaxCount(subject_count);
+     }
+    }, [requestData,subjectDeatils]);
 
-  const changeCount = ({ type, stud_id, count, index }) => {
-    console.log( " change",type, stud_id,count);
-
-    if (type === "increment") {
-      console.log("increment");
-      if (count === maxCount) {
-        console.log(maxCount);
-        count = maxCount;
+    const changeCount = ({ type, stud_id, count, index }) => {
+      // console.log( " change",type, stud_id,count);
+  
+      if (type === "increment") {
+        console.log("increment");
+        if (count === maxCount) {
+          console.log(maxCount);
+          count = maxCount;
+        } else {
+          count = count + 1;
+        }
       } else {
-        count = count + 1;
+        if (count === 0) {
+          count = 0;
+        } else {
+          count = count - 1;
+        }
       }
-    } else {
-      if (count === 0) {
-        count = 0;
-      } else {
-        count = count - 1;
-      }
+  
+      // console.log({stud_id,count,index})
+      setstudentIDs((prevStudentIDs) => {
+        const updatedStudentIDs = [...prevStudentIDs];
+        updatedStudentIDs[index].count = count;
+        return updatedStudentIDs;
+      });
+      // console.log(studentIDs)
+    };
+  
+
+  const submitHandler = async () => {
+    try {
+      const payload = {
+          studentIDs: studentIDs,
+      };
+      await axios.post(`/api/updatepastattendance/updateattendancebypermission/${req_id.id}`, payload);
+    } catch (error) {
+      console.log(error);
     }
-
-    // console.log({stud_id,count,index})
-    setstudentIDs((prevStudentIDs) => {
-      const updatedStudentIDs = [...prevStudentIDs];
-      updatedStudentIDs[index].count = count;
-      return updatedStudentIDs;
-    });
-    // console.log(studentIDs)
   };
 
-  const gotoUpdate = () => {};
 
-  // const markCount = ({ stud_id, count,index }) => {
 
-  //   // var array=studentIDs;
-
-  //   // setstudentIDs(array)
-  //   // if(!assign){
-  //   //   studentIDs.push({"studentid":stud_id,"count":count});
-  //   // }
-
-  // };
 
   useEffect(() => {
     var array = [];
     var idx = 0;
-    
-    dataofstudent.details.message.map((stud) => {
+    studentData.map((stud) => {
       // console.log({"studentid":stud._id,"enrollment_no":stud.enrollment_no,"name":stud.name, "count":0})
       // console.log(stud)
       // const woattendacne=stud.subjects.find(st=>st.subject_id=== sub_id.id);
       // console.log(woattendacne.attendance.length)
+      let presentDate = new Date(requestData.proposedDateTime)
+      // console.log(presentDate.getDate())
       // let tempLecture = stud.subjects.find(subj=>subj.subject_id === sub_id.id).lecture_dates.reduce((result,ele)=>(result+=ele.count),0)
-      let tempAttendanceList = stud.subjects
-        .find((subj) => subj.subject_id === sub_id.id)
-        .attendance.reduce((result, ele) => (result += ele.count), 0);
-      let tempCount = stud.subjects
-        .find((subj) => subj.subject_id === sub_id.id)
-        .attendance.find((ele) => {
-          let tempTime = new Date(ele.date);
-          return (
-            convertDate(tempTime) === convertDate(dateToUpdate)
-          );
-        })?.count;
+      let tempAttendanceList = stud.subjects.find(subj=>subj.subject_id === subjectId).attendance.reduce((result,ele)=>(result+=ele.count),0)
+
+      let tempCount = stud.subjects.find(subj=>subj.subject_id === subjectId).attendance.find(ele=>{
+        let tempTime = new Date(ele.date)
+        
+        // console.log(tempTime.getDate(),presentDate.getDate(),tempTime.getMonth(),presentDate.getMonth(),tempTime.getFullYear(),presentDate.getFullYear())
+
+        return (tempTime.getDate() === presentDate.getDate() && tempTime.getMonth() === presentDate.getMonth() && tempTime.getFullYear() === presentDate.getFullYear() )
+      })
+      // console.log({tempCount})
+      tempCount = tempCount.count;
+
+      console.log(tempCount,stud.name)
       // console.log(tempLecture)
+      
       array.push({
         studentid: stud._id,
         enrollment_no: stud.enrollment_no,
         name: stud.name,
-        count: tempCount ? tempCount : 0,
+        count: tempCount?tempCount:0,
         index: idx,
-        attendance: tempAttendanceList,
-        totalLectures: totalLectures,
+        attendance:tempAttendanceList,
+        totalLectures:totalLectures,
       });
       // console.log(array)
       idx++;
     });
     setstudentIDs(array);
-  }, [dataofstud?.details, dataofstudent.details,dateToUpdate]);
+  }, [studentData]);
 
-  // submit handler
-  const submitHandler = async () => {
-    // if(!(isClassDetails?.message==="No Class Today" )&&)
-    try {
-      let payload = {
-        ID: sub_id.id,
-        data: {
-        //   subjectId: sub_id.id,
-          studentIDs: studentIDs,
-        },
-      };
-      console.log(payload);
-      await dispatch(updateAttendanceByPermissionAsync(payload));
-      if(updateAttendance_Store.isErr){
-        setMsgType(TYPE.Err)
-        setMsg(updateAttendance_Store.errMsg)
-      } 
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const updateAttendance_Store  = useSelector(state=>state.updateAttendancebypermission)   
-  
-  
-  
   
 
   const data = React.useMemo(() => studentIDs, [studentIDs]);
@@ -308,30 +276,10 @@ console.log(userSubjectData)
 
   const { pageIndex, globalFilter } = state;
 
+
   return (
     <div className="markAttendanceMain w-screen h-screen">
-      <h2>Update Past Attendance</h2>
-      {/* {isClassDetails?.message === "No Class Today" && (
-        <div className="w-full p-2 bg-primary text-dimWhite text-center font-semibold">
-          <p>Class is not scheduled for Today, cannot mark the attendance </p>
-        </div>
-      )} */}
-      <div>
-        <h3>Date</h3>
-        <input type="date" name="dateToUpdate" id="dateToUpdate" value={dateToUpdate} onChange={(e)=>setDateToUpdate(e.target.value)}/>
-        <select name="dateToUpdate" id="dateToUpdate" value={dateToUpdate} onChange={(e)=>setDateToUpdate(e.target.value)}>
-            <option value={''}>Date</option>
-            {
-                lectures &&
-                lectures.map(lecture=>{
-                    let dateValue = convertDate(lecture.date)
-                    return(
-                        <option key={dateValue} value={dateValue}>{dateValue}</option>
-                    )
-                })
-            }
-        </select>
-      </div>
+      <h2>Attendance Sheet</h2>
       <div className="sheet">
         <div className="attendenceFormat">
           <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
@@ -418,22 +366,14 @@ console.log(userSubjectData)
           )}
         </div>
 
-        <div className="moreFeatures">
-          <div className="previousAttendance">
-            <button onClick={() => navigate("/previousattendance")}>
-              See Previous Attendance
-            </button>
-          </div>
-        </div>
+      
       </div>
-      {
-        // maxCount &&
-        maxCount > 0 &&
+
+      {isClassScheduled && (
         <div className="button1" onClick={submitHandler}>
           Submit
         </div>
-        // )
-      }
+      )}
     </div>
   );
 }

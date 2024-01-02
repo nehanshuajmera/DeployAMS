@@ -22,7 +22,6 @@ import AttendancePermission from "./pages/SuperAdmin/AttendancePermission/Attend
 import PreviousAttendence from "./pages/Admin/PreviousAttendance/PreviousAttendance";
 import SubstituteTeacher from "./pages/Admin/Substitute Teacher/SubstituteTeacher";
 import ArangementClass from "./pages/Admin/ArangementClass/ArangementClass";
-import UpdatePrevious from "./pages/Admin/AttendenceSheet/UpdatePrevious";
 
 import { authasync } from "./redux-toolkit/slices/authapislice";
 import Header from "./Universal/header";
@@ -30,6 +29,7 @@ import AdminRoute from "./protectrouter/AdminRoute";
 import AuthContext from "./context/AuthContext";
 import UploadBulkData from "./pages/SuperAdmin/UploadData/UploadBulkData";
 import UpdateAttendanceRequestPage from "./pages/Admin/PastAttendance/UpdateAttendanceRequestPage";
+import MarkPastAttendance from "./pages/Admin/AttendenceSheet/MarkPastAttendance";
 
 function App() {
 
@@ -92,7 +92,7 @@ const dispatch=useDispatch();
           }
         />
       <Route
-          path={"/pastattendance"}
+          path={"/pastattendancerequest"}
           element={
             <ProtectedRoute>
               <UpdateAttendanceRequestPage/>
@@ -197,10 +197,10 @@ const dispatch=useDispatch();
           }
         />
         <Route
-          path="/updatepreviousattendace/:id"
+          path="/markpastattendance/:id"
           element={
             <ProtectedRoute>
-              <UpdatePrevious />
+              <MarkPastAttendance />
             </ProtectedRoute>
           }
         />

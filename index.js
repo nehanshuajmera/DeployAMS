@@ -53,7 +53,7 @@ mongoose.connect(process.env.MDB_CONNECT)
     app.use("/api/admin", require("./Routes/adminRouter.js"));
     app.use("/api/logs", require("./Routes/logRouter.js"));
     app.use("/api/schedule", require("./Routes/scheduleRouter"));
-    app.use("/api/updateattendance", require("./Routes/updateattendanceRouter"));
+    app.use("/api/updatepastattendance", require("./Routes/updateattendanceRouter"));
     app.use("/api/alert", require("./Routes/alertRouter"));
     app.use("/api/xlsx", require("./Routes/xlsxRouter"));
     app.use("/api/studentattendancerequest", require("./Routes/attendanceRequestRouter.js"));

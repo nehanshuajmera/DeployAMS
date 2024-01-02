@@ -1,94 +1,71 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom"
 
-const UpdateAttendanceRequestPage = () => {
-  const [date, setDate] = useState('');
-  const [pastRequests, setPastRequests] = useState([]);
+const ViewMyRequestsPage = () => {
+  const [requests, setRequests] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch past requests when the component mounts
-    const fetchPastRequests = async () => {
+    const fetchRequests = async () => {
       try {
-        const response = await axios.get('/api/viewmyrequest');
-        setPastRequests(response.data.requests);
+        const response = await axios.get('/api/updatepastattendance/viewmyrequest');
+        setRequests(response.data.requests);
       } catch (error) {
-        console.error('Error fetching past requests:', error);
+        console.error('Error fetching requests:', error);
       }
     };
 
-    fetchPastRequests();
-  }, []); // Run this effect only once when the component mounts
+    fetchRequests();
+  }, []);
 
-  const handleRequestUpdate = async (event) => {
-    event.preventDefault();
-
-    try {
-      // Perform validation if needed
-      if (!date) {
-        alert('Date is required');
-        return;
-      }
-
-      // Make the API request to send the update attendance request
-      await axios.post(`/api/asktoupdate/:id`, {
-        date,
-      });
-
-      // Refresh the list of past requests
-      const response = await axios.get('/api/viewmyrequest');
-      setPastRequests(response.data.requests);
-
-      // Clear the form
-      setDate('');
-    } catch (error) {
-      console.error('Error sending update attendance request:', error);
-      alert('Error sending update attendance request. Please try again.');
-    }
+  const handleUpdateAttendance = async (requestId) => {
+    navigate(`/markpastattendance/${requestId}`);
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-8 p-4 bg-white rounded-md shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Update Attendance Request</h2>
-
-      {/* Form to apply for past attendance */}
-      <form onSubmit={handleRequestUpdate}>
-        <div className="mb-4">
-          <label htmlFor="date" className="block text-gray-700">
-            Date:
-          </label>
-          <input
-            type="date"
-            id="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="mt-1 p-2 border rounded-md w-full"
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-        >
-          Apply for Update
-        </button>
-      </form>
-
-      {/* Section to show past requests and their status */}
-      <div className="mt-8">
-        <h3 className="text-xl font-bold mb-4">Past Update Attendance Requests</h3>
-        {pastRequests.length === 0 ? (
-          <p>No past update attendance requests.</p>
-        ) : (
-          <ul>
-            {pastRequests.map((request) => (
-              <li key={request._id} className="mb-4">
-                <strong>{request.subject.name}</strong> - {request.proposedDateTime} - Status: {request.status}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+    <div className="container mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-4 text-center ">My Update Attendance Requests</h2>
+      <table className="min-w-full bg-white border border-gray-300">
+        <thead>
+          <tr>
+            <th className="py-2 px-4 border">Subject</th>
+            <th className="py-2 px-4 border">Proposed Date</th>
+            <th className="py-2 px-4 border">Status</th>
+            <th className="py-2 px-4 border">Action</th>
+          </tr>
+        </thead>
+        <tbody className='text-center' >
+          {requests.map((request) => (
+            <tr key={request._id}>
+              <td className="py-2 px-4 border">{request.subject.subject_name}</td>
+              <td className="py-2 px-4 border">  {new Date(request.proposedDateTime).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
+  })}
+</td>
+              <td className="py-2 px-4 border">{request.status}</td>
+              <td className="py-2 px-4 border">
+                {request.status === 'approved' && (
+                  <button
+                    onClick={() => handleUpdateAttendance(request._id)}
+                    className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+                  >
+                    Update Attendance
+                  </button>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default UpdateAttendanceRequestPage;
+export default ViewMyRequestsPage;
