@@ -161,8 +161,10 @@ router.post("/updateattendancebypermission/:id", isauthenticated, isTeacher, asy
       if (date1.getTime() > date2.getTime()) {
         return res.status(401).json({ message: "You cannot update attendance of the future" });
       }
- 
+
+      // console.log(date1)
       // console.log(req.body);
+
       const studentIDs = req.body.studentIDs;
       // console.log(studentIDs);
       if (!studentIDs) {

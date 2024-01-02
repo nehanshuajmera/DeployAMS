@@ -83,5 +83,5 @@ mongoose.connect(process.env.MDB_CONNECT)
     console.error('Error connecting to MongoDB:', err);
   });
 
-  const result = updateTodayAttendance();
-  console.log(result);
+  // const result = updateTodayAttendance();
+  // console.log(result);
