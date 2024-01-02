@@ -135,17 +135,17 @@ export default function MarkPastAttendance() {
       // console.log(stud)
       // const woattendacne=stud.subjects.find(st=>st.subject_id=== sub_id.id);
       // console.log(woattendacne.attendance.length)
-      let presentDate = new Date(requestData.proposedDateTime)
-      // console.log(presentDate.getDate())
+      let pastDate = new Date(requestData.proposedDateTime)
+      // console.log(pastDate.getDate())
       // let tempLecture = stud.subjects.find(subj=>subj.subject_id === sub_id.id).lecture_dates.reduce((result,ele)=>(result+=ele.count),0)
       let tempAttendanceList = stud.subjects.find(subj=>subj.subject_id === subjectId).attendance.reduce((result,ele)=>(result+=ele.count),0)
 
       let tempCount = stud.subjects.find(subj=>subj.subject_id === subjectId).attendance.find(ele=>{
         let tempTime = new Date(ele.date)
         
-        // console.log(tempTime.getDate(),presentDate.getDate(),tempTime.getMonth(),presentDate.getMonth(),tempTime.getFullYear(),presentDate.getFullYear())
+        // console.log(tempTime.getDate(),pastDate.getDate(),tempTime.getMonth(),pastDate.getMonth(),tempTime.getFullYear(),pastDate.getFullYear())
 
-        return (tempTime.getDate() === presentDate.getDate() && tempTime.getMonth() === presentDate.getMonth() && tempTime.getFullYear() === presentDate.getFullYear() )
+        return (tempTime.getDate() === pastDate.getDate() && tempTime.getMonth() === pastDate.getMonth() && tempTime.getFullYear() === pastDate.getFullYear() )
       })
       // console.log({tempCount})
       tempCount = tempCount.count;
@@ -161,6 +161,7 @@ export default function MarkPastAttendance() {
         index: idx,
         attendance:tempAttendanceList,
         totalLectures:totalLectures,
+        date:pastDate
       });
       // console.log(array)
       idx++;
@@ -280,6 +281,12 @@ export default function MarkPastAttendance() {
   return (
     <div className="markAttendanceMain w-screen h-screen">
       <h2>Attendance Sheet</h2>
+      <p>Date : { new Date(requestData?.proposedDateTime).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    
+  })}</p>
       <div className="sheet">
         <div className="attendenceFormat">
           <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />

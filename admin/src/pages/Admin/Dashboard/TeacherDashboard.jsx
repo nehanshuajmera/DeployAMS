@@ -46,6 +46,7 @@ export default function TeacherDashboard() {
 
   // calculate total number of lecture 
   const gotoSubjectAttendance=(sub_id)=>{
+    // console.log(subjects)
     let totalLectures = subjects.find(subj=>subj.subject_id._id===sub_id).subject_id.lecture_dates.reduce((result,ele)=>(result+=ele.count),0)
     // console.log(totalLectures)
     navigate(`/markattendance/${sub_id}`,{state:{totalLectures}})

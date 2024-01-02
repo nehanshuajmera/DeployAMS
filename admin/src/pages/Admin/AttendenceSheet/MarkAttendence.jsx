@@ -83,7 +83,7 @@ export default function MarkAttendance() {
   const dataofstudent = useSelector(
     (state) => state.particularattendanceDetail.details
   );
-  // console.log(dataofstudent);
+  console.log(dataofstudent);
 
   const changeCount = ({ type, stud_id, count, index }) => {
     // console.log( " change",type, stud_id,count);
