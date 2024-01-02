@@ -15,12 +15,15 @@ export default function AllTeacher() {
   
   useEffect(() => {
     const unsub=()=>{
+      try {
        dispatch(fetchdetailasync({apiname:"allteachers"}));
+      }
+      catch (error) {
+        console.log(error);
+      }
     }
    
-     return () => {
-       unsub()
-     }
+    unsub()
    }, [])
   
   const dataofteacher=useSelector((state)=>state.fetchDetail);
