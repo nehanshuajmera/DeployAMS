@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { TYPE, useMsgErr } from "../context/MsgAndErrContext";
+import { useSelector } from "react-redux";
 
 const AskPermission = ({ sub_id }) => {
+  const userDetail = useSelector(state=>state.userdetail)
+  // console.log(userDetail)
+  
+  let lectureList = userDetail?.details?.subjects.find(subj=>subj.subject_id._id===sub_id).subject_id.lecture_dates
+  // let lectureList1 = userDetail?.details.subjects.find(subj=>console.log(subj))
+  console.log(lectureList)
   const { setMsgType, setMsg } = useMsgErr();
   const [data, setdata] = useState({
     date: "",
@@ -27,6 +34,15 @@ const AskPermission = ({ sub_id }) => {
     }
   };
 
+  const convertDate = (date)=>{
+    return new Date(date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      
+    })
+  }
+
   return (
     <>
       <div className="askForPermission">
@@ -40,11 +56,15 @@ const AskPermission = ({ sub_id }) => {
             value={data.date}
             onChange={(e) => changeHandler(e)}
           />
-          <select name="date" id="permission" value={data.date}             onChange={(e) => changeHandler(e)}
+          <select name="date" id="permission" value={data.date} onChange={(e) => changeHandler(e)}
 >
             <option value="">Date</option>
             {
-              data
+              lectureList?.map(lecture=>{
+                return(
+                  <option value={convertDate(lecture.date)}>{convertDate(lecture.date)}</option>
+                )
+              })
             }
           </select>
         </div>
