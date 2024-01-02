@@ -78,6 +78,10 @@ mongoose.connect(process.env.MDB_CONNECT)
       if (err) throw err;
       console.log(`Server started on port: ${PORT}`);
     });
+    app.use(express.static('admin/dist'));
+    app.get('*', (req, res) => {
+            res.sendFile(path.resolve('admin','dist','index.html'));
+    });
   })
   .catch(err => {
     console.error('Error connecting to MongoDB:', err);
@@ -85,3 +89,4 @@ mongoose.connect(process.env.MDB_CONNECT)
 
   // const result = updateTodayAttendance();
   // console.log(result);
+
