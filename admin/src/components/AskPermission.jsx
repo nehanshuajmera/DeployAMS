@@ -7,7 +7,7 @@ const AskPermission = ({ sub_id }) => {
   const [data, setdata] = useState({
     date: "",
   });
-
+  // const 
   const changeHandler = (e) => {
     setdata({ date: e.target.value });
   };
@@ -34,12 +34,19 @@ const AskPermission = ({ sub_id }) => {
         <div className="askForPermissionText">
           <input
             type="date"
-            className="bg-dimwhite"
+            className="bg-dimWhite"
             name="date"
             id="permission"
             value={data.date}
             onChange={(e) => changeHandler(e)}
           />
+          <select name="date" id="permission" value={data.date}             onChange={(e) => changeHandler(e)}
+>
+            <option value="">Date</option>
+            {
+              data
+            }
+          </select>
         </div>
         <div className="askForPermissionBtn">
           <button onClick={submitHandler}>Ask</button>

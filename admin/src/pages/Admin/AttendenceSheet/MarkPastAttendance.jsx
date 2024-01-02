@@ -281,6 +281,12 @@ export default function MarkPastAttendance() {
   return (
     <div className="markAttendanceMain w-screen h-screen">
       <h2>Attendance Sheet</h2>
+      <p>Date : { new Date(requestData?.proposedDateTime).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    
+  })}</p>
       <div className="sheet">
         <div className="attendenceFormat">
           <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
