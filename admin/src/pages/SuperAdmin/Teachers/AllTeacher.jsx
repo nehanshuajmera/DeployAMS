@@ -52,12 +52,12 @@ export default function AllTeacher() {
         accessor: "faculty",
       },
       {
-        Header: "Email",
-        accessor: "email",
-      },
-      {
         Header: "Phone No.",
         accessor: "phone_no",
+      },
+      {
+        Header: "Email",
+        accessor: "email",
       },
       {
         Header: 'Actions',
@@ -127,9 +127,9 @@ export default function AllTeacher() {
                 {headerGroup.headers.map((column) => (
                   <th className='adminTeacherTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
-                    <span>
-                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' ↕️'}
-                    </span>
+                    {column.Header!=="Actions" && column.Header!=="Email" && column.Header!=="Phone No." ? <span>
+                      {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
+                    </span>:null }
                   </th>
                 ))}
               </tr>
