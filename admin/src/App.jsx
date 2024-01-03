@@ -35,25 +35,25 @@ import MapTeacherandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapTea
 
 function App() {
 
-// const dispatch=useDispatch();
+const dispatch=useDispatch();
 
-//   useEffect(() => {
-//     const unsub=async()=>{
-//       try{
-//         await dispatch(authasync());
-//       }catch(error){
-//           console.log(error);
-//       }
-//     }
-//     unsub();
-//    }, [])
+  useEffect(() => {
+    const unsub=async()=>{
+      try{
+        await dispatch(authasync());
+      }catch(error){
+          console.log(error);
+      }
+    }
+    unsub();
+   }, [])
   
    const {IsLogin}=useContext(AuthContext);
 
   return (
     <div className="w-full overflow-hidden bg-dimWhite ">
-      {IsLogin? <Header/>:null}
-      <ErrMsg/>
+      {IsLogin ? <Header /> : null}
+      <ErrMsg />
       <Routes>
         <Route
           path={"/"}
@@ -126,22 +126,14 @@ function App() {
             </AdminRoute>
           }
         />
-        <Route
-          path={"/allsubject"}
-          element={
+        <Route path={"/allsubject"} element={
             <AdminRoute>
               <AllSubject />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path={"/createstudent"}
-          element={
+            </AdminRoute> }/>
+        <Route path={"/createstudent"} element={
             <AdminRoute>
               <CreateStudent />
-            </AdminRoute>
-          }
-        />
+            </AdminRoute> }/>
         <Route
           path={"/updatestudent/:id"}
           element={
@@ -241,8 +233,8 @@ function App() {
         <Route path="/alert" element={<Alert />} />
         <Route path="*" element={<ErrMsg />} />
       </Routes>
-
-      {/* <MarkAttendence/> */}
+      {/* <Header />
+      <Dashboard /> */}
     </div>
   );
 }
