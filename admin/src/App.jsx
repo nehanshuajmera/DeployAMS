@@ -31,6 +31,7 @@ import UploadBulkData from "./pages/SuperAdmin/UploadData/UploadBulkData";
 import UpdateAttendanceRequestPage from "./pages/Admin/PastAttendance/UpdateAttendanceRequestPage";
 import MarkPastAttendance from "./pages/Admin/AttendenceSheet/MarkPastAttendance";
 import MapStudentandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapStudentandSubject";
+import MapTeacherandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapTeacherandSubject";
 
 function App() {
 
@@ -219,6 +220,14 @@ const dispatch=useDispatch();
             <AdminRoute>
               <MapStudentandSubject />
             </AdminRoute>
+          }
+        />
+         <Route
+          path="/mapteacherandsubject"
+          element={
+            // <AdminRoute>
+              <MapTeacherandSubject />
+            // </AdminRoute>
           }
         />
         <Route
