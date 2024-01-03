@@ -36,7 +36,7 @@
 }
 
 .adminSubjectTableRow:hover {
-    background-color: #E2ECEB;
+    background-color: #d2e9f9;
 }
 
 .adminSubjectTableHead {
@@ -45,7 +45,7 @@
     padding: 1rem;
     text-align: center;
     font-size: 1rem;
-    background-color: #000;
+    background-color: #030955;
     color: #fff;
     border: hidden;
 }
