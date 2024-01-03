@@ -1,13 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { TYPE, useMsgErr } from "../context/MsgAndErrContext";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { userdetailasync } from "../redux-toolkit/slices/userdetailslice";
 
 const AskPermission = ({ sub_id }) => {
+const dispatch = useDispatch();
+const [lectureList,setlectureList] = useState([])
+
+  useEffect(()=>{
+    ;(async()=>{
+      try{
+
+         dispatch(userdetailasync());
+        if(userDetail.isErr){
+          setMsgType(TYPE.Err)
+          setMsg(userDetail.errMsg)
+        } 
+        // const studentState = useSelector(state=>state.crudstudent)
+        
+      }catch(error){
+        console.log(error);
+      }
+    })();    
+  },[])
   const userDetail = useSelector(state=>state.userdetail)
   // console.log(userDetail)
   
-  let lectureList = userDetail?.details?.subjects.find(subj=>subj.subject_id._id===sub_id).subject_id.lecture_dates
+  // calculate total number of lecture on change of userDetail
+  useEffect(()=>{
+    console.log(userDetail)
+    const temp = userDetail.details.subjects.find(subj=>subj.subject_id._id===sub_id).subject_id.lecture_dates
+    setlectureList(temp)
+  },[userDetail])
+
+  // let lectureList = userDetail?.details?.subjects.find(subj=>subj.subject_id._id===sub_id).subject_id.lecture_dates
   // let lectureList1 = userDetail?.details.subjects.find(subj=>console.log(subj))
   console.log(lectureList)
   const { setMsgType, setMsg } = useMsgErr();
@@ -62,7 +89,7 @@ const AskPermission = ({ sub_id }) => {
             {
               lectureList?.map(lecture=>{
                 return(
-                  <option value={convertDate(lecture.date)}>{convertDate(lecture.date)}</option>
+                  <option key={lecture.date} value={convertDate(lecture.date)}>{convertDate(lecture.date)}</option>
                 )
               })
             }
