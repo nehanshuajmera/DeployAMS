@@ -46,9 +46,8 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
   // remove subject
   const removeSubject = (sub_id) => {
     console.log(sub_id)
-    const newList = detailsofSelectedSubject.filter((subject) => {
-      return subject._id !== sub_id;
-    });
+    console.log(selectedSubject)
+    const newList = selectedSubject.filter(subject => subject.subject_id !== sub_id);
     setSelectedSubject(newList);
   };
 
@@ -155,8 +154,9 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
               <p className="">No Selected subject</p>
             ) : (
               detailsofSelectedSubject.map((subject) => {
+                // console.log(subject)
                 return (
-                  <tr key={subject.id} className="grid grid-cols-6">
+                  <tr key={subject._id} className="grid grid-cols-6">
                     <td className="col-span-3 text-center">{subject.subject_name}</td>
                     <td className="col-span-2 text-center">
                       {subject.course_code}
@@ -173,31 +173,12 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
             )}
           </tbody>
 
-          {detailsofSelectedSubject.map((subject) => (
-            <SubjectCollection
-              key={subject.id}
-              subject={subject}
-              removeSubject={removeSubject}
-            />
-          ))}
+          
         </table>
       </div>
     </div>
   );
 };
 
-const SubjectCollection = ({ subject, removeSubject }) => {
-  return (
-    <div className="bg-primary relative text-white pl-3 py-2 rounded-3xl flex justify-between items-center gap-1">
-      <p>{subject.name}</p>
-      <div
-        className=" right-2 text-3xl flexCenter cursor-pointer"
-        onClick={() => removeSubject(subject.id)}
-      >
-        <IoIosClose />
-      </div>
-    </div>
-  );
-};
 
 export default SubjectSearch;
