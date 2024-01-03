@@ -102,25 +102,11 @@ const all_students=async (req, res) => {
     try {
       const userId = req.user_id; // You should have this information in your authentication middleware
     
-        if (req.user_role !== 'teacher') {
-          return res.status(403).json({ message: 'Forbidden: Access denied for non-teacher users' });
-        }
-    
-        // Check if the user has admin privileges (admin_role is "Admin")
-        const teacher = await Teacher.findById(userId);
-    
-        if (!teacher) {
-          return res.status(404).json({ message: "Teacher not found" });
-        }
-    
-        if (teacher.admin_role !== "Admin") {
-          return res.status(403).json({ message: "Forbidden: Access denied for non-admin teachers" });
-        }
       // Find all students
       const students = await Student.find();
   
       if (!students || students.length === 0) {
-        return res.status(404).json({ message: 'No students found' });
+        return res.status(404).json({ message:[], error: 'No students found' });
       }
   
       // Map students and get their subjects and teacher details

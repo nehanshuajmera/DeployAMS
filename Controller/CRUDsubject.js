@@ -203,7 +203,7 @@ const all_subjects=async (req, res) => {
       }
   
       if (!subjects || subjects.length === 0) {
-        return res.status(404).json({ message: [],error:"No subjects found"});
+        return res.status(201).json({ message: [],error:"No subjects found"});
       }
   
       // console.log(subjects)
