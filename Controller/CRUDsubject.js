@@ -7,7 +7,7 @@ const AcademicCalander = require("../Model/calanderSchema");
 const createsubject= async (req, res) => {
     try {
       // Create a new subject using the data from the request body
-      const { subject_name, course_code, branch, section, batch, day } = req.body;
+      const { subject_name, course_code, branch, section, batch, day,  department,class_name } = req.body;
        
       const lecture_dates = [];
       // const today = new Date();
@@ -50,6 +50,7 @@ const createsubject= async (req, res) => {
         section,
         batch,
         lecture_dates,
+        department,class_name,
         day
       });
       
@@ -189,12 +190,20 @@ const deletesubjectbyid= async (req, res) => {
 
 const all_subjects=async (req, res) => {
     try {
-  
+        
       // Find all subjects and populate the teacher details
-      const subjects = await Subject.find();  
+      const user_id=req.user_id;
+      const teacher = await Teacher.findById(user_id);
+      var subjects;
+      if(teacher.admin_role==="HOD"){
+         subjects = await Subject.find({department:teacher.department});
+      }
+      else{
+         subjects = await Subject.find();  
+      }
   
       if (!subjects || subjects.length === 0) {
-        return res.status(404).json({ message: 'No subjects found' });
+        return res.status(404).json({ message: [],error:"No subjects found"});
       }
   
       // console.log(subjects)

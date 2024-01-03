@@ -17,6 +17,8 @@ const studentSchema = new mongoose.Schema({
   branch: String,
   section: String,
   batch: String,
+  department: String,
+  class_name: String,
   password: String, // You should encrypt this before saving it
   updated_at: {
     type: Date,
