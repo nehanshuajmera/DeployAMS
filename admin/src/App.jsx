@@ -34,18 +34,18 @@ import MapStudentandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapStu
 
 function App() {
 
-const dispatch=useDispatch();
+// const dispatch=useDispatch();
 
-  useEffect(() => {
-    const unsub=async()=>{
-      try{
-        await dispatch(authasync());
-      }catch(error){
-          console.log(error);
-      }
-    }
-    unsub();
-   }, [])
+//   useEffect(() => {
+//     const unsub=async()=>{
+//       try{
+//         await dispatch(authasync());
+//       }catch(error){
+//           console.log(error);
+//       }
+//     }
+//     unsub();
+//    }, [])
   
    const {IsLogin}=useContext(AuthContext);
 

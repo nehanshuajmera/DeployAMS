@@ -29,14 +29,18 @@ export default function MarkAttendance() {
 
 
   // check if today is class
-  useLayoutEffect(() => {
-    (async () => {
+  useEffect(() => {
+
+
+    const unsub=async()=>{
       try {
         await dispatch(checkclassasync({ ID: sub_id.id }));
       } catch (error) {
         console.log(error);
       }
-    })();
+
+    }
+    unsub();
   }, []);
 
   const isClassDetails = useSelector((state) => state.checkClass.message);
