@@ -11,7 +11,6 @@ const [lectureList,setlectureList] = useState([])
   useEffect(()=>{
     ;(async()=>{
       try{
-
          dispatch(userdetailasync());
         if(userDetail.isErr){
           setMsgType(TYPE.Err)
@@ -29,7 +28,6 @@ const [lectureList,setlectureList] = useState([])
   
   // calculate total number of lecture on change of userDetail
   useEffect(()=>{
-    console.log(userDetail)
     const temp = userDetail.details.subjects.find(subj=>subj.subject_id._id===sub_id).subject_id.lecture_dates
     setlectureList(temp)
   },[userDetail])
