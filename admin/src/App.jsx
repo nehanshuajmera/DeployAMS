@@ -225,9 +225,9 @@ const dispatch=useDispatch();
          <Route
           path="/mapteacherandsubject"
           element={
-            // <AdminRoute>
+            <AdminRoute>
               <MapTeacherandSubject />
-            // </AdminRoute>
+            </AdminRoute>
           }
         />
         <Route
