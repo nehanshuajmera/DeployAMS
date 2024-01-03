@@ -7,7 +7,7 @@ const Student = require("../Model/studentSchema");
 const create_student=async (req, res) => {
     try {
       // Create a new student using the data from the request body
-      const { name, enrollment_no, programme,faculty, specialisation, year, scholar_no, email, phone_no, branch, section, batch, password, subjects } = req.body;
+      const { name, enrollment_no, programme,faculty, specialisation, year, scholar_no, email, phone_no, branch, section, batch, password, subjects, department,class_name } = req.body;
 
       if (!name || !enrollment_no || !programme || !faculty || !specialisation || !year || !scholar_no || !email || !phone_no || !branch || !section || !batch || !password || !subjects) {
         return res.status(400).json({ message: "All fields are required" });
@@ -21,6 +21,7 @@ const create_student=async (req, res) => {
         faculty,
         specialisation,
         year,
+        department,class_name,
         email,
         phone_no,
         branch,

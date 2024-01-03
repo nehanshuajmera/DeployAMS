@@ -15,6 +15,8 @@ const data = {
   branch:"",
   section:"",
   batch:"",
+  class_name:'',
+  department:'',
   teacher_id:"",
   day:[],
 };

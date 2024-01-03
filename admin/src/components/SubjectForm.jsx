@@ -68,6 +68,49 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
       </div>
 
       <div className="flex justify-center items-center flex-col md:flex-row gap-5 flex-1">
+        {/* department field */}
+        <div className="relative w-full grid grid-cols-3 flex-1 ">
+          <label
+            htmlFor="department"
+            className={`px-3 py-2 text-secondary text-xl col-span-1 `}
+          >
+            Department
+          </label>
+          <div className="relative col-span-2">
+            <input
+              type="text"
+              name="department"
+              id="department"
+              className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/department focus:border-primary focus:border-[1px] "
+              value={subject.department}
+              onChange={(e) => ChangeHandler(e)}
+            />
+                      <span className="ml-2 text-lg text-primary">*</span>
+          </div>
+        </div>
+        {/* class_name field */}
+        <div className="relative w-full grid grid-cols-3  flex-1">
+          <label
+            htmlFor="class_name"
+            className={`px-3 py-2 text-secondary text-xl col-span-1 `}
+          >
+            Class
+          </label>
+          <div className="relative col-span-2">
+            <input
+              type="text"
+              name="class_name"
+              id="class_name"
+              className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/class_name focus:border-primary focus:border-[1px] "
+              value={subject.class_name}
+              onChange={(e) => ChangeHandler(e)}
+            />
+                      <span className="ml-2 text-lg text-primary">*</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex justify-center items-center flex-col md:flex-row gap-5 flex-1">
         {/* course_code field */}
         <div className="relative w-full grid grid-cols-3 flex-1 ">
           <label
