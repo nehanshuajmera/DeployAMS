@@ -171,9 +171,7 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
                 );
               })
             )}
-          </tbody>
-
-          
+          </tbody>          
         </table>
       </div>
     </div>
