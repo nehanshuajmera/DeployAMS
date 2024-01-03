@@ -1,78 +1,24 @@
-.dashboardMainContainer {
-    background-color: #fff;
+.AdminDashboard{
     background-image: url('https://img.freepik.com/free-vector/network-mesh-wire-digital-technology-background_1017-27428.jpg?w=1060&t=st=1700814703~exp=1700815303~hmac=6a310d20b0d0df6346466b04ff048f2ba29a16b8542deea3b3b8e2041e1219cd');
-    /* background-image: url('https://w0.peakpx.com/wallpaper/294/709/HD-wallpaper-train-travel-illustration-ultra-aero-vector-art-illustration-landscape-mountains-train.jpg'); */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     color: #000;
     width: 100vw;
-    /* height: 100vh; */
+    height: 85vh;
+}
+.dashboardMainContainer {
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-}
-
-.universalDetailsAdmin {
-    padding: 0.5rem 3rem;
-    max-width: 100vw;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    align-self: center;
-    flex-wrap: wrap;
-}
-
-.cllgLogo {
-    max-height: 20vh;
-    /* height: 100%; */
-    max-width: 20vw;
-    padding: 1rem;
-    /* border: 1px solid blue; */
-}
-
-.cllgLogo img {
-    width: 100%;
-    height: 100%;
-}
-
-.logoutButton {
-    padding: 0.5rem;
-    font-size: 1.2rem;
-    border: 2px solid black;
-    /* border: 2px solid white; */
-    border-radius: 0.3rem;
-}
-
-.logoutButton button {
-    cursor: pointer;
-    font-weight: 500;
-}
-
-.styleHr {
-    border: 1px solid black;
-}
-
-.adminContentContainer {
-    display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    align-self: center;
-    max-width: 90vw;
-    width: 90%;
-    padding: 2rem;
-    max-height: 80vh;
-    /* border: 1px solid red; */
 }
 
 .adminMain {
     /* border: 1px solid green; */
     display: grid;
     grid-template-columns: repeat(2, auto);
-    max-width: 50vw;
-    width: 90%;
+    max-width: 48vw;
     text-align: center;
 }
 
@@ -87,23 +33,19 @@
 }
 
 .adminMain div:hover {
-    color: #fff;
-    background-color: grey;
-    opacity: 0.7;
+    color: #d2e9f9;
+    background-color: #030955;
 }
 
 .adminExtra {
-    max-width: 30vw;
-    width: 80%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column wrap;
+    /* border: 1px solid green; */
+    max-width: 48vw;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
     text-align: center;
 }
 
 .adminExtra div {
-    width: 25vw;
     margin: 1rem;
     padding: 1rem;
     border: 2px solid black;
@@ -113,30 +55,76 @@
     cursor: pointer;
 }
 
-.adminExtra div:hover{
-    color: #fff;
-    background-color: grey;
-    opacity: 0.7;
+.adminExtra div:hover {
+    color: #d2e9f9;
+    background-color: #030955;
+}
+
+.styleHr {
+    border: 1px solid black;
 }
 
 /* Responsive Design CSS */
-@media (min-width: 320px) and (max-width: 479px){
-    .dashboardMainContainer{
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+@media (min-width: 320px) and (max-width: 479px) {
+    .dashboardMainContainer {
+        background-image: url('https://img.freepik.com/free-vector/network-mesh-wire-digital-technology-background_1017-27428.jpg?w=1060&t=st=1700814703~exp=1700815303~hmac=6a310d20b0d0df6346466b04ff048f2ba29a16b8542deea3b3b8e2041e1219cd');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        color: #000;
+        width: 100vw;
+        height: 85vh;
         display: flex;
-        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
         flex-wrap: wrap;
     }
 
-    .styleHr{
-        border: 1px solid black;
+    .adminMain {
+        /* border: 1px solid green; */
+        display: grid;
+        grid-template-columns: repeat(1, auto);
+        max-width: 48vw;
+        text-align: center;
     }
 
-    .adminContentContainer{
-        display: flex;
-        justify-content: center;
+    .adminMain div {
+        margin: 1rem;
+        padding: 1rem;
+        border: 2px solid black;
+        border-radius: 0.4rem;
+        font-weight: 500;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
 
+    .adminMain div:hover {
+        color: #fff;
+        background-color: grey;
+        opacity: 0.7;
+    }
+
+    .adminExtra {
+        /* border: 1px solid green; */
+        max-width: 48vw;
+        display: grid;
+        grid-template-columns: repeat(1, auto);
+        text-align: center;
+    }
+
+    .adminExtra div {
+        margin: 1rem;
+        padding: 1rem;
+        border: 2px solid black;
+        border-radius: 0.4rem;
+        font-weight: 500;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    .adminExtra div:hover {
+        color: #fff;
+        background-color: #d2e9f9;
+        opacity: 0.7;
     }
 }

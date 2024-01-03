@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     height: 15vh;
+    background-color: #d2e9f9;
 }
 
 .headerDiv {
@@ -47,6 +48,10 @@
     padding: 0.5rem;
     margin: 0.5rem;
     box-sizing: border-box;
+}
+
+.styleHr {
+    border: 1px solid black;
 }
 
 /* Responsive CSS */

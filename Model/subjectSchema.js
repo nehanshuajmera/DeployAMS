@@ -22,7 +22,8 @@ const subjectSchema = new mongoose.Schema({
   //   Day:String,
   //   dateOfreschedule:Date
   // }],
-
+  department: String,
+  class_name: String,
   teacher_id: mongoose.Schema.Types.ObjectId, // Assuming this references the teacher
   lecture_dates: [{date: Date, count: Number}], // An array of date objects
   day:[{name: String, count: Number,cause:String}], // for backup no use

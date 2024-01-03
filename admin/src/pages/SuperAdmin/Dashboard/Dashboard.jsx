@@ -13,9 +13,9 @@ export default function Dashboard() {
     navigate("/")
   }
   return (
-    <div className='dashboardMainContainer'>
+    <div className='AdminDashboard'>
       <hr className="styleHr" />
-      <div className="adminContentContainer">
+      <div className='dashboardMainContainer'>
         <div className="adminMain">
           <div onClick={() => { navigate('/allstudent') }}>See All Students</div>
           <div onClick={() => navigate("/createstudent")}>Create Student</div>
@@ -25,10 +25,11 @@ export default function Dashboard() {
           <div onClick={() => navigate("/createsubject")}>Create Subject</div>
         </div>
         <div className="adminExtra">
-          <div onClick={() => navigate("/academiccalendar")}>Create Academic Calendar</div>
+          <div onClick={() => navigate("/academiccalendar")}>Academic Calendar</div>
           <div onClick={() => navigate("/attendancepermission")}>Attendance Permission</div>
           <div onClick={() => navigate("/alert")}>Alert & Notice</div>
           <div onClick={() => navigate("/mapstudentandsubject")}>Map Student & Subject</div>
+          <div onClick={() => navigate("/mapteacherandsubject")}>Map Teacher & Subject</div>
           <div onClick={() => navigate("/dataupload")}>XLSX Data Upload</div>
         </div>
       </div>
