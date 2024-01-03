@@ -214,7 +214,7 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        height: 12vh;
+        height: 15vh;
     }
 
     .headerDiv {
@@ -228,25 +228,13 @@
     }
 
     .logoCllg {
-        width: 30%;
+        width: 15%;
         height: 80%;
     }
 
     .logoCllg img {
         width: 100%;
         height: 100%;
-    }
-
-    .bttnCllg {
-        margin: 0.5rem;
-        padding: 1rem;
-    }
-
-    .bttnCss {
-        margin: 0.5rem;
-        padding: 1rem;
-        font-size: 1.2rem;
-        /* height: 60%; */
     }
 }
 

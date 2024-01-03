@@ -11,6 +11,7 @@ export default function AllStudent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [dataofstud, setdataofstud] = useState({ details: [] });
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
     const unsub = async () => {
       try {
@@ -23,6 +24,18 @@ export default function AllStudent() {
     unsub();
   }, [])
   // setdataofstudent(useSelector((state)=>state.fetchDetail));
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const dataofstudent = useSelector((state) => state.fetchDetail);
   useEffect(() => {
@@ -37,30 +50,37 @@ export default function AllStudent() {
       {
         Header: "Name",
         accessor: "name",
+        show: true,
       },
       {
         Header: "Enrollment No.",
         accessor: "enrollment_no",
+        show: true,
       },
       {
         Header: "Scholar No.",
         accessor: "scholar_no",
+        show: true,
       },
       {
         Header: "Year",
         accessor: "year",
+        show: true,
       },
       {
         Header: "Branch",
         accessor: "branch",
+        show: true,
       },
       {
         Header: "Section",
         accessor: "section",
+        show: windowWidth > 800,
       },
       {
         Header: "Specialization",
         accessor: "specialisation",
+        show: windowWidth > 800,
       },
       // {
       //   Header: "Faculty",
@@ -69,6 +89,7 @@ export default function AllStudent() {
       {
         Header: "Programme",
         accessor: "programme",
+        show: windowWidth > 800,
       },
       {
         Header: 'Actions',
@@ -76,19 +97,20 @@ export default function AllStudent() {
           const { row: index } = tableInstance;
           const {id:itemId} = index.original
           return (
-            <div>
+            <div className='tableActions'>
               <button className='actionBtn' onClick={() => navigate(`/updatestudent/`+itemId,{state:{...index.original}})}>
-                <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
+                <img src="/editBtn.png" alt="" />
               </button>
               <button className='actionBtn' onClick={() => handleDelete(itemId)}>
-                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
+                <img src="/deleteBtn.png" alt="" />
               </button>
             </div>
           )
-        }
+        },
+        show: true,
       }
     ],
-    []
+    [windowWidth]
   );
 
   const initialState = {
@@ -136,7 +158,8 @@ export default function AllStudent() {
             {headerGroups.map((headerGroup) => (
               <tr className='adminStudentTableRow' {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th className='adminStudentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>                  
+                  <th className='adminStudentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}
+                  style={{ display: column.show ? 'table-cell' : 'none' }} >                  
                     {column.render("Header")}
                    {column.Header!=="Actions" ? <span>
                       {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
@@ -149,11 +172,12 @@ export default function AllStudent() {
           <tbody {...getTableBodyProps()}>
             {page.map((row) => {
               prepareRow(row);
-              console.log(row)
+              console.log(row);
               return (
                 <tr className='adminStudentTableRow' {...row.getRowProps()}>
                   {row.cells.map((cell) => (
-                    <td className='adminStudentTableData' {...cell.getCellProps()}>
+                    <td className='adminStudentTableData' {...cell.getCellProps()}
+                    style={{ display: cell.column.show ? 'table-cell' : 'none' }} >
                       {cell.render("Cell")}
                     </td>
                   ))}
