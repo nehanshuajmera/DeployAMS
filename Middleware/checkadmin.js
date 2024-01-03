@@ -33,7 +33,7 @@ const isAdmin = async (req, res, next) => {
       return res.status(404).json({ message: "Teacher not found" });
     }
 
-    if (teacher.admin_role !== "Admin") {
+    if (teacher.admin_role !== "Admin" && teacher.admin_role !== "HOD") {
       return res.status(403).json({ message: "Forbidden: Access denied for non-admin teachers" });
     }
 
