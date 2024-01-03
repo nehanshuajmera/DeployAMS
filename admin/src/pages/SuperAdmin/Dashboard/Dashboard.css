@@ -80,7 +80,7 @@
     }
 
     .dashboardMainContainer {
-        height: 84vh;
+        height: 86vh;
         /* border: 1px solid red; */
         display: flex;
         flex-direction: column;
@@ -100,8 +100,10 @@
 
     .admin-479px div {
         display: flex;
-        margin: 1rem;
-        padding: 1rem;
+        align-items: center;
+        justify-content: center;
+        margin: 0.8rem;
+        padding: 0.8rem;
         border: 2px solid black;
         border-radius: 0.4rem;
         font-weight: 500;
@@ -129,7 +131,7 @@
     }
 
     .dashboardMainContainer {
-        height: 70vh;
+        height: 86vh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -138,10 +140,14 @@
 
     .adminMain {
         /* border: 1px solid green; */
-        display: grid;
-        grid-template-columns: repeat(1, auto);
-        max-width: 40vw;
+        /* display: grid;
+        grid-template-columns: repeat(1, auto); */
+        max-width: 96vw;
         text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
     }
 
     .adminMain div {
@@ -163,10 +169,14 @@
 
     .adminExtra {
         /* border: 1px solid green; */
-        display: grid;
-        grid-template-columns: repeat(1, auto);
-        max-width: 60vw;
+        /* display: grid;
+        grid-template-columns: repeat(1, auto); */
+        max-width: 90vw;
         text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
     }
 
     .adminExtra div {
@@ -178,6 +188,7 @@
         font-size: 1.2rem;
         cursor: pointer;
         text-align: center;
+        width: 60%;
     }
 
     .adminExtra div:hover {
