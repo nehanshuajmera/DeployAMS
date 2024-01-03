@@ -128,9 +128,9 @@ export default function AllSubject() {
                 {headerGroup.headers.map((column) => (
                   <th className='adminSubjectTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
-                    <span>
+                    {column.Header!=="Actions"  ? <span>
                       {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
-                    </span>
+                    </span>:null }
                   </th>
                 ))}
               </tr>
