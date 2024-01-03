@@ -28,6 +28,7 @@ export default function Header() {
           </button>
         </div>
       </div>
+      <hr className="styleHr" />
     </header>
   );
 }
