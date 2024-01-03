@@ -66,10 +66,10 @@ export default function AllStudent() {
       //   Header: "Faculty",
       //   accessor: "faculty",
       // },
-      // {
-      //   Header: "Programme",
-      //   accessor: "programme",
-      // },
+      {
+        Header: "Programme",
+        accessor: "programme",
+      },
       {
         Header: 'Actions',
         Cell: (tableInstance) => {
