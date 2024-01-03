@@ -15,7 +15,7 @@ const teacherSchema = new mongoose.Schema({
   designation: String,
   subjects: [
     {
-      subject_id: mongoose.Schema.Types.ObjectId,
+      subject_id: String,
       permission: {
         type: String,
         enum: ['read', 'write'],
