@@ -88,7 +88,7 @@
     font-weight: 500;
 }
 
-.tableActions{
+.tableActions {
     display: flex;
 }
 
@@ -105,46 +105,54 @@
 }
 
 /* Responsive CSS */
-@media (min-width: 320px) and (max-width: 480px){
-    .allStudentMain{
+@media (min-width: 320px) and (max-width: 480px) {
+    .allStudentMain {
         width: 100vw;
         margin: 0;
         padding: 0;
     }
-    .allStudentMain h2{
+
+    .allStudentMain h2 {
         font-size: 1.2rem;
     }
-    .allStudentTable{
-       width: 100vw;
+
+    .allStudentTable {
+        width: 100vw;
         padding: 0.1rem;
     }
-    .adminStudentTableHead{
+
+    .adminStudentTableHead {
         min-width: 8vw;
         padding: 0.5rem 0.2rem;
         /* border: 1px solid #000; */
         font-size: 0.8rem;
     }
-    .adminStudentTableData{
+
+    .adminStudentTableData {
         min-width: 8vw;
         padding: 0.2rem 0.2rem;
         font-size: 0.7rem;
         /* border: 1px solid #000; */
     }
-    .tablePageButtons{
+
+    .tablePageButtons {
         padding: 0.5rem;
         margin: 0.2rem;
     }
-    .nAndpButtons{
+
+    .nAndpButtons {
         margin: 0.2rem 1rem;
         padding: 0.5rem;
         font-size: 0.9rem;
     }
-    .pageNoDetails{
+
+    .pageNoDetails {
         margin: 0.2rem 1rem;
         padding: 0.2rem;
         font-size: 1rem;
     }
-    .tableActions{
+
+    .tableActions {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -153,49 +161,64 @@
         align-items: center;
         justify-content: center;
     }
-    .actionBtn{
+
+    .actionBtn {
         height: 0.4rem;
         width: 0.4rem;
     }
-    .actionBtn img{
+
+    .actionBtn img {
         height: 60%;
         width: 60%;
     }
 }
 
-@media (min-width: 480px) and (max-width: 599px){
-    .allStudentMain h2{
+@media (min-width: 480px) and (max-width: 599px) {
+    .allStudentMain {
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+    }
+
+    .allStudentMain h2 {
         font-size: 1.2rem;
     }
-    .allStudentTable{
+
+    .allStudentTable {
         max-width: 100vw;
         padding: 0.1rem;
     }
-    .adminStudentTableHead{
+
+    .adminStudentTableHead {
         min-width: 8vw;
         padding: 0.5rem 0.2rem;
         font-size: 0.8rem;
     }
-    .adminStudentTableData{
+
+    .adminStudentTableData {
         min-width: 8vw;
         padding: 0.5rem 0.2rem;
         font-size: 0.7rem;
     }
-    .tablePageButtons{
+
+    .tablePageButtons {
         padding: 0.5rem;
         margin: 0.2rem;
     }
-    .nAndpButtons{
+
+    .nAndpButtons {
         margin: 0.2rem 1rem;
         padding: 0.5rem;
         font-size: 0.9rem;
     }
-    .pageNoDetails{
+
+    .pageNoDetails {
         margin: 0.2rem 1rem;
         padding: 0.2rem;
         font-size: 1rem;
     }
-    .tableActions{
+
+    .tableActions {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -204,28 +227,14 @@
         align-items: center;
         justify-content: center;
     }
-    .actionBtn{
+
+    .actionBtn {
         height: 0.4rem;
         width: 0.4rem;
     }
-    .actionBtn img{
+
+    .actionBtn img {
         height: 60%;
         width: 60%;
     }
 }
-
-/* @media (min-width: 600px) and (max-width: 800px){
-
-}
-
-@media (min-width: 801px) and (max-width: 1024px){
-
-}
-
-@media (min-width: 1025px) and (max-width: 1280px){
-
-}
-
-@media (min-width: 1281px){
-
-} */

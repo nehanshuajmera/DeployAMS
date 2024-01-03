@@ -95,10 +95,10 @@ export default function AllStudent() {
         Header: 'Actions',
         Cell: (tableInstance) => {
           const { row: index } = tableInstance;
-          const {id:itemId} = index.original
+          const { id: itemId } = index.original
           return (
             <div className='tableActions'>
-              <button className='actionBtn' onClick={() => navigate(`/updatestudent/`+itemId,{state:{...index.original}})}>
+              <button className='actionBtn' onClick={() => navigate(`/updatestudent/` + itemId, { state: { ...index.original } })}>
                 <img src="/editBtn.png" alt="" />
               </button>
               <button className='actionBtn' onClick={() => handleDelete(itemId)}>
@@ -140,7 +140,7 @@ export default function AllStudent() {
 
   const { pageIndex, globalFilter } = state;
 
-  const handleDelete = async(itemId)=>{
+  const handleDelete = async (itemId) => {
     try {
       await dispatch(deleteStudentAsync(itemId))
     } catch (error) {
@@ -159,11 +159,12 @@ export default function AllStudent() {
               <tr className='adminStudentTableRow' {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
                   <th className='adminStudentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}
-                  style={{ display: column.show ? 'table-cell' : 'none' }} >                  
+                    style={{ display: column.show ? 'table-cell' : 'none' }}
+                  >
                     {column.render("Header")}
-                   {column.Header!=="Actions" ? <span>
+                    {column.Header !== "Actions" ? <span>
                       {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
-                    </span>:null }
+                    </span> : null}
                   </th>
                 ))}
               </tr>
@@ -177,7 +178,8 @@ export default function AllStudent() {
                 <tr className='adminStudentTableRow' {...row.getRowProps()}>
                   {row.cells.map((cell) => (
                     <td className='adminStudentTableData' {...cell.getCellProps()}
-                    style={{ display: cell.column.show ? 'table-cell' : 'none' }} >
+                      style={{ display: cell.column.show ? 'table-cell' : 'none' }}
+                    >
                       {cell.render("Cell")}
                     </td>
                   ))}

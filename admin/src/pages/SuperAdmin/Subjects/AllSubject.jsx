@@ -65,12 +65,12 @@ export default function AllSubject() {
           const { row: index } = tableInstance;
           const {_id:itemId} = index.original
           return (
-            <div>
+            <div className='tableActions'>
               <button className='actionBtn' onClick={() => navigate(`/updatesubject/`+itemId,{state:{...index.original}})}>
-                <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
+                <img src="/editBtn.png" alt="" />
               </button>
               <button className='actionBtn' onClick={() => handleDelete(itemId)}>
-                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
+                <img src="/deleteBtn.png" alt="" />
               </button>
             </div>
           )
