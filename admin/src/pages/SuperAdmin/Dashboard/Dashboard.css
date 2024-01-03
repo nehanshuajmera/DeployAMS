@@ -1,4 +1,4 @@
-.dashboardMainContainer {
+.AdminDashboard{
     background-image: url('https://img.freepik.com/free-vector/network-mesh-wire-digital-technology-background_1017-27428.jpg?w=1060&t=st=1700814703~exp=1700815303~hmac=6a310d20b0d0df6346466b04ff048f2ba29a16b8542deea3b3b8e2041e1219cd');
     background-repeat: no-repeat;
     background-size: cover;
@@ -6,6 +6,8 @@
     color: #000;
     width: 100vw;
     height: 85vh;
+}
+.dashboardMainContainer {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -31,9 +33,8 @@
 }
 
 .adminMain div:hover {
-    color: #fff;
-    background-color: grey;
-    opacity: 0.7;
+    color: #d2e9f9;
+    background-color: #030955;
 }
 
 .adminExtra {
@@ -55,25 +56,75 @@
 }
 
 .adminExtra div:hover {
-    color: #fff;
-    background-color: grey;
-    opacity: 0.7;
+    color: #d2e9f9;
+    background-color: #030955;
+}
+
+.styleHr {
+    border: 1px solid black;
 }
 
 /* Responsive Design CSS */
 @media (min-width: 320px) and (max-width: 479px) {
     .dashboardMainContainer {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+        background-image: url('https://img.freepik.com/free-vector/network-mesh-wire-digital-technology-background_1017-27428.jpg?w=1060&t=st=1700814703~exp=1700815303~hmac=6a310d20b0d0df6346466b04ff048f2ba29a16b8542deea3b3b8e2041e1219cd');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        color: #000;
+        width: 100vw;
+        height: 85vh;
         display: flex;
-        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
         flex-wrap: wrap;
     }
 
-    .adminContentContainer {
-        display: flex;
-        justify-content: center;
+    .adminMain {
+        /* border: 1px solid green; */
+        display: grid;
+        grid-template-columns: repeat(1, auto);
+        max-width: 48vw;
+        text-align: center;
+    }
 
+    .adminMain div {
+        margin: 1rem;
+        padding: 1rem;
+        border: 2px solid black;
+        border-radius: 0.4rem;
+        font-weight: 500;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    .adminMain div:hover {
+        color: #fff;
+        background-color: grey;
+        opacity: 0.7;
+    }
+
+    .adminExtra {
+        /* border: 1px solid green; */
+        max-width: 48vw;
+        display: grid;
+        grid-template-columns: repeat(1, auto);
+        text-align: center;
+    }
+
+    .adminExtra div {
+        margin: 1rem;
+        padding: 1rem;
+        border: 2px solid black;
+        border-radius: 0.4rem;
+        font-weight: 500;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    .adminExtra div:hover {
+        color: #fff;
+        background-color: #d2e9f9;
+        opacity: 0.7;
     }
 }
