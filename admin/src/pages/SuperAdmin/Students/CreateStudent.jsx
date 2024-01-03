@@ -1,12 +1,11 @@
-import {  useEffect, useState } from "react";
+import {   useState } from "react";
 import StudentForm from "../../../components/StudentForm";
 
 // import TopOfPage from "../../../components/TopOfPage";
 import { studentFieldVerify } from "../../../action/InputFieldVerification";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {createStudentasync} from '../../../redux-toolkit/slices/crudstudentslice'
-import { fetchdetailasync } from "../../../redux-toolkit/slices/fetchdetailslice";
 
 const data = {
   name: "",
@@ -22,6 +21,8 @@ const data = {
   section: "",
   batch: "",
   password: "",
+  class_name:'',
+  department:'',
   subjects: [
     // {
     //   name: "OS",

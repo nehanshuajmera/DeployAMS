@@ -8,32 +8,44 @@ const AskPermission = ({ sub_id }) => {
 const dispatch = useDispatch();
 const [lectureList,setlectureList] = useState([])
 
-  useEffect(()=>{
-    ;(async()=>{
-      try{
-
-         dispatch(userdetailasync());
-        if(userDetail.isErr){
-          setMsgType(TYPE.Err)
-          setMsg(userDetail.errMsg)
-        } 
-        // const studentState = useSelector(state=>state.crudstudent)
-        
-      }catch(error){
-        console.log(error);
+const userDetail = useSelector(state=>state.userdetail);
+useEffect(()=>{
+  const unsub=async()=>{
+    console.log("redl");
+    try{
+      
+      dispatch(userdetailasync());
+      
+      if(userDetail.isErr){
+        setMsgType(TYPE.Err)
+        setMsg(userDetail.errMsg)
       }
-    })();    
-  },[])
-  const userDetail = useSelector(state=>state.userdetail)
-  // console.log(userDetail)
+      // const studentState = useSelector(state=>state.crudstudent)
+      
+    }catch(error){
+      console.log(error);
+    }
+  }
   
-  // calculate total number of lecture on change of userDetail
-  useEffect(()=>{
-    console.log(userDetail)
+  unsub();
+},[])
+const check=()=>{
+  return userDetail.value
+
+}
+console.log(userDetail);
+// calculate total number of lecture on change of userDetail
+// useEffect(()=>{
+//   const temp = userDetail.details.subjects.find(subj=>subj.subject_id._id===sub_id).subject_id.lecture_dates
+//   setlectureList(temp)
+  
+//   },[check])
+  
+  //calculate total number of lecture on change of userDetail
+  const calulateTotal=()=>{
     const temp = userDetail.details.subjects.find(subj=>subj.subject_id._id===sub_id).subject_id.lecture_dates
     setlectureList(temp)
-  },[userDetail])
-
+  }
   // let lectureList = userDetail?.details?.subjects.find(subj=>subj.subject_id._id===sub_id).subject_id.lecture_dates
   // let lectureList1 = userDetail?.details.subjects.find(subj=>console.log(subj))
   console.log(lectureList)
@@ -83,7 +95,7 @@ const [lectureList,setlectureList] = useState([])
             value={data.date}
             onChange={(e) => changeHandler(e)}
           />
-          <select name="date" id="permission" value={data.date} onChange={(e) => changeHandler(e)}
+          <select name="date" id="permission" value={data.date} onClick={calulateTotal} onChange={(e) => changeHandler(e)}
 >
             <option value="">Date</option>
             {
