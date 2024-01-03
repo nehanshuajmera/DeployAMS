@@ -28,6 +28,7 @@ function AuthContextProvider(props) {
     axios.get("/api/teacher/details")
       .then((res) => { 
         setIsLogin(true)
+        // console.log(res.data.message)
         setuserdata(res.data.message);
        })
       .catch((err) => {

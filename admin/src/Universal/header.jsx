@@ -18,7 +18,7 @@ export default function Header() {
         </div>
         {/* Buttons */}
         <div className="bttnCllg">
-          {userdata?.admin_role === 'Admin' && (
+          {(userdata?.admin_role === 'Admin'||userdata?.admin_role === 'HOD') && (
             <button className="bttnCss bg-blue-500 hover:bg-blue-600 text-white rounded" onClick={() => navigate('/dashboard')} >
               Admin Dashboard
             </button>

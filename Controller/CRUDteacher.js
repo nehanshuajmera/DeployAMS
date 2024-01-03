@@ -15,21 +15,6 @@ const createteacher=async (req, res) => {
     try {
       const userId = req.user_id; // You should have this information in your authentication middleware
   
-      // Check if the user has admin privileges (admin_role is "Admin")
-  
-      if (req.user_role !== 'teacher') {
-        return res.status(403).json({ message: 'Forbidden: Access denied for non-teacher users' });
-      }
-  
-      const teacher = await Teacher.findById(userId);
-  
-      if (!teacher) {
-        return res.status(404).json({ message: "Teacher not found" });
-      }
-  
-      if (teacher.admin_role !== "Admin") {
-        return res.status(403).json({ message: "Forbidden: Access denied for non-admin teachers" });
-      }
   
       // Create a new teacher using the data from the request body
       const { teacher_id, name, email, faculty,department , phone_no, subjects, password } = req.body;

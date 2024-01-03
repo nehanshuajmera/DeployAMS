@@ -15,9 +15,9 @@ const MapStudentandSubject = () => {
   const [subjectNameFilter, setSubjectNameFilter] = useState('');
   const [branchFilter, setBranchFilter] = useState('');
 
-  useEffect(() => {
+  // useEffect(() => {
     // console.log(studentIds, subjectIds);
-  }, [studentIds, subjectIds]);
+  // }, [studentIds, subjectIds]);
 
   useEffect(() => {
     const fetchStudentsAndSubjects = async () => {
