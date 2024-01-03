@@ -136,10 +136,7 @@ export default function AllStudent() {
             {headerGroups.map((headerGroup) => (
               <tr className='adminStudentTableRow' {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                
-                  <th className='adminStudentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {console.log("column",column)}
-                  
+                  <th className='adminStudentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>                  
                     {column.render("Header")}
                    {column.Header!=="Actions" ? <span>
                       {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
