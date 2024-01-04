@@ -155,7 +155,7 @@ const all_students=async (req, res) => {
             branch: student.branch,
             section: student.section,
             batch: student.batch,
-            year: student.year,
+            year: 2024 - student.year,
             programme: student.programme,
             faculty: student.faculty,
             specialisation: student.specialisation,

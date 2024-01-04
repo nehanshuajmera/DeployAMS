@@ -60,6 +60,20 @@ export default function AllSubject() {
         accessor: "course_code",
       },
       {
+        Header: "Section",
+        accessor: "section",
+      }
+      ,
+      {
+        Header: "Batch",
+        accessor: "batch",
+      },
+      {
+        Header: "Class Name",
+        accessor: "class_name",
+      }
+      ,
+      {
         Header: 'Actions',
         Cell: (tableInstance) => {
           const { row: index } = tableInstance;
