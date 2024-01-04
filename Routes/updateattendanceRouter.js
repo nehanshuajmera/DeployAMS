@@ -228,7 +228,7 @@ router.post("/updateattendancebypermission/:id", isauthenticated, isTeacher, asy
             }
           } else {
             if (count !== 0) {
-              subjectAttendance.push({ date: new Date(date1), count, cause: '' });
+              subjectAttendance.push({ date: new Date(date1), count, cause: date2.toDateString() +" Past Attendance" });
             }
           }
   

@@ -172,6 +172,13 @@ router.post('/updateattendance', isauthenticated, isTeacher, async (req, res) =>
 
     // Check if the subject has a class scheduled for today
     const today = new Date();
+    // console.log(today)
+    // attendance will not mark after    6:00 am
+    if (today.getHours() < 6) {
+      return res.status(403).json({ message: "Attendance cannot be marked after 11:55 pm to 6:00 am" });
+    } 
+
+    
     let isclasstoday = await Subject.findById(subjectId);
     // console.log(isclasstoday.lecture_dates)
     isclasstoday = isclasstoday?.lecture_dates?.find(d => d.date.getFullYear() === today.getFullYear() && d.date.getMonth() === today.getMonth() && d.date.getDate() === today.getDate());
