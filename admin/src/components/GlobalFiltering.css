@@ -22,3 +22,28 @@
     font-size: 1rem;
     font-weight: 500;
 }
+
+@media (min-width: 320px) and (max-width: 480px){
+    .adminGlobalSearch{
+        /* border: 1px solid red; */
+        width: 80vw;
+    }
+
+    .adminGlobalSearch input{
+        width: 70%;
+        padding: 0.2rem;
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 599px){
+    .adminGlobalSearch{
+        /* border: 1px solid blue; */
+        width: 80vw;
+    }
+    .adminGlobalSearch input{
+        width: 70%;
+        padding: 0.2rem;
+        font-size: 1rem;
+    }
+}
