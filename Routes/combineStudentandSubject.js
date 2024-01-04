@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Student = require("../Model/studentSchema");
+const Teacher = require("../Model/teacherSchema");
+const Subject = require("../Model/subjectSchema");  
 const isAdmin = require("../Middleware/checkadmin");
 
 // create a api to combine subject and students by branch,section, batch

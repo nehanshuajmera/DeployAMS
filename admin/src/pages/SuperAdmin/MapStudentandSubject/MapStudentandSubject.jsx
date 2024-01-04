@@ -186,7 +186,7 @@ const MapStudentandSubject = () => {
                 className="mr-2"
               />
               <span className="text-sm">
-                {subject.course_code} - {subject.subject_name} - {subject.branch}
+                {subject.course_code} - {subject.subject_name} - {subject.branch} - {subject.section} - {subject.batch}
               </span>
             </div>
           ))}

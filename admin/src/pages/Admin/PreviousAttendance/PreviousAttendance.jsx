@@ -56,7 +56,7 @@ const PreviousAttendance = () => {
                 dataofstudent.subject.lecture_dates.map((dates) => (
                   <th key={dates._id} className="py-2 px-4 border">
                      {formattedAttendance.includes(convertDate(dates.date)) ? (
-                              <td className='dataForStudents bg-green-500 '> present</td>
+                              <td className='dataForStudents bg-green-500 '> present </td>
                             ) : (
                               <td className='dataForStudents bg-red-500 ' > Absent</td>
                             )

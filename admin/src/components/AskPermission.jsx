@@ -33,7 +33,7 @@ const check=()=>{
   return userDetail.value
 
 }
-console.log(userDetail);
+// console.log(userDetail);
 // calculate total number of lecture on change of userDetail
 // useEffect(()=>{
 //   const temp = userDetail.details.subjects.find(subj=>subj.subject_id._id===sub_id).subject_id.lecture_dates
@@ -87,21 +87,14 @@ console.log(userDetail);
       <div className="askForPermission">
         <h2>Ask For Permission</h2>
         <div className="askForPermissionText">
-          <input
-            type="date"
-            className="bg-dimWhite"
-            name="date"
-            id="permission"
-            value={data.date}
-            onChange={(e) => changeHandler(e)}
-          />
-          <select name="date" id="permission" value={data.date} onClick={calulateTotal} onChange={(e) => changeHandler(e)}
->
+          
+          <select name="date" id="permission" value={data.date} onClick={calulateTotal} onChange={(e) => changeHandler(e)}>
+            
             <option value="">Date</option>
             {
               lectureList?.map(lecture=>{
                 return(
-                  <option key={lecture.date} value={convertDate(lecture.date)}>{convertDate(lecture.date)}</option>
+                  <option key={lecture.date} value={lecture.date}>{convertDate(lecture.date)}</option>
                 )
               })
             }

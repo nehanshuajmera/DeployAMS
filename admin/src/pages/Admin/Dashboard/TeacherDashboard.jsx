@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import './Dashboard.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom"
 import { logoutAsync } from '../../../redux-toolkit/slices/loginslice';
 import { userdetailasync } from '../../../redux-toolkit/slices/userdetailslice';
 import { TYPE, useMsgErr } from '../../../context/MsgAndErrContext';
-
+import  AuthContext  from '../../../context/AuthContext';
 
 export default function TeacherDashboard() {
   const { setMsgType, setMsg } = useMsgErr()
+  const { logout ,userdata } = useContext(AuthContext);
+  // console.log(userdata)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -56,12 +58,22 @@ export default function TeacherDashboard() {
     <div className='teacherDashboard'>
       <hr className="styleHr" />
       <div className="teacherContentContainer">
+        <div className="teacherHeader m-2 ">
+
+          <h1>
+
+          Teacher Id : {userdata?.teacher_id}
+          </h1>
+          <h1>
+          Name : {userdata?.name}
+          </h1>
+          </div>
         <div className="teacherMain">
           {
             subjects &&
             subjects.map(subject => {
               return (
-                <div key={subject.subject_id._id} onClick={() => gotoSubjectAttendance(subject.subject_id._id)}>{subject.subject_id.course_code} - {subject.subject_id.branch} - {subject.subject_id.subject_name}</div>
+                <div key={subject.subject_id._id} onClick={() => gotoSubjectAttendance(subject.subject_id._id)}>{subject.subject_id.course_code} - {subject.subject_id.branch} - {subject.subject_id.subject_name} - {subject.subject_id.section} - {subject.subject_id.batch} </div>
               )
             })
           }

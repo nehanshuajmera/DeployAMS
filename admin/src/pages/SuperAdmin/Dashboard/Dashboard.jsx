@@ -31,7 +31,7 @@ export default function Dashboard() {
           <div onClick={() => navigate("/mapstudentandsubject")}>Map Student & Subject</div>
           <div onClick={() => navigate("/alert")}>Alert & Notice</div>
           <div onClick={() => navigate("/mapteacherandsubject")}>Map Teacher & Subject</div>
-          <div onClick={() => navigate("/dataupload")}>XLSX Data Upload</div>
+          {userdata.admin_role==="Admin"?<div onClick={() => navigate("/dataupload")}>XLSX Data Upload</div>:null}
         </div>
       </div>
     </div>
