@@ -58,6 +58,16 @@ const UploadBulkData = () => {
     }
   };
 
+  const recalculateattendance = async () => {
+    try {
+      const response = await axios.get('/api/admin/recalaculatetodaysattendance');
+
+      setMessage('Attendance Calculated Successfully.');
+    } catch (error) {
+      setMessage(error.response?.data?.msg || 'An error occurred.');
+    }
+  }
+
   return (
     <div className="container mx-auto p-8 max-w-screen-md">
       {/* File Upload for Adding Students */}
@@ -121,6 +131,20 @@ const UploadBulkData = () => {
           Generate Attendance Report
         </button>
       </div>
+
+
+      {/* Recalculate Attendance */}
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold mb-2">Recalculate Attendance</h2>
+        <button
+          onClick={recalculateattendance}
+          className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
+        >
+          Recalculate Attendance
+        </button>
+      </div>
+
+
 
       {/* Display success or error message */}
       {message && <p className="text-red-600">{message}</p>}
