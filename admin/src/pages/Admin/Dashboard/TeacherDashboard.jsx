@@ -36,7 +36,7 @@ export default function TeacherDashboard() {
   let subjects = userDetail?.details?.subjects
   useEffect(() => {
     subjects = userDetail.details?.subjects
-    console.log(subjects)
+    // console.log(subjects)
   }, [userDetail.details])
 
 
@@ -77,8 +77,8 @@ export default function TeacherDashboard() {
             }
           </div>
           <div className="teacherExtra">
-            <div onClick={() => navigate("/arangementclass")}>Arrangement Class</div>
-            <div onClick={() => navigate("/substituteteacher")}>Notify Substitute Teacher</div>
+            {/* <div onClick={() => navigate("/arangementclass")}>Arrangement Class</div> */}
+            {userdata.admin_role==="AcademicHead"||userdata.admin_role==="Admin" ?<div onClick={() => navigate("/academichead")}>Attendance Report</div>:null}
             <div onClick={() => navigate("/pastattendancerequest")}>Past Attendance Request</div>
           </div>
         </div>

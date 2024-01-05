@@ -59,7 +59,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.name}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
         {/* password field */}
@@ -79,10 +79,10 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.password}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
-        
+
       </div>
       <div className="flex justify-center items-center flex-col md:flex-row gap-5 flex-1">
         {/* email field */}
@@ -102,7 +102,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.email}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
         {/* phone_no field */}
@@ -122,10 +122,10 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.phone_no}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
-        
+
       </div>
 
       <div className="flex justify-center items-center flex-col md:flex-row gap-5 flex-1">
@@ -146,7 +146,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.year}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
         {/* branch field */}
@@ -166,7 +166,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.branch}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
       </div>
@@ -189,7 +189,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.section}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
         {/* Batch field */}
@@ -209,7 +209,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.batch}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
 
           </div>
         </div>
@@ -233,7 +233,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.programme}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
         {/* faculty field */}
@@ -253,7 +253,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.faculty}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
 
           </div>
         </div>
@@ -276,7 +276,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.specialisation}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
         {/* year field */}
@@ -296,14 +296,14 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.year}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
 
           </div>
         </div>
       </div>
       <div className="flex justify-center items-center flex-col md:flex-row gap-5 flex-1">
         {/* department field */}
-        <div className="relative w-full grid grid-cols-3  flex-1">
+        <div className="relative w-full grid grid-cols-3 flex-1">
           <label
             htmlFor="department"
             className={`px-3 py-2 text-secondary text-xl col-span-1 `}
@@ -311,15 +311,19 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
             Department
           </label>
           <div className="relative col-span-2">
-            <input
-              type="text"
-              name="department"
+            <select
               id="department"
-              className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/department focus:border-primary focus:border-[1px] "
+              name="department"
+              className="inputBox max-w-full outline-none bg-dimGray border-secondary peer/department focus:border-primary focus:border-[1px]"
               value={student.department}
               onChange={(e) => ChangeHandler(e)}
-            />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            >
+              <option value="" disabled>Select Department</option>
+              <option value="Computer Science Engineering">Computer Science Engineering</option>
+              {/* <option value="IT">IT</option> */}
+              {/* Add more departments as needed */}
+            </select>
+            <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
         {/* class_name field */}
@@ -339,7 +343,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.class_name}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
 
           </div>
         </div>
@@ -363,7 +367,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.enrollment_no}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
         {/* scholar field */}
@@ -383,7 +387,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={student.scholar_no}
               onChange={(e) => ChangeHandler(e)}
             />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            <span className="ml-2 text-lg text-primary">*</span>
 
           </div>
         </div>

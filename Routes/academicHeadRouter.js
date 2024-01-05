@@ -12,7 +12,7 @@ router.get("/allstudents",isauthenticated,  async (req, res) => {
         if (!teacher) {
             return res.status(404).json({ message: "Teacher not found" });
         }
-        if (teacher.admin_role !== "AcademicHead") {
+        if (teacher.admin_role !== "AcademicHead" && teacher.admin_role !== "Admin") {
             return res.status(403).json({ message: "Forbidden: Access denied for non-academic head teachers" });
         }
 

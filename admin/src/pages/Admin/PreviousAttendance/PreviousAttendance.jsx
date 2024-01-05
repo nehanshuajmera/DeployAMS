@@ -12,11 +12,16 @@ const PreviousAttendance = () => {
     return dateObj.toLocaleDateString('en-US', options);
   };
 
+  
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`/api/teacher/studentsattendance/${sub_id}`);
+        console.log(response.data);
         setDataOfStudent(response.data);
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -66,9 +71,9 @@ const PreviousAttendance = () => {
                             }
                   </th>
                 ))}
-                <td className='py-2 px-4 border'>{selectedsubject.attendance.filter((dates)=>formattedAttendance.includes(convertDate(dates.date))).length}</td>
-                {/* <td className='py-2 px-4 border'>{selectedsubject.subject_id.lecture_dates.filter((dates)=>formattedAttendance.includes(convertDate(dates.date))).length}</td> */}
-                {/* <td className='py-2 px-4 border'>{selectedsubject.attendance.filter((dates)=>formattedAttendance.includes(convertDate(dates.date))).length/selectedsubject.lecture_dates.length*100}%</td> */}
+                <td className='py-2 px-4 border'>{selectedsubject.attendance.reduce((result,ele)=>(result+=ele.count),0)}</td>
+                <td className='py-2 px-4 border'>{dataofstudent?.subject?.lecture_dates?.reduce((result,ele)=>(result+=ele.count),0)}</td>
+                <td className='py-2 px-4 border'>{selectedsubject.attendance.reduce((result,ele)=>(result+=ele.count),0)/dataofstudent?.subject?.lecture_dates?.reduce((result,ele)=>(result+=ele.count),0)*100} %</td>
                 </tr>
               );
             })}
