@@ -13,6 +13,8 @@ router.post("/asktoupdate/:id",isauthenticated,isTeacher ,async(req,res)=>{
         const teacher = await Teacher.findById(req.user_id);
         const subject = await Subject.findById(req.params.id);
         
+        // console.log(req.body)
+
         if(!teacher){
             return res.status(401).json({message:"Invalid Teacher ID"});
         }
@@ -23,7 +25,13 @@ router.post("/asktoupdate/:id",isauthenticated,isTeacher ,async(req,res)=>{
         if(!date){
             return res.status(401).json({message:"Date not provided"});
         }
-        const date1 = new Date(date);
+        var date1 = new Date(date);
+        // increase 5:30
+        date1.setHours(date1.getHours() + 5);
+        date1.setMinutes(date1.getMinutes() + 30);
+
+        // console.log(date1)
+
         const date2 = new Date();
         if(date1.getTime() > date2.getTime()){
             return res.status(401).json({message:"You cannot update attendance of future"});
@@ -50,7 +58,7 @@ router.get("/viewmyrequest",isauthenticated,isTeacher,async(req,res)=>{
     try{
         const requests = await scheduleRequest
   .find({ teacher: req.user_id, typeOfRequest: "update" })
-  .populate({ path: "subject", model: Subject, select: "subject_name" })
+  .populate({ path: "subject", model: Subject, select:["subject_name","course_code","section","branch","batch","class_name"] })
 //   .sort({ createdAt: -1 });
 
 
@@ -83,7 +91,7 @@ router.get("/viewmyrequestdetail/:id",isauthenticated,isTeacher,async(req,res)=>
 //  create a api for admin to see all the request of teacher to update attendance
 router.get("/viewallrequest",isAdmin,async(req,res)=>{
     try{
-        const requests = await scheduleRequest.find({typeOfRequest:"update"}).populate({path:"teacher",model:Teacher,select:"name"}).populate({path:"subject",model:Subject,select:"subject_name"}).sort({createdAt:-1});
+        const requests = await scheduleRequest.find({typeOfRequest:"update"}).populate({path:"teacher",model:Teacher,select:"name"}).populate({path:"subject",model:Subject,select:["subject_name","course_code","section","branch","batch","class_name"]}).sort({createdAt:-1});
         return res.status(200).json({requests});
     }
     catch(error){
@@ -136,6 +144,12 @@ router.post("/updateattendancebypermission/:id", isauthenticated, isTeacher, asy
       if(!request){
           return res.status(401).json({message:"Invalid Request ID"});
       }
+      const date2 = new Date();
+
+    
+      // if(request.updated_at - date2 > 0){
+      //   return res.status(401).json({ message: "Request already processed" });
+      // }
 
       const subject = await Subject.findById(request[0].subject);
  
@@ -156,13 +170,15 @@ router.post("/updateattendancebypermission/:id", isauthenticated, isTeacher, asy
       const date = request[0].proposedDateTime;
       // console.log(date);  
       const date1 = new Date(date);
-      const date2 = new Date();
+      
 
       if (date1.getTime() > date2.getTime()) {
         return res.status(401).json({ message: "You cannot update attendance of the future" });
       }
- 
+
+      // console.log(date1)
       // console.log(req.body);
+
       const studentIDs = req.body.studentIDs;
       // console.log(studentIDs);
       if (!studentIDs) {
@@ -202,7 +218,7 @@ router.post("/updateattendancebypermission/:id", isauthenticated, isTeacher, asy
         if (subjectIndex !== -1) {
           const subjectAttendance = student.subjects[subjectIndex].attendance;
   
-          const attendanceIndex = subjectAttendance.findIndex(att => att.date.getFullYear() === date2.getFullYear() && att.date.getMonth() === date2.getMonth() && att.date.getDate() === date2.getDate());
+          const attendanceIndex = subjectAttendance.findIndex(att => att.date.getFullYear() === date1.getFullYear() && att.date.getMonth() === date1.getMonth() && att.date.getDate() === date1.getDate());
   
           if (attendanceIndex !== -1) {
             subjectAttendance[attendanceIndex].count = count;
@@ -212,7 +228,7 @@ router.post("/updateattendancebypermission/:id", isauthenticated, isTeacher, asy
             }
           } else {
             if (count !== 0) {
-              subjectAttendance.push({ date: new Date(date2), count, cause: '' });
+              subjectAttendance.push({ date: new Date(date1), count, cause: date2.toDateString() +" Past Attendance" });
             }
           }
   

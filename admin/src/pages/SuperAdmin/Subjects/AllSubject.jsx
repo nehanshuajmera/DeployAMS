@@ -60,17 +60,31 @@ export default function AllSubject() {
         accessor: "course_code",
       },
       {
+        Header: "Section",
+        accessor: "section",
+      }
+      ,
+      {
+        Header: "Batch",
+        accessor: "batch",
+      },
+      {
+        Header: "Class Name",
+        accessor: "class_name",
+      }
+      ,
+      {
         Header: 'Actions',
         Cell: (tableInstance) => {
           const { row: index } = tableInstance;
           const {_id:itemId} = index.original
           return (
-            <div>
+            <div className='tableActions'>
               <button className='actionBtn' onClick={() => navigate(`/updatesubject/`+itemId,{state:{...index.original}})}>
-                <img src="https://cdn-icons-png.flaticon.com/512/11608/11608686.png" alt="" />
+                <img src="/editBtn.png" alt="" />
               </button>
               <button className='actionBtn' onClick={() => handleDelete(itemId)}>
-                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" alt="" />
+                <img src="/deleteBtn.png" alt="" />
               </button>
             </div>
           )
@@ -128,9 +142,9 @@ export default function AllSubject() {
                 {headerGroup.headers.map((column) => (
                   <th className='adminSubjectTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
-                    <span>
+                    {column.Header!=="Actions"  ? <span>
                       {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
-                    </span>
+                    </span>:null }
                   </th>
                 ))}
               </tr>

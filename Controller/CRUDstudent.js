@@ -7,7 +7,7 @@ const Student = require("../Model/studentSchema");
 const create_student=async (req, res) => {
     try {
       // Create a new student using the data from the request body
-      const { name, enrollment_no, programme,faculty, specialisation, year, scholar_no, email, phone_no, branch, section, batch, password, subjects } = req.body;
+      const { name, enrollment_no, programme,faculty, specialisation, year, scholar_no, email, phone_no, branch, section, batch, password, subjects, department,class_name } = req.body;
 
       if (!name || !enrollment_no || !programme || !faculty || !specialisation || !year || !scholar_no || !email || !phone_no || !branch || !section || !batch || !password || !subjects) {
         return res.status(400).json({ message: "All fields are required" });
@@ -21,6 +21,7 @@ const create_student=async (req, res) => {
         faculty,
         specialisation,
         year,
+        department,class_name,
         email,
         phone_no,
         branch,
@@ -101,25 +102,11 @@ const all_students=async (req, res) => {
     try {
       const userId = req.user_id; // You should have this information in your authentication middleware
     
-        if (req.user_role !== 'teacher') {
-          return res.status(403).json({ message: 'Forbidden: Access denied for non-teacher users' });
-        }
-    
-        // Check if the user has admin privileges (admin_role is "Admin")
-        const teacher = await Teacher.findById(userId);
-    
-        if (!teacher) {
-          return res.status(404).json({ message: "Teacher not found" });
-        }
-    
-        if (teacher.admin_role !== "Admin") {
-          return res.status(403).json({ message: "Forbidden: Access denied for non-admin teachers" });
-        }
       // Find all students
       const students = await Student.find();
   
       if (!students || students.length === 0) {
-        return res.status(404).json({ message: 'No students found' });
+        return res.status(404).json({ message:[], error: 'No students found' });
       }
   
       // Map students and get their subjects and teacher details
@@ -168,7 +155,7 @@ const all_students=async (req, res) => {
             branch: student.branch,
             section: student.section,
             batch: student.batch,
-            year: student.year,
+            year: 2024 - student.year,
             programme: student.programme,
             faculty: student.faculty,
             specialisation: student.specialisation,

@@ -36,7 +36,7 @@
 }
 
 .adminSubjectTableRow:hover {
-    background-color: #E2ECEB;
+    background-color: #d2e9f9;
 }
 
 .adminSubjectTableHead {
@@ -45,7 +45,7 @@
     padding: 1rem;
     text-align: center;
     font-size: 1rem;
-    background-color: #000;
+    background-color: #030955;
     color: #fff;
     border: hidden;
 }
@@ -68,7 +68,7 @@
     align-items: center;
 }
 
-.nAndpButtons{
+/* .nAndpButtons{
     margin: 0.2rem 3rem;
     padding: 0.5rem;
     text-align: center;
@@ -77,9 +77,9 @@
     border-radius: 0.3rem;
     font-size: 1rem;
     font-weight: 500;
-}
+} */
 
-.pageNoDetails{
+/* .pageNoDetails{
     margin: 0.2rem 2rem;
     padding: 0.5rem;
     text-align: center;
@@ -88,13 +88,11 @@
 
 .actionBtn{
     margin: 0 0.5rem;
-    /* padding: 0.2rem; */
     height: 1.5rem;
     width: 1.5rem;
-    /* display: flex; */
 }
 
 .actionBtn img{
     height: 100%;
     width: 100%;
-}
+} */

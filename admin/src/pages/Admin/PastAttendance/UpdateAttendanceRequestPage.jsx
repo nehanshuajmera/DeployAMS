@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom"
 
+
 const ViewMyRequestsPage = () => {
   const [requests, setRequests] = useState([]);
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const ViewMyRequestsPage = () => {
     const fetchRequests = async () => {
       try {
         const response = await axios.get('/api/updatepastattendance/viewmyrequest');
+        console.log(response.data.requests);
         setRequests(response.data.requests);
       } catch (error) {
         console.error('Error fetching requests:', error);
@@ -30,6 +32,10 @@ const ViewMyRequestsPage = () => {
         <thead>
           <tr>
             <th className="py-2 px-4 border">Subject</th>
+            <th className="py-2 px-4 border">Course Code</th>
+            <th className="py-2 px-4 border">Section</th>
+            <th className="py-2 px-4 border">Batch</th>
+            <th className="py-2 px-4 border">Class Name</th>
             <th className="py-2 px-4 border">Proposed Date</th>
             <th className="py-2 px-4 border">Status</th>
             <th className="py-2 px-4 border">Action</th>
@@ -39,14 +45,14 @@ const ViewMyRequestsPage = () => {
           {requests.map((request) => (
             <tr key={request._id}>
               <td className="py-2 px-4 border">{request.subject.subject_name}</td>
+              <td className="py-2 px-4 border">{request.subject.course_code}</td>
+              <td className="py-2 px-4 border">{request.subject.section}</td>
+              <td className="py-2 px-4 border">{request.subject.batch}</td>
+              <td className="py-2 px-4 border">{request.subject.class_name}</td>
               <td className="py-2 px-4 border">  {new Date(request.proposedDateTime).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-    hour12: true,
   })}
 </td>
               <td className="py-2 px-4 border">{request.status}</td>

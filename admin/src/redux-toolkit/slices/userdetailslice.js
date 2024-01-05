@@ -10,7 +10,7 @@ const initialState={
 
 export const userdetailasync = createAsyncThunk('userDetail/detailasync', async (payload, { rejectWithValue }) => {
     try {
-        
+                
             const response = await axios.get('/api/teacher/details');
             const msg = response.data.message;
             
@@ -36,8 +36,10 @@ export const userdetailslice = createSlice(
     
                     state.value = true;
                     state.details=action.payload;
+                    console.log('full');
                 })
                 .addCase(userdetailasync.rejected, (state, action) => {
+                    
                     state.isErr = true;
                     state.errMsg =  action.payload
                 })

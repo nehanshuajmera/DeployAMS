@@ -1,62 +1,66 @@
+// MapTeacherandSubject.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const MapStudentandSubject = () => {
-  const [studentIds, setStudentIds] = useState([]);
+const MapTeacherandSubject = () => {
+  const [teacherId, setTeacherId] = useState("");
   const [subjectIds, setSubjectIds] = useState([]);
   const [message, setMessage] = useState('');
-  const [students, setStudents] = useState([]);
+  const [teachers, setTeachers] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [filteredStudents, setFilteredStudents] = useState([]);
+  const [filteredTeachers, setFilteredTeachers] = useState([]);
   const [filteredSubjects, setFilteredSubjects] = useState([]);
-  const [studentFilter, setStudentFilter] = useState('');
+  const [teacherFilter, setTeacherFilter] = useState('');
   const [subjectFilter, setSubjectFilter] = useState('');
   const [courseCodeFilter, setCourseCodeFilter] = useState('');
   const [subjectNameFilter, setSubjectNameFilter] = useState('');
   const [branchFilter, setBranchFilter] = useState('');
-
-  // useEffect(() => {
-    // console.log(studentIds, subjectIds);
-  // }, [studentIds, subjectIds]);
+  const [sectionFilter, setSectionFilter] = useState('');
+  const [batchFilter, setBatchFilter] = useState('');
 
   useEffect(() => {
-    const fetchStudentsAndSubjects = async () => {
+    console.log(teacherId, subjectIds);
+  }, [teacherId, subjectIds]);
+
+  useEffect(() => {
+    const fetchTeachersAndSubjects = async () => {
       try {
-        const studentsResponse = await axios.get('/api/admin/allstudents');
+        const teachersResponse = await axios.get('/api/admin/allteachers');
         const subjectsResponse = await axios.get('/api/admin/allsubjects');
-        setStudents(studentsResponse.data.message);
-        setFilteredStudents(studentsResponse.data.message);
+        setTeachers(teachersResponse.data.message);
+        setFilteredTeachers(teachersResponse.data.message);
         setSubjects(subjectsResponse.data.message);
         setFilteredSubjects(subjectsResponse.data.message);
       } catch (error) {
-        console.error('Error fetching students and subjects:', error);
+        console.error('Error fetching teachers and subjects:', error);
       }
     };
 
-    fetchStudentsAndSubjects();
+    fetchTeachersAndSubjects();
   }, []);
 
-  const combineSubjectsAndStudents = async () => {
+  const combineSubjectsAndTeachers = async () => {
     try {
-      // console.log(studentIds, subjectIds);
-      const response = await axios.post('/api/mapstudentsubject/combinesubjectandstudents', {
-        studentIds,
+      const response = await axios.post('/api/mapstudentsubject/combinesubjectandteacher', {
+        teacherId: teacherId,
         subjectIds,
       });
       setMessage(response.data.message);
     } catch (error) {
-      console.error('Error combining subjects and students:', error);
-      setMessage('Error combining subjects and students.');
+      console.error('Error combining subjects and teachers:', error);
+      setMessage('Error combining subjects and teachers.');
     }
   };
 
-  const handleStudentFilterChange = (e) => {
+  const handleTeacherFilterChange = (e) => {
     const filterValue = e.target.value.toLowerCase();
-    setStudentFilter(filterValue);
-    const filtered = students.filter(
-      (student) => student.name.toLowerCase().includes(filterValue) || student.enrollment_no.toLowerCase().includes(filterValue)
+    setTeacherFilter(filterValue);
+    const filtered = teachers.filter(
+      (teacher) =>
+        teacher.name.toLowerCase().includes(filterValue) ||
+        teacher.enrollment_no.toLowerCase().includes(filterValue)
     );
-    setFilteredStudents(filtered);
+    setFilteredTeachers(filtered);
   };
 
   const handleSubjectFilterChange = (e) => {
@@ -66,7 +70,9 @@ const MapStudentandSubject = () => {
       (subject) =>
         subject.course_code.toLowerCase().includes(filterValue) ||
         subject.subject_name.toLowerCase().includes(filterValue) ||
-        subject.branch.toLowerCase().includes(filterValue)
+        subject.branch.toLowerCase().includes(filterValue) ||
+        subject.section.toLowerCase().includes(filterValue) ||
+        subject.batch.toLowerCase().includes(filterValue)
     );
     setFilteredSubjects(filtered);
   };
@@ -92,12 +98,22 @@ const MapStudentandSubject = () => {
     setFilteredSubjects(filtered);
   };
 
-  const handleStudentCheckboxChange = (studentId) => {
-    setStudentIds((prevStudentIds) =>
-      prevStudentIds.includes(studentId)
-        ? prevStudentIds.filter((id) => id !== studentId)
-        : [...prevStudentIds, studentId]
-    );
+  const handleSectionFilterChange = (e) => {
+    const filterValue = e.target.value.toLowerCase();
+    setSectionFilter(filterValue);
+    const filtered = subjects.filter((subject) => subject.section.toLowerCase().includes(filterValue));
+    setFilteredSubjects(filtered);
+  };
+
+  const handleBatchFilterChange = (e) => {
+    const filterValue = e.target.value.toLowerCase();
+    setBatchFilter(filterValue);
+    const filtered = subjects.filter((subject) => subject.batch.toLowerCase().includes(filterValue));
+    setFilteredSubjects(filtered);
+  };
+
+  const handleTeacherCheckboxChange = (teacherId) => {
+    setTeacherId(teacherId);
   };
 
   const handleSubjectCheckboxChange = (subjectId) => {
@@ -110,33 +126,33 @@ const MapStudentandSubject = () => {
 
   return (
     <div className="container mx-auto mt-10 m-4 flex justify-center items-center flex-col">
-      <h1 className="text-3xl font-bold mb-4 text-blue-700">Combine Subjects and Students</h1>
+      <h1 className="text-3xl font-bold mb-4 text-blue-700">Combine Subjects and Teachers</h1>
 
       <div className="flex gap-8 w-full">
         <div className=" w-1/2 bg-gray-100 p-4 rounded-lg">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Search Students:</label>
+          <label className="block text-gray-700 text-sm font-bold mb-2">Search Teachers:</label>
           <input
             type="text"
             className="border p-2 w-full mb-4"
-            value={studentFilter}
-            onChange={handleStudentFilterChange}
+            value={teacherFilter}
+            onChange={handleTeacherFilterChange}
             placeholder="Search by name or enrollment number"
           />
           <div className="flex flex-col gap-4 overflow-y-auto max-h-96">
-          {filteredStudents.map((student) => (
-            <div key={student.id} className="flex items-center mb-2">
-              <input
-                type="checkbox"
-                value={student.id}
-                checked={studentIds.includes(student.id)}
-                onChange={() => handleStudentCheckboxChange(student.id)}
-                className="mr-2"
-              />
-              <span className="text-sm">
-                {student.enrollment_no} - {student.name}
-              </span>
-            </div>
-          ))}
+            {filteredTeachers.map((teacher) => (
+              <div key={teacher._id} className="flex items-center mb-2">
+                <input
+                  type="checkbox"
+                  value={teacher._id}
+                  checked={teacherId === teacher._id}
+                  onChange={() => handleTeacherCheckboxChange(teacher._id)}
+                  className="mr-2"
+                />
+                <span className="text-sm">
+                  {teacher.teacher_id} - {teacher.name}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -174,29 +190,45 @@ const MapStudentandSubject = () => {
                 </option>
               ))}
             </select>
+            <select className="border p-2" onChange={handleSectionFilterChange}>
+              <option value="">Filter by Section</option>
+              {Array.from(new Set(subjects.map((subject) => subject.section))).map((section) => (
+                <option key={section} value={section}>
+                  {section}
+                </option>
+              ))}
+            </select>
+            <select className="border p-2" onChange={handleBatchFilterChange}>
+              <option value="">Filter by Batch</option>
+              {Array.from(new Set(subjects.map((subject) => subject.batch))).map((batch) => (
+                <option key={batch} value={batch}>
+                  {batch}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex mt-4 flex-col gap-4 overflow-y-auto max-h-96">
-          {filteredSubjects.map((subject) => (
-            <div key={subject._id} className="flex items-center mb-2">
-              <input
-                type="checkbox"
-                value={subject._id}
-                checked={subjectIds.includes(subject._id)}
-                onChange={() => handleSubjectCheckboxChange(subject._id)}
-                className="mr-2"
-              />
-              <span className="text-sm">
-                {subject.course_code} - {subject.subject_name} - {subject.branch} - {subject.section} - {subject.batch}
-              </span>
-            </div>
-          ))}
+            {filteredSubjects.map((subject) => (
+              <div key={subject._id} className="flex items-center mb-2">
+                <input
+                  type="checkbox"
+                  value={subject._id}
+                  checked={subjectIds.includes(subject._id)}
+                  onChange={() => handleSubjectCheckboxChange(subject._id)}
+                  className="mr-2"
+                />
+                <span className="text-sm">
+                  {subject.course_code} - {subject.subject_name} - {subject.branch} - {subject.section} - {subject.batch}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
       <button
         className="bg-blue-500 text-white p-2 rounded mt-6"
-        onClick={combineSubjectsAndStudents}
+        onClick={combineSubjectsAndTeachers}
       >
         Combine
       </button>
@@ -210,4 +242,4 @@ const MapStudentandSubject = () => {
   );
 };
 
-export default MapStudentandSubject;
+export default MapTeacherandSubject;

@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Student = require("../Model/studentSchema");
+const Teacher = require("../Model/teacherSchema");
+const Subject = require("../Model/subjectSchema");  
 const isAdmin = require("../Middleware/checkadmin");
 
 // create a api to combine subject and students by branch,section, batch
@@ -35,6 +37,44 @@ router.post("/combinesubjectandstudents",isAdmin, async (req, res) => {
 
         return res.status(200).json({ message: "Successfully combined" });
        
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+
+router.post("/combinesubjectandteacher", isAdmin, async (req, res) => {
+    try {
+        const { teacherId, subjectIds } = req.body;
+
+        if (!teacherId || !subjectIds) {
+            return res.status(400).json({ error: "Please enter all fields" });
+        }
+
+        const arrayofsubjects = subjectIds.map((subject) => {
+            return { subject_id: subject, permission: "write" };
+        });
+
+        
+        if (await Teacher.findOne({ _id: teacherId, "subjects.subject_id": { $in: subjectIds } })) {
+            return res.status(400).json({ error: "Teacher already has that subject" });
+        } else {
+            const teacherupdate = await Teacher.updateOne(
+                { _id: teacherId },
+                { $push: { subjects: arrayofsubjects } }
+            );
+        }
+
+        subjectIds.map(async (subject) => {
+            const subjectupdate = await Subject.updateOne(
+                { _id: subject },
+                { teacher_id: teacherId  }
+            );
+        });
+
+        return res.status(200).json({ message: "Successfully combined" });
+
     } catch (err) {
         console.log(err);
         res.status(500).json({ error: "Internal server error" });

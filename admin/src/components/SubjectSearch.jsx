@@ -46,9 +46,8 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
   // remove subject
   const removeSubject = (sub_id) => {
     console.log(sub_id)
-    const newList = detailsofSelectedSubject.filter((subject) => {
-      return subject._id != sub_id;
-    });
+    console.log(selectedSubject)
+    const newList = selectedSubject.filter(subject => subject.subject_id !== sub_id);
     setSelectedSubject(newList);
   };
 
@@ -94,7 +93,8 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
 
   //   change detailsofSelectedSubject state on change of subjects array
   useEffect(() => {
-    let temp = allSubjectData.filter(subj=>selectedSubject.find(elem=>elem.subject_id==subj._id))
+    let temp = allSubjectData.filter(subj=>(selectedSubject.find(elem=>elem.subject_id==subj._id)))
+    temp = temp.map(sub=>{return{...sub,permission:"write"}})
     setDetailsofSelectedSubject(temp);
     // console.log(detailsofSelectedSubject)
   }, [allSubjectData, selectedSubject]);
@@ -143,26 +143,31 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
       {/* list of selected subject */}
       <div className="flex gap-3 flex-wrap mt-[100px] w-[300px] md:w-[400px]">
         <table className="flexCenter flex-col">
-          <tHead>
-            <tr className="grid grid-cols-6">
-              <th className="col-span-3 text-center">Subject Name</th>
-              <th className="col-span-2 text-center">Course Code</th>
-              <th className="col-span-1 text-center">Remove</th>
+          <thead>
+            <tr className="py-2 px-2 border grid grid-cols-8">
+              <th className="py-2 px-2 border col-span-3 text-center">Subject Name</th>
+              <th className="py-2 px-2 border col-span-2 text-center">Course Code</th>
+              <th className="py-2 px-2 border col-span-2 text-center">Permission</th>
+              <th className="py-2 px-2 border col-span-1 text-center">Remove</th>
             </tr>
-          </tHead>
+          </thead>
           <tbody>
             {detailsofSelectedSubject.length === 0 ? (
               <p className="">No Selected subject</p>
             ) : (
               detailsofSelectedSubject.map((subject) => {
+                // console.log(subject)
                 return (
-                  <tr key={subject.id} className="grid grid-cols-6">
-                    <td className="col-span-3 text-center">{subject.subject_name}</td>
-                    <td className="col-span-2 text-center">
+                  <tr key={subject._id} className="py-2 px-2 border grid grid-cols-8">
+                    <td className="py-2 px-2 border col-span-3 text-center">{subject.subject_name}</td>
+                    <td className="py-2 px-2 border col-span-2 text-center">
                       {subject.course_code}
                     </td>
+                    <td className="py-2 px-2 border col-span-2 text-center">
+                      {subject.permission}
+                    </td>
                     <td
-                      className="col-span-1 text-center right-2 text-3xl flexCenter cursor-pointer"
+                      className="py-2 px-2 border col-span-1 text-center right-2 text-3xl flexCenter cursor-pointer"
                       onClick={() => removeSubject(subject._id)}
                     >
                       <IoIosClose />
@@ -171,33 +176,12 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
                 );
               })
             )}
-          </tbody>
-
-          {detailsofSelectedSubject.map((subject) => (
-            <SubjectCollection
-              key={subject.id}
-              subject={subject}
-              removeSubject={removeSubject}
-            />
-          ))}
+          </tbody>          
         </table>
       </div>
     </div>
   );
 };
 
-const SubjectCollection = ({ subject, removeSubject }) => {
-  return (
-    <div className="bg-primary relative text-white pl-3 py-2 rounded-3xl flex justify-between items-center gap-1">
-      <p>{subject.name}</p>
-      <div
-        className=" right-2 text-3xl flexCenter cursor-pointer"
-        onClick={() => removeSubject(subject.id)}
-      >
-        <IoIosClose />
-      </div>
-    </div>
-  );
-};
 
 export default SubjectSearch;

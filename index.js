@@ -9,6 +9,7 @@ const cron = require('node-cron');
 const updateTodayAttendance = require("./Controller/UpdateTodayAttendance");
 const fileUpload = require('express-fileupload');
 const rateLimit = require("express-rate-limit");
+const path=require("path");
 
 dotenv.config();
 app.use(express.json());
@@ -32,12 +33,18 @@ app.use((err, req, res, next) => {
 
 // Use rate limiting middleware
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10000, // limit each IP to 100 requests per windowMs
+  windowMs: 1 * 60 * 1000, // 1 minutes
+  max: 300, // limit each IP to 100 requests per windowMs
   message: "Too many requests from this IP, please try again after 15 minutes"
 });
 
-app.use(limiter);
+// app.use(limiter);
+
+// app.use((req, res, next) => {
+//   const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+//   console.log(`User IP: ${clientIp}`);
+//   next(); // Call the next middleware in the chain
+// });
 
 // connect to mongoDB
 mongoose.set('strictQuery', false)
@@ -58,8 +65,13 @@ mongoose.connect(process.env.MDB_CONNECT)
     app.use("/api/xlsx", require("./Routes/xlsxRouter"));
     app.use("/api/studentattendancerequest", require("./Routes/attendanceRequestRouter.js"));
     app.use("/api/mapstudentsubject", require("./Routes/combineStudentandSubject.js"));
-
+    app.use("/api/academichead", require("./Routes/academicHeadRouter.js"));
     
+    
+    app.use(express.static('admin/dist'));
+    app.get('*', (req, res) => {
+            res.sendFile(path.resolve('admin','dist','index.html'));
+    });
 
     // Schedule the cron jobs
     cron.schedule('31 5 * * *', async () => {
@@ -82,6 +94,4 @@ mongoose.connect(process.env.MDB_CONNECT)
   .catch(err => {
     console.error('Error connecting to MongoDB:', err);
   });
-
-  const result = updateTodayAttendance();
-  console.log(result);
+  

@@ -29,18 +29,23 @@ export default function MarkAttendance() {
 
 
   // check if today is class
-  useLayoutEffect(() => {
-    (async () => {
+  useEffect(() => {
+
+
+    const unsub=async()=>{
       try {
         await dispatch(checkclassasync({ ID: sub_id.id }));
       } catch (error) {
         console.log(error);
       }
-    })();
+
+    }
+    unsub();
   }, []);
 
   const isClassDetails = useSelector((state) => state.checkClass.message);
   // console.log(isClassDetails);
+  const d1=new Date();
 
   useEffect(() => {
     // console.log(isClassDetails)
@@ -50,8 +55,15 @@ export default function MarkAttendance() {
         setMaxCount(isClassDetails.count);
         // console.log(maxCount)
       } else {
+        
         setMaxCount(0);
       }
+
+      // add 5:30 hr in d1
+      // d1.setHours(d1.getHours()+5);
+      // d1.setMinutes(d1.getMinutes()+30);
+      // console.log(d1.getHours(),d1.getMinutes())      
+      
     // checking if isClassDetails !== undefine
     // isClassDetails?.message === "No Class Today"
     //   ? setMaxCount(0)
@@ -283,7 +295,7 @@ export default function MarkAttendance() {
   const { pageIndex, globalFilter } = state;
 
   return (
-    <div className="markAttendanceMain w-screen h-screen">
+    <div className="markAttendanceMain w-screen h-full">
       <h2>Attendence Sheet</h2>
       {isClassDetails?.message === "No Class Today" && (
         <div className="w-full p-2 bg-primary text-dimWhite text-center font-semibold">
@@ -385,13 +397,13 @@ export default function MarkAttendance() {
               See Previous Attendance
             </button>
             {/* update previous attendance */}
-            <button onClick={() => navigate(`/updatepreviousattendace/${sub_id.id}`,{state:{totalLectures}})}>
+            {/* <button onClick={() => navigate(`/updatepreviousattendace/${sub_id.id}`,{state:{totalLectures}})}>
               Update Previous Attendance
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
-      {
+      { d1.getHours()>=6&&
         // maxCount &&
         // maxCount > 0 &&
         !(isClassDetails?.message === "No Class Today") && (

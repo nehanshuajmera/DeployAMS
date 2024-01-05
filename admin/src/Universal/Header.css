@@ -1,0 +1,292 @@
+.headerContainer {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 15vh;
+    background-color: #d2e9f9;
+}
+
+.headerDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.logoCllg {
+    width: 15%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    box-sizing: border-box;
+}
+
+.logoCllg img {
+    width: 100%;
+    height: 100%;
+}
+
+.bttnCllg {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    box-sizing: border-box;
+}
+
+.bttnCss {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    box-sizing: border-box;
+}
+
+.styleHr {
+    border: 1px solid black;
+}
+
+/* Responsive CSS */
+@media (min-width: 320px) and (max-width: 480px) {
+    .headerContainer {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        height: 12vh;
+    }
+
+    .headerDiv {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.2rem;
+        box-sizing: border-box;
+        height: 100%;
+        width: 100%;
+    }
+
+    .logoCllg {
+        /* width: 30%;
+        height: 45%; */
+        width: 40%;
+        height: 55%;
+    }
+
+    .bttnCllg {
+        width: 50%;
+        height: 80%;
+    }
+
+    .bttnCss {
+        width: 50%;
+        height: 80%;
+        margin: 0.3rem;
+        padding: 0.2rem;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 599px) {
+    .headerContainer {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        height: 12vh;
+    }
+
+    .headerDiv {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.2rem;
+        box-sizing: border-box;
+        height: 100%;
+        width: 100%;
+    }
+
+    .logoCllg {
+        width: 40%;
+        height: 60%;
+    }
+
+    .bttnCllg {
+        width: fit-content;
+        height: 80%;
+    }
+
+    .bttnCss {
+        width: 50%;
+        height: 80%;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 800px) {
+    .headerContainer {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        height: 12vh;
+    }
+
+    .headerDiv {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.3rem;
+        box-sizing: border-box;
+        height: 100%;
+        width: 100%;
+    }
+
+    .logoCllg {
+        width: 40%;
+        height: 70%;
+    }
+
+    .logoCllg img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .bttnCllg {
+        width: fit-content;
+        height: 80%;
+        padding: 0.2rem;
+
+    }
+
+    /* .bttnCss {
+        width: 100%;
+        height: 100%;
+    } */
+}
+
+@media (min-width: 801px) and (max-width: 1024px) {
+    .headerContainer {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        height: 12vh;
+    }
+
+    .headerDiv {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        height: 100%;
+        width: 100%;
+    }
+
+    .logoCllg {
+        width: 35%;
+        height: 80%;
+    }
+
+    .logoCllg img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .bttnCllg {
+        margin: 0.5rem;
+        padding: 1rem;
+    }
+
+    .bttnCss {
+        margin: 0.5rem;
+        padding: 1rem;
+        font-size: 1.2rem;
+        /* height: 60%; */
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .headerContainer {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        height: 15vh;
+    }
+
+    .headerDiv {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        height: 100%;
+        width: 100%;
+    }
+
+    .logoCllg {
+        width: 15%;
+        height: 80%;
+    }
+
+    .logoCllg img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media (min-width: 1281px) {
+    .headerContainer {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        height: 15vh;
+    }
+
+    .headerDiv {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        height: 100%;
+    }
+
+    .logoCllg {
+        width: 20%;
+        height: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem;
+        margin: 0.5rem;
+        box-sizing: border-box;
+    }
+
+    .logoCllg img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .bttnCllg {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem;
+        margin: 0.5rem;
+        box-sizing: border-box;
+    }
+
+    .bttnCss {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem;
+        margin: 0.5rem;
+        box-sizing: border-box;
+    }
+}

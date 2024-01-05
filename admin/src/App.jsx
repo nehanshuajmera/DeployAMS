@@ -31,6 +31,8 @@ import UploadBulkData from "./pages/SuperAdmin/UploadData/UploadBulkData";
 import UpdateAttendanceRequestPage from "./pages/Admin/PastAttendance/UpdateAttendanceRequestPage";
 import MarkPastAttendance from "./pages/Admin/AttendenceSheet/MarkPastAttendance";
 import MapStudentandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapStudentandSubject";
+import MapTeacherandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapTeacherandSubject";
+import AcademicHead from "./pages/AcademicHead/AcademicHead";
 
 function App() {
 
@@ -51,8 +53,8 @@ const dispatch=useDispatch();
 
   return (
     <div className="w-full overflow-hidden bg-dimWhite ">
-      {IsLogin? <Header/>:null}
-      <ErrMsg/>
+      {IsLogin ? <Header /> : null}
+      <ErrMsg />
       <Routes>
         <Route
           path={"/"}
@@ -125,22 +127,14 @@ const dispatch=useDispatch();
             </AdminRoute>
           }
         />
-        <Route
-          path={"/allsubject"}
-          element={
+        <Route path={"/allsubject"} element={
             <AdminRoute>
               <AllSubject />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path={"/createstudent"}
-          element={
+            </AdminRoute> }/>
+        <Route path={"/createstudent"} element={
             <AdminRoute>
               <CreateStudent />
-            </AdminRoute>
-          }
-        />
+            </AdminRoute> }/>
         <Route
           path={"/updatestudent/:id"}
           element={
@@ -216,9 +210,17 @@ const dispatch=useDispatch();
         <Route
           path="/mapstudentandsubject"
           element={
-            // <AdminRoute>
+            <AdminRoute>
               <MapStudentandSubject />
-            // </AdminRoute>
+            </AdminRoute>
+          }
+        />
+         <Route
+          path="/mapteacherandsubject"
+          element={
+            <AdminRoute>
+              <MapTeacherandSubject />
+            </AdminRoute>
           }
         />
         <Route
@@ -229,11 +231,21 @@ const dispatch=useDispatch();
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/academichead"
+          element={
+            <ProtectedRoute>
+              <AcademicHead/>
+            </ProtectedRoute>
+
+          }
+        />
+            
         <Route path="/alert" element={<Alert />} />
         <Route path="*" element={<ErrMsg />} />
       </Routes>
-
-      {/* <MarkAttendence/> */}
+      {/* <Header />
+      <Dashboard /> */}
     </div>
   );
 }
