@@ -50,11 +50,11 @@ const ViewMyRequestsPage = () => {
               <td className="py-2 px-4 border">{request.subject.batch}</td>
               <td className="py-2 px-4 border">{request.subject.class_name}</td>
               <td className="py-2 px-4 border">  {new Date(request.proposedDateTime).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  })}
-</td>
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+              })}
+              </td>
               <td className="py-2 px-4 border">{request.status}</td>
               <td className="py-2 px-4 border">
                 {request.status === 'approved' && (
