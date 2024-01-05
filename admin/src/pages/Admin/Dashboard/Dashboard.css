@@ -24,7 +24,7 @@
     max-width: 98vw;
     padding: 1rem;
     max-height: 80vh;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .teacherDetailContainer{
@@ -46,46 +46,43 @@
 }
 
 .teacherFeature{
-    border: 1px solid orangered;
+    /* border: 1px solid orangered; */
     display: flex;
     justify-content: center;
 }
 
 .teacherMain {
     display: grid;
-    grid-template-columns: repeat(3, auto);
-    /* display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center; */
-    max-width: 40vw;
-    /* width: 90%; */
-    /* text-align: center; */
-    border: 1px solid blue;
+    grid-template-columns: repeat(2, auto);
+    gap: 0.5rem;
+    text-align: center;
+    /* border: 1px solid blue; */
+    margin: 1rem;
 }
 
 .teacherMain div {
-    margin: 0.4rem;
+    margin: 0.5rem;
     padding: 0.5rem;
-    width: 18vw;
-    max-height: 16vh;
     border: 2px solid black;
     border-radius: 0.4rem;
-    font-weight: 500;
-    font-size: 1.2rem;
+    font-size: 1rem;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .teacherMain div:hover {
-    color: #fff;
-    background-color: grey;
-    opacity: 0.7;
+    color: #d2e9f9;
+    background-color: #030955;
+    border-color: #030955;
 }
 
 .teacherExtra {
     margin: 1rem;
     padding: 1rem;
-    border: 1px solid darkmagenta;
+    /* border: 1px solid darkmagenta; */
     /* border-radius: 0.4rem; */
     font-weight: 500;
     font-size: 1.2rem;
@@ -100,6 +97,12 @@
     font-weight: 500;
     font-size: 1.2rem;
     cursor: pointer;
+}
+
+.teacherExtra div:hover {
+    color: #d2e9f9;
+    background: #030955;
+    border-color: #030955;
 }
 
 /* Responsive css */
