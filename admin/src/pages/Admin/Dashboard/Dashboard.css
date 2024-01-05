@@ -49,6 +49,7 @@
     /* border: 1px solid orangered; */
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .teacherMain {
@@ -64,6 +65,7 @@
     margin: 0.5rem;
     padding: 0.5rem;
     border: 2px solid black;
+    max-height: 20vh;
     border-radius: 0.4rem;
     font-size: 1rem;
     cursor: pointer;
