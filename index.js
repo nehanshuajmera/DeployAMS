@@ -65,6 +65,7 @@ mongoose.connect(process.env.MDB_CONNECT)
     app.use("/api/xlsx", require("./Routes/xlsxRouter"));
     app.use("/api/studentattendancerequest", require("./Routes/attendanceRequestRouter.js"));
     app.use("/api/mapstudentsubject", require("./Routes/combineStudentandSubject.js"));
+    app.use("/api/academichead", require("./Routes/academicHeadRouter.js"));
     
     
     app.use(express.static('admin/dist'));
