@@ -81,10 +81,10 @@ export default function SingleAttendence(props) {
       </div>
       <hr className="styleHr" />
       <div className="studentDetails">
-        <div className="studentProgramme"><h4>Programme: {userdata?.Programme}</h4></div>
+        <div className="studentProgramme"><h4>Programme: {props?.Programme}</h4></div>
         <div className="studentName"><h4>Name: {userdata?.name}</h4></div>
         <div className="studentId"><h4>Enrollment No.: {userdata?.enrollment_no}</h4></div>
-        <div className="Year"><h4>Year: {userdata?.Year}</h4></div>
+        <div className="Year"><h4>Year: {props?.Year}</h4></div>
         <div className="cls-sec"><h4>Class & Section: {userdata?.branch}</h4></div>
         <div className="studentBatch"><h4>Batch: {userdata?.batch}</h4></div>
       </div>
@@ -94,8 +94,8 @@ export default function SingleAttendence(props) {
             <tr>
               <th className='headingForStudents'>Course Code</th>
               <th className='headingForStudents'>Subject Name</th>
+              <th className='headingForStudents'> Attendence </th>
               <th className='headingForStudents'>Total Attendence </th>
-              <th className='headingForStudents'>Attendence </th>
               <th className='headingForStudents'>Percentage </th>
               <th className='headingForStudents'>Daily Attendence {currentDate.toLocaleDateString()} </th>
             </tr>
@@ -150,8 +150,8 @@ export default function SingleAttendence(props) {
       </div>
       <div className="detailedAttendence">
         <div className="checkAttendence">
-          <button onClick={() => navigate('/changepassword')}><h4>Change Password</h4></button>
-          <button onClick={() => navigate('/studentattendance/daywise')}><h4>Check Day-Wise Attendence</h4></button>
+          <button className="changepassword" onClick={() => navigate('/changepassword')}><h4>Change Password</h4></button>
+          <button className="check_daywise" onClick={() => navigate('/studentattendance/daywise')}><h4>Check Day-Wise Attendence</h4></button>
         </div>
       </div>
     </div>
