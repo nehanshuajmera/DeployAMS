@@ -107,8 +107,8 @@ router.get("/studentsattendance/:id", isauthenticated, async (req, res) => {
     const subjectId = req.params.id; // Get the subject ID from the request parameters
 
     // Check if the teacher is assigned to the requested subject
-    const subject = await Subject.findOne({ _id: subjectId, teacher_id: userId });
-    // const subject1 = await Subject.findOne({ _id: subjectId });
+    // const subject = await Subject.findOne({ _id: subjectId, teacher_id: userId });
+    const subject = await Subject.findOne({ _id: subjectId });
 
     // console.log(subject)
     if (!subject) {
@@ -163,8 +163,10 @@ router.post('/updateattendance', isauthenticated, isTeacher, async (req, res) =>
     const { subjectId, studentIDs } = req.body;
 
     // Check if the teacher has permission to update attendance for this subject
-    const subject = await Subject.findOne({ _id: subjectId, teacher_id: teacherId });
+    // const subject = await Subject.findOne({ _id: subjectId, teacher_id: teacherId });
 
+    const subject = await Subject.findOne({ _id: subjectId });
+    
 
     if (!subject) {
       return res.status(403).json({ message: 'Forbidden: No permission to update attendance for this subject' });
