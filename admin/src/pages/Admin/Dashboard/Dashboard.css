@@ -21,8 +21,7 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    max-width: 90vw;
-    width: 90%;
+    max-width: 98vw;
     padding: 1rem;
     max-height: 80vh;
     border: 1px solid red;
@@ -53,22 +52,23 @@
 }
 
 .teacherMain {
-    /* display: grid;
-    grid-template-columns: repeat(2, auto); */
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    /* display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    max-width: 30vw;
-    width: 90%;
-    text-align: center;
+    justify-content: center; */
+    max-width: 40vw;
+    /* width: 90%; */
+    /* text-align: center; */
     border: 1px solid blue;
 }
 
 .teacherMain div {
-    margin: 0.5rem;
+    margin: 0.4rem;
     padding: 0.5rem;
-    max-width: 12vw;
+    width: 18vw;
+    max-height: 16vh;
     border: 2px solid black;
     border-radius: 0.4rem;
     font-weight: 500;

@@ -69,7 +69,7 @@ export default function TeacherDashboard() {
                 return (
                   <div key={subject.subject_id._id} onClick={() => gotoSubjectAttendance(subject.subject_id._id)}>
                     <h3>C{subject.subject_id.course_code}</h3>
-                    <h3>{subject.subject_id.branch}</h3>
+                    {/* <h3>{subject.subject_id.branch}</h3> */}
                     <h3>{subject.subject_id.subject_name}</h3>
                     <h3>Sec: {subject.subject_id.section} Batch: {subject.subject_id.batch}</h3>
                   </div>
