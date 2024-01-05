@@ -77,7 +77,7 @@ export default function TeacherDashboard() {
             }
           </div>
           <div className="teacherExtra">
-            {/* <div onClick={() => navigate("/arangementclass")}>Arrangement Class</div> */}
+            <div onClick={() => navigate("/substituteteacher")}> Substitute Teacher </div>
             {userdata.admin_role==="AcademicHead"||userdata.admin_role==="Admin" ?<div onClick={() => navigate("/academichead")}>Attendance Report</div>:null}
             <div onClick={() => navigate("/pastattendancerequest")}>Past Attendance Request</div>
           </div>

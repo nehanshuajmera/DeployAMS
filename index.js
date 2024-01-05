@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 5000;
 const cors = require("cors");
 const cron = require('node-cron');
 const updateTodayAttendance = require("./Controller/UpdateTodayAttendance");
+const removeAssignedSubject = require("./Controller/RemoveAssignedSubject");
 const fileUpload = require('express-fileupload');
 const rateLimit = require("express-rate-limit");
 const path=require("path");
@@ -66,6 +67,7 @@ mongoose.connect(process.env.MDB_CONNECT)
     app.use("/api/studentattendancerequest", require("./Routes/attendanceRequestRouter.js"));
     app.use("/api/mapstudentsubject", require("./Routes/combineStudentandSubject.js"));
     app.use("/api/academichead", require("./Routes/academicHeadRouter.js"));
+    app.use("/api/substituteteacher", require("./Routes/substituteTeacher.js"));
     
     
     app.use(express.static('admin/dist'));
@@ -78,6 +80,7 @@ mongoose.connect(process.env.MDB_CONNECT)
       console.log('Running teacher rating update job...');
       try {
         const result = await updateTodayAttendance();
+        removeAssignedSubject();
         console.log(result);
 
       } catch (error) {

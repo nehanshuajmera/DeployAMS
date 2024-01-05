@@ -233,6 +233,10 @@ router.post("/updateattendancebypermission/:id", isauthenticated, isTeacher, asy
           }
   
           await student.save();
+
+          // expire the request
+          request[0].status = "processed";
+          await request[0].save();
         } else {
           return res.status(404).json({ message: "Student not found" });
         }
