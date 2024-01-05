@@ -21,9 +21,9 @@ export default function Dashboard() {
           <div onClick={() => { navigate('/allstudent') }}>See All Students</div>
          {userdata.admin_role==="Admin"? <div onClick={() => navigate("/createstudent")}>Create Student</div>:null}
           <div onClick={() => navigate("/allteacher")}>See All Teachers</div>
-          <div onClick={() => navigate("/createteacher")}>Create Teacher</div>
+          {userdata.admin_role==="Admin"?<div onClick={() => navigate("/createteacher")}>Create Teacher</div>:null}
           <div onClick={() => navigate("/allsubject")}>See All Subjects</div>
-          {userdata.admin_role==="Admin"?<div onClick={() => navigate("/createsubject")}>Create Subject</div>:null}
+          <div onClick={() => navigate("/createsubject")}>Create Subject</div>
         </div>
         <div className="adminExtra admin-479px">
         {userdata.admin_role==="Admin"?<div onClick={() => navigate("/attendancepermission")}>Attendance Permission</div>:null}

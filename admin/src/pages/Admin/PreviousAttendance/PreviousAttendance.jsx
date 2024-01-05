@@ -41,6 +41,9 @@ const PreviousAttendance = () => {
                     {convertDate(dates.date)}
                   </th>
                 ))}
+                <th className='py-2 px-4 border'>Attended Classes</th>
+                <th className='py-2 px-4 border'>Total Classes</th>
+                <th className='py-2 px-4 border'>Attendance Percentage</th>
             </tr>
           </thead>
           <tbody>
@@ -63,6 +66,9 @@ const PreviousAttendance = () => {
                             }
                   </th>
                 ))}
+                <td className='py-2 px-4 border'>{selectedsubject.attendance.filter((dates)=>formattedAttendance.includes(convertDate(dates.date))).length}</td>
+                {/* <td className='py-2 px-4 border'>{selectedsubject.subject_id.lecture_dates.filter((dates)=>formattedAttendance.includes(convertDate(dates.date))).length}</td> */}
+                {/* <td className='py-2 px-4 border'>{selectedsubject.attendance.filter((dates)=>formattedAttendance.includes(convertDate(dates.date))).length/selectedsubject.lecture_dates.length*100}%</td> */}
                 </tr>
               );
             })}
