@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom"
 import { logoutAsync } from '../../../redux-toolkit/slices/loginslice';
 import { userdetailasync } from '../../../redux-toolkit/slices/userdetailslice';
 import { TYPE, useMsgErr } from '../../../context/MsgAndErrContext';
-import  AuthContext  from '../../../context/AuthContext';
+import AuthContext from '../../../context/AuthContext';
 
 export default function TeacherDashboard() {
   const { setMsgType, setMsg } = useMsgErr()
-  const { logout ,userdata } = useContext(AuthContext);
+  const { logout, userdata } = useContext(AuthContext);
   // console.log(userdata)
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -58,30 +58,30 @@ export default function TeacherDashboard() {
     <div className='teacherDashboard'>
       <hr className="styleHr" />
       <div className="teacherContentContainer">
-        <div className="teacherHeader m-2 ">
-
-          <h1>
-
-          Teacher Id : {userdata?.teacher_id}
-          </h1>
-          <h1>
-          Name : {userdata?.name}
-          </h1>
-          </div>
-        <div className="teacherMain">
-          {
-            subjects &&
-            subjects.map(subject => {
-              return (
-                <div key={subject.subject_id._id} onClick={() => gotoSubjectAttendance(subject.subject_id._id)}>{subject.subject_id.course_code} - {subject.subject_id.branch} - {subject.subject_id.subject_name} - {subject.subject_id.section} - {subject.subject_id.batch} </div>
-              )
-            })
-          }
+        <div className="teacherDetailContainer">
+          <h1>Teacher Id : {userdata?.teacher_id}</h1>
+          <h1>Name : {userdata?.name}</h1>
         </div>
-        <div className="teacherExtra">
-          {/* <div onClick={() => navigate("/arangementclass")}>Arrangement Class</div> */}
-          {/* <div onClick={() => navigate("/substituteteacher")}>Notify Substitute Teacher</div> */}
-          <div onClick={() => navigate("/pastattendancerequest")}>Past Attendance Request</div>
+        <div className="teacherFeature">
+          <div className="teacherMain">
+            {
+              subjects && subjects.map(subject => {
+                return (
+                  <div key={subject.subject_id._id} onClick={() => gotoSubjectAttendance(subject.subject_id._id)}>
+                    <h3>C{subject.subject_id.course_code}</h3>
+                    <h3>{subject.subject_id.branch}</h3>
+                    <h3>{subject.subject_id.subject_name}</h3>
+                    <h3>Sec: {subject.subject_id.section} Batch: {subject.subject_id.batch}</h3>
+                  </div>
+                )
+              })
+            }
+          </div>
+          <div className="teacherExtra">
+            <div onClick={() => navigate("/arangementclass")}>Arrangement Class</div>
+            <div onClick={() => navigate("/substituteteacher")}>Notify Substitute Teacher</div>
+            <div onClick={() => navigate("/pastattendancerequest")}>Past Attendance Request</div>
+          </div>
         </div>
       </div>
     </div>
