@@ -31,6 +31,7 @@ import UpdateAttendanceRequestPage from "./pages/Admin/PastAttendance/UpdateAtte
 import MarkPastAttendance from "./pages/Admin/AttendenceSheet/MarkPastAttendance";
 import MapStudentandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapStudentandSubject";
 import MapTeacherandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapTeacherandSubject";
+import AcademicHead from "./pages/AcademicHead/AcademicHead";
 
 function App() {
 
@@ -229,6 +230,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/academichead"
+          element={
+            <ProtectedRoute>
+              <AcademicHead/>
+            </ProtectedRoute>
+
+          }
+        />
+            
         <Route path="/alert" element={<Alert />} />
         <Route path="*" element={<ErrMsg />} />
       </Routes>
