@@ -75,6 +75,11 @@ mongoose.connect(process.env.MDB_CONNECT)
             res.sendFile(path.resolve('admin','dist','index.html'));
     });
 
+    // app.use(express.static('client/dist'));
+    // app.get('*', (req, res) => {
+    //         res.sendFile(path.resolve('client','dist','index.html'));
+    // });
+
     // Schedule the cron jobs
     cron.schedule('31 5 * * *', async () => {
       console.log('Running teacher rating update job...');

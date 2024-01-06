@@ -108,9 +108,9 @@ export default function Login() {
           />
         </div>
         <button type="submit" className="button"  >Login</button>
-        <a className="forgotLink" href="#">
+        {/* <a className="forgotLink" href="#">
           Forgot your password?
-        </a>
+        </a> */}
       </form>
 
     </div>
