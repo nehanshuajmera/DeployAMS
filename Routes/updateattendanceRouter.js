@@ -44,7 +44,9 @@ router.post("/asktoupdate/:id",isauthenticated,isTeacher ,async(req,res)=>{
             status:"pending"
         });
         await request.save();
-        // addLog(req.user.user_id,`Teacher ${teacher.name} asked to update attendance of subject ${subject.name} on date ${date}`);
+        
+        addLog(`Teacher ${teacher.name} asked to update attendance of subject ${subject.subject_name} on date ${date}`,req.user_id);
+
         return res.status(200).json({message:"Request sent"});
     }
     catch(error){
@@ -113,13 +115,13 @@ router.post("/acceptorreject/:id",isAdmin,async(req,res)=>{
         if(req.body.status === "Accepted"){
             request.status = "approved";
             await request.save();
-            // addLog(req.user.user_id,`Admin accepted the request of teacher ${request.teacher.name} to update attendance of subject ${request.subject.name} on date ${request.proposedDateTime}`);
+            addLog(`Admin accepted the request ${request._id}`,req.user.user_id);
             return res.status(200).json({message:"Request accepted"});
         }
         else if(req.body.status === "Rejected"){
             request.status = "denied";
             await request.save();
-            // addLog(req.user.user_id,`Admin rejected the request of teacher ${request.teacher.name} to update attendance of subject ${request.subject.name} on date ${request.proposedDateTime}`);
+            addLog(`Admin rejected the request ${request._id}`,req.user.user_id);
             return res.status(200).json({message:"Request rejected"});
         }
         else{
@@ -241,6 +243,7 @@ router.post("/updateattendancebypermission/:id", isauthenticated, isTeacher, asy
           return res.status(404).json({ message: "Student not found" });
         }
       }
+      addLog(`Attendance updated for ${subject.subject_name} request Id ${req.params.id} on date ${date1}`,req.user_id);
   
       return res.status(200).json({ message: 'Attendance updated successfully' });
     } catch (error) {

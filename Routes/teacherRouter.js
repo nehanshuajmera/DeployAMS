@@ -238,10 +238,11 @@ router.post('/updateattendance', isauthenticated, isTeacher, async (req, res) =>
       else {
         return res.status(404).json({ message: "Student not found" });
       }
-
+      
     }
-
-    // addLog(`Student attendance updated for subject: ${subject._id}`, teacherId);
+    
+    
+    addLog(`Student attendance updated for subject: ${subject._id}`, teacherId);
 
     return res.status(200).json({ message: 'Attendance updated successfully' });
   } catch (error) {
@@ -286,6 +287,7 @@ router.post("/changepassword", isauthenticated, isTeacher, async (req, res) => {
 
     // Save the updated teacher information
     await teacher.save();
+    addLog(`Teacher password changed: ${teacher._id}`, teacherId);
 
     return res.status(200).json({ message: "Password changed successfully" });
   } catch (error) {

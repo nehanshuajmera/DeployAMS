@@ -4,6 +4,7 @@ const AcademicCalendar = require("../Model/calanderSchema"); // Import your Acad
 const Teacher = require("../Model/teacherSchema");
 const subject = require("../Model/subjectSchema");
 const isAdmin = require("../Middleware/checkadmin");
+const addLog=require('../Controller/logs');
 
 // POST /create-academic-calendar - Create academic calendar entries for a date range
 router.post("/create-academic-calendar",isAdmin, async (req, res) => {
@@ -41,6 +42,7 @@ router.post("/create-academic-calendar",isAdmin, async (req, res) => {
     // Insert the academic calendar entries into the database
 
     await AcademicCalendar.insertMany(academicCalendarEntries);
+    addLog(`Academic Calendar Created from ${startDate} to ${endDate}`,req.user_id);
 
     return res.status(200).json({ message: "Academic calendar entries created successfully" });
   } catch (error) {
@@ -114,7 +116,7 @@ router.post('/updateholiday', isAdmin, async (req, res) => {
       { date },
       { holiday, event},
     );
-    
+    addLog(`Academic Calendar Updated for ${date} as holiday`,req.user_id);
     return res.status(200).json({ message: 'Academic calendar updated to mark the date as a holiday' });
   } catch (error) {
     console.error('Error updating academic calendar:', error);
@@ -157,6 +159,7 @@ router.post('/addmoredays', isAdmin, async (req, res) => {
 
     await AcademicCalendar.insertMany(academicCalendarEntries);
 
+    addLog(`Academic Calendar Updated for ${dayscnt} days`,req.user_id);
     return res.status(200).json({ message: "Academic calendar entries created successfully" });
 
   } catch (error) {
@@ -186,6 +189,8 @@ router.post("/updateday",isAdmin,async(req,res)=>{
       { date },
       { day},
     );
+
+    addLog(`Academic Calendar Updated for ${date} as ${day}`,req.user_id);
 
     return res.status(200).json({ message: 'Academic calendar updated Successfully' });
   } catch (error) {

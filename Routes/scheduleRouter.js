@@ -5,6 +5,7 @@ const Teacher = require('../Model/teacherSchema');
 const Subject = require('../Model/subjectSchema');
 const isauthenticated = require('../Middleware/authenticated');
 const isTeacher = require('../Middleware/checkteacher');
+const addLog=require('../Controller/logs');
 
 // It is used to post a Attendence Manipulation request in the server 
 router.post('/request',isauthenticated,isTeacher, async (req, res) => {
@@ -30,6 +31,7 @@ router.post('/request',isauthenticated,isTeacher, async (req, res) => {
 
         // Save the request to the database
         const savedRequest = await request.save();
+        addLog(`Request generated: ${savedRequest._id} ${teacherId}`, req.user_id);
 
         return res.status(200).json({ message: 'Rescheduling request created successfully', requestId: savedRequest._id });
     } catch (error) {
@@ -128,7 +130,7 @@ router.put('/updateRequest/:id',isauthenticated,isTeacher, async (req, res) => {
 
         // Save the updated request
         const updatedRequest = await Request.save();
-
+        addLog(`Request updated: ${requestId} ${status}`, req.user_id);
         // Respond with a success message and the updated request
         return res.status(200).json({ message: 'Request updated successfully', updatedRequest });
 

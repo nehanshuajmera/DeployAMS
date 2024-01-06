@@ -9,6 +9,7 @@ const bcrypt = require("bcrypt");
 const isauthenticated = require('../Middleware/authenticated');
 const isAdmin = require('../Middleware/checkadmin');
 const fs = require('fs'); 
+const addLog=require('../Controller/logs');
 
 router.post("/addstudentxlsx", isAdmin, async (req, res) => {
     try {
@@ -48,6 +49,8 @@ router.post("/addstudentxlsx", isAdmin, async (req, res) => {
         // Save the students to the database
         const savedStudents = await Student.insertMany(students);
 
+        addLog("Added Students via xlsx",req.user_id);
+
         res.status(200).json({ msg: 'Students added successfully', data: savedStudents });
 
         // res.status(200).json({ msg: 'Students added successfully', data: students });  
@@ -85,6 +88,8 @@ router.post("/addteacherxlsx", isAdmin, async (req, res) => {
 
         // Save the teachers to the database
         const savedTeachers = await Teacher.insertMany(teachers);
+        addLog("Added Teacher via xlsx",req.user_id);
+
 
         res.status(200).json({ msg: 'Teachers added successfully', data: savedTeachers });
         
@@ -115,6 +120,8 @@ router.post("/addsubjectxlsx", isAdmin, async (req, res) => {
 
         // Save the subjects to the database
         const savedSubjects = await Subject.insertMany(subjects);
+        
+        addLog("Added Subjects via xlsx",req.user_id);
 
         res.status(200).json({ msg: 'Subjects added successfully', data: savedSubjects });
         

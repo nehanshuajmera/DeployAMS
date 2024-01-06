@@ -3,6 +3,7 @@ const router = express.Router();
 const AttendanceRequest=require("../Model/attendanceRequestSchema");
 const isauthenticated=require("../Middleware/authenticated");
 const isTeacher=require("../Middleware/checkteacher");
+const addLog=require('../Controller/logs');
 
 router.post("/generaterequest",isauthenticated,isTeacher,async(req,res)=>{
     try{
@@ -13,6 +14,7 @@ router.post("/generaterequest",isauthenticated,isTeacher,async(req,res)=>{
         const student_id=req.user_id;
         const newRequest=new AttendanceRequest({student_id,subject_id,reason,message,status:"pending",created_at:Date.now(),updated_at:Date.now()});
         await newRequest.save();
+        addLog(`Request generated: ${newRequest._id} ${student_id}`, req.user_id);
         res.status(200).json({message:"Request generated successfully"});
     }catch(err){
         res.status(500).json({error:"Internal server error"});
@@ -66,6 +68,7 @@ router.post("/acceptorrejectattendance",isauthenticated,async(req,res)=>{
         request.status=status;
         request.updated_at=Date.now();
         await request.save();
+        addLog(`Request updated: ${request_id} ${status}`, req.user_id);
         res.status(200).json({message:"Request updated successfully"});
     }catch(err){
         res.status(500).json({error:"Internal server error"});

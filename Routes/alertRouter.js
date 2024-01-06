@@ -3,6 +3,7 @@ const router = express.Router();
 const isAdmin = require("../Middleware/checkadmin");
 const isauthenticated = require("../Middleware/authenticated");
 const Alert = require("../Model/alertSchema");
+const addLog=require('../Controller/logs');
 
 router.get("/", isauthenticated, async(req, res) => {
     try {
@@ -34,6 +35,7 @@ router.post("/createalert", isauthenticated, isAdmin, async(req, res) => {
         }
         const alertData = new Alert({title, alert, created_by, created_at});
         const alertCreated = await alertData.save();
+        addLog(`Alert Created with title ${title} and alert ${alert}`,req.user_id);
         return res.status(200).json({ message: alertCreated });
     } catch (error) {
         console.log({error})

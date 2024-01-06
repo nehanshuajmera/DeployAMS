@@ -52,6 +52,7 @@ const createteacher=async (req, res) => {
           );
         }
       }
+      addLog(`Teacher created: ${teacher_id}`, userId);
       
       return res.status(201).json({ message: "Teacher created successfully", teacher: savedTeacher });
     } catch (error) {
@@ -93,6 +94,8 @@ const update_teacher_by_id=async (req, res) => {
       if (!updatedTeacher) {
         return res.status(404).json({ message: "Teacher not found" });
       }
+
+      addLog(`Teacher updated: ${teacherId}`, userId);
   
       return res.status(200).json({ message: "Teacher information updated successfully", teacher: updatedTeacher });
     } catch (error) {
@@ -112,6 +115,8 @@ const delete_teacher_by_id= async (req, res) => {
       if (!deletedTeacher) {
         return res.status(404).json({ message: "Teacher not found" });
       }
+
+      addLog(`Teacher deleted: ${teacherId}`, userId);
   
       return res.status(200).json({ message: "Teacher deleted successfully" });
     } catch (error) {

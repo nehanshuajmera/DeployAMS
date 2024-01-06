@@ -4,6 +4,7 @@ const isauthenticated=require("../Middleware/authenticated");
 const isTeacher=require("../Middleware/checkteacher");
 const SubstituteTeacher=require("../Model/substituteTeacher");
 const Teacher = require("../Model/teacherSchema");
+const addLog=require('../Controller/logs');
 
 router.post("/generaterequest",isauthenticated,isTeacher,async(req,res)=>{
     try{
@@ -50,6 +51,8 @@ router.post("/generaterequest",isauthenticated,isTeacher,async(req,res)=>{
         const created_teacherId=req.user_id;
         const newRequest=new SubstituteTeacher({created_teacherId,subjectId,assign_teacherId});
         await newRequest.save();
+
+        addLog(`Request generated: ${newRequest._id} ${created_teacherId}`, req.user_id);
         res.status(200).json({message:"Request generated successfully"});
 
     }catch(err){

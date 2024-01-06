@@ -32,6 +32,7 @@ import MarkPastAttendance from "./pages/Admin/AttendenceSheet/MarkPastAttendance
 import MapStudentandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapStudentandSubject";
 import MapTeacherandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapTeacherandSubject";
 import AcademicHead from "./pages/AcademicHead/AcademicHead";
+import LogViewer from "./pages/SuperAdmin/Logs/LogViewer";
 
 function App() {
 
@@ -107,6 +108,14 @@ function App() {
           element={
             <AdminRoute>
               <Dashboard />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path={"/logviewer"}
+          element={
+            <AdminRoute>
+              <LogViewer />
             </AdminRoute>
           }
         />
