@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Student = require("../Model/studentSchema");
+const Teacher = require("../Model/teacherSchema");
+const Subject = require("../Model/subjectSchema");  
 const isAdmin = require("../Middleware/checkadmin");
+const addLog=require('../Controller/logs');
 
 // create a api to combine subject and students by branch,section, batch
 router.post("/combinesubjectandstudents",isAdmin, async (req, res) => {
@@ -33,6 +36,7 @@ router.post("/combinesubjectandstudents",isAdmin, async (req, res) => {
 
         });
 
+        addLog("Combine Student and Subject",req.user_id);
         return res.status(200).json({ message: "Successfully combined" });
        
     } catch (err) {
@@ -71,6 +75,7 @@ router.post("/combinesubjectandteacher", isAdmin, async (req, res) => {
             );
         });
 
+        addLog("Combine Teacher and Subject",req.user_id);
         return res.status(200).json({ message: "Successfully combined" });
 
     } catch (err) {

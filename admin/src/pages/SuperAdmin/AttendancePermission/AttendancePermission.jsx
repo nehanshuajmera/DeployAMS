@@ -41,6 +41,10 @@ const AttendancePermission = () => {
         <thead>
           <tr>
             <th className="py-2 px-4 border">Subject</th>
+            <th className="py-2 px-4 border">Course Code</th>
+            <th className="py-2 px-4 border">Section</th>
+            <th className="py-2 px-4 border">Batch</th>
+            <th className="py-2 px-4 border">Class Name</th>
             <th className="py-2 px-4 border">Proposed Date</th>
             <th className="py-2 px-4 border">Status</th>
             <th className="py-2 px-4 border">Action</th>
@@ -50,6 +54,10 @@ const AttendancePermission = () => {
           {requests.map((request) => (
             <tr key={request._id}>
               <td className="py-2 px-4 border">{request.subject.subject_name}</td>
+              <td className="py-2 px-4 border">{request.subject.course_code}</td>
+              <td className="py-2 px-4 border">{request.subject.section}</td>
+              <td className="py-2 px-4 border">{request.subject.batch}</td>
+              <td className="py-2 px-4 border">{request.subject.class_name}</td>
               <td className="py-2 px-4 border">{new Date(request.proposedDateTime).toLocaleDateString('en-US')}</td>
               <td className="py-2 px-4 border">{request.status}</td>
               <td className="py-2 px-4 border">

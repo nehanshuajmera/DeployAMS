@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const Teacher = require("../Model/teacherSchema");
 const Subject = require("../Model/subjectSchema");
 const Student = require("../Model/studentSchema");
-// const addLog = require('../Controller/logs');
+const addLog = require('../Controller/logs');
 
 const create_student=async (req, res) => {
     try {
@@ -30,10 +30,10 @@ const create_student=async (req, res) => {
         password: await bcrypt.hash(password, 10), // Encrypt the password before saving
         subjects,
       });
-      // addLog(`Student created: ${name}`, userId);
-  
+      
       // Save the new student to the database
       const savedStudent = await newStudent.save();
+      addLog(`Student created: ${savedStudent._id} ${enrollment_no}`, userId);
   
       return res.status(201).json({ message: "Student created successfully", student: savedStudent });
     } catch (error) {
@@ -71,6 +71,8 @@ const update_student_by_id= async (req, res) => {
       if (!updatedStudent) {
         return res.status(404).json({ message: 'Student not found' });
       }
+
+      addLog(`Student updated: ${studentId}`, req.user_id)
   
       return res.status(200).json({ message: 'Student information updated successfully', updatedStudent });
     } catch (error) {
@@ -91,7 +93,8 @@ const delete_student_by_id= async (req, res) => {
       if (!deletedStudent) {
         return res.status(404).json({ message: "Student not found" });
       }
-  
+
+      addLog(`Student deleted: ${studentId}`, req.user_id)  
       return res.status(200).json({ message: "Student deleted successfully" });
     } catch (error) {
       return res.status(500).json({ message: "Internal server error" });

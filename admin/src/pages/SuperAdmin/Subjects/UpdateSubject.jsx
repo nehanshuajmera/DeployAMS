@@ -7,8 +7,9 @@ import SubjectForm from "../../../components/SubjectForm";
 import DeleteButton from "../../../components/DeleteButton";
 import { subjectFieldVerify } from "../../../action/InputFieldVerification";
 import { updateSubjectAsync } from "../../../redux-toolkit/slices/crudsubjectslice";
-import { useDispatch } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
 
 
 // const data = {
@@ -23,7 +24,9 @@ import { useLocation, useParams } from "react-router-dom";
 
 
 const UpdateSubject = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {setMsgType, setMsg} = useMsgErr()
   const {id} = useParams()
   const {state} = useLocation()
   
@@ -35,18 +38,34 @@ const UpdateSubject = () => {
       try {
         ;(async()=>{
           await dispatch(updateSubjectAsync({ID:id,data:subject}))
+          if(subjState.isErr ){
+            setMsgType(TYPE.Err)
+            setMsg(subjState.Err)
+            console.log(subjState.isErr)
+          }
+          else{
+            
+            setMsgType(TYPE.Success)
+            setMsg("Subject added successfully")
+            navigate("/allsubject")
+          }
         })()
         
       } catch (error) {
-        console.log(error)
+        console.log(`failed to update subject : ${error}`)
+        setMsgType(TYPE.Err)
+        setMsg("Failed to Update subject")
       }
     }
     else{
       let msg = "Fill all required fields"
+      setMsgType(TYPE.Err)
+      setMsg(msg)
       // setMsg({msg,msgType:msgType.WARNING})
     }
   }
-
+  const subjState = useSelector((state) => state.crudsubject)
+  console.log(subjState)
 
   return (
     <div>

@@ -107,8 +107,8 @@ router.get("/studentsattendance/:id", isauthenticated, async (req, res) => {
     const subjectId = req.params.id; // Get the subject ID from the request parameters
 
     // Check if the teacher is assigned to the requested subject
-    const subject = await Subject.findOne({ _id: subjectId, teacher_id: userId });
-    // const subject1 = await Subject.findOne({ _id: subjectId });
+    // const subject = await Subject.findOne({ _id: subjectId, teacher_id: userId });
+    const subject = await Subject.findOne({ _id: subjectId });
 
     // console.log(subject)
     if (!subject) {
@@ -163,8 +163,10 @@ router.post('/updateattendance', isauthenticated, isTeacher, async (req, res) =>
     const { subjectId, studentIDs } = req.body;
 
     // Check if the teacher has permission to update attendance for this subject
-    const subject = await Subject.findOne({ _id: subjectId, teacher_id: teacherId });
+    // const subject = await Subject.findOne({ _id: subjectId, teacher_id: teacherId });
 
+    const subject = await Subject.findOne({ _id: subjectId });
+    
 
     if (!subject) {
       return res.status(403).json({ message: 'Forbidden: No permission to update attendance for this subject' });
@@ -172,6 +174,13 @@ router.post('/updateattendance', isauthenticated, isTeacher, async (req, res) =>
 
     // Check if the subject has a class scheduled for today
     const today = new Date();
+    // console.log(today)
+    // attendance will not mark after    6:00 am
+    if (today.getHours() < 6) {
+      return res.status(403).json({ message: "Attendance cannot be marked after 11:55 pm to 6:00 am" });
+    } 
+
+    
     let isclasstoday = await Subject.findById(subjectId);
     // console.log(isclasstoday.lecture_dates)
     isclasstoday = isclasstoday?.lecture_dates?.find(d => d.date.getFullYear() === today.getFullYear() && d.date.getMonth() === today.getMonth() && d.date.getDate() === today.getDate());
@@ -229,10 +238,11 @@ router.post('/updateattendance', isauthenticated, isTeacher, async (req, res) =>
       else {
         return res.status(404).json({ message: "Student not found" });
       }
-
+      
     }
-
-    // addLog(`Student attendance updated for subject: ${subject._id}`, teacherId);
+    
+    
+    addLog(`Student attendance updated for subject: ${subject._id}`, teacherId);
 
     return res.status(200).json({ message: 'Attendance updated successfully' });
   } catch (error) {
@@ -277,6 +287,7 @@ router.post("/changepassword", isauthenticated, isTeacher, async (req, res) => {
 
     // Save the updated teacher information
     await teacher.save();
+    addLog(`Teacher password changed: ${teacher._id}`, teacherId);
 
     return res.status(200).json({ message: "Password changed successfully" });
   } catch (error) {

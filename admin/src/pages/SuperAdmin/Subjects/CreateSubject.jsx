@@ -4,7 +4,9 @@ import SubjectForm from "../../../components/SubjectForm";
 // import TopOfPage from "../../../components/TopOfPage";
 import { subjectFieldVerify } from "../../../action/InputFieldVerification";
 import { createSubjectAsync } from "../../../redux-toolkit/slices/crudsubjectslice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -24,27 +26,43 @@ const data = {
 
 const CreateSubject = () => {
   const [subject, setSubject] = useState(data);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const {setMsgType, setMsg} = useMsgErr()
   
   const HandleClick = ()=>{
     if(subjectFieldVerify(subject)){
+      console.log(subjState)
       try {
         ;(async()=>{
           await dispatch(createSubjectAsync({...subject}))
-          
+          if(subjState.isErr ){
+            setMsgType(TYPE.Err)
+            setMsg(subjState.Err)
+          }
+          else{
+            
+            setMsgType(TYPE.Success)
+            setMsg("Subject added successfully")
+            navigate("/allsubject")
+          }
+          console.log(subjState)
         })()
         
       } catch (error) {
-        console.log(error)
+        console.log(`failed to add subject : ${error}`)
+        setMsgType(TYPE.Err)
+        setMsg("Failed to add subject")
       }
     }
     else{
       let msg = "Fill all required fields"
-      // setMsg({msg,msgType:msgType.WARNING})
+      setMsgType(TYPE.Err)
+      setMsg(msg)
     }
   }
-
+  const subjState = useSelector((state) => state.crudsubject)
+  console.log(subjState)
 
   return (
     <div>

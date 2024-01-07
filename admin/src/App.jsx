@@ -22,7 +22,6 @@ import AttendancePermission from "./pages/SuperAdmin/AttendancePermission/Attend
 import PreviousAttendence from "./pages/Admin/PreviousAttendance/PreviousAttendance";
 import SubstituteTeacher from "./pages/Admin/Substitute Teacher/SubstituteTeacher";
 import ArangementClass from "./pages/Admin/ArangementClass/ArangementClass";
-
 import { authasync } from "./redux-toolkit/slices/authapislice";
 import Header from "./Universal/header";
 import AdminRoute from "./protectrouter/AdminRoute";
@@ -32,23 +31,25 @@ import UpdateAttendanceRequestPage from "./pages/Admin/PastAttendance/UpdateAtte
 import MarkPastAttendance from "./pages/Admin/AttendenceSheet/MarkPastAttendance";
 import MapStudentandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapStudentandSubject";
 import MapTeacherandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapTeacherandSubject";
+import AcademicHead from "./pages/AcademicHead/AcademicHead";
+import LogViewer from "./pages/SuperAdmin/Logs/LogViewer";
 
 function App() {
 
-const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsub=async()=>{
-      try{
+    const unsub = async () => {
+      try {
         await dispatch(authasync());
-      }catch(error){
-          console.log(error);
+      } catch (error) {
+        console.log(error);
       }
     }
     unsub();
-   }, [])
-  
-   const {IsLogin}=useContext(AuthContext);
+  }, [])
+
+  const { IsLogin } = useContext(AuthContext);
 
   return (
     <div className="w-full overflow-hidden bg-dimWhite ">
@@ -58,7 +59,7 @@ const dispatch=useDispatch();
         <Route
           path={"/"}
           element={
-              <Login />
+            <Login />
           }
         />
         <Route
@@ -93,20 +94,28 @@ const dispatch=useDispatch();
             </ProtectedRoute>
           }
         />
-      <Route
+        <Route
           path={"/pastattendancerequest"}
           element={
             <ProtectedRoute>
-              <UpdateAttendanceRequestPage/>
+              <UpdateAttendanceRequestPage />
             </ProtectedRoute>
           }
         />
-        
+
         <Route
           path={"/dashboard"}
           element={
             <AdminRoute>
               <Dashboard />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path={"/logviewer"}
+          element={
+            <AdminRoute>
+              <LogViewer />
             </AdminRoute>
           }
         />
@@ -127,13 +136,13 @@ const dispatch=useDispatch();
           }
         />
         <Route path={"/allsubject"} element={
-            <AdminRoute>
-              <AllSubject />
-            </AdminRoute> }/>
+          <AdminRoute>
+            <AllSubject />
+          </AdminRoute>} />
         <Route path={"/createstudent"} element={
-            <AdminRoute>
-              <CreateStudent />
-            </AdminRoute> }/>
+          <AdminRoute>
+            <CreateStudent />
+          </AdminRoute>} />
         <Route
           path={"/updatestudent/:id"}
           element={
@@ -214,7 +223,7 @@ const dispatch=useDispatch();
             </AdminRoute>
           }
         />
-         <Route
+        <Route
           path="/mapteacherandsubject"
           element={
             <AdminRoute>
@@ -230,6 +239,16 @@ const dispatch=useDispatch();
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/academichead"
+          element={
+            <ProtectedRoute>
+              <AcademicHead/>
+            </ProtectedRoute>
+
+          }
+        />
+            
         <Route path="/alert" element={<Alert />} />
         <Route path="*" element={<ErrMsg />} />
       </Routes>

@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 5000;
 const cors = require("cors");
 const cron = require('node-cron');
 const updateTodayAttendance = require("./Controller/UpdateTodayAttendance");
+const removeAssignedSubject = require("./Controller/RemoveAssignedSubject");
 const fileUpload = require('express-fileupload');
 const rateLimit = require("express-rate-limit");
 const path=require("path");
@@ -38,7 +39,7 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again after 15 minutes"
 });
 
-app.use(limiter);
+// app.use(limiter);
 
 // app.use((req, res, next) => {
 //   const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -65,6 +66,8 @@ mongoose.connect(process.env.MDB_CONNECT)
     app.use("/api/xlsx", require("./Routes/xlsxRouter"));
     app.use("/api/studentattendancerequest", require("./Routes/attendanceRequestRouter.js"));
     app.use("/api/mapstudentsubject", require("./Routes/combineStudentandSubject.js"));
+    app.use("/api/academichead", require("./Routes/academicHeadRouter.js"));
+    app.use("/api/substituteteacher", require("./Routes/substituteTeacher.js"));
     
     
     app.use(express.static('admin/dist'));
@@ -72,11 +75,17 @@ mongoose.connect(process.env.MDB_CONNECT)
             res.sendFile(path.resolve('admin','dist','index.html'));
     });
 
+    // app.use(express.static('client/dist'));
+    // app.get('*', (req, res) => {
+    //         res.sendFile(path.resolve('client','dist','index.html'));
+    // });
+
     // Schedule the cron jobs
     cron.schedule('31 5 * * *', async () => {
       console.log('Running teacher rating update job...');
       try {
         const result = await updateTodayAttendance();
+        removeAssignedSubject();
         console.log(result);
 
       } catch (error) {

@@ -107,9 +107,9 @@ export default function Login() {
         </div>
         <button className='button' onClick={handellogin}>Login</button>
         {/* <button className='button' onClick={()=>{dispatch(logoutAsync())}}>Logout</button> */}
-        <a className="forgotLink" href="#">
+        {/* <a className="forgotLink" href="#">
           Forgot your password?
-        </a>
+        </a> */}
       </div>
 
     </div>
