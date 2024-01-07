@@ -99,121 +99,198 @@
 
 /* Responsive CSS */
 @media (min-width: 320px) and (max-width: 480px){
+    .allSubjectMain{
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+    }
     .allSubjectMain h2 {
-        font-size: 1.2rem;
+        font-size: 1.6rem;
     }
 
     .allSubjectTable {
         max-width: 100vw;
-        width: 100%;
-        padding: 0.5rem;
-        margin: 0.5rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        padding: 0.1rem;
     }
 
     .adminSubjectTableHead {
-        min-width: 12vw;
-        padding: 0.5rem;
-        text-align: center;
+        min-width: 8vw;
+        padding: 0.5rem 0.2rem;
         font-size: 0.8rem;
     }
 
     .adminSubjectTableData {
-        min-width: 12vw;
-        padding: 0.5rem;
-        text-align: center;
-        font-size: 0.8rem;
+        min-width: 8vw;
+        padding: 0.5rem 0.2rem;
+        /* text-align: center; */
+        font-size: 0.7rem;
     }
 
     .tablePageButtons{
         padding: 0.5rem;
-        margin: 0.5rem;
+        margin: 0.2rem;
+    }
+    .nAndpButtons {
+        margin: 0.2rem 1rem;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .pageNoDetails {
+        margin: 0.2rem 1rem;
+        padding: 0.2rem;
+        font-size: 1rem;
+    }
+
+    .tableActions {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        width: auto;
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
+    }
+
+    .actionBtn {
+        height: 0.4rem;
+        width: 0.4rem;
+    }
+
+    .actionBtn img {
+        height: 60%;
+        width: 60%;
     }
 }
 
 @media (min-width: 480px) and (max-width: 600px){
+    .allSubjectMain{
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+    }
     .allSubjectMain h2 {
-        font-size: 1.2rem;
+        font-size: 1.7rem;
     }
 
     .allSubjectTable {
         max-width: 100vw;
-        width: 100%;
-        padding: 0.5rem;
-        margin: 0.5rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        padding: 0.1rem;
     }
 
     .adminSubjectTableHead {
-        min-width: 12vw;
-        padding: 0.5rem;
-        text-align: center;
+        min-width: 8vw;
+        padding: 0.5rem 0.2rem;
         font-size: 0.8rem;
     }
 
     .adminSubjectTableData {
-        min-width: 12vw;
-        padding: 0.5rem;
-        text-align: center;
-        font-size: 0.8rem;
+        min-width: 8vw;
+        padding: 0.5rem 0.2rem;
+        /* text-align: center; */
+        font-size: 0.7rem;
     }
 
     .tablePageButtons{
         padding: 0.5rem;
-        margin: 0.5rem;
+        margin: 0.2rem;
+    }
+    .nAndpButtons {
+        margin: 0.2rem 1rem;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .pageNoDetails {
+        margin: 0.2rem 1rem;
+        padding: 0.2rem;
+        font-size: 1rem;
+    }
+
+    .tableActions {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        width: auto;
         display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
+    }
+
+    .actionBtn {
+        height: 0.4rem;
+        width: 0.4rem;
+    }
+
+    .actionBtn img {
+        height: 60%;
+        width: 60%;
     }
 }
 
-@media (min-width: 600px) and (max-width: 800px){
+/* @media (min-width: 600px) and (max-width: 800px){
+    .allSubjectMain{
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+    }
     .allSubjectMain h2 {
-        font-size: 1.2rem;
+        font-size: 1.6rem;
     }
 
     .allSubjectTable {
         max-width: 100vw;
-        width: 100%;
-        padding: 0.5rem;
-        margin: 0.5rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        padding: 0.1rem;
     }
 
     .adminSubjectTableHead {
-        min-width: 12vw;
-        padding: 0.5rem;
-        text-align: center;
+        min-width: 8vw;
+        padding: 0.5rem 0.2rem;
         font-size: 0.8rem;
     }
 
     .adminSubjectTableData {
-        min-width: 12vw;
-        padding: 0.5rem;
-        text-align: center;
-        font-size: 0.8rem;
+        min-width: 8vw;
+        padding: 0.5rem 0.2rem;
+        font-size: 0.7rem;
     }
 
     .tablePageButtons{
         padding: 0.5rem;
-        margin: 0.5rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        margin: 0.2rem;
     }
-}
+    .nAndpButtons {
+        margin: 0.2rem 1rem;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .pageNoDetails {
+        margin: 0.2rem 1rem;
+        padding: 0.2rem;
+        font-size: 1rem;
+    }
+
+    .tableActions {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        width: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .actionBtn {
+        height: 0.4rem;
+        width: 0.4rem;
+    }
+
+    .actionBtn img {
+        height: 60%;
+        width: 60%;
+    }
+} */
 
 /* @media (min-width: 800px) and (max-width: 1024px){
 
