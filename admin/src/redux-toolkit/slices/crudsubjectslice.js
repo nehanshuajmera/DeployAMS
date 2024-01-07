@@ -87,7 +87,24 @@ export const extraLectureAsync = createAsyncThunk('subjectCRUD/extraLectureAsync
     return rejectWithValue(error.message);
   }
 });
-
+export const deleteSubjrctAsync = createAsyncThunk('sububjectCRUD/deleteSububjectAsync', async (studentId, { rejectWithValue }) => {
+  try {
+      // if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
+      // {
+          const response = await axios.get(`/api/admin/deletestudent/${studentId}`);
+          const msg = response.data.message;
+          
+          if(response.status === 200)       
+              return msg;
+          
+          // Return undefined or an error object if the request fails
+          return rejectWithValue(msg);
+      // }
+  } catch (error) {
+      // Return undefined or an error object if an error occurs
+      return rejectWithValue(error.message);
+  }
+});
 export const crudSubjectsSlice = createSlice(
   {
     name: 'subjectCRUD',
