@@ -159,7 +159,7 @@ export default function AllStudent() {
   );
 
   const { pageIndex, globalFilter } = state;
-  
+
   // state functions and variables for deletion
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState(null);
@@ -167,13 +167,13 @@ export default function AllStudent() {
   const toggleDeleteConfirmation = (itemId = null) => {
     setDeleteItemId(itemId);
     setShowDeleteConfirmation(!showDeleteConfirmation);
-    console.log(showDeleteConfirmation)
+    console.log(showDeleteConfirmation);
   };
 
   const handleDelete = async (itemId) => {
     toggleDeleteConfirmation(itemId);
     // Handle deletion if confirmed
-    console.log(showDeleteConfirmation)
+    console.log(showDeleteConfirmation);
     if (showDeleteConfirmation) {
       try {
         await dispatch(deleteStudentAsync(itemId));
@@ -251,9 +251,13 @@ export default function AllStudent() {
           </tbody>
         </table>
       </div>
-       {/* Delete Confirmation Popup */}
-       {showDeleteConfirmation && (
-        <DeletePOP toggleDeleteConfirmation={toggleDeleteConfirmation} deleteItemId={deleteItemId} handleDelete={handleDelete}/>
+      {/* Delete Confirmation Popup */}
+      {showDeleteConfirmation && (
+        <DeletePOP
+          toggleDeleteConfirmation={toggleDeleteConfirmation}
+          deleteItemId={deleteItemId}
+          handleDelete={handleDelete}
+        />
       )}
       {page.length ? (
         <div className="tablePageButtons">
@@ -287,5 +291,3 @@ export default function AllStudent() {
     </div>
   );
 }
-
-
