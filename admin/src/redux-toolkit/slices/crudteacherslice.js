@@ -80,6 +80,7 @@ export const crudTeacherSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(createTeacherAsync.fulfilled, (state, action) => {
+                state={...initialState}
                 state.change = true;
                 state.message = action.payload;
             })
@@ -88,6 +89,7 @@ export const crudTeacherSlice = createSlice({
                 state.errMsg =  action.payload;
             })
             .addCase(updateTeacherAsync.fulfilled, (state, action) => {
+                state={...initialState}
                 state.change = true;
                 state.message = action.payload;
             })
@@ -96,6 +98,7 @@ export const crudTeacherSlice = createSlice({
                 state.errMsg =  action.payload;
             })
             .addCase(deleteTeacherAsync.fulfilled, (state, action) => {
+                state={...initialState}
                 state.change = true;
                 state.message = action.payload;
             })
