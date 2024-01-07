@@ -12,11 +12,16 @@ const PreviousAttendance = () => {
     return dateObj.toLocaleDateString('en-US', options);
   };
 
+  
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`/api/teacher/studentsattendance/${sub_id}`);
+        console.log(response.data);
         setDataOfStudent(response.data);
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -41,6 +46,9 @@ const PreviousAttendance = () => {
                     {convertDate(dates.date)}
                   </th>
                 ))}
+                <th className='py-2 px-4 border'>Attended Classes</th>
+                <th className='py-2 px-4 border'>Total Classes</th>
+                <th className='py-2 px-4 border'>Attendance Percentage</th>
             </tr>
           </thead>
           <tbody>
@@ -56,13 +64,16 @@ const PreviousAttendance = () => {
                 dataofstudent.subject.lecture_dates.map((dates) => (
                   <th key={dates._id} className="py-2 px-4 border">
                      {formattedAttendance.includes(convertDate(dates.date)) ? (
-                              <td className='dataForStudents bg-green-500 '> present</td>
+                              <td className='dataForStudents bg-green-500 '> present </td>
                             ) : (
                               <td className='dataForStudents bg-red-500 ' > Absent</td>
                             )
                             }
                   </th>
                 ))}
+                <td className='py-2 px-4 border'>{selectedsubject.attendance.reduce((result,ele)=>(result+=ele.count),0)}</td>
+                <td className='py-2 px-4 border'>{dataofstudent?.subject?.lecture_dates?.reduce((result,ele)=>(result+=ele.count),0)}</td>
+                <td className='py-2 px-4 border'>{selectedsubject.attendance.reduce((result,ele)=>(result+=ele.count),0)/dataofstudent?.subject?.lecture_dates?.reduce((result,ele)=>(result+=ele.count),0)*100} %</td>
                 </tr>
               );
             })}

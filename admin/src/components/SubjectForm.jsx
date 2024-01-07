@@ -69,7 +69,7 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
 
       <div className="flex justify-center items-center flex-col md:flex-row gap-5 flex-1">
         {/* department field */}
-        <div className="relative w-full grid grid-cols-3 flex-1 ">
+        <div className="relative w-full grid grid-cols-3 flex-1">
           <label
             htmlFor="department"
             className={`px-3 py-2 text-secondary text-xl col-span-1 `}
@@ -77,15 +77,19 @@ const StudentForm = ({ subject, setSubject, HandleClick }) => {
             Department
           </label>
           <div className="relative col-span-2">
-            <input
-              type="text"
-              name="department"
+            <select
               id="department"
-              className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/department focus:border-primary focus:border-[1px] "
+              name="department"
+              className="inputBox max-w-full outline-none bg-dimGray border-secondary peer/department focus:border-primary focus:border-[1px]"
               value={subject.department}
               onChange={(e) => ChangeHandler(e)}
-            />
-                      <span className="ml-2 text-lg text-primary">*</span>
+            >
+              <option value="" disabled>Select Department</option>
+              <option value="Computer Science Engineering">Computer Science Engineering</option>
+              {/* <option value="IT">IT</option> */}
+              {/* Add more departments as needed */}
+            </select>
+            <span className="ml-2 text-lg text-primary">*</span>
           </div>
         </div>
         {/* class_name field */}

@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const Teacher = require("../Model/teacherSchema");
 const Subject = require("../Model/subjectSchema");
 const Student = require("../Model/studentSchema");
-// const addLog = require('../Controller/logs');
+const addLog = require('../Controller/logs');
 
 const create_student=async (req, res) => {
     try {
@@ -30,10 +30,10 @@ const create_student=async (req, res) => {
         password: await bcrypt.hash(password, 10), // Encrypt the password before saving
         subjects,
       });
-      // addLog(`Student created: ${name}`, userId);
-  
+      
       // Save the new student to the database
       const savedStudent = await newStudent.save();
+      addLog(`Student created: ${savedStudent._id} ${enrollment_no}`, userId);
   
       return res.status(201).json({ message: "Student created successfully", student: savedStudent });
     } catch (error) {
@@ -71,6 +71,8 @@ const update_student_by_id= async (req, res) => {
       if (!updatedStudent) {
         return res.status(404).json({ message: 'Student not found' });
       }
+
+      addLog(`Student updated: ${studentId}`, req.user_id)
   
       return res.status(200).json({ message: 'Student information updated successfully', updatedStudent });
     } catch (error) {
@@ -91,7 +93,8 @@ const delete_student_by_id= async (req, res) => {
       if (!deletedStudent) {
         return res.status(404).json({ message: "Student not found" });
       }
-  
+
+      addLog(`Student deleted: ${studentId}`, req.user_id)  
       return res.status(200).json({ message: "Student deleted successfully" });
     } catch (error) {
       return res.status(500).json({ message: "Internal server error" });
@@ -102,25 +105,11 @@ const all_students=async (req, res) => {
     try {
       const userId = req.user_id; // You should have this information in your authentication middleware
     
-        if (req.user_role !== 'teacher') {
-          return res.status(403).json({ message: 'Forbidden: Access denied for non-teacher users' });
-        }
-    
-        // Check if the user has admin privileges (admin_role is "Admin")
-        const teacher = await Teacher.findById(userId);
-    
-        if (!teacher) {
-          return res.status(404).json({ message: "Teacher not found" });
-        }
-    
-        if (teacher.admin_role !== "Admin") {
-          return res.status(403).json({ message: "Forbidden: Access denied for non-admin teachers" });
-        }
       // Find all students
       const students = await Student.find();
   
       if (!students || students.length === 0) {
-        return res.status(404).json({ message: 'No students found' });
+        return res.status(404).json({ message:[], error: 'No students found' });
       }
   
       // Map students and get their subjects and teacher details
@@ -169,7 +158,7 @@ const all_students=async (req, res) => {
             branch: student.branch,
             section: student.section,
             batch: student.batch,
-            year: student.year,
+            year: 2024 - student.year,
             programme: student.programme,
             faculty: student.faculty,
             specialisation: student.specialisation,

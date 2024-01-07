@@ -1,149 +1,146 @@
-import React, { useContext } from 'react'
-import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
-import GlobalFiltering from '../../../components/GlobalFiltering';
-import { useEffect } from 'react';
-// import { deleteTeacherAsync } from '../../../redux-toolkit/slices/crudteacherslice';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-export default function SubstituteTeacher() {
-
-  const dispatch=useDispatch();
-  const navigate = useNavigate();
+const SubstituteTeacherRequests = () => {
+  const [requests, setRequests] = useState([]);
+  const [allSubjects,setALLSubjects] = useState([]);
+  const [allTeachers, setAllTeachers] = useState([]);
+  const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedTeacher, setSelectedTeacher] = useState('');
   
-  const logdata=useSelector((state)=>state.login)
   useEffect(() => {
-    const unsub=()=>{
-       dispatch(fetchdetailasync({apiname:"allteachers"}));
-    }
-   
-     return () => {
-       unsub()
-     }
-   }, [logdata])
-  
-  const dataofteacher=useSelector((state)=>state.fetchDetail.details);
-  console.log(dataofteacher);
-  const data = React.useMemo(() =>dataofteacher, [dataofteacher]);
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Teacher Id",
-        accessor: "teacher_id",
-      },
-      {
-        Header: "Department",
-        accessor: "department",
-      },
-      {
-        Header: "Phone No.",
-        accessor: "phone_no",
-      },
-      {
-        Header: 'Actions',
-        Cell: (tableInstance) => {
-          const { row: index } = tableInstance;
-          return (
-            <div>
-              <button className='actionBtn' onClick={() => console.log(index)}>
-                <img src="/substituteAlarm.png" alt="" />
-              </button>
-            </div>
-          )
-        }
+    const fetchRequests = async () => {
+      try {
+        const response = await axios.get('/api/substituteteacher/viewmyrequest');
+        setRequests(response.data.requests);
+      } catch (error) {
+        console.error('Error fetching substitute teacher requests:', error);
       }
-    ],
-    []
-  );
+    };
 
-  const initialState = {
-    pageSize: 20
-  }
+    const fetchAllTeachers = async () => {
+      try {
+        const response = await axios.get('/api/substituteteacher/getallteachers');
+        setAllTeachers(response.data.teachers);
+        // console.log(response.data.teachers)
+      } catch (error) {
+        console.error('Error fetching all teachers:', error);
+      }
+    };
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    nextPage,
-    previousPage,
-    canNextPage,
-    canPreviousPage,
-    pageOptions,
-    state,
-    setGlobalFilter,
-    prepareRow
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState,
-      enableEditing: true
-    }, useGlobalFilter, useSortBy, usePagination);
+    const fetchAllSubjects = async () => {
+      try {
+        const response = await axios.get('/api/teacher/details');
+        setALLSubjects(response.data.message.subjects);
+        // console.log(response.data.message.subjects)
 
-  const { pageIndex, globalFilter } = state;
+      } catch (error) {
+        console.error('Error fetching all teachers:', error);
+      }
+    };
 
-  const handleDelete = async(itemId)=>{
-    try {
-      // await dispatch(deleteTeacherAsync(itemId))
-    } catch (error) {
-      console.log(error)
+    fetchAllSubjects();
+
+    fetchRequests();
+    fetchAllTeachers();
+  }, []);
+
+  const handleApplyRequest = async () => {
+    if (!selectedSubject || !selectedTeacher) {
+      alert('Please select both subject and teacher');
+      return;
     }
-  }
+
+    try {
+      await axios.post('/api/substituteteacher/generaterequest', {
+        subjectId: selectedSubject,
+        assign_teacherId: selectedTeacher,
+      });
+
+      alert('Request generated successfully');
+      // Optionally, you can refetch the requests after submission
+      // setRequests([]);
+    } catch (error) {
+      console.error('Error generating request:', error);
+      alert('Error generating request');
+    }
+  };
 
   return (
-    <div className='allTeacherMain'>
-       <h2>All Teacher List</h2>
-     <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
-      <div className="allTeacherTable">
-        <table className='adminTeacherTable' {...getTableProps()}>
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr className='adminTeacherTableRow' {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th className='adminTeacherTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}>
-                    {column.render("Header")}
-                    <span>
-                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ' ↕️'}
-                    </span>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
-              prepareRow(row);
-              return (
-                <tr className='adminTeacherTableRow' {...row.getRowProps()} onClick={()=>gotoUpdate(row)}>
-                  {row.cells.map((cell) => (
-                    <td className='adminTeacherTableData' {...cell.getCellProps()}>
-                      {cell.render("Cell")}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+    <div className="container mx-auto mt-8">
+      <h1 className="text-3xl font-bold mb-4 text-blue-700">My Substitute Teacher Requests</h1>
+
+      <div className="flex gap-4 mb-4">
+        <label htmlFor="subject" className="text-lg">
+          Select Subject:
+        </label>
+        <select
+          id="subject"
+          className="p-2 border rounded"
+          onChange={(e) => setSelectedSubject(e.target.value)}
+        >
+          <option value="" disabled selected>
+            Select Subject
+          </option>
+          {allSubjects?.map((subject) =>
+            
+              <option key={subject.subject_id._id} value={subject.subject_id._id}>
+                {subject.subject_id.subject_name} - {subject.subject_id.course_code} - {subject.subject_id.section} - {subject.subject_id.batch} 
+              </option>
+            
+          )}
+        </select>
       </div>
-      {page.length ?
-        <div className="tablePageButtons">
-          <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
-          <span className="pageNoDetails">
-            {' '}Page{' '}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>
-          </span>
-          <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
-        </div>
-        : <h2 className="noData">No Data</h2>}
+
+      <div className="flex gap-4 mb-4">
+        <label htmlFor="teacher" className="text-lg">
+          Select Substitute Teacher:
+        </label>
+        <select
+          id="teacher"
+          className="p-2 border rounded"
+          onChange={(e) => setSelectedTeacher(e.target.value)}
+        >
+          <option value="" disabled selected>
+            Select Teacher
+          </option>
+          {allTeachers?.map((teacher) => (
+            <option key={teacher._id} value={teacher._id}>
+              {teacher.name} - {teacher.teacher_id}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none"
+        onClick={handleApplyRequest}
+      >
+        Apply for Substitute Teacher
+      </button>
+
+      <table className="w-full border border-collapse mt-4">
+        <thead>
+          <tr className="bg-blue-200">
+            <th className="py-2 px-4 border">Subject ID</th>
+            <th className="py-2 px-4 border">Assigned Teacher ID</th>
+            <th className="py-2 px-4 border">Status</th>
+            <th className="py-2 px-4 border">Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          {requests.map((request) => (
+            <tr key={request._id} className="hover:bg-gray-100">
+              <td className="py-2 px-4 border">{request.subjectId}</td>
+              <td className="py-2 px-4 border">{request.assign_teacherId}</td>
+              <td className="py-2 px-4 border">{request.flag ? 'Assigned' : 'Expired'}</td>
+              <td className="py-2 px-4 border">{new Date(request.created_at).toLocaleString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
-  )
-}
+  );
+};
+
+export default SubstituteTeacherRequests;

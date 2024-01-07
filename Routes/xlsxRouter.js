@@ -9,6 +9,7 @@ const bcrypt = require("bcrypt");
 const isauthenticated = require('../Middleware/authenticated');
 const isAdmin = require('../Middleware/checkadmin');
 const fs = require('fs'); 
+const addLog=require('../Controller/logs');
 
 router.post("/addstudentxlsx", isAdmin, async (req, res) => {
     try {
@@ -18,21 +19,25 @@ router.post("/addstudentxlsx", isAdmin, async (req, res) => {
         const sheetName = workbook.SheetNames[0];
         const studentsData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
+        const password="medicaps";
+
         
         const students = await Promise.all(studentsData.map(async data => ({
             name: data.name,
             enrollment_no: data.enrollment_no,
             scholar_no: data.scholar_no,
-            email: data.email,
+            email: data.enrollment_no+"@medicaps.ac.in",
             phone_no: data.phone_no,
             programme: data.programme,
             faculty: data.faculty,
             specialisation: data.specialisation,
             year: data.year,
+            department: data.department,
+            class_name: data.class_name,
             branch: data.branch,
-            section: data.section,
-            batch: data.batch,
-            password: await bcrypt.hash(data.password, 10),
+            section: "A",
+            batch: "II",
+            password: await bcrypt.hash(password, 10),
             created_at_and_by: {
                 admin_name: req.user_id,
             },
@@ -43,6 +48,8 @@ router.post("/addstudentxlsx", isAdmin, async (req, res) => {
 
         // Save the students to the database
         const savedStudents = await Student.insertMany(students);
+
+        addLog("Added Students via xlsx",req.user_id);
 
         res.status(200).json({ msg: 'Students added successfully', data: savedStudents });
 
@@ -61,18 +68,19 @@ router.post("/addteacherxlsx", isAdmin, async (req, res) => {
         const sheetName = workbook.SheetNames[0];
         const teachersData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
         // console.log(teachersData)
+        const password="medicaps";
 
         const teachers = await Promise.all(teachersData.map(async data => ({
             teacher_id: data.teacher_id,
             name: data.name,
             email: data.email,
             phone_no: data.phone_no,
-            admin_role: data.admin_role,
             department: data.department,
             faculty: data.faculty,
-            designation: data.designation,
+            admin_role: "teacher",
+            designation: "teacher",
             subjects: [],
-            password: await bcrypt.hash(data.password, 10),
+            password: await bcrypt.hash(password, 10),
             created_at_and_by: {
                 admin_name: req.user_id,
             }
@@ -80,6 +88,8 @@ router.post("/addteacherxlsx", isAdmin, async (req, res) => {
 
         // Save the teachers to the database
         const savedTeachers = await Teacher.insertMany(teachers);
+        addLog("Added Teacher via xlsx",req.user_id);
+
 
         res.status(200).json({ msg: 'Teachers added successfully', data: savedTeachers });
         
@@ -101,6 +111,8 @@ router.post("/addsubjectxlsx", isAdmin, async (req, res) => {
             course_code: data.course_code,
             branch: data.branch,
             section: data.section,
+            department: data.department,
+            class_name: data.class_name,
             batch: data.batch,
             lecture_dates: [],
             day: [],
@@ -108,6 +120,8 @@ router.post("/addsubjectxlsx", isAdmin, async (req, res) => {
 
         // Save the subjects to the database
         const savedSubjects = await Subject.insertMany(subjects);
+        
+        addLog("Added Subjects via xlsx",req.user_id);
 
         res.status(200).json({ msg: 'Subjects added successfully', data: savedSubjects });
         

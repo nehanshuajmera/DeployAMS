@@ -13,6 +13,8 @@ router.post("/asktoupdate/:id",isauthenticated,isTeacher ,async(req,res)=>{
         const teacher = await Teacher.findById(req.user_id);
         const subject = await Subject.findById(req.params.id);
         
+        // console.log(req.body)
+
         if(!teacher){
             return res.status(401).json({message:"Invalid Teacher ID"});
         }
@@ -23,7 +25,13 @@ router.post("/asktoupdate/:id",isauthenticated,isTeacher ,async(req,res)=>{
         if(!date){
             return res.status(401).json({message:"Date not provided"});
         }
-        const date1 = new Date(date);
+        var date1 = new Date(date);
+        // increase 5:30
+        date1.setHours(date1.getHours() + 5);
+        date1.setMinutes(date1.getMinutes() + 30);
+
+        // console.log(date1)
+
         const date2 = new Date();
         if(date1.getTime() > date2.getTime()){
             return res.status(401).json({message:"You cannot update attendance of future"});
@@ -36,7 +44,9 @@ router.post("/asktoupdate/:id",isauthenticated,isTeacher ,async(req,res)=>{
             status:"pending"
         });
         await request.save();
-        // addLog(req.user.user_id,`Teacher ${teacher.name} asked to update attendance of subject ${subject.name} on date ${date}`);
+        
+        addLog(`Teacher ${teacher.name} asked to update attendance of subject ${subject.subject_name} on date ${date}`,req.user_id);
+
         return res.status(200).json({message:"Request sent"});
     }
     catch(error){
@@ -50,7 +60,7 @@ router.get("/viewmyrequest",isauthenticated,isTeacher,async(req,res)=>{
     try{
         const requests = await scheduleRequest
   .find({ teacher: req.user_id, typeOfRequest: "update" })
-  .populate({ path: "subject", model: Subject, select: "subject_name" })
+  .populate({ path: "subject", model: Subject, select:["subject_name","course_code","section","branch","batch","class_name"] })
 //   .sort({ createdAt: -1 });
 
 
@@ -83,7 +93,7 @@ router.get("/viewmyrequestdetail/:id",isauthenticated,isTeacher,async(req,res)=>
 //  create a api for admin to see all the request of teacher to update attendance
 router.get("/viewallrequest",isAdmin,async(req,res)=>{
     try{
-        const requests = await scheduleRequest.find({typeOfRequest:"update"}).populate({path:"teacher",model:Teacher,select:"name"}).populate({path:"subject",model:Subject,select:"subject_name"}).sort({createdAt:-1});
+        const requests = await scheduleRequest.find({typeOfRequest:"update"}).populate({path:"teacher",model:Teacher,select:"name"}).populate({path:"subject",model:Subject,select:["subject_name","course_code","section","branch","batch","class_name"]}).sort({createdAt:-1});
         return res.status(200).json({requests});
     }
     catch(error){
@@ -105,13 +115,13 @@ router.post("/acceptorreject/:id",isAdmin,async(req,res)=>{
         if(req.body.status === "Accepted"){
             request.status = "approved";
             await request.save();
-            // addLog(req.user.user_id,`Admin accepted the request of teacher ${request.teacher.name} to update attendance of subject ${request.subject.name} on date ${request.proposedDateTime}`);
+            addLog(`Admin accepted the request ${request._id}`,req.user.user_id);
             return res.status(200).json({message:"Request accepted"});
         }
         else if(req.body.status === "Rejected"){
             request.status = "denied";
             await request.save();
-            // addLog(req.user.user_id,`Admin rejected the request of teacher ${request.teacher.name} to update attendance of subject ${request.subject.name} on date ${request.proposedDateTime}`);
+            addLog(`Admin rejected the request ${request._id}`,req.user.user_id);
             return res.status(200).json({message:"Request rejected"});
         }
         else{
@@ -136,6 +146,12 @@ router.post("/updateattendancebypermission/:id", isauthenticated, isTeacher, asy
       if(!request){
           return res.status(401).json({message:"Invalid Request ID"});
       }
+      const date2 = new Date();
+
+    
+      // if(request.updated_at - date2 > 0){
+      //   return res.status(401).json({ message: "Request already processed" });
+      // }
 
       const subject = await Subject.findById(request[0].subject);
  
@@ -156,7 +172,7 @@ router.post("/updateattendancebypermission/:id", isauthenticated, isTeacher, asy
       const date = request[0].proposedDateTime;
       // console.log(date);  
       const date1 = new Date(date);
-      const date2 = new Date();
+      
 
       if (date1.getTime() > date2.getTime()) {
         return res.status(401).json({ message: "You cannot update attendance of the future" });
@@ -204,7 +220,7 @@ router.post("/updateattendancebypermission/:id", isauthenticated, isTeacher, asy
         if (subjectIndex !== -1) {
           const subjectAttendance = student.subjects[subjectIndex].attendance;
   
-          const attendanceIndex = subjectAttendance.findIndex(att => att.date.getFullYear() === date2.getFullYear() && att.date.getMonth() === date2.getMonth() && att.date.getDate() === date2.getDate());
+          const attendanceIndex = subjectAttendance.findIndex(att => att.date.getFullYear() === date1.getFullYear() && att.date.getMonth() === date1.getMonth() && att.date.getDate() === date1.getDate());
   
           if (attendanceIndex !== -1) {
             subjectAttendance[attendanceIndex].count = count;
@@ -214,15 +230,20 @@ router.post("/updateattendancebypermission/:id", isauthenticated, isTeacher, asy
             }
           } else {
             if (count !== 0) {
-              subjectAttendance.push({ date: new Date(date2), count, cause: '' });
+              subjectAttendance.push({ date: new Date(date1), count, cause: date2.toDateString() +" Past Attendance" });
             }
           }
   
           await student.save();
+
+          // expire the request
+          request[0].status = "processed";
+          await request[0].save();
         } else {
           return res.status(404).json({ message: "Student not found" });
         }
       }
+      addLog(`Attendance updated for ${subject.subject_name} request Id ${req.params.id} on date ${date1}`,req.user_id);
   
       return res.status(200).json({ message: 'Attendance updated successfully' });
     } catch (error) {

@@ -1,6 +1,5 @@
 .allTeacherMain {
     max-width: 100vw;
-    width: 100%;
     color: #000;
     display: flex;
     flex-direction: column;
@@ -18,7 +17,6 @@
 .allTeacherTable {
     align-self: center;
     max-width: 90vw;
-    width: 90%;
     /* border: 1px solid red; */
     padding: 0.5rem;
     margin: 0.5rem;
@@ -31,12 +29,12 @@
     border: 1px solid hotpink;
 } */
 
-.adminTeacherTableRow{
+.adminTeacherTableRow {
     border-bottom: 1px dashed #000;
 }
 
 .adminTeacherTableRow:hover {
-    background-color: #E2ECEB;
+    background-color: #d2e9f9;
 }
 
 .adminTeacherTableHead {
@@ -44,12 +42,8 @@
     padding: 1rem;
     text-align: center;
     font-size: 1rem;
-    background-color: #000;
+    background-color: #030955;
     color: #fff;
-    position: sticky;
-    top: 0;
-    border: hidden;
-    z-index: 999;
 }
 
 .adminTeacherTableData {
@@ -61,7 +55,7 @@
     font-weight: 500;
 }
 
-.tablePageButtons{
+.tablePageButtons {
     /* border: 1px solid gold; */
     padding: 1rem;
     margin: 0.5rem;
@@ -70,7 +64,7 @@
     align-items: center;
 }
 
-.nAndpButtons{
+/* .nAndpButtons{
     margin: 0.2rem 3rem;
     padding: 0.5rem;
     text-align: center;
@@ -79,12 +73,154 @@
     border-radius: 0.3rem;
     font-size: 1rem;
     font-weight: 500;
-}
+} */
 
-.pageNoDetails{
+/* .pageNoDetails{
     margin: 0.2rem 2rem;
     padding: 0.5rem;
     text-align: center;
     font-weight: 500;
+} */
+
+/* Responsive CSS */
+@media (min-width: 320px) and (max-width: 480px) {
+    .allTeacherMain {
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+    }
+
+    .allTeacherMain h2 {
+        font-size: 1.6rem;
+    }
+
+    .allTeacherTable {
+        width: 100vw;
+        padding: 0.1rem;
+    }
+
+    /* .adminTeacherTable{
+        width: 100vw;
+    } */
+
+    .adminTeacherTableHead {
+        min-width: 8vw;
+        padding: 0.5rem 0.2rem;
+        /* border: 1px solid #000; */
+        font-size: 0.8rem;
+    }
+
+    .adminTeacherTableData {
+        min-width: 8vw;
+        padding: 0.5rem 0.2rem;
+        font-size: 0.7rem;
+        /* border: 1px solid #000; */
+    }
+
+    .tablePageButtons {
+        padding: 0.5rem;
+        margin: 0.2rem;
+    }
+
+    .nAndpButtons {
+        margin: 0.2rem 1rem;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .pageNoDetails {
+        margin: 0.2rem 1rem;
+        padding: 0.2rem;
+        font-size: 1rem;
+    }
+
+    .tableActions {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        width: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .actionBtn {
+        height: 0.4rem;
+        width: 0.4rem;
+    }
+
+    .actionBtn img {
+        height: 60%;
+        width: 60%;
+    }
 }
 
+@media (min-width: 480px) and (max-width: 599px) {
+    .allTeacherMain {
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+    }
+
+    .allTeacherMain h2 {
+        font-size: 1.7rem;
+    }
+
+    .allTeacherTable {
+        max-width: 100vw;
+        padding: 0.2rem;
+    }
+
+    /* .adminTeacherTable{
+        width: 100vw;
+    } */
+
+    .adminTeacherTableHead {
+        min-width: 8vw;
+        padding: 0.5rem 0.3rem;
+        font-size: 0.8rem;
+    }
+
+    .adminTeacherTableData {
+        min-width: 8vw;
+        padding: 0.5rem 0.3rem;
+        font-size: 0.7rem;
+    }
+
+    .tablePageButtons {
+        padding: 0.5rem;
+        margin: 0.2rem;
+    }
+
+    .nAndpButtons {
+        margin: 0.2rem 1rem;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .pageNoDetails {
+        margin: 0.2rem 1rem;
+        padding: 0.2rem;
+        font-size: 1rem;
+    }
+
+    .tableActions {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        width: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .actionBtn {
+        height: 0.4rem;
+        width: 0.4rem;
+    }
+
+    .actionBtn img {
+        height: 60%;
+        width: 60%;
+    }
+}

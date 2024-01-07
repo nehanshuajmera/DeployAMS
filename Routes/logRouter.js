@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Log = require('../Model/logSchema'); // Import your Log model
-
+const isAdmin = require('../Middleware/checkadmin');
 // GET / - Retrieve all log entries
-router.get('/', async (req, res) => {
+router.get('/',isAdmin, async (req, res) => {
   try {
     // Find all log entries
     const logs = await Log.find();

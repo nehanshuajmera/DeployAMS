@@ -18,7 +18,7 @@ const scheduleRequestSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'approved', 'denied'],
+    enum: ['pending', 'approved', 'denied','processed'],
     default: 'pending',
   },
   created_at: {

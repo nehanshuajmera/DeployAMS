@@ -5,7 +5,9 @@ import { useState } from "react";
 import TeacherForm from "../../../components/TeacherForm";
 import { createTeacherAsync } from "../../../redux-toolkit/slices/crudteacherslice";
 import { teacherFieldVerify } from "../../../action/InputFieldVerification";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
+import { useNavigate } from "react-router-dom";
 
 
 const data = {
@@ -23,6 +25,8 @@ const data = {
 const CreateTeacher = () => {
   const [teacher, setTeacher] = useState(data);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {setMsgType, setMsg} = useMsgErr()
 
   
   const HandleClick = ()=>{
@@ -30,18 +34,31 @@ const CreateTeacher = () => {
       try {
         ;(async()=>{
           await dispatch(createTeacherAsync({...teacher}))
+          if (teacherState.isErr) {
+            setMsgType(TYPE.Err);
+            setMsg(teacherState.errMsg);
+          } else {
+            setMsgType(TYPE.Success);
+            setMsg("Teacher added successfully");
+            navigate("/allteacher");
+          }
+          console.log(teacherState);
         })()
         
       } catch (error) {
-        console.log(error)
+        console.log(`failed to add teacher : ${error}`);
+        setMsgType(TYPE.Err);
+        setMsg("Failed to add teacher");
       }
     }
     else{
       let msg = "Fill all required fields"
-      // setMsg({msg,msgType:msgType.WARNING})
+      setMsgType(TYPE.Err)
+      setMsg(msg)
     }
   }
 
+  const teacherState = useSelector((state) => state.crudteacher);
 
   return (
     <div>

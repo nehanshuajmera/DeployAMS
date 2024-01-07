@@ -76,10 +76,11 @@ export default function MarkPastAttendance() {
 
     useEffect(() => {
       const proposedDateTime = requestData?.proposedDateTime;
+      console.log("proposedDateTime",proposedDateTime);
       const lectureDates = subjectDeatils.lecture_dates;
      if (lectureDates && proposedDateTime) {
        const subject_count =  lectureDates.find((ele) => ele.date === proposedDateTime)?.count;
-       // console.log("Subject count",subject_count);
+       console.log("Subject count",subject_count);
        setMaxCount(subject_count);
      }
     }, [requestData,subjectDeatils]);
@@ -148,7 +149,7 @@ export default function MarkPastAttendance() {
         return (tempTime.getDate() === pastDate.getDate() && tempTime.getMonth() === pastDate.getMonth() && tempTime.getFullYear() === pastDate.getFullYear() )
       })
       // console.log({tempCount})
-      tempCount = tempCount.count;
+      tempCount = tempCount?.count;
 
       console.log(tempCount,stud.name)
       // console.log(tempLecture)
@@ -279,7 +280,7 @@ export default function MarkPastAttendance() {
 
 
   return (
-    <div className="markAttendanceMain w-screen h-screen">
+    <div className="markAttendanceMain w-screen h-full">
       <h2>Attendance Sheet</h2>
       <p>Date : { new Date(requestData?.proposedDateTime).toLocaleDateString('en-US', {
     year: 'numeric',
