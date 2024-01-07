@@ -14,6 +14,7 @@ export default function AllStudent() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
     const unsub = async () => {
+      console.log("clicked");
       try {
         await dispatch(fetchdetailasync({ apiname: "allstudents" }));
       }
