@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './Log.css'
 
 const LogViewer = () => {
   const [logs, setLogs] = useState([]);
@@ -32,10 +33,9 @@ const LogViewer = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8">
-      <h1 className="text-3xl font-bold mb-4 text-blue-700">Log Viewer</h1>
-
-      <div className="flex gap-4 mb-4">
+    <div className="logContainer container mx-auto mt-8">
+      <h1 className="logHeading text-3xl font-bold mb-4 text-blue-700">Log Viewer</h1>
+      <div className="logBttn flex gap-4 mb-4">
         <input
           type="text"
           placeholder="Search logs"
@@ -57,20 +57,20 @@ const LogViewer = () => {
         </button>
       </div>
 
-      <table className="w-full border border-collapse">
+      <table className="logTable w-full border border-collapse">
         <thead>
-          <tr className="bg-blue-200">
-            <th className="py-2 px-4 border">Message</th>
-            <th className="py-2 px-4 border">Created By</th>
-            <th className="py-2 px-4 border">Timestamp</th>
+          <tr className="logTableRow bg-blue-200">
+            <th className="logTableHead py-2 px-4 border">Message</th>
+            <th className="logTableHead py-2 px-4 border">Created By</th>
+            <th className="logTableHead py-2 px-4 border">Timestamp</th>
           </tr>
         </thead>
         <tbody>
           {logs.map((log) => (
-            <tr key={log._id} className="hover:bg-gray-100">
-              <td className="py-2 px-4 border">{log.message}</td>
-              <td className="py-2 px-4 border">{log.createdBy}</td>
-              <td className="py-2 px-4 border">{new Date(log.timestamp).toLocaleString()}</td>
+            <tr key={log._id} className="logTableRow hover:bg-gray-100">
+              <td className="logTableData py-2 px-4 border">{log.message}</td>
+              <td className="logTableData py-2 px-4 border">{log.createdBy}</td>
+              <td className="logTableData py-2 px-4 border">{new Date(log.timestamp).toLocaleString()}</td>
             </tr>
           ))}
         </tbody>
