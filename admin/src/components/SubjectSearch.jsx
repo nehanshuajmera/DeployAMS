@@ -157,6 +157,12 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
             ) : (
               detailsofSelectedSubject.map((subject) => {
                 // console.log(subject)
+                const permissionChange = (e) => {
+                  return {
+                    ...subject,
+                    permission: e.target.value,
+                  }
+                }
                 return (
                   <tr key={subject._id} className="py-2 px-2 border grid grid-cols-8">
                     <td className="py-2 px-2 border col-span-3 text-center">{subject.subject_name}</td>
@@ -164,6 +170,11 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
                       {subject.course_code}
                     </td>
                     <td className="py-2 px-2 border col-span-2 text-center">
+                      {/* <select name="permission" id="permission" value={subject.permission} onChange={permissionChange
+                      } >
+                        <option value="write" default>Write</option>
+                        <option value="read">Read</option>
+                      </select> */}
                       {subject.permission}
                     </td>
                     <td
