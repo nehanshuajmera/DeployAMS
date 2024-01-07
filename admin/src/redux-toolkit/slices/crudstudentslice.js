@@ -76,7 +76,7 @@ export const crudstudentslice = createSlice(
         extraReducers: (builder) => {
             builder
                 .addCase(createStudentasync.fulfilled, (state, action) => {
-    
+                    state={...initialState}
                     state.change = true;
                     state.message=action.payload;
                 })
@@ -85,20 +85,22 @@ export const crudstudentslice = createSlice(
                     state.errMsg =  action.payload
                 })
                 .addCase(updateStudentasync.fulfilled, (state, action) => {
-    
+                    state={...initialState}
                     state.change = true;
                     state.message=action.payload;
                 })
                 .addCase(updateStudentasync.rejected, (state, action) => {
+                    
                     state.isErr = true;
                     state.errMsg =  action.payload
                 })
                 .addCase(deleteStudentAsync.fulfilled, (state, action) => {
-    
+                    state={...initialState}
                     state.change = true;
                     state.message=action.payload;
                 })
                 .addCase(deleteStudentAsync.rejected, (state, action) => {
+                    state={...initialState}
                     state.isErr = true;
                     state.errMsg =  action.payload
                 })
