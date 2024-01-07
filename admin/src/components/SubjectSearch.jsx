@@ -161,9 +161,9 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
                 key={data._id}
                 className="text-black cursor-pointer"
                 value={data._id}
-                // onClick={() => addSubject(data._id)}
-                // onSelect={() => addSubject(data._id)}
-                // onSelect={() => console.log(data._id)}
+              // onClick={() => addSubject(data._id)}
+              // onSelect={() => addSubject(data._id)}
+              // onSelect={() => console.log(data._id)}
               >
                 {data.subject_name} - {data.course_code}
               </option>
@@ -177,17 +177,17 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
       <div className="flex gap-3 flex-wrap mt-[100px] w-[300px] md:w-[400px]">
         <table className="flexCenter flex-col">
           <thead>
-            <tr className="py-2 px-2 border grid grid-cols-8">
+            <tr className="py-2 px-2 border grid grid-cols-11">
               <th className="py-2 px-2 border col-span-3 text-center">
                 Subject Name
               </th>
-              <th className="py-2 px-2 border col-span-2 text-center">
+              <th className="py-2 px-2 border col-span-3 text-center">
                 Course Code
               </th>
-              <th className="py-2 px-2 border col-span-2 text-center">
+              <th className="py-2 px-2 border col-span-3 text-center">
                 Permission
               </th>
-              <th className="py-2 px-2 border col-span-1 text-center">
+              <th className="py-2 px-1 border col-span-2 text-center">
                 Remove
               </th>
             </tr>
@@ -201,15 +201,15 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
                 return (
                   <tr
                     key={subject._id}
-                    className="py-2 px-2 border grid grid-cols-8"
+                    className="py-2 px-2 border grid grid-cols-11"
                   >
                     <td className="py-2 px-2 border col-span-3 text-center">
                       {subject.subject_name}
                     </td>
-                    <td className="py-2 px-2 border col-span-2 text-center">
+                    <td className="py-2 px-2 border col-span-3 text-center">
                       {subject.course_code}
                     </td>
-                    <td className="py-2 px-2 border col-span-2 text-center">
+                    <td className="py-2 px-2 border col-span-3 text-center">
                       <select
                         name="permission"
                         id="permission"
@@ -223,7 +223,7 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
                       {subject.permission}
                     </td>
                     <td
-                      className="py-2 px-2 border col-span-1 text-center right-2 text-3xl flexCenter cursor-pointer"
+                      className="py-2 px-2 border col-span-2 text-center right-2 text-3xl flexCenter cursor-pointer"
                       onClick={() => removeSubject(subject._id)}
                     >
                       <IoIosClose />
