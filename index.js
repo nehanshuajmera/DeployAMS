@@ -34,12 +34,12 @@ app.use((err, req, res, next) => {
 
 // Use rate limiting middleware
 const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minutes
+  windowMs: 2 * 60 * 1000, // 1 minutes
   max: 300, // limit each IP to 100 requests per windowMs
   message: "Too many requests from this IP, please try again after 15 minutes"
 });
 
-// app.use(limiter);
+app.use(limiter);
 
 // app.use((req, res, next) => {
 //   const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
