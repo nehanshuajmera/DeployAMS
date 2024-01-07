@@ -10,7 +10,6 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
   const [selectedSubject, setSelectedSubject] = useState([...subjects]);
   console.log(selectedSubject);
 
-
   // fetch all subjects
   useEffect(() => {
     const unsub = async () => {
@@ -29,13 +28,11 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
 
   //   add subject
   const addSubject = (sub_id) => {
-
     // check if subject is already in the Selected Array
     if (detailsofSelectedSubject.find((ele) => ele._id === sub_id)) {
       return;
     }
     // add new Subject
-    
     setSelectedSubject((prev) => [
       ...prev,
       { subject_id: sub_id, permission: "write" },
@@ -44,15 +41,13 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
 
   // remove subject
   const removeSubject = (sub_id) => {
-    console.log(sub_id);
-    console.log(selectedSubject);
     const newList = selectedSubject.filter(
       (subject) => subject.subject_id !== sub_id
     );
     setSelectedSubject(newList);
   };
 
-// search function
+  // search function
   const searchFunc = (e) => {
     setSearch(e.target.value);
     console.log(search);
@@ -95,11 +90,29 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
 
   //   change detailsofSelectedSubject state on change of subjects array
   useEffect(() => {
-    let temp = allSubjectData.filter((subj) =>
-      selectedSubject.find((elem) => elem.subject_id == subj._id)
-    );
+    let temp = allSubjectData.filter((subj) => {
+      let obj = selectedSubject.find((elem) => elem.subject_id == subj._id);
+      if (obj) {
+        console.log(obj);
+        return {
+          ...obj,
+          ...subj,
+          // permission: obj.permission
+        };
+      } else return;
+    });
+    console.log("temp, ", temp);
     temp = temp.map((sub) => {
-      return { ...sub, permission: "write" };
+      let obj = selectedSubject.find((elem) => elem.subject_id == sub._id);
+      if (obj) {
+        console.log(obj);
+        return {
+          ...obj,
+          ...sub,
+          // permission: obj.permission
+        };
+      }
+      // return { ...sub, permission: "write" };
     });
     setDetailsofSelectedSubject(temp);
     // console.log(detailsofSelectedSubject)
@@ -112,9 +125,9 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
   }, [selectedSubject]);
 
   const permissionChange = (e, subID) => {
-    console.log(e.target.value)
     let temp = selectedSubject.map((subj) => {
-      if (subj.id === subID) return { ...subj, permission: e.target.value };
+      if (subj.subject_id === subID)
+        return { ...subj, permission: e.target.value };
       return subj;
     });
     setSelectedSubject(temp);
@@ -126,6 +139,7 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
     // });
   };
 
+  console.log(detailsofSelectedSubject);
   return (
     <div className="flex flex-col gap-3 col-span-2  ">
       <div className="relative w-[300px] md:w-[400px]">
@@ -183,6 +197,7 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
               <p className="">No Selected subject</p>
             ) : (
               detailsofSelectedSubject.map((subject) => {
+                // console.log(subject)
                 return (
                   <tr
                     key={subject._id}
@@ -201,12 +216,11 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
                         value={subject.permission}
                         onChange={(e) => permissionChange(e, subject._id)}
                       >
-                        <option value="write" default>
-                          Write
-                        </option>
+                        <option value="write">Write</option>
                         <option value="read">Read</option>
                       </select>
-                      {/* {subject.permission} */}
+
+                      {subject.permission}
                     </td>
                     <td
                       className="py-2 px-2 border col-span-1 text-center right-2 text-3xl flexCenter cursor-pointer"

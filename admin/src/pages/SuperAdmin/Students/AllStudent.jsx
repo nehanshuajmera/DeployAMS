@@ -1,11 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
-import { useDispatch, useSelector } from 'react-redux';
-import GlobalFiltering from '../../../components/GlobalFiltering';
-import './AllStudent.css'
-import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
-import { deleteStudentAsync } from '../../../redux-toolkit/slices/crudstudentslice';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from "react";
+import {
+  useTable,
+  usePagination,
+  useSortBy,
+  useGlobalFilter,
+} from "react-table";
+import { useDispatch, useSelector } from "react-redux";
+import GlobalFiltering from "../../../components/GlobalFiltering";
+import "./AllStudent.css";
+import { fetchdetailasync } from "../../../redux-toolkit/slices/fetchdetailslice";
+import { deleteStudentAsync } from "../../../redux-toolkit/slices/crudstudentslice";
+import { useNavigate } from "react-router-dom";
 
 export default function AllStudent() {
   const dispatch = useDispatch();
@@ -17,13 +22,12 @@ export default function AllStudent() {
       console.log("clicked");
       try {
         await dispatch(fetchdetailasync({ apiname: "allstudents" }));
-      }
-      catch (error) {
+      } catch (error) {
         console.log(error);
       }
-    }
+    };
     unsub();
-  }, [])
+  }, []);
   // setdataofstudent(useSelector((state)=>state.fetchDetail));
 
   useEffect(() => {
@@ -31,18 +35,18 @@ export default function AllStudent() {
       setWindowWidth(window.innerWidth);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   const dataofstudent = useSelector((state) => state.fetchDetail);
   useEffect(() => {
     console.log("data is comming", dataofstudent);
-    setdataofstud(dataofstudent)
-  }, [dataofstudent])
+    setdataofstud(dataofstudent);
+  }, [dataofstudent]);
 
   const data = React.useMemo(() => dataofstud.details, [dataofstud.details]);
 
@@ -93,30 +97,40 @@ export default function AllStudent() {
         show: windowWidth > 800,
       },
       {
-        Header: 'Actions',
+        Header: "Actions",
         Cell: (tableInstance) => {
           const { row: index } = tableInstance;
-          const { id: itemId } = index.original
+          const { id: itemId } = index.original;
           return (
-            <div className='tableActions'>
-              <button className='actionBtn' onClick={() => navigate(`/updatestudent/` + itemId, { state: { ...index.original } })}>
+            <div className="tableActions">
+              <button
+                className="actionBtn"
+                onClick={() =>
+                  navigate(`/updatestudent/` + itemId, {
+                    state: { ...index.original },
+                  })
+                }
+              >
                 <img src="/editBtn.png" alt="" />
               </button>
-              <button className='actionBtn' onClick={() => handleDelete(itemId)}>
+              <button
+                className="actionBtn"
+                onClick={() => handleDelete(itemId)}
+              >
                 <img src="/deleteBtn.png" alt="" />
               </button>
             </div>
-          )
+          );
         },
         show: true,
-      }
+      },
     ],
     [windowWidth]
   );
 
   const initialState = {
-    pageSize: 20
-  }
+    pageSize: 20,
+  };
 
   const {
     getTableProps,
@@ -130,43 +144,60 @@ export default function AllStudent() {
     pageOptions,
     state,
     setGlobalFilter,
-    prepareRow
+    prepareRow,
   } = useTable(
     {
       columns,
       data,
       initialState,
-      enableEditing: true
-    }, useGlobalFilter, useSortBy, usePagination);
+      enableEditing: true,
+    },
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  );
 
   const { pageIndex, globalFilter } = state;
 
   const handleDelete = async (itemId) => {
     try {
-      await dispatch(deleteStudentAsync(itemId))
-      navigate('/allstudent')
+      await dispatch(deleteStudentAsync(itemId));
+      // navigate('/allstudent')
+      // reload the page
+      window.location.reload();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
-    <div className='allStudentMain'>
+    <div className="allStudentMain">
       <h2>All Students List</h2>
       <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
       <div className="allStudentTable">
-        <table className='adminStudentTable' {...getTableProps()}>
+        <table className="adminStudentTable" {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
-              <tr className='adminStudentTableRow' {...headerGroup.getHeaderGroupProps()}>
+              <tr
+                className="adminStudentTableRow"
+                {...headerGroup.getHeaderGroupProps()}
+              >
                 {headerGroup.headers.map((column) => (
-                  <th className='adminStudentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}
-                    style={{ display: column.show ? 'table-cell' : 'none' }}
+                  <th
+                    className="adminStudentTableHead"
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    style={{ display: column.show ? "table-cell" : "none" }}
                   >
                     {column.render("Header")}
-                    {column.Header !== "Actions" ? <span>
-                      {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
-                    </span> : null}
+                    {column.Header !== "Actions" ? (
+                      <span>
+                        {column.isSorted
+                          ? column.isSortedDesc
+                            ? " ⬇"
+                            : " ⬆"
+                          : " ↕"}
+                      </span>
+                    ) : null}
                   </th>
                 ))}
               </tr>
@@ -177,10 +208,14 @@ export default function AllStudent() {
               prepareRow(row);
               console.log(row);
               return (
-                <tr className='adminStudentTableRow' {...row.getRowProps()}>
+                <tr className="adminStudentTableRow" {...row.getRowProps()}>
                   {row.cells.map((cell) => (
-                    <td className='adminStudentTableData' {...cell.getCellProps()}
-                      style={{ display: cell.column.show ? 'table-cell' : 'none' }}
+                    <td
+                      className="adminStudentTableData"
+                      {...cell.getCellProps()}
+                      style={{
+                        display: cell.column.show ? "table-cell" : "none",
+                      }}
                     >
                       {cell.render("Cell")}
                     </td>
@@ -191,18 +226,35 @@ export default function AllStudent() {
           </tbody>
         </table>
       </div>
-      {page.length ?
+      {page.length ? (
         <div className="tablePageButtons">
-          <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
+          <button
+            className="nAndpButtons"
+            onClick={() => previousPage()}
+            disabled={!canPreviousPage}
+          >
+            {" "}
+            Previous{" "}
+          </button>
           <span className="pageNoDetails">
-            {' '}Page{' '}
+            {" "}
+            Page{" "}
             <strong>
               {pageIndex + 1} of {pageOptions.length}
             </strong>
           </span>
-          <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
+          <button
+            className="nAndpButtons"
+            onClick={() => nextPage()}
+            disabled={!canNextPage}
+          >
+            {" "}
+            Next{" "}
+          </button>
         </div>
-        : <h2 className="noData">No Data</h2>}
+      ) : (
+        <h2 className="noData">No Data</h2>
+      )}
     </div>
-  )
+  );
 }

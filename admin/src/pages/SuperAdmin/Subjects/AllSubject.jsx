@@ -126,7 +126,9 @@ export default function AllSubject() {
   const handleDelete = async(itemId)=>{
     try {
       await dispatch(deleteSubjectAsync(itemId))
-      navigate('/allsubject');
+      // reload the page
+      window.location.reload()
+      // navigate('/allsubject');
     } catch (error) {
       console.log(error)
     }
