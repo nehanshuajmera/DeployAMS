@@ -143,6 +143,7 @@ export default function AllStudent() {
   const handleDelete = async (itemId) => {
     try {
       await dispatch(deleteStudentAsync(itemId))
+      navigate('/allstudent')
     } catch (error) {
       console.log(error)
     }

@@ -38,7 +38,7 @@ const CreateSubject = () => {
           await dispatch(createSubjectAsync({...subject}))
           if(subjState.isErr ){
             setMsgType(TYPE.Err)
-            setMsg(subjState.Err)
+            setMsg(subjState.errMsg)
           }
           else{
             

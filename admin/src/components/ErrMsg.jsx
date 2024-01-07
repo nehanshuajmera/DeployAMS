@@ -11,24 +11,30 @@ const ErrMsg = () => {
 
   return (
     <div className="fixed top-0 left-0 w-full z-50">
-      {/* {msg && (
+      <div>
+      {/* error msg  */}
+      {msg && msgType === TYPE.Err && (
         <div
-          className={`w-full py-1 px-2 rounded-md flexCenter${
-            msgType === TYPE.Err ? "bg-red-400" : "bg-green-500"
-          }`}
-        >
-          <h4 className="text-center text-white ">{msg}</h4>
-        </div>
-      )} */}
-      {msg && (
-        <div
-          className={`w-full py-1 px-2 rounded-md flexCenter ${
-            msgType === TYPE.Success ?  "bg-green-500": "bg-red-400"
-          }`}
+          className={`w-full py-1 px-2 rounded-md flexCenter bg-red-400`}
         >
           <h4 className="text-center text-white ">{msg}</h4>
         </div>
       )}
+
+      </div>
+      <div>
+      {/* success msg */}
+      {msg && msgType === TYPE.Success &&(
+        
+        <div
+        className={`w-full py-1 px-2 rounded-md flexCenter ${
+            msgType === TYPE.Success ?  "bg-green-500": " bg-red-500"
+          }`}
+          >
+          <h4 className="text-center text-white ">{msg}</h4>
+        </div>
+      )}
+      </div>
       {
         // msg &&
         <div

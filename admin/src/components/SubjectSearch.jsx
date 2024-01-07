@@ -4,53 +4,55 @@ import { IoIosClose } from "react-icons/io";
 import { fetchdetailasync } from "../redux-toolkit/slices/fetchdetailslice";
 
 const SubjectSearch = ({ subjects, changeSubjectList }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [search, setSearch] = useState("");
-  const [detailsofSelectedSubject, setDetailsofSelectedSubject ] = useState([]);
+  const [detailsofSelectedSubject, setDetailsofSelectedSubject] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState([...subjects]);
-  console.log(selectedSubject)
-  // console.log(`"detailsofSelectedSubject" ${detailsofSelectedSubject}`)
-  // fetch all subjects 
-  useEffect(() => {
-    const unsub=async()=>{
-      try{
-        
-        await dispatch(fetchdetailasync({apiname:"/allsubjects"}));
-        
-      }catch(error){
-          console.log(error);
-      }
-    }
-    
-    unsub();
-  }, [])
-  
-  const allSubjectData = useSelector(state=>state.fetchDetail.details)  
-  const [searchResult, setSearchResult] = useState([...allSubjectData]);
+  console.log(selectedSubject);
 
+
+  // fetch all subjects
+  useEffect(() => {
+    const unsub = async () => {
+      try {
+        await dispatch(fetchdetailasync({ apiname: "/allsubjects" }));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    unsub();
+  }, []);
+
+  const allSubjectData = useSelector((state) => state.fetchDetail.details);
+  const [searchResult, setSearchResult] = useState([...allSubjectData]);
 
   //   add subject
   const addSubject = (sub_id) => {
-    // check if subject is already in the Selected Array 
-    if(detailsofSelectedSubject.find(ele=>ele._id===sub_id)){
-      return
+
+    // check if subject is already in the Selected Array
+    if (detailsofSelectedSubject.find((ele) => ele._id === sub_id)) {
+      return;
     }
     // add new Subject
-    // const newSub = searchResult.filter(element=>element._id==sub_id);
-    // setSelectedSubject((prev) => {
-    //    return [...prev,...newSub];
-    // });
-    setSelectedSubject(prev=>[...prev,{subject_id:sub_id,permission:"write"}])
+    
+    setSelectedSubject((prev) => [
+      ...prev,
+      { subject_id: sub_id, permission: "write" },
+    ]);
   };
 
   // remove subject
   const removeSubject = (sub_id) => {
-    console.log(sub_id)
-    console.log(selectedSubject)
-    const newList = selectedSubject.filter(subject => subject.subject_id !== sub_id);
+    console.log(sub_id);
+    console.log(selectedSubject);
+    const newList = selectedSubject.filter(
+      (subject) => subject.subject_id !== sub_id
+    );
     setSelectedSubject(newList);
   };
 
+// search function
   const searchFunc = (e) => {
     setSearch(e.target.value);
     console.log(search);
@@ -93,19 +95,36 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
 
   //   change detailsofSelectedSubject state on change of subjects array
   useEffect(() => {
-    let temp = allSubjectData.filter(subj=>(selectedSubject.find(elem=>elem.subject_id==subj._id)))
-    temp = temp.map(sub=>{return{...sub,permission:"write"}})
+    let temp = allSubjectData.filter((subj) =>
+      selectedSubject.find((elem) => elem.subject_id == subj._id)
+    );
+    temp = temp.map((sub) => {
+      return { ...sub, permission: "write" };
+    });
     setDetailsofSelectedSubject(temp);
     // console.log(detailsofSelectedSubject)
   }, [allSubjectData, selectedSubject]);
- 
-  //   change the of subjects array 
+
+  //   change the of subjects array
   useEffect(() => {
     // console.log(selectedSubject)
     changeSubjectList([...selectedSubject]);
   }, [selectedSubject]);
 
-
+  const permissionChange = (e, subID) => {
+    console.log(e.target.value)
+    let temp = selectedSubject.map((subj) => {
+      if (subj.id === subID) return { ...subj, permission: e.target.value };
+      return subj;
+    });
+    setSelectedSubject(temp);
+    // setSelectedSubject((prev) => {
+    //   return prev.map((subj) => {
+    //     if (subj.id === subID) return { ...subj, permission: e.target.value };
+    //     return subj;
+    //   });
+    // });
+  };
 
   return (
     <div className="flex flex-col gap-3 col-span-2  ">
@@ -118,26 +137,26 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
           // value={search}
           onChange={(e) => addSubject(e.target.value)}
         >
-        {/* dropdown */}
-        {/* <div className="absolute w-full h-[95px] bg-[#FFFBF5] left-0  hidden peer-focus/search:block peer-active/search:block"> */}
+          {/* dropdown */}
+          {/* <div className="absolute w-full h-[95px] bg-[#FFFBF5] left-0  hidden peer-focus/search:block peer-active/search:block"> */}
           {/* <div className="flexStart flex-col"> */}
           <option value={null}>Add new Subject</option>
-            {searchResult.map((data) => {
-              return (
-                <option
-                  key={data._id}
-                  className="text-black cursor-pointer"
-                  value={data._id}
-                  // onClick={() => addSubject(data._id)}
-                  // onSelect={() => addSubject(data._id)}
-                  // onSelect={() => console.log(data._id)}
-                >
-                  {data.subject_name} - {data.course_code}
-                </option>
-              );
-            })}
+          {searchResult.map((data) => {
+            return (
+              <option
+                key={data._id}
+                className="text-black cursor-pointer"
+                value={data._id}
+                // onClick={() => addSubject(data._id)}
+                // onSelect={() => addSubject(data._id)}
+                // onSelect={() => console.log(data._id)}
+              >
+                {data.subject_name} - {data.course_code}
+              </option>
+            );
+          })}
           {/* </div> */}
-        {/* </div> */}
+          {/* </div> */}
         </select>
       </div>
       {/* list of selected subject */}
@@ -145,10 +164,18 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
         <table className="flexCenter flex-col">
           <thead>
             <tr className="py-2 px-2 border grid grid-cols-8">
-              <th className="py-2 px-2 border col-span-3 text-center">Subject Name</th>
-              <th className="py-2 px-2 border col-span-2 text-center">Course Code</th>
-              <th className="py-2 px-2 border col-span-2 text-center">Permission</th>
-              <th className="py-2 px-2 border col-span-1 text-center">Remove</th>
+              <th className="py-2 px-2 border col-span-3 text-center">
+                Subject Name
+              </th>
+              <th className="py-2 px-2 border col-span-2 text-center">
+                Course Code
+              </th>
+              <th className="py-2 px-2 border col-span-2 text-center">
+                Permission
+              </th>
+              <th className="py-2 px-2 border col-span-1 text-center">
+                Remove
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -156,26 +183,30 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
               <p className="">No Selected subject</p>
             ) : (
               detailsofSelectedSubject.map((subject) => {
-                // console.log(subject)
-                const permissionChange = (e) => {
-                  return {
-                    ...subject,
-                    permission: e.target.value,
-                  }
-                }
                 return (
-                  <tr key={subject._id} className="py-2 px-2 border grid grid-cols-8">
-                    <td className="py-2 px-2 border col-span-3 text-center">{subject.subject_name}</td>
+                  <tr
+                    key={subject._id}
+                    className="py-2 px-2 border grid grid-cols-8"
+                  >
+                    <td className="py-2 px-2 border col-span-3 text-center">
+                      {subject.subject_name}
+                    </td>
                     <td className="py-2 px-2 border col-span-2 text-center">
                       {subject.course_code}
                     </td>
                     <td className="py-2 px-2 border col-span-2 text-center">
-                      {/* <select name="permission" id="permission" value={subject.permission} onChange={permissionChange
-                      } >
-                        <option value="write" default>Write</option>
+                      <select
+                        name="permission"
+                        id="permission"
+                        value={subject.permission}
+                        onChange={(e) => permissionChange(e, subject._id)}
+                      >
+                        <option value="write" default>
+                          Write
+                        </option>
                         <option value="read">Read</option>
-                      </select> */}
-                      {subject.permission}
+                      </select>
+                      {/* {subject.permission} */}
                     </td>
                     <td
                       className="py-2 px-2 border col-span-1 text-center right-2 text-3xl flexCenter cursor-pointer"
@@ -187,12 +218,11 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
                 );
               })
             )}
-          </tbody>          
+          </tbody>
         </table>
       </div>
     </div>
   );
 };
-
 
 export default SubjectSearch;

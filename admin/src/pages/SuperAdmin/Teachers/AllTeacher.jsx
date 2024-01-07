@@ -130,6 +130,7 @@ export default function AllTeacher() {
   const handleDelete = async (itemId) => {
     try {
       await dispatch(deleteTeacherAsync(itemId))
+      navigate('/allteacher')
     } catch (error) {
       console.log(error)
     }

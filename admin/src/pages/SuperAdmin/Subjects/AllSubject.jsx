@@ -7,6 +7,7 @@ import './AllSubject.css'
 import { useEffect } from 'react';
 import {useNavigate} from 'react-router-dom'
 import { deleteStudentAsync } from '../../../redux-toolkit/slices/crudstudentslice';
+import { deleteSubjectAsync } from '../../../redux-toolkit/slices/crudsubjectslice';
 
 export default function AllSubject() {
   const dispatch=useDispatch();
@@ -124,7 +125,8 @@ export default function AllSubject() {
     // delete the subject, api call function
   const handleDelete = async(itemId)=>{
     try {
-      await dispatch(deleteStudentAsync(itemId))
+      await dispatch(deleteSubjectAsync(itemId))
+      navigate('/allsubject');
     } catch (error) {
       console.log(error)
     }

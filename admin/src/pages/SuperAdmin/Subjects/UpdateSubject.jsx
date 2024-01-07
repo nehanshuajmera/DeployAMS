@@ -34,17 +34,16 @@ const UpdateSubject = () => {
   const [subject, setSubject] = useState(state);
 
   const HandleClick = ()=>{
-    if(subjectFieldVerify(subject)){
+    // if(subjectFieldVerify(subject)){
       try {
         ;(async()=>{
           await dispatch(updateSubjectAsync({ID:id,data:subject}))
           if(subjState.isErr ){
             setMsgType(TYPE.Err)
-            setMsg(subjState.Err)
+            setMsg(subjState.errMsg)
             console.log(subjState.isErr)
           }
-          else{
-            
+          else{            
             setMsgType(TYPE.Success)
             setMsg("Subject added successfully")
             navigate("/allsubject")
@@ -56,13 +55,13 @@ const UpdateSubject = () => {
         setMsgType(TYPE.Err)
         setMsg("Failed to Update subject")
       }
-    }
-    else{
-      let msg = "Fill all required fields"
-      setMsgType(TYPE.Err)
-      setMsg(msg)
-      // setMsg({msg,msgType:msgType.WARNING})
-    }
+    // }
+    // else{
+    //   let msg = "Fill all required fields"
+    //   setMsgType(TYPE.Err)
+    //   setMsg(msg)
+    //   // setMsg({msg,msgType:msgType.WARNING})
+    // }
   }
   const subjState = useSelector((state) => state.crudsubject)
   console.log(subjState)
