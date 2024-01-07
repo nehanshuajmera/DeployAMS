@@ -96,3 +96,131 @@
     height: 100%;
     width: 100%;
 } */
+
+/* Responsive CSS */
+@media (min-width: 320px) and (max-width: 480px){
+    .allSubjectMain h2 {
+        font-size: 1.2rem;
+    }
+
+    .allSubjectTable {
+        max-width: 100vw;
+        width: 100%;
+        padding: 0.5rem;
+        margin: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .adminSubjectTableHead {
+        min-width: 12vw;
+        padding: 0.5rem;
+        text-align: center;
+        font-size: 0.8rem;
+    }
+
+    .adminSubjectTableData {
+        min-width: 12vw;
+        padding: 0.5rem;
+        text-align: center;
+        font-size: 0.8rem;
+    }
+
+    .tablePageButtons{
+        padding: 0.5rem;
+        margin: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 600px){
+    .allSubjectMain h2 {
+        font-size: 1.2rem;
+    }
+
+    .allSubjectTable {
+        max-width: 100vw;
+        width: 100%;
+        padding: 0.5rem;
+        margin: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .adminSubjectTableHead {
+        min-width: 12vw;
+        padding: 0.5rem;
+        text-align: center;
+        font-size: 0.8rem;
+    }
+
+    .adminSubjectTableData {
+        min-width: 12vw;
+        padding: 0.5rem;
+        text-align: center;
+        font-size: 0.8rem;
+    }
+
+    .tablePageButtons{
+        padding: 0.5rem;
+        margin: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 800px){
+    .allSubjectMain h2 {
+        font-size: 1.2rem;
+    }
+
+    .allSubjectTable {
+        max-width: 100vw;
+        width: 100%;
+        padding: 0.5rem;
+        margin: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .adminSubjectTableHead {
+        min-width: 12vw;
+        padding: 0.5rem;
+        text-align: center;
+        font-size: 0.8rem;
+    }
+
+    .adminSubjectTableData {
+        min-width: 12vw;
+        padding: 0.5rem;
+        text-align: center;
+        font-size: 0.8rem;
+    }
+
+    .tablePageButtons{
+        padding: 0.5rem;
+        margin: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* @media (min-width: 800px) and (max-width: 1024px){
+
+} */
+
+/* @media (min-width: 1024px) and (max-width: 1281px){
+
+} */
+
+
