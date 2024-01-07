@@ -47,3 +47,27 @@
         font-size: 1rem;
     }
 }
+
+@media (min-width: 600px) and (max-width: 800px){
+    .adminGlobalSearch{
+        /* border: 1px solid green; */
+        width: 80vw;
+    }
+    .adminGlobalSearch input{
+        width: 70%;
+        padding: 0.2rem;
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 800px) and (max-width: 1024px){
+    .adminGlobalSearch{
+        /* border: 1px solid yellow; */
+        width: 80vw;
+    }
+    .adminGlobalSearch input{
+        width: 70%;
+        padding: 0.2rem;
+        font-size: 1rem;
+    }
+}
