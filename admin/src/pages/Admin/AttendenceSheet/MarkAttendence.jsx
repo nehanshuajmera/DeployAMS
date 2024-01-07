@@ -287,7 +287,7 @@ export default function MarkAttendance() {
   const { pageIndex, globalFilter } = state;
 
   return (
-    <div className="markAttendanceMain w-screen h-screen">
+    <div className="markAttendanceMain w-screen h-full">
       <h2>Attendence Sheet</h2>
       {isClassDetails?.message === "No Class Today" && (
         <div className="w-full p-2 bg-primary text-dimWhite text-center font-semibold">

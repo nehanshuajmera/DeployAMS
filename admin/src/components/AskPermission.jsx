@@ -95,6 +95,8 @@ console.log(userDetail);
             value={data.date}
             onChange={(e) => changeHandler(e)}
           />
+        </div>
+        
           <select name="date" id="permission" value={data.date} onClick={calulateTotal} onChange={(e) => changeHandler(e)}
 >
             <option value="">Date</option>
