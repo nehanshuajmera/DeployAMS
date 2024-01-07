@@ -7,13 +7,13 @@ export default function AdminRoute({ children }) {
   const {IsLogin, userdata}=useContext(AuthContext);
 // console.log(userdata)
   useEffect(() => {
-    if(IsLogin !== null){
+    if(IsLogin === null){
 
     }
     else if(!IsLogin){
-      navigate('/teacherdashboard');
+      navigate('/');
     }
-    else if (userdata.admin_role!=='admin'&&userdata.admin_role!=="HOD"){
+    else if (userdata.admin_role!=='' && (userdata.admin_role!=='Admin'&&userdata.admin_role!=="HOD")){
       navigate('/teacherdashboard');      
     }
 
