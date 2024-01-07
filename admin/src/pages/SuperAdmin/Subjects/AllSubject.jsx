@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, {  useState } from 'react'
 import { useTable, useSortBy, useGlobalFilter, usePagination } from 'react-table'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
@@ -6,8 +6,8 @@ import GlobalFiltering from '../../../components/GlobalFiltering';
 import './AllSubject.css'
 import { useEffect } from 'react';
 import {useNavigate} from 'react-router-dom'
-import { deleteStudentAsync } from '../../../redux-toolkit/slices/crudstudentslice';
 import { deleteSubjectAsync } from '../../../redux-toolkit/slices/crudsubjectslice';
+import DeletePOP from '../../../components/DeletePOP';
 
 export default function AllSubject() {
   const dispatch=useDispatch();
@@ -122,17 +122,30 @@ export default function AllSubject() {
 
   const { pageIndex, globalFilter } = state;
 
-    // delete the subject, api call function
-  const handleDelete = async(itemId)=>{
-    try {
-      await dispatch(deleteSubjectAsync(itemId))
-      // reload the page
-      window.location.reload()
-      // navigate('/allsubject');
-    } catch (error) {
-      console.log(error)
+   
+  // state functions and variables for deletion
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState(null);
+
+  const toggleDeleteConfirmation = (itemId = null) => {
+    setDeleteItemId(itemId);
+    setShowDeleteConfirmation(!showDeleteConfirmation);
+    console.log(showDeleteConfirmation)
+  };
+
+  const handleDelete = async (itemId) => {
+    toggleDeleteConfirmation(itemId);
+    // Handle deletion if confirmed
+    console.log(showDeleteConfirmation)
+    if (showDeleteConfirmation) {
+      try {
+        await dispatch(deleteSubjectAsync(itemId));
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }
+  };
 
   return (
     <div className='allSubjectMain'>
@@ -170,6 +183,10 @@ export default function AllSubject() {
           </tbody>
         </table>
       </div>
+      {/* Delete Confirmation Popup */}
+      {showDeleteConfirmation && (
+        <DeletePOP toggleDeleteConfirmation={toggleDeleteConfirmation} deleteItemId={deleteItemId} handleDelete={handleDelete}/>
+      )}
       {page.length ?
         <div className="tablePageButtons">
           <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>

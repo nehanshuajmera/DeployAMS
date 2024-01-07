@@ -12,6 +12,7 @@ import GlobalFiltering from "../../../components/GlobalFiltering";
 import { useEffect } from "react";
 import { deleteTeacherAsync } from "../../../redux-toolkit/slices/crudteacherslice";
 import { useNavigate } from "react-router-dom";
+import DeletePOP from "../../../components/DeletePOP";
 
 export default function AllTeacher() {
   const [dataofteach, setdataofteach] = useState({ details: [] });
@@ -145,16 +146,29 @@ export default function AllTeacher() {
 
   const { pageIndex, globalFilter } = state;
 
-  const handleDelete = async (itemId) => {
+// delete function and variables 
+const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+const [deleteItemId, setDeleteItemId] = useState(null);
+
+const toggleDeleteConfirmation = (itemId = null) => {
+  setDeleteItemId(itemId);
+  setShowDeleteConfirmation(!showDeleteConfirmation);
+  console.log(showDeleteConfirmation)
+};
+
+const handleDelete = async (itemId) => {
+  toggleDeleteConfirmation(itemId);
+  // Handle deletion if confirmed
+  console.log(showDeleteConfirmation)
+  if (showDeleteConfirmation) {
     try {
       await dispatch(deleteTeacherAsync(itemId));
-      // navigate('/allteacher')
-      // reload the page
       window.location.reload();
     } catch (error) {
       console.log(error);
     }
-  };
+  }
+};
 
   return (
     <div className="allTeacherMain">
@@ -217,6 +231,10 @@ export default function AllTeacher() {
           </tbody>
         </table>
       </div>
+      {/* Delete Confirmation Popup */}
+      {showDeleteConfirmation && (
+        <DeletePOP toggleDeleteConfirmation={toggleDeleteConfirmation} deleteItemId={deleteItemId} handleDelete={handleDelete}/>
+      )}
       {page.length ? (
         <div className="tablePageButtons">
           <button
