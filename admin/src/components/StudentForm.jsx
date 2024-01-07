@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { IoIosClose } from "react-icons/io";
+// import { IoIosClose } from "react-icons/io";
 import SubjectSearch from "./SubjectSearch";
-
-// import { useAdmin } from "../context/AdminContext";
 
 const StudentForm = ({ student, setStudent, HandleClick }) => {
   const [subject, setSubject] = useState("");
@@ -426,6 +424,5 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
     </div>
   );
 };
-
 
 export default StudentForm;
