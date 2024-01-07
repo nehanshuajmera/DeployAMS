@@ -1,18 +1,121 @@
 /* Responsive CSS */
-@media (min-width: 320px) and (max-width: 480px){
-   /* .logContainer{
-      width: 100vw;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-   } */
+@media (min-width: 320px) and (max-width: 480px) {
+    .logContainer {
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .logHeading {
+        margin: 0.3rem;
+        padding: 0.2rem;
+        text-align: center;
+        font-size: 1.6rem;
+        color: #000;
+    }
+
+    .logBttn{
+        margin: 0.3rem;
+        padding: 0.2rem;
+    }
+
+    .logTable {
+        width: 100vw;
+        margin: 0.5rem 0 0 0;
+    }
+
+    .logTableRow{
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .logTableHead{
+        border: 1px solid white;
+        width: 37vw;
+        text-align: left;
+    }
+
+    .logTableData{
+        max-width: 37vw;
+        padding: 0.2rem;
+        border: 1px solid #fff;
+        white-space: pre-wrap !important;
+        word-break: break-word;
+    }
+
+    .logTableRow th:nth-child(3n+0){
+        max-width: 25vw;
+    }
+
+    .logTableRow td:nth-child(3n+0){
+        max-width: 25vw;
+    }
 }
 
-/* @media (min-width: 480px) and (max-width: 600px){
+@media (min-width: 480px) and (max-width: 600px){
+    .logContainer {
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
 
+    .logHeading {
+        margin: 0.3rem;
+        padding: 0.2rem;
+        text-align: center;
+        font-size: 1.6rem;
+        color: #000;
+    }
+
+    .logBttn{
+        margin: 0.3rem;
+        padding: 0.2rem;
+    }
+
+    .logTable {
+        width: 100vw;
+        margin: 0.5rem 0 0 0;
+    }
+
+    .logTableRow{
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .logTableHead{
+        border: 1px solid #fff;
+        width: 37vw;
+        text-align: left;
+    }
+
+    .logTableData{
+        width: 37vw;
+        padding: 0.3rem;
+        border: 1px solid #fff;
+        white-space: pre-wrap !important;
+        word-break: break-word;
+    }
+
+    .logTableRow th:nth-child(3n+0){
+        max-width: 26vw;
+    }
+
+    .logTableRow td:nth-child(3n+0){
+        max-width: 26vw;
+    }
 }
 
-@media (min-width: 600px) and (max-width: 800px){
+/* @media (min-width: 600px) and (max-width: 800px){
 
 }
 
