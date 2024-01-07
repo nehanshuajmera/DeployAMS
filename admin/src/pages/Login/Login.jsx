@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { loginAsync } from '../../redux-toolkit/slices/loginslice';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
+import LoadingPage from '../../components/Lodaing';
 
 const initialState = {
   userId: '',
@@ -22,6 +23,7 @@ export default function Login() {
     }
   }, [IsLogin])
 
+  console.log("flow",IsLogin);
 
   const userstate = useSelector((state) => { state.login });
 
@@ -34,10 +36,7 @@ export default function Login() {
       [name]: value,
     }));
   };
-  function check() {
-    const isLoggedIn = useSelector((state) => state.login.isLogin);
-    return isLoggedIn;
-  }
+  
 
   const handelsubmit = async (e) => {
     e.preventDefault();
@@ -53,6 +52,10 @@ export default function Login() {
 
   const isError = false;
 
+  if(IsLogin === null)
+  {
+    return <LoadingPage/>  
+  }
 
   return (
     <div className='loginClass'>
