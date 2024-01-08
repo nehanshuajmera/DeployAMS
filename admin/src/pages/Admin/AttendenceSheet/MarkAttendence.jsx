@@ -246,7 +246,6 @@ export default function MarkAttendance() {
                     <div className="w-full flex items-center justify-center self-center text-center">-</div>
                   )}
                 </div>
-                {/* <img src="https://cdn-icons-png.flaticon.com/512/4553/4553011.png" alt="" /> */}
               </>
             </div>
           );
