@@ -65,7 +65,22 @@ export default function TeacherDashboard() {
           <h1>Name : {userdata?.name}</h1>
         </div>
         <div className="teacherFeature">
-          <div className="teacherMain">
+          <div className="teacherExtra DisplayMobile-2">
+            <div onClick={() => navigate("/substituteteacher")}>
+              {" "}
+              Substitute Teacher{" "}
+            </div>
+            {userdata.admin_role === "AcademicHead" ||
+              userdata.admin_role === "Admin" ? (
+              <div onClick={() => navigate("/academichead")}>
+                Attendance Report
+              </div>
+            ) : null}
+            <div onClick={() => navigate("/pastattendancerequest")}>
+              Past Attendance Request
+            </div>
+          </div>
+          <div className="teacherMain DisplayMobile1">
             {subjects &&
               subjects.map((subject) => {
                 return (
@@ -73,8 +88,7 @@ export default function TeacherDashboard() {
                     key={subject.subject_id._id}
                     onClick={() =>
                       gotoSubjectAttendance(subject.subject_id._id)
-                    }
-                  >
+                    }>
                     <h3 style={{ fontWeight: "500", fontSize: "1.2rem" }}>
                       {subject.subject_id.subject_name}
                     </h3>
@@ -89,21 +103,6 @@ export default function TeacherDashboard() {
                   </div>
                 );
               })}
-          </div>
-          <div className="teacherExtra">
-            <div onClick={() => navigate("/substituteteacher")}>
-              {" "}
-              Substitute Teacher{" "}
-            </div>
-            {userdata.admin_role === "AcademicHead" ||
-            userdata.admin_role === "Admin" ? (
-              <div onClick={() => navigate("/academichead")}>
-                Attendance Report
-              </div>
-            ) : null}
-            <div onClick={() => navigate("/pastattendancerequest")}>
-              Past Attendance Request
-            </div>
           </div>
         </div>
       </div>
