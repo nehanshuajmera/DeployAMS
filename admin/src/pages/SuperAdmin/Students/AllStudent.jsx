@@ -11,6 +11,7 @@ import "./AllStudent.css";
 import { fetchdetailasync } from "../../../redux-toolkit/slices/fetchdetailslice";
 import { deleteStudentAsync } from "../../../redux-toolkit/slices/crudstudentslice";
 import { useNavigate } from "react-router-dom";
+import DeletePOP from "../../../components/DeletePOP";
 
 export default function AllStudent() {
   const dispatch = useDispatch();
@@ -159,16 +160,40 @@ export default function AllStudent() {
 
   const { pageIndex, globalFilter } = state;
 
+  // state functions and variables for deletion
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState(null);
+
+  const toggleDeleteConfirmation = (itemId = null) => {
+    setDeleteItemId(itemId);
+    setShowDeleteConfirmation(!showDeleteConfirmation);
+    console.log(showDeleteConfirmation);
+  };
+
   const handleDelete = async (itemId) => {
-    try {
-      await dispatch(deleteStudentAsync(itemId));
-      // navigate('/allstudent')
-      // reload the page
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
+    toggleDeleteConfirmation(itemId);
+    // Handle deletion if confirmed
+    console.log(showDeleteConfirmation);
+    if (showDeleteConfirmation) {
+      try {
+        await dispatch(deleteStudentAsync(itemId));
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
+
+  // const handleDelete = async (itemId) => {
+  //   try {
+  //     await dispatch(deleteStudentAsync(itemId));
+  //     // navigate('/allstudent')
+  //     // reload the page
+  //     window.location.reload();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div className="allStudentMain">
@@ -206,7 +231,7 @@ export default function AllStudent() {
           <tbody {...getTableBodyProps()}>
             {page.map((row) => {
               prepareRow(row);
-              console.log(row);
+              // console.log(row);
               return (
                 <tr className="adminStudentTableRow" {...row.getRowProps()}>
                   {row.cells.map((cell) => (
@@ -226,6 +251,14 @@ export default function AllStudent() {
           </tbody>
         </table>
       </div>
+      {/* Delete Confirmation Popup */}
+      {showDeleteConfirmation && (
+        <DeletePOP
+          toggleDeleteConfirmation={toggleDeleteConfirmation}
+          deleteItemId={deleteItemId}
+          handleDelete={handleDelete}
+        />
+      )}
       {page.length ? (
         <div className="tablePageButtons">
           <button
