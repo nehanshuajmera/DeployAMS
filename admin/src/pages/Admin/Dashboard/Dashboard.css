@@ -119,7 +119,7 @@
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        overflow-y: visible;
+        overflow-y: scroll;
     }
 
     .styleHr {
@@ -230,7 +230,7 @@
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        overflow-y: visible;
+        overflow-y: scroll;
     }
 
     .styleHr {

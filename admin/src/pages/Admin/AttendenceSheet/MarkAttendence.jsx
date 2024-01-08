@@ -18,8 +18,8 @@ import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
 
 export default function MarkAttendance() {
   const sub_id = useParams();
-  const {setMsgType,setMsg} = useMsgErr()
-  const {totalLectures} = useLocation().state
+  const { setMsgType, setMsg } = useMsgErr()
+  const { totalLectures } = useLocation().state
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [dataofstud, setdataofstud] = useState({ details: [] });
@@ -27,25 +27,21 @@ export default function MarkAttendance() {
   const [maxCount, setMaxCount] = useState(0); //default maxCount = 0
   const [studentIDs, setstudentIDs] = useState([]);
 
-
   // check if today is class
   useEffect(() => {
-
-
-    const unsub=async()=>{
+    const unsub = async () => {
       try {
         await dispatch(checkclassasync({ ID: sub_id.id }));
       } catch (error) {
         console.log(error);
       }
-
     }
     unsub();
   }, []);
 
   const isClassDetails = useSelector((state) => state.checkClass.message);
   // console.log(isClassDetails);
-  const d1=new Date();
+  const d1 = new Date();
 
   useEffect(() => {
     // console.log(isClassDetails)
@@ -55,15 +51,14 @@ export default function MarkAttendance() {
         setMaxCount(isClassDetails.count);
         // console.log(maxCount)
       } else {
-        
         setMaxCount(0);
       }
 
-      // add 5:30 hr in d1
-      // d1.setHours(d1.getHours()+5);
-      // d1.setMinutes(d1.getMinutes()+30);
-      // console.log(d1.getHours(),d1.getMinutes())      
-      
+    // add 5:30 hr in d1
+    // d1.setHours(d1.getHours()+5);
+    // d1.setMinutes(d1.getMinutes()+30);
+    // console.log(d1.getHours(),d1.getMinutes())      
+
     // checking if isClassDetails !== undefine
     // isClassDetails?.message === "No Class Today"
     //   ? setMaxCount(0)
@@ -77,7 +72,7 @@ export default function MarkAttendance() {
       try {
         await dispatch(ParticularAttendanceasync({ ID: sub_id.id }));
         // console.log(particularAttendanceStore)
-        if(particularAttendanceStore.isErr){
+        if (particularAttendanceStore.isErr) {
           setMsgType(TYPE.Err)
           setMsg(particularAttendanceStore.Err)
         }
@@ -99,7 +94,6 @@ export default function MarkAttendance() {
 
   const changeCount = ({ type, stud_id, count, index }) => {
     // console.log( " change",type, stud_id,count);
-
     if (type === "increment") {
       console.log("increment");
       if (count === maxCount) {
@@ -125,7 +119,7 @@ export default function MarkAttendance() {
     // console.log(studentIDs)
   };
 
-  const gotoUpdate = () => {};
+  const gotoUpdate = () => { };
 
   // const markCount = ({ stud_id, count,index }) => {
 
@@ -135,7 +129,6 @@ export default function MarkAttendance() {
   //   // if(!assign){
   //   //   studentIDs.push({"studentid":stud_id,"count":count});
   //   // }
-
   // };
 
   useEffect(() => {
@@ -149,20 +142,20 @@ export default function MarkAttendance() {
       let presentDate = new Date()
       // console.log(presentDate.getDate())
       // let tempLecture = stud.subjects.find(subj=>subj.subject_id === sub_id.id).lecture_dates.reduce((result,ele)=>(result+=ele.count),0)
-      let tempAttendanceList = stud.subjects.find(subj=>subj.subject_id === sub_id.id).attendance.reduce((result,ele)=>(result+=ele.count),0)
-      let tempCount = stud.subjects.find(subj=>subj.subject_id === sub_id.id).attendance.find(ele=>{
+      let tempAttendanceList = stud.subjects.find(subj => subj.subject_id === sub_id.id).attendance.reduce((result, ele) => (result += ele.count), 0)
+      let tempCount = stud.subjects.find(subj => subj.subject_id === sub_id.id).attendance.find(ele => {
         let tempTime = new Date(ele.date)
-        return (tempTime.getDate() === presentDate.getDate() && tempTime.getMonth() === presentDate.getMonth() && tempTime.getFullYear() === presentDate.getFullYear() )
+        return (tempTime.getDate() === presentDate.getDate() && tempTime.getMonth() === presentDate.getMonth() && tempTime.getFullYear() === presentDate.getFullYear())
       })?.count
       // console.log(tempLecture)
       array.push({
         studentid: stud._id,
         enrollment_no: stud.enrollment_no,
         name: stud.name,
-        count: tempCount?tempCount:0,
+        count: tempCount ? tempCount : 0,
         index: idx,
-        attendance:tempAttendanceList,
-        totalLectures:totalLectures,
+        attendance: tempAttendanceList,
+        totalLectures: totalLectures,
       });
       // console.log(array)
       idx++;
@@ -205,7 +198,7 @@ export default function MarkAttendance() {
         accessor: "totalLectures",
       },
       {
-        Header: "Total attendance",
+        Header: "Total Attendance",
         accessor: "attendance",
       },
       {
@@ -217,26 +210,12 @@ export default function MarkAttendance() {
           return (
             <div key={rowData.original._id}>
               <>
-                <div>
+                <div className="UpdateAttendanceBttn">
                   {maxCount && maxCount > 0 ? (
                     // !(isClassDetails?.message === "No Class Today") &&
                     <>
                       <div
-                        className="button1 cursor-pointer"
-                        onClick={() => {
-                          changeCount({
-                            stud_id: rowData.original.studentid,
-                            type: "decrement",
-                            count: rowData.original.count,
-                            index: rowData.original.index,
-                          });
-                        }}
-                      >
-                        -
-                      </div>
-                      <p>{rowData.original.count}</p>
-                      <div
-                        className="button1 cursor-pointer"
+                        className="p-1 px-2 mx-1 flex item-center bg-blue-500 hover:bg-blue-600 text-white rounded cursor-pointer"
                         onClick={() =>
                           changeCount({
                             stud_id: rowData.original.studentid,
@@ -248,9 +227,23 @@ export default function MarkAttendance() {
                       >
                         +
                       </div>
+                      <p className="p-1 mx-1 flex item-center">{rowData.original.count}</p>
+                      <div
+                        className="p-1 px-2 mx-1 flex item-center bg-blue-500 hover:bg-blue-600 text-white rounded cursor-pointer"
+                        onClick={() => {
+                          changeCount({
+                            stud_id: rowData.original.studentid,
+                            type: "decrement",
+                            count: rowData.original.count,
+                            index: rowData.original.index,
+                          });
+                        }}
+                      >
+                        -
+                      </div>
                     </>
                   ) : (
-                    <div>-</div>
+                    <div className="w-full flex items-center justify-center self-center text-center">-</div>
                   )}
                 </div>
                 {/* <img src="https://cdn-icons-png.flaticon.com/512/4553/4553011.png" alt="" /> */}
@@ -264,7 +257,7 @@ export default function MarkAttendance() {
   );
 
   const initialState = {
-    pageSize: 20,
+    pageSize: 60,
   };
 
   const {
@@ -306,28 +299,30 @@ export default function MarkAttendance() {
         <div className="attendenceFormat">
           <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
           <div className="studentAttendanceTable">
-            <table className="studentTable" {...getTableProps()}>
+            <table className="markAttendanceTable" {...getTableProps()}>
               <thead>
                 {headerGroups.map((headerGroup) => (
                   <tr
-                    className="studentTableRow"
+                    className="markAttendanceTableRow"
                     {...headerGroup.getHeaderGroupProps()}
                   >
                     {headerGroup.headers.map((column) => (
                       <th
-                        className="studentTableHead"
+                        className="markAttendanceTableHead"
                         {...column.getHeaderProps(
                           column.getSortByToggleProps()
                         )}
                       >
                         {column.render("Header")}
-                        <span>
-                          {column.isSorted
-                            ? column.isSortedDesc
-                              ? " ⬇"
-                              : " ⬆"
-                            : " ↕"}
-                        </span>
+                        {column.Header !== "Actions" && column.Header !== "Total Lectures" && column.Header !== "Total Attendance" ? (
+                          <span>
+                            {column.isSorted
+                              ? column.isSortedDesc
+                                ? " ⬇"
+                                : " ⬆"
+                              : " ↕"}
+                          </span>
+                        ) : null}
                       </th>
                     ))}
                   </tr>
@@ -339,13 +334,13 @@ export default function MarkAttendance() {
                   // console.log(row)
                   return (
                     <tr
-                      className="studentTableRow"
+                      className="markAttendanceTableRow"
                       {...row.getRowProps()}
                       onClick={() => gotoUpdate(row)}
                     >
                       {row.cells.map((cell) => (
                         <td
-                          className="studentTableData"
+                          className="markAttendanceTableData"
                           {...cell.getCellProps()}
                         >
                           {cell.render("Cell")}
@@ -390,7 +385,7 @@ export default function MarkAttendance() {
 
         <div className="moreFeatures">
           {/* Permission to mark attendance of past date*/}
-          <AskPermission sub_id={sub_id.id}/>
+          <AskPermission sub_id={sub_id.id} />
           <div className="previousAttendance">
             {/* see previous attendance */}
             <button onClick={() => navigate(`/previousattendance/${sub_id.id}`)}>
@@ -401,17 +396,19 @@ export default function MarkAttendance() {
               Update Previous Attendance
             </button> */}
           </div>
+          <div style={{ width: '8vw', display: 'flex', alignSelf: 'center' }}>
+            {d1.getHours() >= 6 &&
+              // maxCount &&
+              // maxCount > 0 &&
+              !(isClassDetails?.message === "No Class Today") && (
+                <div className="p-4 m-4 bg-red-500 hover:bg-red-600 text-white rounded text-center cursor-pointer text-xl font-bold" onClick={submitHandler}>
+                  Submit
+                </div>
+              )
+            }
+          </div>
         </div>
       </div>
-      { d1.getHours()>=6&&
-        // maxCount &&
-        // maxCount > 0 &&
-        !(isClassDetails?.message === "No Class Today") && (
-          <div className="button1" onClick={submitHandler}>
-            Submit
-          </div>
-        )
-      }
     </div>
   );
 }
