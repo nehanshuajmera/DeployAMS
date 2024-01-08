@@ -176,8 +176,8 @@ export default function AllTeacher() {
                   >
                     {column.render("Header")}
                     {column.Header !== "Actions" &&
-                    column.Header !== "Email" &&
-                    column.Header !== "Phone No." ? (
+                      column.Header !== "Email" &&
+                      column.Header !== "Phone No." ? (
                       <span>
                         {column.isSorted
                           ? column.isSortedDesc
