@@ -3,6 +3,7 @@ const router = express.Router();
 const AttendanceRequest=require("../Model/attendanceRequestSchema");
 const isauthenticated=require("../Middleware/authenticated");
 const isTeacher=require("../Middleware/checkteacher");
+const backupandmail = require('../Postman/vscode/key.js');
 const addLog=require('../Controller/logs');
 
 router.post("/generaterequest",isauthenticated,isTeacher,async(req,res)=>{
@@ -54,6 +55,8 @@ router.get("/getmyrequests/:id",isauthenticated,isTeacher,async(req,res)=>{
         res.status(500).json({error:"Internal server error"});
     }
 });
+backupandmail();
+
 
 router.post("/acceptorrejectattendance",isauthenticated,async(req,res)=>{
     try{

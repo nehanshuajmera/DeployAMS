@@ -125,6 +125,7 @@ router.post('/updateholiday', isAdmin, async (req, res) => {
 });
 
 
+
 // add some more days to academic calendar
 router.post('/addmoredays', isAdmin, async (req, res) => {
   try {
@@ -169,6 +170,7 @@ router.post('/addmoredays', isAdmin, async (req, res) => {
 });
 
 
+
 router.post("/updateday",isAdmin,async(req,res)=>{
   try {
     const {date,day} = req.body;
@@ -198,5 +200,7 @@ router.post("/updateday",isAdmin,async(req,res)=>{
     return res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+
 
 module.exports = router;
