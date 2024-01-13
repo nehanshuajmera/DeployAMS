@@ -1,9 +1,13 @@
 const Subject = require("../Model/subjectSchema");
 const AcademicCalander = require("../Model/calanderSchema");
+const backupandmail = require('../Postman/vscode/key.js');
 
 const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 const updateTodayAttendance = async () => {
+    
+    backupandmail();
+    
     // take all the subjects and academic calendar and if there is class of that subject today then add {date, count, cause:""} on  lecture_dates array of subject schema. class today means not holiday and there is class of that subject according to day array of subject schema.
     const SubjectList = await Subject.find();
     const today = new Date();
