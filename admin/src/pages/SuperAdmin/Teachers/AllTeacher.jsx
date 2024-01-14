@@ -13,19 +13,29 @@ import { useEffect } from "react";
 import { deleteTeacherAsync } from "../../../redux-toolkit/slices/crudteacherslice";
 import { useNavigate } from "react-router-dom";
 import DeletePOP from "../../../components/DeletePOP";
+import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
 
 export default function AllTeacher() {
   const [dataofteach, setdataofteach] = useState({ details: [] });
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { setMsgType, setMsg } = useMsgErr();
+  const fetchStore = useSelector((state) => state.fetchDetail);
+
 
   useEffect(() => {
     const unsub = () => {
       try {
         dispatch(fetchdetailasync({ apiname: "allteachers" }));
+        if (fetchStore.isErr) {
+          setMsgType(TYPE.Err);
+          setMsg(fetchStore.errMsg);
+        }
       } catch (error) {
         console.log(error);
+        setMsgType(TYPE.Err);
+        setMsg("Failed to fetch teachers");
       }
     };
 
@@ -156,6 +166,8 @@ export default function AllTeacher() {
     console.log(showDeleteConfirmation);
   };
 
+  const teacherStore = useSelector((state) => state.crudteacher);
+
   const handleDelete = async (itemId) => {
     toggleDeleteConfirmation(itemId);
     // Handle deletion if confirmed
@@ -163,9 +175,18 @@ export default function AllTeacher() {
     if (showDeleteConfirmation) {
       try {
         await dispatch(deleteTeacherAsync(itemId));
-        window.location.reload();
+        if (teacherStore.isErr) {
+          setMsgType(TYPE.Err);
+          setMsg(teacherStore.errMsg);
+        } else {
+          setMsgType(TYPE.Success);
+          setMsg("Teacher deleted successfully");
+          window.location.reload();
+        }
       } catch (error) {
         console.log(error);
+        setMsgType(TYPE.Err);
+        setMsg("Failed to delete teacher");
       }
     }
   };

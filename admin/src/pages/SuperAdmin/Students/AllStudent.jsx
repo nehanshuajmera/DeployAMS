@@ -12,24 +12,34 @@ import { fetchdetailasync } from "../../../redux-toolkit/slices/fetchdetailslice
 import { deleteStudentAsync } from "../../../redux-toolkit/slices/crudstudentslice";
 import { useNavigate } from "react-router-dom";
 import DeletePOP from "../../../components/DeletePOP";
+import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
 
 export default function AllStudent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [dataofstud, setdataofstud] = useState({ details: [] });
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { setMsgType, setMsg } = useMsgErr();
+
   useEffect(() => {
     const unsub = async () => {
       console.log("clicked");
       try {
         await dispatch(fetchdetailasync({ apiname: "allstudents" }));
+        if (fetchStore.isErr) {
+          setMsgType(TYPE.Err);
+          setMsg(fetchStore.errMsg);
+        }
       } catch (error) {
         console.log(error);
+        setMsgType(TYPE.Err);
+        setMsg("Failed to fetch students");
       }
     };
     unsub();
   }, []);
-  // setdataofstudent(useSelector((state)=>state.fetchDetail));
+
+  const fetchStore = useSelector((state)=>state.fetchDetail);
 
   useEffect(() => {
     const handleResize = () => {
@@ -170,6 +180,8 @@ export default function AllStudent() {
     console.log(showDeleteConfirmation);
   };
 
+  const studentStore = useSelector((state) => state.crudStudent);
+
   const handleDelete = async (itemId) => {
     toggleDeleteConfirmation(itemId);
     // Handle deletion if confirmed
@@ -177,23 +189,22 @@ export default function AllStudent() {
     if (showDeleteConfirmation) {
       try {
         await dispatch(deleteStudentAsync(itemId));
-        window.location.reload();
+        if (studentStore.isErr) {
+          setMsgType(TYPE.Err);
+          setMsg(studentStore.errMsg);
+        } else {
+          setMsgType(TYPE.Success);
+          setMsg("Student Deleted successfully");
+          window.location.reload();
+        }
       } catch (error) {
         console.log(error);
+        setMsgType(TYPE.Err);
+        setMsg("Failed to delete student");
       }
     }
   };
 
-  // const handleDelete = async (itemId) => {
-  //   try {
-  //     await dispatch(deleteStudentAsync(itemId));
-  //     // navigate('/allstudent')
-  //     // reload the page
-  //     window.location.reload();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   return (
     <div className="allStudentMain">

@@ -13,11 +13,12 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteSubjectAsync } from "../../../redux-toolkit/slices/crudsubjectslice";
 import DeletePOP from "../../../components/DeletePOP";
+import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
 
 export default function AllSubject() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const { setMsgType, setMsg } = useMsgErr();
   // const logdata=useSelector((state)=>state.login)
   // useEffect(() => {
   //   const unsub=()=>{
@@ -31,19 +32,25 @@ export default function AllSubject() {
 
   // const dataofsubjec=useSelector((state)=>state.fetchDetail.details);
   // console.log(dataofsubjec);
-
   const [dataofsubjec, setdataofsubjec] = useState({ details: [] });
+
   useEffect(() => {
     const unsub = async () => {
       try {
         await dispatch(fetchdetailasync({ apiname: "allsubjects" }));
+        if (fetchStore.isErr) {
+          setMsgType(TYPE.Err);
+          setMsg(fetchStore.errMsg);
+        }
       } catch (error) {
         console.log(error);
+        setMsgType(TYPE.Err);
+        setMsg("Failed to fetch subjects");
       }
     };
     unsub();
   }, []);
-  // setdataofsubjec(useSelector((state)=>state.fetchDetail));
+  const fetchStore = useSelector((state)=>state.fetchDetail);
 
   const dataofsubject = useSelector((state) => state.fetchDetail);
   useEffect(() => {
@@ -150,6 +157,8 @@ export default function AllSubject() {
     console.log(showDeleteConfirmation);
   };
 
+  const subjectStore = useSelector((state) => state.crudsubject);
+
   const handleDelete = async (itemId) => {
     toggleDeleteConfirmation(itemId);
     // Handle deletion if confirmed
@@ -157,9 +166,18 @@ export default function AllSubject() {
     if (showDeleteConfirmation) {
       try {
         await dispatch(deleteSubjectAsync(itemId));
-        window.location.reload();
+        if (subjectStore.isErr) {
+          setMsgType(TYPE.Err);
+          setMsg(subjectStore.errMsg);
+        } else {
+          setMsgType(TYPE.Success);
+          setMsg("Subject deleted successfully");
+          window.location.reload();
+        }
       } catch (error) {
         console.log(error);
+        setMsgType(TYPE.Err);
+        setMsg("Failed to delete subject");
       }
     }
   };

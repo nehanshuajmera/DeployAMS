@@ -41,28 +41,7 @@ const CreateStudent = () => {
   const { setMsgType, setMsg } = useMsgErr();
 
   const HandleClick = () => {
-    // const unsub = async () => {
-    //   try {
-    //     await dispatch(createStudentasync({ ...student }));
-    //     if(studState.isErr ){
-    //         setMsgType(TYPE.Err)
-    //         setMsg(studState.errMsg)
-
-    //       }
-    //       else{
-    //         setMsgType(TYPE.Success)
-    //         setMsg("Student added successfully");
-    //         navigate("/allstudent");
-    //       }
-    //       console.log(studState)
-    //   } catch (error) {
-    //     console.log(`failed to add student : ${error}`);
-    //     setMsgType(TYPE.Err);
-    //     setMsg("Failed to add student");
-    //   }
-    // };
-
-    // unsub();
+    
     if (studentFieldVerify(student)) {
       // createItem({API:API_Item_Type.student,data:student})
       (async () => {
