@@ -1,18 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
-import {
-  useTable,
-  usePagination,
-  useSortBy,
-  useGlobalFilter,
-} from "react-table";
+import React, { useEffect, useState } from "react";
+import { useTable, usePagination, useSortBy, useGlobalFilter } from "react-table";
 import { useDispatch, useSelector } from "react-redux";
-import GlobalFiltering from "../../../components/GlobalFiltering";
-import "./AllStudent.css";
 import { fetchdetailasync } from "../../../redux-toolkit/slices/fetchdetailslice";
 import { deleteStudentAsync } from "../../../redux-toolkit/slices/crudstudentslice";
 import { useNavigate } from "react-router-dom";
-import DeletePOP from "../../../components/DeletePOP";
 import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
+import GlobalFiltering from "../../../components/GlobalFiltering";
+import DeletePOP from "../../../components/DeletePOP";
+import "./AllStudent.css";
 
 export default function AllStudent() {
   const dispatch = useDispatch();
@@ -39,7 +34,7 @@ export default function AllStudent() {
     unsub();
   }, []);
 
-  const fetchStore = useSelector((state)=>state.fetchDetail);
+  const fetchStore = useSelector((state) => state.fetchDetail);
 
   useEffect(() => {
     const handleResize = () => {
@@ -60,7 +55,6 @@ export default function AllStudent() {
   }, [dataofstudent]);
 
   const data = React.useMemo(() => dataofstud.details, [dataofstud.details]);
-
   const columns = React.useMemo(
     () => [
       {
@@ -98,10 +92,6 @@ export default function AllStudent() {
         accessor: "specialisation",
         show: windowWidth > 800,
       },
-      // {
-      //   Header: "Faculty",
-      //   accessor: "faculty",
-      // },
       {
         Header: "Programme",
         accessor: "programme",
@@ -114,21 +104,11 @@ export default function AllStudent() {
           const { id: itemId } = index.original;
           return (
             <div className="tableActions">
-              <button
-                className="actionBtn"
-                onClick={() =>
-                  navigate(`/updatestudent/` + itemId, {
-                    state: { ...index.original },
-                  })
-                }
-              >
-                <img src="/editBtn.png" alt="" />
+              <button className="actionBtn" onClick={() => navigate(`/updatestudent/` + itemId, { state: { ...index.original } })}>
+                <img src="/editBtn.png" alt="Error Loading Image" />
               </button>
-              <button
-                className="actionBtn"
-                onClick={() => handleDelete(itemId)}
-              >
-                <img src="/deleteBtn.png" alt="" />
+              <button className="actionBtn" onClick={() => handleDelete(itemId)}>
+                <img src="/deleteBtn.png" alt="Error Loading Image" />
               </button>
             </div>
           );
@@ -140,7 +120,7 @@ export default function AllStudent() {
   );
 
   const initialState = {
-    pageSize: 20,
+    pageSize: 60,
   };
 
   const {
@@ -156,17 +136,12 @@ export default function AllStudent() {
     state,
     setGlobalFilter,
     prepareRow,
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState,
-      enableEditing: true,
-    },
-    useGlobalFilter,
-    useSortBy,
-    usePagination
-  );
+  } = useTable({
+    columns,
+    data,
+    initialState,
+    enableEditing: true,
+  }, useGlobalFilter, useSortBy, usePagination);
 
   const { pageIndex, globalFilter } = state;
 
@@ -205,7 +180,6 @@ export default function AllStudent() {
     }
   };
 
-
   return (
     <div className="allStudentMain">
       <h2>All Students List</h2>
@@ -214,24 +188,14 @@ export default function AllStudent() {
         <table className="adminStudentTable" {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
-              <tr
-                className="adminStudentTableRow"
-                {...headerGroup.getHeaderGroupProps()}
-              >
+              <tr className="adminStudentTableRow" {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th
-                    className="adminStudentTableHead"
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                    style={{ display: column.show ? "table-cell" : "none" }}
-                  >
+                  <th className="adminStudentTableHead" {...column.getHeaderProps(column.getSortByToggleProps())}
+                    style={{ display: column.show ? "table-cell" : "none" }}>
                     {column.render("Header")}
                     {column.Header !== "Actions" ? (
                       <span>
-                        {column.isSorted
-                          ? column.isSortedDesc
-                            ? " ⬇"
-                            : " ⬆"
-                          : " ↕"}
+                        {column.isSorted ? column.isSortedDesc ? " ⬇" : " ⬆" : " ↕"}
                       </span>
                     ) : null}
                   </th>
@@ -246,13 +210,8 @@ export default function AllStudent() {
               return (
                 <tr className="adminStudentTableRow" {...row.getRowProps()}>
                   {row.cells.map((cell) => (
-                    <td
-                      className="adminStudentTableData"
-                      {...cell.getCellProps()}
-                      style={{
-                        display: cell.column.show ? "table-cell" : "none",
-                      }}
-                    >
+                    <td className="adminStudentTableData" {...cell.getCellProps()}
+                      style={{ display: cell.column.show ? "table-cell" : "none", }}>
                       {cell.render("Cell")}
                     </td>
                   ))}
@@ -264,19 +223,13 @@ export default function AllStudent() {
       </div>
       {/* Delete Confirmation Popup */}
       {showDeleteConfirmation && (
-        <DeletePOP
-          toggleDeleteConfirmation={toggleDeleteConfirmation}
+        <DeletePOP toggleDeleteConfirmation={toggleDeleteConfirmation}
           deleteItemId={deleteItemId}
-          handleDelete={handleDelete}
-        />
+          handleDelete={handleDelete} />
       )}
       {page.length ? (
         <div className="tablePageButtons">
-          <button
-            className="nAndpButtons"
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-          >
+          <button className="nAndpButtons" onClick={() => previousPage()} disabled={!canPreviousPage}>
             {" "}
             Previous{" "}
           </button>
@@ -287,11 +240,7 @@ export default function AllStudent() {
               {pageIndex + 1} of {pageOptions.length}
             </strong>
           </span>
-          <button
-            className="nAndpButtons"
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-          >
+          <button className="nAndpButtons" onClick={() => nextPage()} disabled={!canNextPage}>
             {" "}
             Next{" "}
           </button>
