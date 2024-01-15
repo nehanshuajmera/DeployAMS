@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import StudentForm from "../../../components/StudentForm";
-
 import DeleteButton from "../../../components/DeleteButton";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import TopOfPage from "../../../components/TopOfPage";
 import { useDispatch, useSelector } from "react-redux";
 import { updateStudentasync } from "../../../redux-toolkit/slices/crudstudentslice";
 import { studentFieldVerify } from "../../../action/InputFieldVerification";
@@ -87,10 +85,6 @@ const UpdateStudent = () => {
 
   return (
     <div>
-      <TopOfPage
-        pagePath={"Dashboard >> Student >> Update"}
-        pageName={"Update Student"}
-      />
       <StudentForm
         student={student}
         setStudent={setStudent}
