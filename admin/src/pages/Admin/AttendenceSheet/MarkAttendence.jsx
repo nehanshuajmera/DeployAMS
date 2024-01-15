@@ -7,14 +7,13 @@ import {
 } from "react-table";
 import { useDispatch, useSelector } from "react-redux";
 import GlobalFiltering from "../../../components/GlobalFiltering";
-import { fetchdetailasync } from "../../../redux-toolkit/slices/fetchdetailslice";
-import "./MarkAttendance.css";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ParticularAttendanceasync } from "../../../redux-toolkit/slices/teacherAPIslice/seeparticularatendanceslice";
 import { checkclassasync } from "../../../redux-toolkit/slices/teacherAPIslice/checkclassSlice";
 import { updateAttendanceAsync } from "../../../redux-toolkit/slices/teacherAPIslice/insertUpdateattendanceSlice";
 import AskPermission from "../../../components/AskPermission";
 import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
+import "./MarkAttendance.css";
 
 export default function MarkAttendance() {
   const sub_id = useParams();
@@ -289,11 +288,11 @@ export default function MarkAttendance() {
   return (
     <div className="markAttendanceMain w-screen h-full">
       <h2>Attendence Sheet</h2>
-      {isClassDetails?.message === "No Class Today" && (
+      {/* {isClassDetails?.message === "No Class Today" && (
         <div className="w-full p-2 bg-primary text-dimWhite text-center font-semibold">
           <p>Class is not scheduled for Today, cannot mark the attendance </p>
         </div>
-      )}
+      )} */}
       <div className="sheet">
         <div className="attendenceFormat">
           <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
@@ -384,7 +383,7 @@ export default function MarkAttendance() {
 
         <div className="moreFeatures">
           {/* Permission to mark attendance of past date*/}
-          <AskPermission sub_id={sub_id.id} />
+          <AskPermission className="blockPermission" sub_id={sub_id.id} />
           <div className="previousAttendance">
             {/* see previous attendance */}
             <button onClick={() => navigate(`/previousattendance/${sub_id.id}`)}>

@@ -1,10 +1,11 @@
-import React, { useEffect, useImperativeHandle, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createAcademicAsync, fetchAcademicAsync, updateHolidayAsync } from '../../../redux-toolkit/slices/academicCalenderslice'
-import './Calendar.css'
 import UpdateHolidayForm from './UpdateHolidayForm'
 import UpdateDayForm from './UpdateDayForm'
 import AddMoreDaysForm from './AddMoreDaysForm'
+import './Calendar.css'
+
 const semDate = {
   startDate: '',
   endDate: '',
@@ -61,7 +62,6 @@ export default function Calendar() {
   }
 
   const CreateSemester = () => {
-
     ; (async () => {
       try {
         await dispatch(createAcademicAsync({ ...dates }));
@@ -82,7 +82,6 @@ export default function Calendar() {
           console.log(error);
         }
       })()
-
   }
 
   // reschedule form submit
@@ -99,7 +98,6 @@ export default function Calendar() {
 
   }
 
-
   useEffect(() => {
     const unsub = async () => {
       try {
@@ -110,13 +108,11 @@ export default function Calendar() {
         console.log(error);
       }
     }
-
     unsub();
   }, [])
 
   const convertDate = (inputDate) => {
     const dateObj = new Date(inputDate);
-
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     const formattedDate = dateObj.toLocaleDateString('en-US', options);
     return formattedDate

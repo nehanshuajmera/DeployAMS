@@ -84,7 +84,7 @@ const check=()=>{
 
   return (
     <>
-      <div className="askForPermission">
+      <div className="askForPermission blockPermission">
         <h2>Ask For Permission</h2>
         <div className="askForPermissionText">
           
