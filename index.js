@@ -41,7 +41,7 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again after 15 minutes"
 });
 
-app.use(limiter);
+// app.use(limiter);
 
 // app.use((req, res, next) => {
 //   const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
