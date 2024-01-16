@@ -21,7 +21,7 @@ function App() {
   
   
   return (
-    <div className="w-screen overflow-hidden h-screen flex items-center justify-center">
+    <div className="overflow-hidden h-full flex items-center justify-center">
         <Routes>
             <Route exact path="/studentattendance" element={<ProtectedRoute>
             <StudentAttendence/>
