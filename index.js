@@ -21,7 +21,7 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://medicaps-ams-student.netlify.app"
+    "http://localhost:5174",
   ],
   credentials: true,
 })
@@ -69,16 +69,18 @@ mongoose.connect(process.env.MDB_CONNECT)
     app.use("/api/academichead", require("./Routes/academicHeadRouter.js"));
     app.use("/api/substituteteacher", require("./Routes/substituteTeacher.js"));
     
-    
-    app.use(express.static('admin/dist'));
-    app.get('*', (req, res) => {
-            res.sendFile(path.resolve('admin','dist','index.html'));
-    });
-
-    // app.use(express.static('client/dist'));
-    // app.get('*', (req, res) => {
-    //         res.sendFile(path.resolve('client','dist','index.html'));
-    // });
+    if (process.env.DEPLOY === 'student') {
+      app.use(express.static('client/dist'));
+      app.get('*', (req, res) => {
+          res.sendFile(path.resolve('client','dist','index.html'));
+      });
+    }
+    else {
+      app.use(express.static('admin/dist'));
+      app.get('*', (req, res) => {
+              res.sendFile(path.resolve('admin','dist','index.html'));
+      });
+    }
 
     // Schedule the cron jobs
     cron.schedule('31 5 * * *', async () => {
