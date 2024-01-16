@@ -41,7 +41,7 @@ function App() {
   useEffect(() => {
     const unsub = async () => {
       try {
-        await dispatch(authasync());
+       dispatch(authasync());
       } catch (error) {
         console.log(error);
       }
@@ -243,12 +243,12 @@ function App() {
           path="/academichead"
           element={
             <ProtectedRoute>
-              <AcademicHead/>
+              <AcademicHead />
             </ProtectedRoute>
 
           }
         />
-            
+
         <Route path="/alert" element={<Alert />} />
         <Route path="*" element={<ErrMsg />} />
       </Routes>

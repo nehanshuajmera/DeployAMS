@@ -15,20 +15,20 @@ import AuthContext from '../../context/AuthContext';
 export default function SingleAttendence(props) {
   const {IsLogin,userdata,logout}=useContext(AuthContext);
 
-// const dispatch=useDispatch()
-// const data=useSelector((state)=>state.login)
-// // console.log(data)
-// useEffect(() => {
-//  const unsub=()=>{
-//   dispatch(studentdetailasync());
+const dispatch=useDispatch()
+// console.log(data)
+useEffect(() => {
+  const unsub=()=>{
+    dispatch(studentdetailasync());
+    
+  }
+  
+  
+    unsub();
+  
+}, [])
 
-//  }
-
-//   return () => {
-//    unsub();
-//   }
-// }, [data])
-
+const data=useSelector((state)=>state.login)
 // if(useLocation().pathname === '/studentattandence')
 // {
 //   dispatch(studentdetailasync());

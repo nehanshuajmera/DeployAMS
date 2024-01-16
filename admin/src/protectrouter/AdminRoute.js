@@ -7,6 +7,7 @@ export default function AdminRoute({ children }) {
   const {IsLogin, userdata}=useContext(AuthContext);
 // console.log(userdata)
   useEffect(() => {
+    console.log("its here in adminprotector");
     if(IsLogin !== null){
 
     }

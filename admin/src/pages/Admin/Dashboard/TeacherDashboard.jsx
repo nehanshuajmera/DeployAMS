@@ -9,7 +9,7 @@ import AuthContext from '../../../context/AuthContext';
 
 export default function TeacherDashboard() {
   const { setMsgType, setMsg } = useMsgErr()
-  const { logout, userdata } = useContext(AuthContext);
+  const { userdata } = useContext(AuthContext);
   // console.log(userdata)
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,11 +40,7 @@ export default function TeacherDashboard() {
   }, [userDetail.details])
 
 
-  const handellogout = () => {
-    dispatch(logoutAsync());
-
-    navigate("/")
-  }
+  
 
   // calculate total number of lecture 
   const gotoSubjectAttendance = (sub_id) => {

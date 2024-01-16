@@ -19,7 +19,7 @@ function AuthContextProvider(props) {
     "programme": "",
     "faculty": "",
     "specialisation": "",
-    "year": 2020,
+    "year": 0,
     "branch": "",
     "section": "",
     "batch": "",
@@ -29,7 +29,7 @@ function AuthContextProvider(props) {
     "updated_at": "",
     "__v": 0  
   });
-  const [userapi,setuserapi]=useState([]);
+  
   
   const navigate = useNavigate();
     

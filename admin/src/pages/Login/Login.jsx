@@ -12,6 +12,7 @@ const initialState = {
 }
 
 export default function Login() {
+  const [loginData, setLoginData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,9 +28,8 @@ export default function Login() {
 
   const userstate = useSelector((state) => { state.login });
 
-  const [loginData, setLoginData] = useState(initialState);
 
-  const handleChange = (e) => {
+  const handleChange =(e) => {
     const { name, value } = e.target;
     setLoginData((prevFormData) => ({
       ...prevFormData,

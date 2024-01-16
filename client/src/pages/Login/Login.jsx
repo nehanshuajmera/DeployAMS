@@ -2,7 +2,7 @@ import './Login.css'
 
 import { useState,useEffect, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { loginAsync ,logoutAsync } from '../../redux-toolkit/slicees/loginslice';
+import { loginAsync} from '../../redux-toolkit/slicees/loginslice';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 
@@ -13,45 +13,40 @@ const initialState = {
 }
 
 export default function Login() {
-  const {IsLogin}=useContext(AuthContext);
-
-  useEffect(() => {
-    if(IsLogin !== null&&IsLogin){
-      navigate('/studentattendance');
-    }
-  }, [IsLogin])
-
-
-  const [loginData, setLoginData] = useState(initialState);
-  // const stateofuser = useSelector((state) => state.login);
-  // const changestate= useSelector((state) => state.changePassword)
   const navigate= useNavigate();
   const dispatch = useDispatch();
-  function check() {
-    const isLoggedIn = useSelector((state) => state.login.isLogin);
-    return isLoggedIn;
-  }
-  const handellogin=async ()=>{
-    try {
-      
-      await dispatch(loginAsync(loginData));
-      
-
-      if (check) {
-        // User is successfully logged in, navigate to the desired page
-        navigate("/studentattendance");
-     
-      }
-    } catch (error) {
-      console.log(error);
+  const [loginData, setLoginData] = useState(initialState);
+  const {IsLogin}=useContext(AuthContext);
+  const logdata=useSelector((state)=>state.login);
+  useEffect(() => {
+    if(IsLogin!==null && IsLogin){
+      navigate('/studentattendance');
     }
+  }, [IsLogin,navigate])
+  
+  
+  console.log('flow',IsLogin,logdata);
+  // const stateofuser = useSelector((state) => state.login);
+  // const changestate= useSelector((state) => state.changePassword)
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+  const handellogin=async(e)=>{
+    e.preventDefault();
+       dispatch(loginAsync(loginData));
+    // User is successfully logged in, navigate to the desired page
+        navigate("/studentattendance");
     }
       
       
    let iserror=false
   return (
     <div className='loginClass'>
-      <div className="form_main">
+      <form onSubmit={handellogin}className="form_main">
         {
           iserror &&
           <div className='text-white bg-red-600 px-6 py-2  z-50 rounded-lg'>
@@ -74,12 +69,10 @@ export default function Login() {
             type="text"
             className="inputField"
             id="username"
+            name='userId'
             placeholder="Enrollment/Scholar No."
             value={loginData.userId}
-            onChange={(e)=>{setLoginData(prev=>({
-              ...prev,
-              userId: e.target.value,
-            }))}}
+            onChange={handleChange}
           />
         </div>
         <div className="inputContainer">
@@ -97,20 +90,15 @@ export default function Login() {
             type="password"
             className="inputField"
             id="password"
+            name='password'
             placeholder="Password"
             value={loginData.password}
-            onChange={(e)=>{setLoginData(prev=>({
-              ...prev,
-              password: e.target.value,
-            }))}}
+            onChange={handleChange}
           />
         </div>
-        <button className='button' onClick={handellogin}>Login</button>
-        {/* <button className='button' onClick={()=>{dispatch(logoutAsync())}}>Logout</button> */}
-        {/* <a className="forgotLink" href="#">
-          Forgot your password?
-        </a> */}
-      </div>
+        <button type="submit" className='button' >Login</button>
+        
+      </form>
 
     </div>
   )

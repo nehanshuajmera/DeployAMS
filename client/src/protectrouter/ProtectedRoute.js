@@ -7,7 +7,8 @@ export default function ProtectedRoute({ children }) {
   const {IsLogin}=useContext(AuthContext);
 
   useEffect(() => {
-    if(IsLogin !== null&&!IsLogin){
+    console.log('in the protector',IsLogin);
+    if(IsLogin !== null && !IsLogin){
       navigate('/');      
     }
   }, [IsLogin])

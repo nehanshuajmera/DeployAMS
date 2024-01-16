@@ -14,6 +14,7 @@ const initialState = {
 // Async thunk for login
 export const loginAsync = createAsyncThunk('login/loginAsync', async (payload, { rejectWithValue }) => {
     try {
+        console.log("login api");
         const response = await axios.post('api/student/login', {
             enrollment_no: payload.userId,
             password: payload.password,
@@ -30,6 +31,7 @@ export const loginAsync = createAsyncThunk('login/loginAsync', async (payload, {
                     usertype: authResponse.data.message,
                 };
             }
+            else rejectWithValue(authResponse.data.message);
         }
 
         // Return undefined or an error object if the authentication fails
@@ -43,7 +45,6 @@ export const loginAsync = createAsyncThunk('login/loginAsync', async (payload, {
 // Async thunk for logout
 export const logoutAsync = createAsyncThunk('login/logoutAsync', async (payload, { rejectWithValue }) => {
     try {
-
         const response = await axios.get('/api/authentic/logout');
        const msg = response.data.message
         console.log("message:",msg);
@@ -69,19 +70,19 @@ export const loginslice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(loginAsync.fulfilled, (state, action) => {
-                    console.log("payload-",action.payload);
+                console.log("seting value");
+                  state={...initialState};
                 state.isLogin = true;
                 state.isAuthenticated = true;
                 state.enrollment_no = action.payload.enrollment_no;
                 state.usertype = action.payload.usertype;
-                console.log("seting value");
                 // localStorage.setItem('reduxState', JSON.stringify(state));
                 
             })
             .addCase(loginAsync.rejected, (state, action) => {
-
+                state={...initialState};
                 state.iserror = true;
-                state.errmsg = action.payload || 'Authentication error';
+                state.errmsg = action.payload;
             })
             .addCase(logoutAsync.fulfilled, (state,action) => {
                         
@@ -91,9 +92,9 @@ export const loginslice = createSlice({
              
             })
             .addCase(logoutAsync.rejected, (state,action) => {
+                state={...initialState};
                 state.iserror = true,
-                    state.errmsg ="something went wrong"
-                    console.error('Logout failed with error:', action.payload);
+                state.errmsg = action.payload;
             })
 
     },
