@@ -21,7 +21,7 @@ app.use(fileUpload());
 app.use(cors({
   origin: [
     // "http://localhost:5173",
-    "https://medicaps-ams-student.netlify.app"
+    "https://medicaps-ams-student.netlify.app",
   ],
   credentials: true,
 })
@@ -29,17 +29,17 @@ app.use(cors({
 
 app.use(cookieParser());
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Internal Server Error' });
-});
+// app.use((err, req, res, next) => {
+//   console.error(err.stack);
+//   res.status(500).json({ error: 'Internal Server Error' });
+// });
 
 // Use rate limiting middleware
-const limiter = rateLimit({
-  windowMs: 2 * 60 * 1000, // 1 minutes
-  max: 300, // limit each IP to 100 requests per windowMs
-  message: "Too many requests from this IP, please try again after 15 minutes"
-});
+// const limiter = rateLimit({
+//   windowMs: 2 * 60 * 1000, // 1 minutes
+//   max: 300, // limit each IP to 100 requests per windowMs
+//   message: "Too many requests from this IP, please try again after 15 minutes"
+// });
 
 // app.use(limiter);
 
