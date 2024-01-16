@@ -25,6 +25,7 @@ function AuthContextProvider(props) {
   const navigate = useNavigate();
     
    useEffect(() => {
+    console.log("in context api");
     axios.get("/api/teacher/details")
       .then((res) => { 
         setIsLogin(true)

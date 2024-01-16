@@ -1,4 +1,4 @@
-import { BrowserRouter as Router,Route, Routes, useNavigate, Navigate, Await } from "react-router-dom"
+import { BrowserRouter as Router, Route, Routes, useNavigate, Navigate, Await } from "react-router-dom"
 import StudentAttendance from './pages/Attendence/StudentAttendence'
 // import PrivateRoutes from "./components/PrivateRoutes"
 import Login from "./pages/Login/Login"
@@ -11,31 +11,25 @@ import { useDispatch, useSelector } from "react-redux"
 import { studentdetailasync } from "./redux-toolkit/slicees/studentdataslice"
 import AuthContext from "./context/AuthContext"
 import NotFoundPage from "./pages/NotFoundPage"
-
+import { authasync } from "./redux-toolkit/slicees/authapislice"
 
 function App() {
-  console.log("hello");
-  const {IsLogin,userdata}=useContext(AuthContext);
-  const logindata=useSelector((state)=>state.login)
-  const dispatch=useDispatch()
-  
-  
+  const { IsLogin } = useContext(AuthContext);
   return (
     <div className="overflow-hidden h-full flex items-center justify-center">
-        <Routes>
-            <Route exact path="/studentattendance" element={<ProtectedRoute>
-            <StudentAttendence/>
-            </ProtectedRoute>}/>
-          <Route exact path="/studentattendance/daywise" element={<ProtectedRoute>
-            <AttendenceSheet/>
-          </ProtectedRoute>}/>
-            <Route exact path="/changepassword" element={<ProtectedRoute>
-            <ChangePassword/>
-            </ProtectedRoute>}/>
-            <Route exact path="/" element={<Login />} />
-        <Route path="*" element={<NotFoundPage/>} />
-        </Routes>
-    
+      <Routes>
+        <Route exact path="/studentattendance" element={<ProtectedRoute>
+          <StudentAttendence />
+        </ProtectedRoute>} />
+        <Route exact path="/studentattendance/daywise" element={<ProtectedRoute>
+          <AttendenceSheet />
+        </ProtectedRoute>} />
+        <Route exact path="/changepassword" element={<ProtectedRoute>
+          <ChangePassword />
+        </ProtectedRoute>} />
+        <Route exact path="/" element={<Login />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </div>
   )
 }

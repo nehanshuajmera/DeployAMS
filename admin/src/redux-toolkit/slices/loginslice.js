@@ -13,6 +13,7 @@ const initialState = {
 // Async thunk for login
 export const loginAsync = createAsyncThunk('login/loginAsync', async (payload, { rejectWithValue }) => {
     try {
+        console.log('login api');
         const response = await axios.post('api/teacher/login', {
             teacher_id: payload.userId,
             password: payload.password,
@@ -66,6 +67,7 @@ export const loginslice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(loginAsync.fulfilled, (state, action) => {
+                console.log("setting value");
                 state={...initialState}
                 state.isLogin = true;
                 state.isAuthenticated = true;
