@@ -73,7 +73,7 @@ const PreviousAttendance = () => {
                 ))}
                 <td className='py-2 px-4 border'>{selectedsubject.attendance.reduce((result,ele)=>(result+=ele.count),0)}</td>
                 <td className='py-2 px-4 border'>{dataofstudent?.subject?.lecture_dates?.reduce((result,ele)=>(result+=ele.count),0)}</td>
-                <td className='py-2 px-4 border'>{selectedsubject.attendance.reduce((result,ele)=>(result+=ele.count),0)/dataofstudent?.subject?.lecture_dates?.reduce((result,ele)=>(result+=ele.count),0)*100} %</td>
+                <td className='py-2 px-4 border'>{Math.ceil(selectedsubject.attendance.reduce((result,ele)=>(result+=ele.count),0)/dataofstudent?.subject?.lecture_dates?.reduce((result,ele)=>(result+=ele.count),0)*100)} %</td>
                 </tr>
               );
             })}
