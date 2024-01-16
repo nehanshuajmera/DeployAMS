@@ -35,7 +35,6 @@ import AcademicHead from "./pages/AcademicHead/AcademicHead";
 import LogViewer from "./pages/SuperAdmin/Logs/LogViewer";
 
 function App() {
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -45,9 +44,9 @@ function App() {
       } catch (error) {
         console.log(error);
       }
-    }
+    };
     unsub();
-  }, [])
+  }, []);
 
   const { IsLogin } = useContext(AuthContext);
 
@@ -56,12 +55,7 @@ function App() {
       {IsLogin ? <Header /> : null}
       <ErrMsg />
       <Routes>
-        <Route
-          path={"/"}
-          element={
-            <Login />
-          }
-        />
+        <Route path={"/"} element={<Login />} />
         <Route
           path={"/teacherdashboard"}
           element={
@@ -135,14 +129,22 @@ function App() {
             </AdminRoute>
           }
         />
-        <Route path={"/allsubject"} element={
-          <AdminRoute>
-            <AllSubject />
-          </AdminRoute>} />
-        <Route path={"/createstudent"} element={
-          <AdminRoute>
-            <CreateStudent />
-          </AdminRoute>} />
+        <Route
+          path={"/allsubject"}
+          element={
+            <AdminRoute>
+              <AllSubject />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path={"/createstudent"}
+          element={
+            <AdminRoute>
+              <CreateStudent />
+            </AdminRoute>
+          }
+        />
         <Route
           path={"/updatestudent/:id"}
           element={
@@ -245,7 +247,6 @@ function App() {
             <ProtectedRoute>
               <AcademicHead />
             </ProtectedRoute>
-
           }
         />
 

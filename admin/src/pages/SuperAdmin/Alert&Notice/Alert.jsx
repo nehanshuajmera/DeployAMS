@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import './Alert.css'
 
 export default function Alert() {
   const [alerts, setAlerts] = useState([]);
@@ -36,7 +37,7 @@ export default function Alert() {
   }, []); // Fetch alerts on component mount
 
   return (
-    <div className="flex justify-center flex-row flex-wrap items-center h-screen">
+    <div className="alertContainer flex justify-center flex-row flex-wrap items-center">
       {/* Old alerts */}
       <div className="bg-white border border-slate-200 grid grid-cols-6 w-1/4 h-2/4 m-2 gap-2 rounded-xl p-2 text-sm">
         <h1 className="text-center text-slate-500 text-xl font-bold col-span-6">Alerts</h1>
@@ -49,7 +50,7 @@ export default function Alert() {
       </div>
 
       {/* New alert */}
-      <div className="bg-white border border-slate-200 grid grid-cols-6 w-2/4 h-2/4 gap-2 rounded-xl p-2 text-sm">
+      <div className="bg-white border border-slate-200 grid grid-cols-6 w-2/4 gap-2 rounded-xl p-2 text-sm">
         <h1 className="text-center text-slate-500 text-xl font-bold col-span-6">Create Alert</h1>
         <input
           placeholder="Title"

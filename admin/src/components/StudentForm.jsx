@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { IoIosClose } from "react-icons/io";
-import SubjectSearch from "./SubjectSearch";
-
-// import { useAdmin } from "../context/AdminContext";
+import SubjectSearchStud from "./SubjectSearchStud";
+// import { IoIosClose } from "react-icons/io";
 
 const StudentForm = ({ student, setStudent, HandleClick }) => {
   const [subject, setSubject] = useState("");
@@ -417,7 +415,7 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
         </div>
       </div>
       {/* <SearchBar  /> */}
-      <SubjectSearch subjects={student.subjects} changeSubjectList={changeSubjectList} />
+      <SubjectSearchStud subjects={student.subjects} changeSubjectList={changeSubjectList} />
       <div className="flex justify-end items-center">
         <button className="button1" onClick={() => HandleClick()}>
           Save
@@ -426,6 +424,8 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
     </div>
   );
 };
+
+
 
 
 export default StudentForm;

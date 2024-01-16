@@ -1,23 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useTable,
   usePagination,
   useSortBy,
   useGlobalFilter,
 } from "react-table";
-import { useDispatch, useSelector } from "react-redux";
 import GlobalFiltering from "../../../components/GlobalFiltering";
-import { fetchdetailasync } from "../../../redux-toolkit/slices/fetchdetailslice";
+import { useNavigate, useParams } from "react-router-dom";
 import "./MarkAttendance.css";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { ParticularAttendanceasync } from "../../../redux-toolkit/slices/teacherAPIslice/seeparticularatendanceslice";
-import { checkclassasync } from "../../../redux-toolkit/slices/teacherAPIslice/checkclassSlice";
-import { updateAttendanceAsync } from "../../../redux-toolkit/slices/teacherAPIslice/insertUpdateattendanceSlice";
-import AskPermission from "../../../components/AskPermission";
-import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
-import { set } from "mongoose";
-
 
 export default function MarkPastAttendance() {
   const req_id = useParams();
@@ -51,82 +42,77 @@ export default function MarkPastAttendance() {
         console.log(err);
       });
   }, []);
-  
+
   const [studentIDs, setstudentIDs] = useState([]);
+  const [subjectDeatils, setSubjectDeatils] = useState({});
 
- const [subjectDeatils, setSubjectDeatils] = useState({});
+  // Fetch student attendance data based on subject ID
+  const fetchStudentAttendance = async (subject_id) => {
+    try {
+      // console.log("Subject id",subject_id); 
+      const response = await axios.get(`/api/teacher/studentsattendance/${subject_id}`);
+      settotalLectures(response.data.subject.lecture_dates.reduce((result, ele) => (result += ele.count), 0))
+      // find the maximum count of the lecture
+      // Check if lecture_dates and proposedDateTime are defined before accessing them
+      setSubjectDeatils(response.data.subject);
+      // console.log("Total lectures",response.data.subject.lecture_dates);
+      // console.log("Student data",response.data);
+      setStudentData(response.data.message);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    // Fetch student attendance data based on subject ID
-    const fetchStudentAttendance = async (subject_id) => {
-      try {
-        // console.log("Subject id",subject_id); 
-        const response = await axios.get(`/api/teacher/studentsattendance/${subject_id}`);
-        settotalLectures(response.data.subject.lecture_dates.reduce((result,ele)=>(result+=ele.count),0))
-        // find the maximum count of the lecture
-         // Check if lecture_dates and proposedDateTime are defined before accessing them
-         setSubjectDeatils(response.data.subject);
-         
-        // console.log("Total lectures",response.data.subject.lecture_dates);
-        // console.log("Student data",response.data);
-        setStudentData(response.data.message);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  useEffect(() => {
+    const proposedDateTime = requestData?.proposedDateTime;
+    console.log("proposedDateTime", proposedDateTime);
+    const lectureDates = subjectDeatils.lecture_dates;
+    if (lectureDates && proposedDateTime) {
+      const subject_count = lectureDates.find((ele) => ele.date === proposedDateTime)?.count;
+      console.log("Subject count", subject_count);
+      setMaxCount(subject_count);
+    }
+  }, [requestData, subjectDeatils]);
 
-    useEffect(() => {
-      const proposedDateTime = requestData?.proposedDateTime;
-      console.log("proposedDateTime",proposedDateTime);
-      const lectureDates = subjectDeatils.lecture_dates;
-     if (lectureDates && proposedDateTime) {
-       const subject_count =  lectureDates.find((ele) => ele.date === proposedDateTime)?.count;
-       console.log("Subject count",subject_count);
-       setMaxCount(subject_count);
-     }
-    }, [requestData,subjectDeatils]);
+  const changeCount = ({ type, stud_id, count, index }) => {
+    // console.log( " change",type, stud_id,count);
 
-    const changeCount = ({ type, stud_id, count, index }) => {
-      // console.log( " change",type, stud_id,count);
-  
-      if (type === "increment") {
-        console.log("increment");
-        if (count === maxCount) {
-          console.log(maxCount);
-          count = maxCount;
-        } else {
-          count = count + 1;
-        }
+    if (type === "increment") {
+      console.log("increment");
+      if (count === maxCount) {
+        console.log(maxCount);
+        count = maxCount;
       } else {
-        if (count === 0) {
-          count = 0;
-        } else {
-          count = count - 1;
-        }
+        count = count + 1;
       }
-  
-      // console.log({stud_id,count,index})
-      setstudentIDs((prevStudentIDs) => {
-        const updatedStudentIDs = [...prevStudentIDs];
-        updatedStudentIDs[index].count = count;
-        return updatedStudentIDs;
-      });
-      // console.log(studentIDs)
-    };
-  
+    } else {
+      if (count === 0) {
+        count = 0;
+      } else {
+        count = count - 1;
+      }
+    }
+
+    // console.log({stud_id,count,index})
+    setstudentIDs((prevStudentIDs) => {
+      const updatedStudentIDs = [...prevStudentIDs];
+      updatedStudentIDs[index].count = count;
+      return updatedStudentIDs;
+    });
+    // console.log(studentIDs)
+  };
+
 
   const submitHandler = async () => {
     try {
       const payload = {
-          studentIDs: studentIDs,
+        studentIDs: studentIDs,
       };
       await axios.post(`/api/updatepastattendance/updateattendancebypermission/${req_id.id}`, payload);
     } catch (error) {
       console.log(error);
     }
   };
-
-
-
 
   useEffect(() => {
     var array = [];
@@ -139,30 +125,30 @@ export default function MarkPastAttendance() {
       let pastDate = new Date(requestData.proposedDateTime)
       // console.log(pastDate.getDate())
       // let tempLecture = stud.subjects.find(subj=>subj.subject_id === sub_id.id).lecture_dates.reduce((result,ele)=>(result+=ele.count),0)
-      let tempAttendanceList = stud.subjects.find(subj=>subj.subject_id === subjectId).attendance.reduce((result,ele)=>(result+=ele.count),0)
+      let tempAttendanceList = stud.subjects.find(subj => subj.subject_id === subjectId).attendance.reduce((result, ele) => (result += ele.count), 0)
 
-      let tempCount = stud.subjects.find(subj=>subj.subject_id === subjectId).attendance.find(ele=>{
+      let tempCount = stud.subjects.find(subj => subj.subject_id === subjectId).attendance.find(ele => {
         let tempTime = new Date(ele.date)
-        
+
         // console.log(tempTime.getDate(),pastDate.getDate(),tempTime.getMonth(),pastDate.getMonth(),tempTime.getFullYear(),pastDate.getFullYear())
 
-        return (tempTime.getDate() === pastDate.getDate() && tempTime.getMonth() === pastDate.getMonth() && tempTime.getFullYear() === pastDate.getFullYear() )
+        return (tempTime.getDate() === pastDate.getDate() && tempTime.getMonth() === pastDate.getMonth() && tempTime.getFullYear() === pastDate.getFullYear())
       })
       // console.log({tempCount})
       tempCount = tempCount?.count;
 
-      console.log(tempCount,stud.name)
+      console.log(tempCount, stud.name)
       // console.log(tempLecture)
-      
+
       array.push({
         studentid: stud._id,
         enrollment_no: stud.enrollment_no,
         name: stud.name,
-        count: tempCount?tempCount:0,
+        count: tempCount ? tempCount : 0,
         index: idx,
-        attendance:tempAttendanceList,
-        totalLectures:totalLectures,
-        date:pastDate
+        attendance: tempAttendanceList,
+        totalLectures: totalLectures,
+        date: pastDate
       });
       // console.log(array)
       idx++;
@@ -170,7 +156,7 @@ export default function MarkPastAttendance() {
     setstudentIDs(array);
   }, [studentData]);
 
-  
+
 
   const data = React.useMemo(() => studentIDs, [studentIDs]);
   // console.log(dataofstud)
@@ -189,7 +175,7 @@ export default function MarkPastAttendance() {
         accessor: "totalLectures",
       },
       {
-        Header: "Total attendance",
+        Header: "Total Attendance",
         accessor: "attendance",
       },
       {
@@ -201,26 +187,12 @@ export default function MarkPastAttendance() {
           return (
             <div key={rowData.original._id}>
               <>
-                <div>
+                <div className="UpdateAttendanceBttn">
                   {maxCount && maxCount > 0 ? (
                     // !(isClassDetails?.message === "No Class Today") &&
                     <>
                       <div
-                        className="button1 cursor-pointer"
-                        onClick={() => {
-                          changeCount({
-                            stud_id: rowData.original.studentid,
-                            type: "decrement",
-                            count: rowData.original.count,
-                            index: rowData.original.index,
-                          });
-                        }}
-                      >
-                        -
-                      </div>
-                      <p>{rowData.original.count}</p>
-                      <div
-                        className="button1 cursor-pointer"
+                        className="p-1 px-2 mx-1 flex item-center bg-blue-500 hover:bg-blue-600 text-white rounded cursor-pointer"
                         onClick={() =>
                           changeCount({
                             stud_id: rowData.original.studentid,
@@ -232,12 +204,25 @@ export default function MarkPastAttendance() {
                       >
                         +
                       </div>
+                      <p className="p-1 mx-1 flex item-center">{rowData.original.count}</p>
+                      <div
+                        className="p-1 px-2 mx-1 flex item-center bg-blue-500 hover:bg-blue-600 text-white rounded cursor-pointer"
+                        onClick={() => {
+                          changeCount({
+                            stud_id: rowData.original.studentid,
+                            type: "decrement",
+                            count: rowData.original.count,
+                            index: rowData.original.index,
+                          });
+                        }}
+                      >
+                        -
+                      </div>
                     </>
                   ) : (
-                    <div>-</div>
+                    <div className="w-full flex items-center justify-center self-center text-center">-</div>
                   )}
                 </div>
-                {/* <img src="https://cdn-icons-png.flaticon.com/512/4553/4553011.png" alt="" /> */}
               </>
             </div>
           );
@@ -281,39 +266,41 @@ export default function MarkPastAttendance() {
 
   return (
     <div className="markAttendanceMain w-screen h-full">
-      <h2>Attendance Sheet</h2>
-      <p>Date : { new Date(requestData?.proposedDateTime).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    
-  })}</p>
+      <h2>Past Attendance Sheet</h2>
+      <p className="font-bold">Date : {new Date(requestData?.proposedDateTime).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+
+      })}</p>
       <div className="sheet">
         <div className="attendenceFormat">
           <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
           <div className="studentAttendanceTable">
-            <table className="studentTable" {...getTableProps()}>
+            <table className="markAttendanceTable" {...getTableProps()}>
               <thead>
                 {headerGroups.map((headerGroup) => (
                   <tr
-                    className="studentTableRow"
+                    className="markAttendanceTableRow"
                     {...headerGroup.getHeaderGroupProps()}
                   >
                     {headerGroup.headers.map((column) => (
                       <th
-                        className="studentTableHead"
+                        className="markAttendanceTableHead"
                         {...column.getHeaderProps(
                           column.getSortByToggleProps()
                         )}
                       >
                         {column.render("Header")}
-                        <span>
-                          {column.isSorted
-                            ? column.isSortedDesc
-                              ? " ⬇"
-                              : " ⬆"
-                            : " ↕"}
-                        </span>
+                        {column.Header !== "Actions" && column.Header !== "Total Lectures" && column.Header !== "Total Attendance" ? (
+                          <span>
+                            {column.isSorted
+                              ? column.isSortedDesc
+                                ? " ⬇"
+                                : " ⬆"
+                              : " ↕"}
+                          </span>
+                        ) : null}
                       </th>
                     ))}
                   </tr>
@@ -325,13 +312,13 @@ export default function MarkPastAttendance() {
                   // console.log(row)
                   return (
                     <tr
-                      className="studentTableRow"
+                      className="markAttendanceTableRow"
                       {...row.getRowProps()}
                       onClick={() => gotoUpdate(row)}
                     >
                       {row.cells.map((cell) => (
                         <td
-                          className="studentTableData"
+                          className="markAttendanceTableData"
                           {...cell.getCellProps()}
                         >
                           {cell.render("Cell")}
@@ -373,12 +360,10 @@ export default function MarkPastAttendance() {
             <h2 className="noData">No Data</h2>
           )}
         </div>
-
-      
       </div>
 
       {isClassScheduled && (
-        <div className="button1" onClick={submitHandler}>
+        <div className="p-2 m-2 bg-red-500 hover:bg-red-600 text-white rounded text-center cursor-pointer" onClick={submitHandler}>
           Submit
         </div>
       )}

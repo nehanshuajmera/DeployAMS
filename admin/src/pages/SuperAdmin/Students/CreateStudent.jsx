@@ -1,9 +1,6 @@
 import { useState } from "react";
 import StudentForm from "../../../components/StudentForm";
-
-import TopOfPage from "../../../components/TopOfPage";
 import { studentFieldVerify } from "../../../action/InputFieldVerification";
-
 import { useDispatch, useSelector } from "react-redux";
 import { createStudentasync } from "../../../redux-toolkit/slices/crudstudentslice";
 import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
@@ -44,28 +41,7 @@ const CreateStudent = () => {
   const { setMsgType, setMsg } = useMsgErr();
 
   const HandleClick = () => {
-    // const unsub = async () => {
-    //   try {
-    //     await dispatch(createStudentasync({ ...student }));
-    //     if(studState.isErr ){
-    //         setMsgType(TYPE.Err)
-    //         setMsg(studState.errMsg)
-
-    //       }
-    //       else{
-    //         setMsgType(TYPE.Success)
-    //         setMsg("Student added successfully");
-    //         navigate("/allstudent");
-    //       }
-    //       console.log(studState)
-    //   } catch (error) {
-    //     console.log(`failed to add student : ${error}`);
-    //     setMsgType(TYPE.Err);
-    //     setMsg("Failed to add student");
-    //   }
-    // };
-
-    // unsub();
+    
     if (studentFieldVerify(student)) {
       // createItem({API:API_Item_Type.student,data:student})
       (async () => {

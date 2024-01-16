@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IoIosClose } from "react-icons/io";
 import { fetchdetailasync } from "../redux-toolkit/slices/fetchdetailslice";
 
-const SubjectSearch = ({ subjects, changeSubjectList }) => {
+const SubjectSearchStud = ({ subjects, changeSubjectList }) => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const [detailsofSelectedSubject, setDetailsofSelectedSubject] = useState([]);
@@ -35,7 +35,7 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
     // add new Subject
     setSelectedSubject((prev) => [
       ...prev,
-      { subject_id: sub_id, permission: "write" },
+      { subject_id: sub_id},
     ]);
   };
 
@@ -124,22 +124,6 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
     changeSubjectList([...selectedSubject]);
   }, [selectedSubject]);
 
-  const permissionChange = (e, subID) => {
-    let temp = selectedSubject.map((subj) => {
-      if (subj.subject_id === subID)
-        return { ...subj, permission: e.target.value };
-      return subj;
-    });
-    setSelectedSubject(temp);
-    // setSelectedSubject((prev) => {
-    //   return prev.map((subj) => {
-    //     if (subj.id === subID) return { ...subj, permission: e.target.value };
-    //     return subj;
-    //   });
-    // });
-  };
-
-  console.log(detailsofSelectedSubject);
   return (
     <div className="flex flex-col gap-3 col-span-2  ">
       <div className="relative w-[300px] md:w-[400px]">
@@ -175,24 +159,21 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
       </div>
       {/* list of selected subject */}
       <div className="flex gap-3 flex-wrap mt-[100px] w-[300px] md:w-[400px]">
-        <table className="flexCenter flex-col">
-          <thead>
+        <table className="flexCenter flex-col py-2 px-2 border grid grid-cols-11">
+          <thead className="col-span-11">
             <tr className="py-2 px-2 border grid grid-cols-11">
-              <th className="py-2 px-2 border col-span-3 text-center">
+              <th className="py-2 px-2 border col-span-5 text-center">
                 Subject Name
               </th>
-              <th className="py-2 px-2 border col-span-3 text-center">
+              <th className="py-2 px-2 border col-span-4 text-center">
                 Course Code
-              </th>
-              <th className="py-2 px-2 border col-span-3 text-center">
-                Permission
-              </th>
-              <th className="py-2 px-1 border col-span-2 text-center">
+              </th>              
+              <th className="py-2 px-2 border col-span-2 text-center">
                 Remove
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="col-span-11">
             {detailsofSelectedSubject.length === 0 ? (
               <p className="">No Selected subject</p>
             ) : (
@@ -203,25 +184,12 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
                     key={subject._id}
                     className="py-2 px-2 border grid grid-cols-11"
                   >
-                    <td className="py-2 px-2 border col-span-3 text-center">
+                    <td className="py-2 px-2 border col-span-5 text-center">
                       {subject.subject_name}
                     </td>
-                    <td className="py-2 px-2 border col-span-3 text-center">
+                    <td className="py-2 px-2 border col-span-4 text-center">
                       {subject.course_code}
-                    </td>
-                    <td className="py-2 px-2 border col-span-3 text-center">
-                      <select
-                        name="permission"
-                        id="permission"
-                        value={subject.permission}
-                        onChange={(e) => permissionChange(e, subject._id)}
-                      >
-                        <option value="write">Write</option>
-                        <option value="read">Read</option>
-                      </select>
-
-                      {subject.permission}
-                    </td>
+                    </td>                    
                     <td
                       className="py-2 px-2 border col-span-2 text-center right-2 text-3xl flexCenter cursor-pointer"
                       onClick={() => removeSubject(subject._id)}
@@ -239,4 +207,4 @@ const SubjectSearch = ({ subjects, changeSubjectList }) => {
   );
 };
 
-export default SubjectSearch;
+export default SubjectSearchStud;

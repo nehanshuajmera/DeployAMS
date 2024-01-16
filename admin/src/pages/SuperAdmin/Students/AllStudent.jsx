@@ -1,51 +1,60 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table'
-import { useDispatch, useSelector } from 'react-redux';
-import GlobalFiltering from '../../../components/GlobalFiltering';
-import './AllStudent.css'
-import { fetchdetailasync } from '../../../redux-toolkit/slices/fetchdetailslice';
-import { deleteStudentAsync } from '../../../redux-toolkit/slices/crudstudentslice';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useTable, usePagination, useSortBy, useGlobalFilter } from "react-table";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchdetailasync } from "../../../redux-toolkit/slices/fetchdetailslice";
+import { deleteStudentAsync } from "../../../redux-toolkit/slices/crudstudentslice";
+import { useNavigate } from "react-router-dom";
+import { TYPE, useMsgErr } from "../../../context/MsgAndErrContext";
+import GlobalFiltering from "../../../components/GlobalFiltering";
+import DeletePOP from "../../../components/DeletePOP";
+import "./AllStudent.css";
 
 export default function AllStudent() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [dataofstud, setdataofstud] = useState({ details: [] });
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { setMsgType, setMsg } = useMsgErr();
+
   useEffect(() => {
     const unsub = async () => {
       console.log("clicked");
       try {
         await dispatch(fetchdetailasync({ apiname: "allstudents" }));
-      }
-      catch (error) {
+        if (fetchStore.isErr) {
+          setMsgType(TYPE.Err);
+          setMsg(fetchStore.errMsg);
+        }
+      } catch (error) {
         console.log(error);
+        setMsgType(TYPE.Err);
+        setMsg("Failed to fetch students");
       }
-    }
+    };
     unsub();
-  }, [])
-  // setdataofstudent(useSelector((state)=>state.fetchDetail));
+  }, []);
+
+  const fetchStore = useSelector((state) => state.fetchDetail);
 
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   const dataofstudent = useSelector((state) => state.fetchDetail);
   useEffect(() => {
     console.log("data is comming", dataofstudent);
-    setdataofstud(dataofstudent)
-  }, [dataofstudent])
+    setdataofstud(dataofstudent);
+  }, [dataofstudent]);
 
   const data = React.useMemo(() => dataofstud.details, [dataofstud.details]);
-
   const columns = React.useMemo(
     () => [
       {
@@ -83,40 +92,36 @@ export default function AllStudent() {
         accessor: "specialisation",
         show: windowWidth > 800,
       },
-      // {
-      //   Header: "Faculty",
-      //   accessor: "faculty",
-      // },
       {
         Header: "Programme",
         accessor: "programme",
         show: windowWidth > 800,
       },
       {
-        Header: 'Actions',
+        Header: "Actions",
         Cell: (tableInstance) => {
           const { row: index } = tableInstance;
-          const { id: itemId } = index.original
+          const { id: itemId } = index.original;
           return (
-            <div className='tableActions'>
-              <button className='actionBtn' onClick={() => navigate(`/updatestudent/` + itemId, { state: { ...index.original } })}>
-                <img src="/editBtn.png" alt="" />
+            <div className="tableActions">
+              <button className="actionBtn" onClick={() => navigate(`/updatestudent/` + itemId, { state: { ...index.original } })}>
+                <img src="/editBtn.png" alt="Error Loading Image" />
               </button>
-              <button className='actionBtn' onClick={() => handleDelete(itemId)}>
-                <img src="/deleteBtn.png" alt="" />
+              <button className="actionBtn" onClick={() => handleDelete(itemId)}>
+                <img src="/deleteBtn.png" alt="Error Loading Image" />
               </button>
             </div>
-          )
+          );
         },
         show: true,
-      }
+      },
     ],
     [windowWidth]
   );
 
   const initialState = {
-    pageSize: 20
-  }
+    pageSize: 60,
+  };
 
   const {
     getTableProps,
@@ -130,43 +135,69 @@ export default function AllStudent() {
     pageOptions,
     state,
     setGlobalFilter,
-    prepareRow
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState,
-      enableEditing: true
-    }, useGlobalFilter, useSortBy, usePagination);
+    prepareRow,
+  } = useTable({
+    columns,
+    data,
+    initialState,
+    enableEditing: true,
+  }, useGlobalFilter, useSortBy, usePagination);
 
   const { pageIndex, globalFilter } = state;
 
+  // state functions and variables for deletion
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState(null);
+
+  const toggleDeleteConfirmation = (itemId = null) => {
+    setDeleteItemId(itemId);
+    setShowDeleteConfirmation(!showDeleteConfirmation);
+    console.log(showDeleteConfirmation);
+  };
+
+  const studentStore = useSelector((state) => state.crudStudent);
+
   const handleDelete = async (itemId) => {
-    try {
-      await dispatch(deleteStudentAsync(itemId))
-      navigate('/allstudent')
-    } catch (error) {
-      console.log(error)
+    toggleDeleteConfirmation(itemId);
+    // Handle deletion if confirmed
+    console.log(showDeleteConfirmation);
+    if (showDeleteConfirmation) {
+      try {
+        await dispatch(deleteStudentAsync(itemId));
+        if (studentStore.isErr) {
+          setMsgType(TYPE.Err);
+          setMsg(studentStore.errMsg);
+        } else {
+          setMsgType(TYPE.Success);
+          setMsg("Student Deleted successfully");
+          window.location.reload();
+        }
+      } catch (error) {
+        console.log(error);
+        setMsgType(TYPE.Err);
+        setMsg("Failed to delete student");
+      }
     }
-  }
+  };
 
   return (
-    <div className='allStudentMain'>
+    <div className="allStudentMain">
       <h2>All Students List</h2>
       <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
       <div className="allStudentTable">
-        <table className='adminStudentTable' {...getTableProps()}>
+        <table className="adminStudentTable" {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
-              <tr className='adminStudentTableRow' {...headerGroup.getHeaderGroupProps()}>
+              <tr className="adminStudentTableRow" {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th className='adminStudentTableHead' {...column.getHeaderProps(column.getSortByToggleProps())}
-                    style={{ display: column.show ? 'table-cell' : 'none' }}
-                  >
+                  <th className="adminStudentTableHead" {...column.getHeaderProps(column.getSortByToggleProps())}
+                    style={{ display: column.show ? "table-cell" : "none" }}>
                     {column.render("Header")}
-                    {column.Header !== "Actions" ? <span>
-                      {column.isSorted ? (column.isSortedDesc ? ' ⬇' : ' ⬆') : ' ↕'}
-                    </span> : null}
+                    {column.Header !== "Actions" ? (
+                      <span>
+                        {column.isSorted ? column.isSortedDesc ? " ⬇" : " ⬆" : " ↕"}
+                      </span>
+                    ) : null}
                   </th>
                 ))}
               </tr>
@@ -175,13 +206,12 @@ export default function AllStudent() {
           <tbody {...getTableBodyProps()}>
             {page.map((row) => {
               prepareRow(row);
-              console.log(row);
+              // console.log(row);
               return (
-                <tr className='adminStudentTableRow' {...row.getRowProps()}>
+                <tr className="adminStudentTableRow" {...row.getRowProps()}>
                   {row.cells.map((cell) => (
-                    <td className='adminStudentTableData' {...cell.getCellProps()}
-                      style={{ display: cell.column.show ? 'table-cell' : 'none' }}
-                    >
+                    <td className="adminStudentTableData" {...cell.getCellProps()}
+                      style={{ display: cell.column.show ? "table-cell" : "none", }}>
                       {cell.render("Cell")}
                     </td>
                   ))}
@@ -191,18 +221,33 @@ export default function AllStudent() {
           </tbody>
         </table>
       </div>
-      {page.length ?
+      {/* Delete Confirmation Popup */}
+      {showDeleteConfirmation && (
+        <DeletePOP toggleDeleteConfirmation={toggleDeleteConfirmation}
+          deleteItemId={deleteItemId}
+          handleDelete={handleDelete} />
+      )}
+      {page.length ? (
         <div className="tablePageButtons">
-          <button className='nAndpButtons' onClick={() => previousPage()} disabled={!canPreviousPage}> Previous </button>
+          <button className="nAndpButtons" onClick={() => previousPage()} disabled={!canPreviousPage}>
+            {" "}
+            Previous{" "}
+          </button>
           <span className="pageNoDetails">
-            {' '}Page{' '}
+            {" "}
+            Page{" "}
             <strong>
               {pageIndex + 1} of {pageOptions.length}
             </strong>
           </span>
-          <button className='nAndpButtons' onClick={() => nextPage()} disabled={!canNextPage}> Next </button>
+          <button className="nAndpButtons" onClick={() => nextPage()} disabled={!canNextPage}>
+            {" "}
+            Next{" "}
+          </button>
         </div>
-        : <h2 className="noData">No Data</h2>}
+      ) : (
+        <h2 className="noData">No Data</h2>
+      )}
     </div>
-  )
+  );
 }

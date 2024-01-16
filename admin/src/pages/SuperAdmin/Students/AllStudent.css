@@ -90,13 +90,15 @@
 
 .tableActions {
     display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .actionBtn {
     margin: 0 0.5rem;
     padding: 0.2rem;
-    height: 1rem;
-    width: 1rem;
+    height: 2rem;
+    width: 2rem;
 }
 
 .actionBtn img {
@@ -163,13 +165,16 @@
     }
 
     .actionBtn {
-        height: 0.4rem;
-        width: 0.4rem;
+        /* height: 1.2rem;
+        width: 1.2rem; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .actionBtn img {
-        height: 60%;
-        width: 60%;
+        height: 80%;
+        width: 80%;
     }
 }
 
@@ -228,7 +233,7 @@
         justify-content: center;
     }
 
-    .actionBtn {
+    /* .actionBtn {
         height: 0.4rem;
         width: 0.4rem;
     }
@@ -236,5 +241,5 @@
     .actionBtn img {
         height: 60%;
         width: 60%;
-    }
+    } */
 }
