@@ -14,9 +14,9 @@ const path=require("path");
 
 dotenv.config();
 app.use(express.json());
+
 app.use(fileUpload());
 
-app.use(cookieParser());
 
 app.use(cors({
   origin: [
@@ -26,6 +26,8 @@ app.use(cors({
   credentials: true,
 })
 );
+
+app.use(cookieParser());
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
