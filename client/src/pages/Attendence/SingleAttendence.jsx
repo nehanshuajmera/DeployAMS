@@ -14,21 +14,21 @@ import AuthContext from '../../context/AuthContext';
 //but wait first you have to call api by use dispatch hook  in use effect so that data can reload on page automatically in line no. 16 exactly same
 export default function SingleAttendence(props) {
   const {IsLogin,userdata,logout}=useContext(AuthContext);
-
+      console.log("in student detail");
+  const data=useSelector((state)=>state.login)
 const dispatch=useDispatch()
 // console.log(data)
-useEffect(() => {
-  const unsub=()=>{
-    dispatch(studentdetailasync());
+// useEffect(() => {
+//   const unsub=()=>{
+//     dispatch(studentdetailasync());
     
-  }
+//   }
   
   
-    unsub();
+//     unsub();
   
-}, [])
+// }, [data.IsLogin])
 
-const data=useSelector((state)=>state.login)
 // if(useLocation().pathname === '/studentattandence')
 // {
 //   dispatch(studentdetailasync());
@@ -47,15 +47,16 @@ const data=useSelector((state)=>state.login)
   
   const [currentDate, setCurrentDate] = useState(new Date());
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentDate(new Date()); // Update current date every 24 hours
-    }, 24 * 60 * 60 * 1000); // 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
+  // useEffect(() => {
+  //   console.log("shit");
+  //   const interval = setInterval(() => {
+  //     setCurrentDate(new Date()); // Update current date every 24 hours
+  //   }, 24 * 60 * 60 * 1000); // 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
 
-    return () => {
-      clearInterval(interval); // Clean up interval on component unmount
-    };
-  }, []);
+  //   return () => {
+  //     clearInterval(interval); // Clean up interval on component unmount
+  //   };
+  // }, []);
   
   const convertDate = (inputDate)=>{
     const dateObj = new Date(inputDate);

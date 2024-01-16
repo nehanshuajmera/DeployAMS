@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
@@ -30,10 +31,11 @@ function AuthContextProvider(props) {
     "__v": 0  
   });
   
-  
+  // const logdata=useSelector((state)=>state.login);
   const navigate = useNavigate();
     
    useEffect(() => {
+    // console.log(logdata);
     axios.get("/api/student/details")
       .then((res) => { 
         setIsLogin(true)
@@ -51,7 +53,7 @@ function AuthContextProvider(props) {
       .then((res) => {
         setIsLogin(false)
         navigate("/");
-        window.location.reload();
+        
       })
       .catch((err) => {
         console.log(err)

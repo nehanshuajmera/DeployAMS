@@ -16,16 +16,16 @@ export default function Login() {
   const navigate= useNavigate();
   const dispatch = useDispatch();
   const [loginData, setLoginData] = useState(initialState);
-  const {IsLogin}=useContext(AuthContext);
   const logdata=useSelector((state)=>state.login);
+  const {IsLogin}=useContext(AuthContext);
   useEffect(() => {
-    if(IsLogin!==null && IsLogin){
-      navigate('/studentattendance');
+    if (IsLogin !== null && IsLogin) {
+      navigate('/teacherdashboard');
     }
-  }, [IsLogin,navigate])
+  }, [IsLogin])
   
   
-  console.log('flow',IsLogin,logdata);
+  console.log('flow',IsLogin);
   // const stateofuser = useSelector((state) => state.login);
   // const changestate= useSelector((state) => state.changePassword)
   const handleChange = (e) => {
@@ -35,7 +35,7 @@ export default function Login() {
       [name]: value,
     }));
   };
-  const handellogin=async(e)=>{
+  const handellogin=(e)=>{
     e.preventDefault();
        dispatch(loginAsync(loginData));
     // User is successfully logged in, navigate to the desired page
@@ -46,7 +46,7 @@ export default function Login() {
    let iserror=false
   return (
     <div className='loginClass'>
-      <form onSubmit={handellogin}className="form_main">
+      <form className="form_main">
         {
           iserror &&
           <div className='text-white bg-red-600 px-6 py-2  z-50 rounded-lg'>
@@ -96,7 +96,7 @@ export default function Login() {
             onChange={handleChange}
           />
         </div>
-        <button type="submit" className='button' >Login</button>
+        <button className='button'onClick={handellogin} >Login</button>
         
       </form>
 
