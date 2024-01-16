@@ -36,7 +36,7 @@ function AuthContextProvider(props) {
     
    useEffect(() => {
     // console.log(logdata);
-    axios.get("https://medicaps-ams.onrender.com/api/student/details")
+    axios.get("/api/student/details")
       .then((res) => { 
         setIsLogin(true)
         setuserdata(res.data.message);
@@ -49,7 +49,7 @@ function AuthContextProvider(props) {
 
   
   const logout = () => {
-    axios.get("https://medicaps-ams.onrender.com/api/authentic/logout")
+    axios.get("/api/authentic/logout")
       .then((res) => {
         setIsLogin(false)
         navigate("/");

@@ -14,34 +14,32 @@ const path=require("path");
 
 dotenv.config();
 app.use(express.json());
-
 app.use(fileUpload());
 
+app.use(cookieParser());
 
 app.use(cors({
   origin: [
-    // "http://localhost:5173",
-    "https://medicaps-ams-student.netlify.app",
+    "http://localhost:5173",
+    "http://localhost:5174",
   ],
   credentials: true,
 })
 );
 
-app.use(cookieParser());
-
-// app.use((err, req, res, next) => {
-//   console.error(err.stack);
-//   res.status(500).json({ error: 'Internal Server Error' });
-// });
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Internal Server Error' });
+});
 
 // Use rate limiting middleware
-// const limiter = rateLimit({
-//   windowMs: 2 * 60 * 1000, // 1 minutes
-//   max: 300, // limit each IP to 100 requests per windowMs
-//   message: "Too many requests from this IP, please try again after 15 minutes"
-// });
+const limiter = rateLimit({
+  windowMs: 2 * 60 * 1000, // 1 minutes
+  max: 300, // limit each IP to 100 requests per windowMs
+  message: "Too many requests from this IP, please try again after 15 minutes"
+});
 
-// app.use(limiter);
+app.use(limiter);
 
 // app.use((req, res, next) => {
 //   const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -71,16 +69,18 @@ mongoose.connect(process.env.MDB_CONNECT)
     app.use("/api/academichead", require("./Routes/academicHeadRouter.js"));
     app.use("/api/substituteteacher", require("./Routes/substituteTeacher.js"));
     
-    
-    app.use(express.static('admin/dist'));
-    app.get('*', (req, res) => {
-            res.sendFile(path.resolve('admin','dist','index.html'));
-    });
-
-    // app.use(express.static('client/dist'));
-    // app.get('*', (req, res) => {
-    //         res.sendFile(path.resolve('client','dist','index.html'));
-    // });
+    if (process.env.DEPLOY === 'student') {
+      app.use(express.static('client/dist'));
+      app.get('*', (req, res) => {
+          res.sendFile(path.resolve('client','dist','index.html'));
+      });
+    }
+    else {
+      app.use(express.static('admin/dist'));
+      app.get('*', (req, res) => {
+              res.sendFile(path.resolve('admin','dist','index.html'));
+      });
+    }
 
     // Schedule the cron jobs
     cron.schedule('31 5 * * *', async () => {
