@@ -73,7 +73,7 @@ export default function SingleAttendence(props) {
           />
         </div>
         <div className="studentDepartment">
-          <h4>Department of {userdata?.faculty}</h4>
+          <h4>Department of {userdata?.department}</h4>
         </div>
         <div className="logoutButton">
           <button onClick={() => logout()}>Logout</button>

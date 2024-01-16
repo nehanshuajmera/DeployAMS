@@ -13,32 +13,23 @@ import AuthContext from "./context/AuthContext"
 import NotFoundPage from "./pages/NotFoundPage"
 import { authasync } from "./redux-toolkit/slicees/authapislice"
 
-
 function App() {
-    
-    
-
   const { IsLogin } = useContext(AuthContext);
-  
-
-
-
   return (
-    <div className="w-screen overflow-hidden h-full flex items-center justify-center">
+    <div className="overflow-hidden h-full flex items-center justify-center">
       <Routes>
-        <Route  path="/" element={<Login />} />
-        <Route  path="/studentattendance" element={<ProtectedRoute>
+        <Route exact path="/studentattendance" element={<ProtectedRoute>
           <StudentAttendence />
         </ProtectedRoute>} />
-        <Route  path="/studentattendance/daywise" element={<ProtectedRoute>
+        <Route exact path="/studentattendance/daywise" element={<ProtectedRoute>
           <AttendenceSheet />
         </ProtectedRoute>} />
-        <Route  path="/changepassword" element={<ProtectedRoute>
+        <Route exact path="/changepassword" element={<ProtectedRoute>
           <ChangePassword />
         </ProtectedRoute>} />
+        <Route exact path="/" element={<Login />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-
     </div>
   )
 }

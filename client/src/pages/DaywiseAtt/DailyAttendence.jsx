@@ -54,7 +54,7 @@ export default function DailyAttendence(props) {
           />
         </div>
         <div className="studentDepartment">
-          <h4>Department of {userdata?.faculty}</h4>
+          <h4>Department of {userdata?.department}</h4>
         </div>
         <div className="logoutButton">
           <button onClick={()=>logout()}>Logout</button>
@@ -64,7 +64,7 @@ export default function DailyAttendence(props) {
 
       <div className="studentDetails">
         <div className="studentProgramme">
-          <h4>Programme: {userdata?.Programme}</h4>
+          <h4>Programme: {userdata?.programme}</h4>
         </div>
         <div className="studentName">
           <h4>Name: {userdata?.name}</h4>
@@ -73,7 +73,7 @@ export default function DailyAttendence(props) {
           <h4>Enrollment No.: {userdata?.enrollment_no}</h4>
         </div>
         <div className="Year">
-          <h4>Year: {userdata?.Year}</h4>
+          <h4>Year: {userdata?.year}</h4>
         </div>
         <div className="cls-sec">
           <h4>
