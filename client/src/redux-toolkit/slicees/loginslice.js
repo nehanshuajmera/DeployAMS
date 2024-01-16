@@ -16,7 +16,7 @@ export const loginAsync = createAsyncThunk('login/loginAsync', async (payload, {
     try {
       
         
-        const response = await axios.post('/api/student/login', {
+        const response = await axios.post('https://medicaps-ams.onrender.com/api/student/login', {
             enrollment_no: payload.userId,
             password: payload.password,
         });
@@ -25,7 +25,7 @@ export const loginAsync = createAsyncThunk('login/loginAsync', async (payload, {
 
         if (msg === 'Authentication successful') {
             window.location.reload();
-            const authResponse = await axios.get('/api/authentic');
+            const authResponse = await axios.get('https://medicaps-ams.onrender.com/api/authentic');
                 
             if (authResponse.data.message === 'student') {
                 return authResponse.data.message;
@@ -44,7 +44,7 @@ export const loginAsync = createAsyncThunk('login/loginAsync', async (payload, {
 // Async thunk for logout
 export const logoutAsync = createAsyncThunk('login/logoutAsync', async (payload, { rejectWithValue }) => {
     try {
-        const response = await axios.get('/api/authentic/logout');
+        const response = await axios.get('https://medicaps-ams.onrender.com/api/authentic/logout');
        const msg = response.data.message
        
         if (msg === "Logout successful")

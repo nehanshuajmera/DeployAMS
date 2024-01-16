@@ -9,7 +9,7 @@ const initialState={
 
 export const changepassasync = createAsyncThunk('changePassword/changepassasync', async (payload, { rejectWithValue }) => {
     try {
-        const response = await axios.post('api/student/changepassword', {
+        const response = await axios.post('https://medicaps-ams.onrender.com/api/student/changepassword', {
             currentPassword: payload.currentpassword,
             newPassword: payload.password
         });

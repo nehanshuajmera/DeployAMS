@@ -29,7 +29,7 @@ const initialState={
 export const studentdetailasync = createAsyncThunk('studentDetail/studentdetailasync', async (payload, { rejectWithValue }) => {
     try {
         
-            const response = await axios.get('api/student/details');
+            const response = await axios.get('https://medicaps-ams.onrender.com/api/student/details');
             const msg = response.data.message;
             // console.log(msg)
             //   if(msg !== "Unauthorized" ||msg !== "User not found" || msg !== "Forbidden: Access denied for non-student users")      
