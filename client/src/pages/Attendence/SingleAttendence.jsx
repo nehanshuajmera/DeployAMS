@@ -43,10 +43,11 @@ export default function SingleAttendence(props) {
 
   const [currentDate, setCurrentDate] = useState(new Date());
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentDate(new Date()); // Update current date every 24 hours
-    }, 24 * 60 * 60 * 1000); // 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
+  // useEffect(() => {
+  //   console.log("shit");
+  //   const interval = setInterval(() => {
+  //     setCurrentDate(new Date()); // Update current date every 24 hours
+  //   }, 24 * 60 * 60 * 1000); // 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
 
     return () => {
       clearInterval(interval); // Clean up interval on component unmount
