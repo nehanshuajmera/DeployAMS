@@ -25,6 +25,19 @@ export default function MarkAttendance() {
   const [attendanceList, setAttendanceList] = useState([]);
   const [maxCount, setMaxCount] = useState(0); //default maxCount = 0
   const [studentIDs, setstudentIDs] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   // check if today is class
   useEffect(() => {
@@ -187,18 +200,22 @@ export default function MarkAttendance() {
       {
         Header: "Enrollment No.",
         accessor: "enrollment_no",
+        show: true,
       },
       {
         Header: "Name",
         accessor: "name",
+        show: windowWidth > 479,
       },
       {
         Header: "Total Lectures",
         accessor: "totalLectures",
+        show: true,
       },
       {
         Header: "Total Attendance",
         accessor: "attendance",
+        show: true,
       },
       {
         Header: "Actions",
@@ -214,7 +231,7 @@ export default function MarkAttendance() {
                     // !(isClassDetails?.message === "No Class Today") &&
                     <>
                       <div
-                        className="p-1 px-2 mx-1 flex item-center bg-blue-500 hover:bg-blue-600 text-white rounded cursor-pointer"
+                        className="markBttn p-1 px-2 mx-1 flex item-center bg-blue-500 hover:bg-blue-600 text-white rounded cursor-pointer"
                         onClick={() =>
                           changeCount({
                             stud_id: rowData.original.studentid,
@@ -228,7 +245,7 @@ export default function MarkAttendance() {
                       </div>
                       <p className="p-1 mx-1 flex item-center">{rowData.original.count}</p>
                       <div
-                        className="p-1 px-2 mx-1 flex item-center bg-blue-500 hover:bg-blue-600 text-white rounded cursor-pointer"
+                        className="markBttn p-1 px-2 mx-1 flex item-center bg-blue-500 hover:bg-blue-600 text-white rounded cursor-pointer"
                         onClick={() => {
                           changeCount({
                             stud_id: rowData.original.studentid,
@@ -249,9 +266,10 @@ export default function MarkAttendance() {
             </div>
           );
         },
+        show: true,
       },
     ],
-    [maxCount]
+    [maxCount, windowWidth]
   );
 
   const initialState = {
@@ -288,11 +306,11 @@ export default function MarkAttendance() {
   return (
     <div className="markAttendanceMain w-screen h-full">
       <h2>Attendence Sheet</h2>
-      {/* {isClassDetails?.message === "No Class Today" && (
+      {isClassDetails?.message === "No Class Today" && (
         <div className="w-full p-2 bg-primary text-dimWhite text-center font-semibold">
           <p>Class is not scheduled for Today, cannot mark the attendance </p>
         </div>
-      )} */}
+      )}
       <div className="sheet">
         <div className="attendenceFormat">
           <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
@@ -308,9 +326,8 @@ export default function MarkAttendance() {
                       <th
                         className="markAttendanceTableHead"
                         {...column.getHeaderProps(
-                          column.getSortByToggleProps()
-                        )}
-                      >
+                          column.getSortByToggleProps())}
+                        style={{ display: column.show ? "table-cell" : "none" }}>
                         {column.render("Header")}
                         {column.Header !== "Actions" && column.Header !== "Total Lectures" && column.Header !== "Total Attendance" ? (
                           <span>
@@ -340,7 +357,7 @@ export default function MarkAttendance() {
                         <td
                           className="markAttendanceTableData"
                           {...cell.getCellProps()}
-                        >
+                          style={{ display: cell.column.show ? "table-cell" : "none", }}>
                           {cell.render("Cell")}
                         </td>
                       ))}
@@ -394,7 +411,7 @@ export default function MarkAttendance() {
               Update Previous Attendance
             </button> */}
           </div>
-          <div style={{ width: '8vw', display: 'flex', alignSelf: 'center' }}>
+          <div className="attendenceSubmitBttn" style={{ width: '8vw', display: 'flex', alignSelf: 'center' }}>
             {d1.getHours() >= 6 &&
               // maxCount &&
               // maxCount > 0 &&

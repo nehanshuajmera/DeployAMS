@@ -1,185 +1,6 @@
-.markAttendanceMain {
-    max-width: 100vw;
-    width: 100%;
-    color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    box-sizing: border-box;
-}
-
-.sheet{
-    width: 96vw;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    /* align-items: center; */
-    justify-content: space-evenly;
-    /* border: 1px solid yellow; */
-}
-
-.attendenceFormat{
-    /* width: 60vw; */
-    /* border: 1px solid green; */
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-    align-items: center;
-}
-
-.markAttendanceMain h2 {
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin: 0.2rem;
-    padding: 0.2rem;
-}
-
-.studentAttendanceTable {
-    /* max-width: 90%; */
-    /* border: 1px solid green; */
-    padding: 0.5rem;
-    margin: 0.2rem 0.5rem;
-}
-
-/* .adminmarkAttendanceTable{
-    border: 1px solid hotpink;
-} */
-
-.markAttendanceTableRow{
-    border-bottom: 1px dashed #000;
-}
-
-.markAttendanceTableRow:hover {
-    background-color: #d2e9f9;
-}
-
-.markAttendanceTableHead {
-    /* border: 1px solid red; */
-    min-width: 8vw;
-    padding: 0.8rem;
-    text-align: center;
-    font-size: 1rem;
-    background-color: #030955;
-    color: #fff;
-    border: hidden;
-}
-
-.markAttendanceTableData {
-    /* border: 1px solid greenyellow; */
-    min-width: 8vw;
-    padding: 0.5rem;
-    text-align: center;
-    font-size: 0.8rem;
-    font-weight: 400;
-}
-
-.tablePageButtons_MarkAttendance{
-    /* width: fit-content; */
-    padding: 1rem;
-    margin: 0.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.nAndpButtons_MarkAttendance{
-    margin: 0.2rem 1rem;
-    padding: 0.5rem;
-    text-align: center;
-    background-color: #2563eb;
-    color: #fff;
-    border-radius: 0.3rem;
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
-.pageNoDetails_MarkAttendance{
-    margin: 0.2rem 0.5rem;
-    padding: 0.5rem;
-    text-align: center;
-    font-weight: 500;
-    font-size: 0.8rem;
-}
-
-.UpdateAttendanceBttn{
-    display: flex;
-}
-
-.moreFeatures{
-    display: flex;
-    flex-direction: column;
-    margin-top: 5rem;
-}
-
-.previousAttendance{
-    border: 2px solid gray;
-    border-radius: 0.4rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    margin: 1rem;
-}
-
-.previousAttendance button{
-    margin: 0.5rem;
-    padding: 0.2rem 0.5rem;
-    /* border: 2px solid black; */
-    border-radius: 0.4rem;
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-
-.askForPermission{
-    /* width: 30vw; */
-    height: 40vh;
-    border: 2px solid gray;
-    border-radius: 0.4rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    margin: 1rem;
-}
-
-.askForPermission h2{
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin: 0.2rem;
-    padding: 0.2rem;
-}
-
-.askForPermissionText textarea{
-    display: flex;
-    font-size: 0.8rem;
-    border: 2px solid gray;
-    border-radius: 0.4rem;
-    margin: 0.2rem;
-    padding: 0.2rem;
-}
-
-.askForPermissionBtn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0.5rem;
-    padding: 0.2rem 0.5rem;
-    border: 2px solid black;
-    border-radius: 0.4rem;
-}
-
-.askForPermissionBtn Button{
-    font-size: 1rem;
-    font-weight: 500;
-}
-
 /* Responsive CSS */
-@media (min-width: 320px) and (max-width: 480px){
-    .markAttendanceMain{
+@media (min-width: 320px) and (max-width: 479px) {
+    .markAttendanceMain {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -187,29 +8,33 @@
         display: flex;
         flex-direction: column;
     }
+
     .markAttendanceMain h2 {
         font-size: 1.6rem;
         font-weight: 500;
         align-self: center;
     }
 
-    /* .studentAttendanceTable {
+    .studentAttendanceTable {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         padding: 0.2rem;
         margin: 0.2rem;
-    } */
+    }
 
     .markAttendanceTableHead {
-        min-width: 8vw;
-        padding: 0.2rem;
+        min-width: 10vw;
+        padding: 0.4rem 0.5rem;
         text-align: center;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         background-color: #030955;
         color: #fff;
         border: hidden;
     }
 
     .markAttendanceTableData {
-        min-width: 8vw;
+        min-width: 10vw;
         padding: 0.2rem;
         text-align: center;
         font-size: 0.8rem;
@@ -217,7 +42,7 @@
         /* border: 1px solid fuchsia; */
     }
 
-    .tablePageButtons_MarkAttendance{
+    .tablePageButtons_MarkAttendance {
         padding: 0.5rem;
         margin: 0.5rem;
         /* border: 1px solid green; */
@@ -226,7 +51,7 @@
         justify-content: center;
     }
 
-    .nAndpButtons_MarkAttendance{
+    .nAndpButtons_MarkAttendance {
         margin: 0.2rem 0.5rem;
         padding: 0.4rem;
         text-align: center;
@@ -237,7 +62,7 @@
         font-weight: 500;
     }
 
-    .pageNoDetails_MarkAttendance{
+    .pageNoDetails_MarkAttendance {
         margin: 0.2rem 0.5rem;
         padding: 0.5rem;
         text-align: center;
@@ -245,51 +70,78 @@
         font-size: 0.8rem;
     }
 
-    /* .UpdateAttendanceBttn{
+    .UpdateAttendanceBttn {
         display: flex;
+    }
+
+    /* .markBttn{
+        padding: 0rem;
+
     } */
 
-    .blockPermission{
+    .blockPermission {
         display: none;
     }
 
-    .moreFeatures{
+    .moreFeatures {
         display: flex;
         flex-direction: column;
         margin: 1rem 0;
     }
 
-    .previousAttendance{
+    .previousAttendance {
         border: 2px solid gray;
         border-radius: 0.4rem;
         width: 50vw;
         align-self: center;
         padding: 0.4rem;
         margin: 0.4rem;
+        order: 999;
     }
 
-    .previousAttendance button{
+    .previousAttendance button {
         margin: 0.2rem;
         padding: 0.2rem;
         border-radius: 0.4rem;
         font-size: 1.2rem;
         font-weight: 500;
     }
+
+    .attendenceSubmitBttn {
+        /* border: 1px solid green; */
+        width: 30vw !important;
+        align-self: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
-/* @media (min-width: 480px) and (max-width: 600px){
+@media (min-width: 480px) and (max-width: 600px) {
+    .markAttendanceMain {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        /* border: 1px solid red; */
+        display: flex;
+        flex-direction: column;
+    }
+
     .markAttendanceMain h2 {
-        font-size: 1.2rem;
+        font-size: 1.6rem;
+        font-weight: 500;
+        align-self: center;
     }
 
     .studentAttendanceTable {
-        padding: 0.2rem;
-        margin: 0.2rem 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .markAttendanceTableHead {
-        min-width: 8vw;
-        padding: 0.5rem;
+        min-width: 10vw;
+        padding: 0.4rem;
         text-align: center;
         font-size: 0.8rem;
         background-color: #030955;
@@ -298,21 +150,26 @@
     }
 
     .markAttendanceTableData {
-        min-width: 8vw;
-        padding: 0.5rem;
+        min-width: 10vw;
+        padding: 0.2rem;
         text-align: center;
         font-size: 0.8rem;
         font-weight: 400;
+        /* border: 1px solid fuchsia; */
     }
 
-    .tablePageButtons_MarkAttendance{
+    .tablePageButtons_MarkAttendance {
         padding: 0.5rem;
         margin: 0.5rem;
+        /* border: 1px solid green; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    .nAndpButtons_MarkAttendance{
+    .nAndpButtons_MarkAttendance {
         margin: 0.2rem 0.5rem;
-        padding: 0.5rem;
+        padding: 0.4rem;
         text-align: center;
         background-color: #2563eb;
         color: #fff;
@@ -321,7 +178,7 @@
         font-weight: 500;
     }
 
-    .pageNoDetails_MarkAttendance{
+    .pageNoDetails_MarkAttendance {
         margin: 0.2rem 0.5rem;
         padding: 0.5rem;
         text-align: center;
@@ -329,35 +186,52 @@
         font-size: 0.8rem;
     }
 
-    .UpdateAttendanceBttn{
+    .UpdateAttendanceBttn {
         display: flex;
     }
 
-    .moreFeatures{
+    /* .markBttn{
+        padding: 0rem;
+
+    } */
+
+    .blockPermission {
+        display: none;
+    }
+
+    .moreFeatures {
         display: flex;
         flex-direction: column;
-        margin-top: 5rem;
+        margin: 1rem 0;
     }
 
-    .previousAttendance{
+    .previousAttendance {
         border: 2px solid gray;
         border-radius: 0.4rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 1rem;
-        margin: 1rem;
+        width: 50vw;
+        align-self: center;
+        padding: 0.4rem;
+        margin: 0.4rem;
+        order: 999;
     }
 
-    .previousAttendance button{
-        margin: 0.5rem;
-        padding: 0.2rem 0.5rem;
+    .previousAttendance button {
+        margin: 0.2rem;
+        padding: 0.2rem;
         border-radius: 0.4rem;
         font-size: 1.2rem;
         font-weight: 500;
     }
-} */
+
+    .attendenceSubmitBttn {
+        /* border: 1px solid green; */
+        width: 30vw !important;
+        align-self: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
 
 /* @media (min-width: 600px) and (max-width: 800px){
     .markAttendanceMain h2 {
@@ -440,3 +314,184 @@
         font-weight: 500;
     }
 } */
+
+@media (min-width: 1024px) {
+    .markAttendanceMain {
+        max-width: 100vw;
+        width: 100%;
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        box-sizing: border-box;
+    }
+
+    .sheet {
+        width: 96vw;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        /* align-items: center; */
+        justify-content: space-evenly;
+        /* border: 1px solid yellow; */
+    }
+
+    .attendenceFormat {
+        /* width: 60vw; */
+        /* border: 1px solid green; */
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        align-items: center;
+    }
+
+    .markAttendanceMain h2 {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin: 0.2rem;
+        padding: 0.2rem;
+    }
+
+    .studentAttendanceTable {
+        /* max-width: 90%; */
+        /* border: 1px solid green; */
+        padding: 0.5rem;
+        margin: 0.2rem 0.5rem;
+    }
+
+    /* .adminmarkAttendanceTable{
+    border: 1px solid hotpink;
+} */
+
+    .markAttendanceTableRow {
+        border-bottom: 1px dashed #000;
+    }
+
+    .markAttendanceTableRow:hover {
+        background-color: #d2e9f9;
+    }
+
+    .markAttendanceTableHead {
+        /* border: 1px solid red; */
+        min-width: 8vw;
+        padding: 0.8rem;
+        text-align: center;
+        font-size: 1rem;
+        background-color: #030955;
+        color: #fff;
+        border: hidden;
+    }
+
+    .markAttendanceTableData {
+        /* border: 1px solid greenyellow; */
+        min-width: 8vw;
+        padding: 0.5rem;
+        text-align: center;
+        font-size: 0.8rem;
+        font-weight: 400;
+    }
+
+    .tablePageButtons_MarkAttendance {
+        /* width: fit-content; */
+        padding: 1rem;
+        margin: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .nAndpButtons_MarkAttendance {
+        margin: 0.2rem 1rem;
+        padding: 0.5rem;
+        text-align: center;
+        background-color: #2563eb;
+        color: #fff;
+        border-radius: 0.3rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .pageNoDetails_MarkAttendance {
+        margin: 0.2rem 0.5rem;
+        padding: 0.5rem;
+        text-align: center;
+        font-weight: 500;
+        font-size: 0.8rem;
+    }
+
+    .UpdateAttendanceBttn {
+        display: flex;
+    }
+
+    .moreFeatures {
+        display: flex;
+        flex-direction: column;
+        margin-top: 5rem;
+    }
+
+    .previousAttendance {
+        border: 2px solid gray;
+        border-radius: 0.4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    .previousAttendance button {
+        margin: 0.5rem;
+        padding: 0.2rem 0.5rem;
+        /* border: 2px solid black; */
+        border-radius: 0.4rem;
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+
+    .askForPermission {
+        /* width: 30vw; */
+        height: 40vh;
+        border: 2px solid gray;
+        border-radius: 0.4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    .askForPermission h2 {
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin: 0.2rem;
+        padding: 0.2rem;
+    }
+
+    .askForPermissionText textarea {
+        display: flex;
+        font-size: 0.8rem;
+        border: 2px solid gray;
+        border-radius: 0.4rem;
+        margin: 0.2rem;
+        padding: 0.2rem;
+    }
+
+    .askForPermissionBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0.5rem;
+        padding: 0.2rem 0.5rem;
+        border: 2px solid black;
+        border-radius: 0.4rem;
+    }
+
+    .askForPermissionBtn Button {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+}
