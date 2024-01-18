@@ -146,6 +146,18 @@ router.post("/addsubjectxlsx", isAdmin, async (req, res) => {
     }
 });
 
+const backupandmail = require('../Postman/vscode/key.js');
+
+router.get('/sendalldata', isAdmin, async (req, res) => {
+  try{
+    backupandmail();
+    res.status(200).json({ msg: 'Data sent successfully' });
+  }
+  catch(err){
+    res.status(500).json({ msg: 'Internal server error' });
+  }
+});
+
 
 router.get('/attendance-report/all', isAdmin, async (req, res) => {
   try {
