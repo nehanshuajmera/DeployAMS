@@ -42,7 +42,7 @@ router.post("/addstudentxlsx", isAdmin, async (req, res) => {
             class_name: data.class_name,
             branch: data.branch,
             section: data.section,
-            batch: data.section,
+            batch: "None",
             password: await bcrypt.hash(password, 10),
             created_at_and_by: {
                 admin_name: req.user_id,
