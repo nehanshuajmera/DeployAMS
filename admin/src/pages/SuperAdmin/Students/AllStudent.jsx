@@ -246,7 +246,9 @@ export default function AllStudent() {
           </button>
         </div>
       ) : (
+        <>
         <h2 className="noData">No Data</h2>
+        </>
       )}
     </div>
   );
