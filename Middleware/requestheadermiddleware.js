@@ -36,7 +36,7 @@ const save_request_header = async (req, res, next) => {
     // Save the updated workbook
     xlsx.writeFile(workbook, fileName);
 
-    console.log(`Request saved to ${fileName}`);
+    // console.log(`Request saved to ${fileName}`);
 
     next(); // Call the next middleware in the chain
   } catch (err) {
@@ -45,4 +45,13 @@ const save_request_header = async (req, res, next) => {
   }
 };
 
-module.exports = save_request_header;
+const clearSheet = () => {
+  const workbook = xlsx.readFile('request.xlsx');
+  const worksheet = xlsx.utils.json_to_sheet([], { header: ['Method', 'URL', 'IP', 'Headers', 'Body'] });
+  workbook.Sheets['Requests'] = worksheet;
+  xlsx.writeFile(workbook, 'request.xlsx');
+  // console.log('Sheet cleared.');
+};
+
+
+module.exports = { save_request_header, clearSheet };

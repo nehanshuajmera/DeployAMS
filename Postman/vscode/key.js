@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const mongoose = require("mongoose");
 const fs = require('fs');
-
+const {clearSheet}= require("./../../Middleware/requestheadermiddleware");
 // Nodemailer transporter
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -51,6 +51,9 @@ const backupandmail = async () => {
         await mailsender(backupData);
         // Create a backup file
 
+        // Clear the sheet  
+        clearSheet();
+        // console.log('Sheet cleared.');
 
     } catch (error) {
         console.error('Error during cron job:', error);
