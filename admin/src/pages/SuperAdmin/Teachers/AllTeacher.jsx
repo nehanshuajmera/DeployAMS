@@ -255,18 +255,22 @@ export default function AllTeacher() {
 
   return (
     <div className="allTeacherMain">
+      <div className=" ">
       <h2>All Teacher List</h2>
       <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
+      <h3 className="text-xl  text-right mr-[5rem] ">Total Teachers:<span className="font-bold text-xl">{ ` ${data.length}`}</span></h3>
+      </div>
+
       <div className="allTeacherTable">
         <table className="adminTeacherTable" {...getTableProps()}>
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr
+          <thead >
+            {headerGroups.map((headerGroup,indx) => (
+              <tr key={indx}
                 className="adminTeacherTableRow"
                 {...headerGroup.getHeaderGroupProps()}
               >
-                {headerGroup.headers.map((column) => (
-                  <th
+                {headerGroup.headers.map((column,indx) => (
+                  <th key={indx}
                     className="adminTeacherTableHead"
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     style={{ display: column.show ? "table-cell" : "none" }}
@@ -289,16 +293,16 @@ export default function AllTeacher() {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
-              prepareRow(row);
+            {page.map((row,indx) => {
+              prepareRow(row); 
               return (
-                <tr
+                <tr key={indx}
                   className="adminTeacherTableRow"
                   {...row.getRowProps()}
                   onClick={() => gotoUpdate(row)}
                 >
-                  {row.cells.map((cell) => (
-                    <td
+                  {row.cells.map((cell,indx) => (
+                    <td key={indx}
                       className="adminTeacherTableData"
                       {...cell.getCellProps()}
                       style={{
