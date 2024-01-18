@@ -36,16 +36,13 @@ app.use((err, req, res, next) => {
 const limiter = rateLimit({
   windowMs: 2 * 60 * 1000, // 1 minutes
   max: 300, // limit each IP to 100 requests per windowMs
-  message: "Too many requests from this IP, please try again after 15 minutes"
+  message: "Too many requests from this IP Address, please try again after 45 seconds",
 });
 
 app.use(limiter);
 
-// app.use((req, res, next) => {
-//   const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-//   console.log(`User IP: ${clientIp}`);
-//   next(); // Call the next middleware in the chain
-// });
+const {save_request_header}= require("./Middleware/requestheadermiddleware.js");
+app.use(save_request_header);
 
 // connect to mongoDB
 mongoose.set('strictQuery', false)

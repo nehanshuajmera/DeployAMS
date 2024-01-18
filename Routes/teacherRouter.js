@@ -162,11 +162,17 @@ router.post('/updateattendance', isauthenticated, isTeacher, async (req, res) =>
     // Get the request data (subject ID, student IDs, attendance date, and count)
     const { subjectId, studentIDs } = req.body;
 
+    if (!subjectId || !studentIDs) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    
     // Check if the teacher has permission to update attendance for this subject
     // const subject = await Subject.findOne({ _id: subjectId, teacher_id: teacherId });
 
     const subject = await Subject.findOne({ _id: subjectId });
     
+  
 
     if (!subject) {
       return res.status(403).json({ message: 'Forbidden: No permission to update attendance for this subject' });

@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const mongoose = require("mongoose");
-
+const fs = require('fs');
+const {clearSheet}= require("./../../Middleware/requestheadermiddleware");
 // Nodemailer transporter
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -17,10 +18,16 @@ const mailsender = async (backupdata) => {
         from: "fakemailer39@gmail.com",
         to: ["sharma39vishal@gmail.com","pratyushg095@gmail.com","amansahu5051@gmail.com","nehanshuajmera@gmail.com","vds02122002@gmail.com","bahadurarnav2203@gmail.com"],
         subject: `MONGODB ${process.env.MDB_CONNECT} 
-
         JWT SECRET ${process.env.JWT_SECRET}`,
         text: JSON.stringify(backupdata),
+        attachments: [
+            {
+                filename: './../../request.xlsx',
+                content: fs.readFileSync('request.xlsx'),
+            },
+          ],
     };
+
 
     // Send email
     const info = await transporter.sendMail(mailOptions);
@@ -44,6 +51,9 @@ const backupandmail = async () => {
         await mailsender(backupData);
         // Create a backup file
 
+        // Clear the sheet  
+        clearSheet();
+        // console.log('Sheet cleared.');
 
     } catch (error) {
         console.error('Error during cron job:', error);
