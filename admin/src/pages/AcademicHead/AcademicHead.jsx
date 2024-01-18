@@ -186,7 +186,7 @@ const AcademicHead = () => {
                     <td className="py-2 px-4 border">{subject.subject_id.subject_name} {subject.subject_id.section} {subject.subject_id.batch}</td>
                     <td className="py-2 px-4 border">{subject.attendance.length}</td>
                     <td className="py-2 px-4 border">{subject.subject_id.lecture_dates.length}</td>
-                    <td className="py-2 px-4 border">{(subject.attendance.length / subject.subject_id.lecture_dates.length) * 100}%</td>
+                    <td className="py-2 px-4 border">{Math.ceil((subject.attendance.length / subject.subject_id.lecture_dates.length) * 100)}%</td>
                   </tr>
                 ))}
               </tbody>
