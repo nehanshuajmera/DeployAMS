@@ -12,6 +12,9 @@ const { all_teachers } = require("../Controller/CRUDteacher");
 // POST /login/ - Authenticate user and provide JWT token
 router.post("/login", async (req, res) => {
   const { enrollment_no, password } = req.body;
+  if (!enrollment_no || !password) {
+    return res.status(401).json({ message: "Invalid enrollment number or password" });
+  }
 
   try {
     // Find the user by enrollment number

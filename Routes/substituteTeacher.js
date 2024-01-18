@@ -9,6 +9,9 @@ const addLog=require('../Controller/logs');
 router.post("/generaterequest",isauthenticated,isTeacher,async(req,res)=>{
     try{
         const {subjectId,assign_teacherId}=req.body;
+        if (!subjectId || !assign_teacherId) {
+            return res.status(400).json({ error: "Please enter all fields" });
+        }
         const teacherdetails=await Teacher.findById(req.user_id);
 
         // if subjects array does not contain this subject in their object in subject_id generate error
