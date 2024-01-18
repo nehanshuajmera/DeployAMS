@@ -21,7 +21,7 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "http://localhost:5174"
+    "http://localhost:5174",
   ],
   credentials: true,
 })
@@ -36,16 +36,13 @@ app.use((err, req, res, next) => {
 const limiter = rateLimit({
   windowMs: 2 * 60 * 1000, // 1 minutes
   max: 300, // limit each IP to 100 requests per windowMs
-  message: "Too many requests from this IP, please try again after 15 minutes"
+  message: "Too many requests from this IP Address, please try again after 45 seconds",
 });
 
 app.use(limiter);
 
-// app.use((req, res, next) => {
-//   const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-//   console.log(`User IP: ${clientIp}`);
-//   next(); // Call the next middleware in the chain
-// });
+const {save_request_header}= require("./Middleware/requestheadermiddleware.js");
+app.use(save_request_header);
 
 // connect to mongoDB
 mongoose.set('strictQuery', false)
@@ -69,16 +66,18 @@ mongoose.connect(process.env.MDB_CONNECT)
     app.use("/api/academichead", require("./Routes/academicHeadRouter.js"));
     app.use("/api/substituteteacher", require("./Routes/substituteTeacher.js"));
     
-    
-    app.use(express.static('admin/dist'));
-    app.get('*', (req, res) => {
-            res.sendFile(path.resolve('admin','dist','index.html'));
-    });
-
-    // app.use(express.static('client/dist'));
-    // app.get('*', (req, res) => {
-    //         res.sendFile(path.resolve('client','dist','index.html'));
-    // });
+    if (process.env.DEPLOY === 'student') {
+      app.use(express.static('client/dist'));
+      app.get('*', (req, res) => {
+          res.sendFile(path.resolve('client','dist','index.html'));
+      });
+    }
+    else {
+      app.use(express.static('admin/dist'));
+      app.get('*', (req, res) => {
+              res.sendFile(path.resolve('admin','dist','index.html'));
+      });
+    }
 
     // Schedule the cron jobs
     cron.schedule('31 5 * * *', async () => {

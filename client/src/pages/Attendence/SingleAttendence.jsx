@@ -73,7 +73,7 @@ export default function SingleAttendence(props) {
           />
         </div>
         <div className="studentDepartment">
-          <h4>Department of {userdata?.faculty}</h4>
+          <h4>Department of {userdata?.department}</h4>
         </div>
         <div className="logoutButton">
           <button onClick={() => logout()}>Logout</button>
@@ -127,7 +127,7 @@ export default function SingleAttendence(props) {
               );
               const percentage =
                 totalLectures > 0
-                  ? ((attendedLectures / totalLectures) * 100).toFixed(2)
+                  ? Math.ceil(((attendedLectures / totalLectures) * 100).toFixed(2))
                   : 0;
 
               const formattedAttendance = subject.attendance.map((dates) =>
