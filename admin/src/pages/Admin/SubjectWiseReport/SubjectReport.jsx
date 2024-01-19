@@ -47,6 +47,17 @@ const SubjectReport = () => {
     fetchSubjects();
   }, []);
 
+  const todaysDate =()=>{
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = ("0" + (today.getMonth() + 1)).slice(-2); // Months are 0-indexed in JavaScript
+    let day = ("0" + today.getDate()).slice(-2);
+    let formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  }
+  const [StartDate, setStartDate] = useState("2024-01-01");
+  const [EndDate, setEndDate] = useState(todaysDate());
+
   const filteredSubjects = subjects.filter(subject => (
     subject.branch.includes(filters.branch) &&
     subject.course_code.includes(filters.courseCode) &&
@@ -127,9 +138,26 @@ const SubjectReport = () => {
         </div>
       </div>
 
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div class="relative max-w-sm p-2">
+      <label class="block mb-2">
+        Start Date
+      </label>
+      <input  type="date" onChange={(e) => setStartDate(e.target.value)} class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date"/>
+    </div>
+
+
+    <div class="relative max-w-sm p-2">
+      <label class="block mb-2">
+        End Date
+      </label>
+      <input  type="date" onChange={(e) => setEndDate(e.target.value)} class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date"/>
+    </div>
+    </div>
+
       {filteredSubjects.map((subject) => (
         <div key={subject.subject_id} className="mb-4">
-          <SingleSubjectAttadance subject={subject} sub_id={subject.subject_id} />
+          <SingleSubjectAttadance subject={subject} sub_id={subject.subject_id} start_date={StartDate} end_date={EndDate} />
         </div>
       ))}
     </div>

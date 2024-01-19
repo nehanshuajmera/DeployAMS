@@ -1,6 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-export default function SingleSubjectAttadance({ subject, sub_id }) {
+export default function SingleSubjectAttadance({ subject, sub_id, start_date, end_date }) {
+
+  const [LectureDates, setLectureDates] = useState(subject?.lecture_dates);
+
+  useEffect(() => {
+    // filter lecture dates based on start_date and end_date
+    const filteredLectureDates = subject.lecture_dates.filter((date) => {
+      const dateObj = new Date(date.date);
+      return dateObj >= new Date(start_date) && dateObj <= new Date(end_date);
+    });
+    setLectureDates(filteredLectureDates);
+  },[start_date,end_date])
+
+
     const convertDate = (inputDate) => {
         const dateObj = new Date(inputDate);
         const options = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -17,8 +30,8 @@ export default function SingleSubjectAttadance({ subject, sub_id }) {
           <tr>
             <th className="py-2 px-4 border">Student Name</th>
             <th className="py-2 px-4 border">Enrollment No.</th>
-            {subject?.lecture_dates.length > 0 &&
-              subject.lecture_dates.map((dates) => (
+            {LectureDates.length > 0 &&
+              LectureDates.map((dates) => (
                 <th key={dates._id} className="py-2 px-4 border">
                   {convertDate(dates.date)}
                 </th>
@@ -30,18 +43,15 @@ export default function SingleSubjectAttadance({ subject, sub_id }) {
         </thead>
         <tbody>
           {subject.students.map((student) => {
-            // return (
-            //     <h1>hello</h1>
-            // )
             let selectedsubject = student.subjects.find((subject) => subject.subject_id === sub_id);
             const formattedAttendance = selectedsubject.attendance.map((dates)=> convertDate(dates.date));
-            // console.log(selectedsubject);
+
             return (
               <tr key={student._id}>
                 <td className="py-2 px-4 border">{student.name}</td>
                 <td className="py-2 px-4 border">{student.enrollment_no}</td>
-                {subject?.lecture_dates.length > 0 &&
-              subject.lecture_dates.map((dates) => (
+                {LectureDates.length > 0 &&
+              LectureDates.map((dates) => (
                 <th key={dates._id} className="py-2 px-4 border">
                    {formattedAttendance.includes(convertDate(dates.date)) ? (
                             <td className='dataForStudents bg-green-500 '> present </td>
@@ -55,6 +65,7 @@ export default function SingleSubjectAttadance({ subject, sub_id }) {
               <td className='py-2 px-4 border'>{subject?.lecture_dates?.reduce((result,ele)=>(result+=ele.count),0)}</td>
               <td className='py-2 px-4 border'>{Math.ceil(selectedsubject.attendance.reduce((result,ele)=>(result+=ele.count),0)/subject?.lecture_dates?.reduce((result,ele)=>(result+=ele.count),0)*100)} %</td>
               </tr>
+
             );
           })}
         </tbody>
