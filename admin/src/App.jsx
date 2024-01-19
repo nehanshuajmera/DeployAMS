@@ -33,6 +33,7 @@ import MapStudentandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapStu
 import MapTeacherandSubject from "./pages/SuperAdmin/MapStudentandSubject/MapTeacherandSubject";
 import AcademicHead from "./pages/AcademicHead/AcademicHead";
 import LogViewer from "./pages/SuperAdmin/Logs/LogViewer";
+import SubjectReport from "./pages/Admin/SubjectWiseReport/SubjectReport";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,6 +70,14 @@ function App() {
           element={
             <ProtectedRoute>
               <PreviousAttendence />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={"/subjectreport"}
+          element={
+            <ProtectedRoute>
+              <SubjectReport/>
             </ProtectedRoute>
           }
         />

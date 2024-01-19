@@ -70,11 +70,15 @@ export default function TeacherDashboard() {
               {" "}
               Substitute Teacher{" "}
             </div>
-            {userdata.admin_role === "AcademicHead" ||
-            userdata.admin_role === "Admin" ? (
+            {userdata.admin_role !== "teacher" ? (
+              <>
               <div onClick={() => navigate("/academichead")}>
                 Attendance Report
               </div>
+              <div onClick={() => navigate("/subjectreport")}>
+                Subject Report
+              </div>
+              </>
             ) : null}
             <div onClick={() => navigate("/pastattendancerequest")}>
               Past Attendance Request
