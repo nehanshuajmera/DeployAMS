@@ -246,18 +246,22 @@ export default function AllSubject() {
 
   return (
     <div className="allSubjectMain">
+      <div>
       <h2>All Subjects List</h2>
       <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
+      <h3 className="text-xl text-right mr-[5rem]">Total Subjects:<span className="font-bold text-xl">{ ` ${data.length}`}</span></h3>
+      </div>
+
       <div className="allSubjectTable">
         <table className="adminSubjectTable" {...getTableProps()}>
           <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr
+            {headerGroups.map((headerGroup,indx) => (
+              <tr key={indx}
                 className="adminSubjectTableRow"
                 {...headerGroup.getHeaderGroupProps()}
               >
-                {headerGroup.headers.map((column) => (
-                  <th
+                {headerGroup.headers.map((column,indx) => (
+                  <th key={indx}
                     className="adminSubjectTableHead"
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                   >
@@ -277,12 +281,12 @@ export default function AllSubject() {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {page.map((row,indx) => {
               prepareRow(row);
               return (
-                <tr className="adminSubjectTableRow" {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
-                    <td
+                <tr key={indx} className="adminSubjectTableRow" {...row.getRowProps()}>
+                  {row.cells.map((cell,indx) => (
+                    <td key={indx}
                       className="adminSubjectTableData"
                       {...cell.getCellProps()}
                     >

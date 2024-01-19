@@ -243,16 +243,21 @@ export default function AllStudent() {
   };
 
   return (
-    <div className="allStudentMain">
+    <div className="allStudentMain relative">
+      <div>
+
       <h2>All Students List</h2>
       <GlobalFiltering filter={globalFilter} setFilter={setGlobalFilter} />
+      <h3 className="text-xl text-right mr-[5rem]">Total Student:<span className="font-bold text-xl">{ ` ${data.length}`}</span></h3>
+      </div>
+      
       <div className="allStudentTable">
-        <table className="adminStudentTable" {...getTableProps()}>
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr className="adminStudentTableRow" {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th className="adminStudentTableHead" {...column.getHeaderProps(column.getSortByToggleProps())}
+        <table className="adminTeacherTable" {...getTableProps()}>
+          <thead >
+            {headerGroups.map((headerGroup,indx) => (
+              <tr key={indx} className="adminStudentTableRow" {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column,indx) => (
+                  <th key={indx} className="adminStudentTableHead" {...column.getHeaderProps(column.getSortByToggleProps())}
                     style={{ display: column.show ? "table-cell" : "none" }}>
                     {column.render("Header")}
                     {column.Header !== "Actions" ? (
@@ -265,14 +270,15 @@ export default function AllStudent() {
               </tr>
             ))}
           </thead>
+          
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {page.map((row,indx) => {
               prepareRow(row);
               // console.log(row);
               return (
-                <tr className="adminStudentTableRow" {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
-                    <td className="adminStudentTableData" {...cell.getCellProps()}
+                <tr key={indx} className="adminStudentTableRow" {...row.getRowProps()}>
+                  {row.cells.map((cell,indx) => (
+                    <td key={indx} className="adminStudentTableData" {...cell.getCellProps()}
                       style={{ display: cell.column.show ? "table-cell" : "none", }}>
                       {cell.render("Cell")}
                     </td>
