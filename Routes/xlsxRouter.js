@@ -130,6 +130,7 @@ router.post("/addsubjectxlsx", isAdmin, async (req, res) => {
             department: data.department,
             class_name: data.class_name,
             batch: data.batch,
+            year: data.year,
             lecture_dates: [],
             day: [],
         })));

@@ -24,10 +24,12 @@ router.get("/allstudents",isauthenticated,  async (req, res) => {
         const department = user_role.split("-")[1];
         const branch = user_role.split("-")[2];
         const section = user_role.split("-")[3];
+        const thisyear= new Date().getFullYear();
+        const year = user_role.split("-")[4] - thisyear - "0";
 
         
         if (user_role.startsWith("CC")) {
-            const students = await Student.find({ department, branch, section });
+            const students = await Student.find({ department, branch, section, year });
             return res.status(200).json({ students });            
         }
         
@@ -52,17 +54,18 @@ router.get("/allsubjectswithallstudent" ,isauthenticated, async (req, res) => {
             return res.status(403).json({ message: "Forbidden: Access denied for non-academic head teachers" });
         }
 
-        const user_role=req.user_role;
+        const user_role=teacher.admin_role;
         // admin role start with cc then
         // CC-department-branch-section
         // parse this
         const department = user_role.split("-")[1];
         const branch = user_role.split("-")[2];
         const section = user_role.split("-")[3];
+        const year = user_role.split("-")[4];
 
         var allsubject = await Subject.find();
         if (user_role.startsWith("CC")) {
-            allsubject = await Subject.find({ department, branch, section });
+            allsubject = await Subject.find({ department, branch, section, year });
         }
 
         // get all students details with subjects details
