@@ -15,24 +15,24 @@ router.post("/addstudentxlsx", isAdmin, async (req, res) => {
     try {
         const file = req.files.file;
         
-        // Check file format
-        if (!file || !file.mimetype.includes("xlsx")) {
-            return res.status(400).json({ msg: 'Invalid file format. Please upload an xlsx file.' });
-        }
+        // // Check file format and extension
+        // if (!file || !file.name.endsWith(".xlsx")) {
+        //   return res.status(400).json({ msg: 'Invalid file format or extension. Please upload a valid Excel file (.xlsx).' });
+        // }
+        
 
         const workbook = xlsx.read(file.data, { type: 'buffer' });
         const sheetName = workbook.SheetNames[0];
         const studentsData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
         // const password="medicaps";
-        const password = data.password;
 
         
         const students = await Promise.all(studentsData.map(async data => ({
             name: data.name,
-            enrollment_no: data.enrollment_no,
+            enrollment_no: data.enrollment_no.trim(),
             scholar_no: data.scholar_no,
-            email: (data.enrollment_no + "@medicaps.ac.in").toLowerCase(),
+            email: (data.enrollment_no.trim() + "@medicaps.ac.in").toLowerCase(),
             phone_no: data.phone_no,
             programme: data.programme,
             faculty: data.faculty,
@@ -43,7 +43,7 @@ router.post("/addstudentxlsx", isAdmin, async (req, res) => {
             branch: data.branch,
             section: data.section,
             batch: "None",
-            password: await bcrypt.hash(password, 10),
+            password: await bcrypt.hash(data.password, 10),
             created_at_and_by: {
                 admin_name: req.user_id,
             },
@@ -62,6 +62,7 @@ router.post("/addstudentxlsx", isAdmin, async (req, res) => {
         // res.status(200).json({ msg: 'Students added successfully', data: students });  
 
     } catch (err) {
+      console.log(err)
         res.status(500).json({ msg: err.message });
     }
 });
@@ -70,10 +71,10 @@ router.post("/addteacherxlsx", isAdmin, async (req, res) => {
     try {
 
         const file = req.files.file;
-        // Check file format
-        if (!file || !file.mimetype.includes("xlsx")) {
-          return res.status(400).json({ msg: 'Invalid file format. Please upload an xlsx file.' });
-        }
+        // // Check file format
+        // if (!file || !file.mimetype.endsWith(".xlsx")) {
+        //   return res.status(400).json({ msg: 'Invalid file format. Please upload an xlsx file.' });
+        // }
         const workbook = xlsx.read(file.data, { type: 'buffer' });
         const sheetName = workbook.SheetNames[0];
         const teachersData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
@@ -112,10 +113,10 @@ router.post("/addsubjectxlsx", isAdmin, async (req, res) => {
     try {
         const file = req.files.file;
         
-        // Check file format
-        if (!file || !file.mimetype.includes("xlsx")) {
-          return res.status(400).json({ msg: 'Invalid file format. Please upload an xlsx file.' });
-        }
+        // // Check file format
+        // if (!file || !file.mimetype.endsWith(".xlsx")) {
+        //   return res.status(400).json({ msg: 'Invalid file format. Please upload an xlsx file.' });
+        // }
 
         const workbook = xlsx.read(file.data, { type: 'buffer' });
         const sheetName = workbook.SheetNames[0];
