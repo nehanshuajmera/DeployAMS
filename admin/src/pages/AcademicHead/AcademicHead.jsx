@@ -59,7 +59,7 @@ const AcademicHead = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container  mt-8 m-4">
       <h1 className="text-3xl font-bold mb-4 text-blue-700">Student List</h1>
       <div className="mb-4">
         <input
