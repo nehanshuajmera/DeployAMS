@@ -70,7 +70,6 @@ router.post("/addteacherxlsx", isAdmin, async (req, res) => {
     try {
 
         const file = req.files.file;
-        
         // Check file format
         if (!file || !file.mimetype.includes("xlsx")) {
           return res.status(400).json({ msg: 'Invalid file format. Please upload an xlsx file.' });
