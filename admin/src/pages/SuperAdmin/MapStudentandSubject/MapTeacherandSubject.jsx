@@ -28,6 +28,7 @@ const MapTeacherandSubject = () => {
         const teachersResponse = await axios.get('/api/admin/allteachers');
         const subjectsResponse = await axios.get('/api/admin/allsubjects');
         setTeachers(teachersResponse.data.message);
+        console.log(teachersResponse.data.message);
         setFilteredTeachers(teachersResponse.data.message);
         setSubjects(subjectsResponse.data.message);
         setFilteredSubjects(subjectsResponse.data.message);
@@ -58,7 +59,7 @@ const MapTeacherandSubject = () => {
     const filtered = teachers.filter(
       (teacher) =>
         teacher.name.toLowerCase().includes(filterValue) ||
-        teacher.enrollment_no.toLowerCase().includes(filterValue)
+        teacher.teacher_id.toLowerCase().includes(filterValue)
     );
     setFilteredTeachers(filtered);
   };
