@@ -400,7 +400,9 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
             Subjects
           </label>
           <div className="flex flex-col gap-3 col-span-2 ">
-            <input
+            {/* <SearchBar  /> */}
+      <SubjectSearchStud subjects={student.subjects} changeSubjectList={changeSubjectList} />
+            {/* <input
               type="text"
               name="subjects"
               id="subjects"
@@ -410,12 +412,11 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
               placeholder="Subject"
-            />
+            /> */}
           </div>
         </div>
       </div>
-      {/* <SearchBar  /> */}
-      <SubjectSearchStud subjects={student.subjects} changeSubjectList={changeSubjectList} />
+      
       <div className="flex justify-end items-center">
         <button className="button1" onClick={() => HandleClick()}>
           Save

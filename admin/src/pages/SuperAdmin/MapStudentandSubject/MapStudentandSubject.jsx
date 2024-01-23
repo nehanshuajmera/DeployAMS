@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { TYPE, useMsgErr } from '../../../context/MsgAndErrContext';
 
 const MapStudentandSubject = () => {
+  const { setMsgType, setMsg } = useMsgErr();
   const [studentIds, setStudentIds] = useState([]);
   const [subjectIds, setSubjectIds] = useState([]);
   const [message, setMessage] = useState('');
@@ -44,9 +46,13 @@ const MapStudentandSubject = () => {
         subjectIds,
       });
       setMessage(response.data.message);
+      setMsgType(TYPE.Success);
+            setMsg(response.data.message);
     } catch (error) {
       console.error('Error combining subjects and students:', error);
       setMessage('Error combining subjects and students.');
+      setMsgType(TYPE.Err);
+        setMsg('Error combining subjects and students.');
     }
   };
 

@@ -46,6 +46,8 @@ export default function MarkAttendance() {
         await dispatch(checkclassasync({ ID: sub_id.id }));
       } catch (error) {
         console.log(error);
+        setMsgType(TYPE.Err);
+        setMsg("Failed in checking class");
       }
     }
     unsub();
@@ -83,13 +85,16 @@ export default function MarkAttendance() {
     const unsub = async () => {
       try {
         await dispatch(ParticularAttendanceasync({ ID: sub_id.id }));
-        // console.log(particularAttendanceStore)
+        console.log(particularAttendanceStore)
         if (particularAttendanceStore.isErr) {
           setMsgType(TYPE.Err)
           setMsg(particularAttendanceStore.Err)
         }
+        
       } catch (error) {
         console.log(error);
+        // setMsgType(TYPE.Err);
+        // setMsg("Failed to mark attendance");
       }
     };
     unsub();
@@ -133,16 +138,7 @@ export default function MarkAttendance() {
 
   const gotoUpdate = () => { };
 
-  // const markCount = ({ stud_id, count,index }) => {
-
-  //   // var array=studentIDs;
-
-  //   // setstudentIDs(array)
-  //   // if(!assign){
-  //   //   studentIDs.push({"studentid":stud_id,"count":count});
-  //   // }
-  // };
-
+  
   useEffect(() => {
     var array = [];
     var idx = 0;
@@ -188,10 +184,24 @@ export default function MarkAttendance() {
       };
       console.log(payload);
       await dispatch(updateAttendanceAsync(payload));
+      if (updateAttendanceStore.isErr) {
+        setMsgType(TYPE.Err);
+        setMsg(updateAttendanceStore.errMsg);
+        console.log(updateAttendanceStore.isErr);
+      } else {
+        setMsgType(TYPE.Success);
+        setMsg("Marked Successfully");
+      }
     } catch (error) {
       console.log(error);
+      setMsgType(TYPE.Err);
+        setMsg("Attendance marked Failed");
     }
   };
+
+  const updateAttendanceStore = useSelector(
+    (state) => state.updateAttendance
+  )
 
   const data = React.useMemo(() => studentIDs, [studentIDs]);
   // console.log(dataofstud)

@@ -85,6 +85,7 @@ const UpdateStudent = () => {
 
   return (
     <div>
+      <p className="text-3xl font-bold text-center my-6">Update Student</p>
       <StudentForm
         student={student}
         setStudent={setStudent}

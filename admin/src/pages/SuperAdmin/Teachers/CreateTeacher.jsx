@@ -56,6 +56,7 @@ const CreateTeacher = () => {
 
   return (
     <div>
+      <p className="text-2xl font-bold text-center mt-2">Create Teacher</p>
       {/* <TopOfPage pagePath={"Dashboard >> Teacher >> Create"} pageName={"Create Teacher"}/> */}
       <TeacherForm
         teacher={teacher}

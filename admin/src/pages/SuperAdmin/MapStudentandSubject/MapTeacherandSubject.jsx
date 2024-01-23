@@ -1,8 +1,10 @@
 // MapTeacherandSubject.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { TYPE, useMsgErr } from '../../../context/MsgAndErrContext';
 
 const MapTeacherandSubject = () => {
+  const { setMsgType, setMsg } = useMsgErr();
   const [teacherId, setTeacherId] = useState("");
   const [subjectIds, setSubjectIds] = useState([]);
   const [message, setMessage] = useState('');
@@ -47,8 +49,12 @@ const MapTeacherandSubject = () => {
         subjectIds,
       });
       setMessage(response.data.message);
+      setMsgType(TYPE.Success);
+      setMsg(response.data.message);
     } catch (error) {
       console.error('Error combining subjects and teachers:', error);
+      setMsgType(TYPE.Err);
+      setMsg('Error combining subjects and teachers.');
       setMessage('Error combining subjects and teachers.');
     }
   };
