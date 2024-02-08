@@ -59,7 +59,7 @@ const AcademicHead = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container  mt-8 m-4">
       <h1 className="text-3xl font-bold mb-4 text-blue-700">Student List</h1>
       <div className="mb-4">
         <input
@@ -186,7 +186,7 @@ const AcademicHead = () => {
                     <td className="py-2 px-4 border">{subject.subject_id.subject_name} {subject.subject_id.section} {subject.subject_id.batch}</td>
                     <td className="py-2 px-4 border">{subject.attendance.length}</td>
                     <td className="py-2 px-4 border">{subject.subject_id.lecture_dates.length}</td>
-                    <td className="py-2 px-4 border">{(subject.attendance.length / subject.subject_id.lecture_dates.length) * 100}%</td>
+                    <td className="py-2 px-4 border">{Math.ceil((subject.attendance.length / subject.subject_id.lecture_dates.length) * 100)}%</td>
                   </tr>
                 ))}
               </tbody>

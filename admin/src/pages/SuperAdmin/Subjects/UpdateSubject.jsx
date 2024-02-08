@@ -41,7 +41,7 @@ const UpdateSubject = () => {
           console.log(subjState.isErr);
         } else {
           setMsgType(TYPE.Success);
-          setMsg("Subject added successfully");
+          setMsg("Subject Updated successfully");
           navigate("/allsubject");
         }
       })();
@@ -63,6 +63,7 @@ const UpdateSubject = () => {
 
   return (
     <div>
+      <p className="text-2xl font-bold text-center mt-2">Update Subject</p>
       {/* <TopOfPage pagePath={"Dashboard >> Subject >> Update"} pageName={"Update Subject"}/> */}
       <SubjectForm
         subject={subject}

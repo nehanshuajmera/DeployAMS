@@ -91,7 +91,7 @@ export const deleteSubjectAsync = createAsyncThunk('subjectCRUD/deleteSubjectAsy
   try {
       // if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
       // {
-          const response = await axios.get(`/api/admin/deletesubject/${subjectId}`);
+          const response = await axios.delete(`/api/admin/deletesubject/${subjectId}`);
           const msg = response.data.message;
           
           if(response.status === 200)       

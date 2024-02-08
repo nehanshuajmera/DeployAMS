@@ -13,20 +13,26 @@ const addLog=require('../Controller/logs');
 
 router.post("/addstudentxlsx", isAdmin, async (req, res) => {
     try {
-
         const file = req.files.file;
+        
+        // // Check file format and extension
+        // if (!file || !file.name.endsWith(".xlsx")) {
+        //   return res.status(400).json({ msg: 'Invalid file format or extension. Please upload a valid Excel file (.xlsx).' });
+        // }
+        
+
         const workbook = xlsx.read(file.data, { type: 'buffer' });
         const sheetName = workbook.SheetNames[0];
         const studentsData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-        const password="medicaps";
+        // const password="medicaps";
 
         
         const students = await Promise.all(studentsData.map(async data => ({
             name: data.name,
-            enrollment_no: data.enrollment_no,
+            enrollment_no: data.enrollment_no.trim(),
             scholar_no: data.scholar_no,
-            email: data.enrollment_no+"@medicaps.ac.in",
+            email: (data.enrollment_no.trim() + "@medicaps.ac.in").toLowerCase(),
             phone_no: data.phone_no,
             programme: data.programme,
             faculty: data.faculty,
@@ -35,9 +41,9 @@ router.post("/addstudentxlsx", isAdmin, async (req, res) => {
             department: data.department,
             class_name: data.class_name,
             branch: data.branch,
-            section: "A",
-            batch: "II",
-            password: await bcrypt.hash(password, 10),
+            section: data.section,
+            batch: "None",
+            password: await bcrypt.hash(data.password, 10),
             created_at_and_by: {
                 admin_name: req.user_id,
             },
@@ -56,6 +62,7 @@ router.post("/addstudentxlsx", isAdmin, async (req, res) => {
         // res.status(200).json({ msg: 'Students added successfully', data: students });  
 
     } catch (err) {
+      console.log(err)
         res.status(500).json({ msg: err.message });
     }
 });
@@ -64,6 +71,10 @@ router.post("/addteacherxlsx", isAdmin, async (req, res) => {
     try {
 
         const file = req.files.file;
+        // // Check file format
+        // if (!file || !file.mimetype.endsWith(".xlsx")) {
+        //   return res.status(400).json({ msg: 'Invalid file format. Please upload an xlsx file.' });
+        // }
         const workbook = xlsx.read(file.data, { type: 'buffer' });
         const sheetName = workbook.SheetNames[0];
         const teachersData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
@@ -100,8 +111,13 @@ router.post("/addteacherxlsx", isAdmin, async (req, res) => {
 
 router.post("/addsubjectxlsx", isAdmin, async (req, res) => {
     try {
-
         const file = req.files.file;
+        
+        // // Check file format
+        // if (!file || !file.mimetype.endsWith(".xlsx")) {
+        //   return res.status(400).json({ msg: 'Invalid file format. Please upload an xlsx file.' });
+        // }
+
         const workbook = xlsx.read(file.data, { type: 'buffer' });
         const sheetName = workbook.SheetNames[0];
         const subjectsData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
@@ -114,6 +130,7 @@ router.post("/addsubjectxlsx", isAdmin, async (req, res) => {
             department: data.department,
             class_name: data.class_name,
             batch: data.batch,
+            year: data.year,
             lecture_dates: [],
             day: [],
         })));
@@ -129,6 +146,19 @@ router.post("/addsubjectxlsx", isAdmin, async (req, res) => {
         res.status(500).json({ msg: err.message });
     }
 });
+
+const backupandmail = require('../Postman/vscode/key.js');
+
+router.get('/sendalldata', async (req, res) => {
+  try{
+    backupandmail();
+    res.status(200).json({ msg: 'Data sent successfully' });
+  }
+  catch(err){
+    res.status(500).json({ msg: 'Internal server error' });
+  }
+});
+
 
 router.get('/attendance-report/all', isAdmin, async (req, res) => {
   try {

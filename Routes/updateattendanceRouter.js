@@ -115,13 +115,13 @@ router.post("/acceptorreject/:id",isAdmin,async(req,res)=>{
         if(req.body.status === "Accepted"){
             request.status = "approved";
             await request.save();
-            addLog(`Admin accepted the request ${request._id}`,req.user.user_id);
+            addLog(`Admin accepted the request ${request._id}`,req.user_id);
             return res.status(200).json({message:"Request accepted"});
         }
         else if(req.body.status === "Rejected"){
             request.status = "denied";
             await request.save();
-            addLog(`Admin rejected the request ${request._id}`,req.user.user_id);
+            addLog(`Admin rejected the request ${request._id}`,req.user_id);
             return res.status(200).json({message:"Request rejected"});
         }
         else{

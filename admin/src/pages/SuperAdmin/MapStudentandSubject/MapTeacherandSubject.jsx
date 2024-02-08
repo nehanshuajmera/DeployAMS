@@ -1,8 +1,10 @@
 // MapTeacherandSubject.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { TYPE, useMsgErr } from '../../../context/MsgAndErrContext';
 
 const MapTeacherandSubject = () => {
+  const { setMsgType, setMsg } = useMsgErr();
   const [teacherId, setTeacherId] = useState("");
   const [subjectIds, setSubjectIds] = useState([]);
   const [message, setMessage] = useState('');
@@ -28,6 +30,7 @@ const MapTeacherandSubject = () => {
         const teachersResponse = await axios.get('/api/admin/allteachers');
         const subjectsResponse = await axios.get('/api/admin/allsubjects');
         setTeachers(teachersResponse.data.message);
+        console.log(teachersResponse.data.message);
         setFilteredTeachers(teachersResponse.data.message);
         setSubjects(subjectsResponse.data.message);
         setFilteredSubjects(subjectsResponse.data.message);
@@ -46,8 +49,12 @@ const MapTeacherandSubject = () => {
         subjectIds,
       });
       setMessage(response.data.message);
+      setMsgType(TYPE.Success);
+      setMsg(response.data.message);
     } catch (error) {
       console.error('Error combining subjects and teachers:', error);
+      setMsgType(TYPE.Err);
+      setMsg('Error combining subjects and teachers.');
       setMessage('Error combining subjects and teachers.');
     }
   };
@@ -58,7 +65,7 @@ const MapTeacherandSubject = () => {
     const filtered = teachers.filter(
       (teacher) =>
         teacher.name.toLowerCase().includes(filterValue) ||
-        teacher.enrollment_no.toLowerCase().includes(filterValue)
+        teacher.teacher_id.toLowerCase().includes(filterValue)
     );
     setFilteredTeachers(filtered);
   };

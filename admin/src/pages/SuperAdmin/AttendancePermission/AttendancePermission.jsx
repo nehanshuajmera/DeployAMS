@@ -3,16 +3,16 @@ import axios from 'axios';
 
 const AttendancePermission = () => {
   const [requests, setRequests] = useState([]);
-
+  const fetchRequests = async () => {
+    try {
+      const response = await axios.get('/api/updatepastattendance/viewallrequest');
+      setRequests(response.data.requests);
+    } catch (error) {
+      console.error('Error fetching requests:', error);
+    }
+  };
   useEffect(() => {
-    const fetchRequests = async () => {
-      try {
-        const response = await axios.get('/api/updatepastattendance/viewallrequest');
-        setRequests(response.data.requests);
-      } catch (error) {
-        console.error('Error fetching requests:', error);
-      }
-    };
+    
 
     fetchRequests();
   }, []);
@@ -26,6 +26,8 @@ const AttendancePermission = () => {
 
       // Handle success, e.g., show a success message or update state
       console.log(response.data.message);
+      window.location.reload();
+
       // Refresh the requests after handling one
       fetchRequests();
     } catch (error) {

@@ -45,7 +45,8 @@ router.get("/getmyrequests/:id", isauthenticated, isTeacher, async (req, res) =>
         if (!student_id) {
             return res.status(400).json({ error: "Please enter all fields" });
         }
-        const requests = await AttendanceRequest.find({ student_id });
+        
+        const requests=await AttendanceRequest.find({student_id});
         if (!requests) {
             return res.status(400).json({ error: "No requests found" });
         }

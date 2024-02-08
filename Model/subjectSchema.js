@@ -22,6 +22,7 @@ const subjectSchema = new mongoose.Schema({
   //   Day:String,
   //   dateOfreschedule:Date
   // }],
+  year:Number,
   department: String,
   class_name: String,
   teacher_id: mongoose.Schema.Types.ObjectId, // Assuming this references the teacher

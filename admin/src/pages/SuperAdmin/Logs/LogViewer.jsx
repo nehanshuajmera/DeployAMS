@@ -33,7 +33,7 @@ const LogViewer = () => {
   };
 
   return (
-    <div className="logContainer container mx-auto mt-8">
+    <div className="logContainer container mx-auto mt-8 p-4">
       <h1 className="logHeading text-3xl font-bold mb-4 text-blue-700">Log Viewer</h1>
       <div className="logBttn flex gap-4 mb-4">
         <input

@@ -9,7 +9,7 @@ const addLog = async (message, createdBy) => {
   
       // Save the log to the database
       await log.save();
-      console.log('Log created successfully');
+      // console.log('Log created successfully');
     } catch (error) {
       console.error('Error creating log:', error);
     }

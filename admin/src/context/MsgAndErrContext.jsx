@@ -60,6 +60,7 @@ const reducer = (state, action) => {
 export const useMsgErr = () => {
   return useContext(MsgAndErrContext);
 };
+
 export const TYPE = {
   Err: "Err",
   Success: "Success",

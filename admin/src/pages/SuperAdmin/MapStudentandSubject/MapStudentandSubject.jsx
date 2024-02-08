@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { TYPE, useMsgErr } from '../../../context/MsgAndErrContext';
 
 const MapStudentandSubject = () => {
+  const { setMsgType, setMsg } = useMsgErr();
   const [studentIds, setStudentIds] = useState([]);
   const [subjectIds, setSubjectIds] = useState([]);
   const [message, setMessage] = useState('');
@@ -44,9 +46,13 @@ const MapStudentandSubject = () => {
         subjectIds,
       });
       setMessage(response.data.message);
+      setMsgType(TYPE.Success);
+            setMsg(response.data.message);
     } catch (error) {
       console.error('Error combining subjects and students:', error);
       setMessage('Error combining subjects and students.');
+      setMsgType(TYPE.Err);
+        setMsg('Error combining subjects and students.');
     }
   };
 
@@ -54,7 +60,7 @@ const MapStudentandSubject = () => {
     const filterValue = e.target.value.toLowerCase();
     setStudentFilter(filterValue);
     const filtered = students.filter(
-      (student) => student.name.toLowerCase().includes(filterValue) || student.enrollment_no.toLowerCase().includes(filterValue)
+      (student) => student.name.toLowerCase().includes(filterValue) || student.enrollment_no.toLowerCase().includes(filterValue) || student.section.toLowerCase().includes(filterValue) || student.branch.toLowerCase().includes(filterValue)
     );
     setFilteredStudents(filtered);
   };
@@ -92,6 +98,18 @@ const MapStudentandSubject = () => {
     setFilteredSubjects(filtered);
   };
 
+  const handleSectionFilterChange = (e) => {
+    const filterValue = e.target.value.toLowerCase();
+    setSectionFilter(filterValue);
+    // const filtered = subjects.filter((subject) => subject.section.toLowerCase().includes(filterValue));
+    const filtered = subjects.filter(
+      
+      (subject) => subject.section.toLowerCase()===filterValue.toLowerCase() 
+    )
+
+    setFilteredSubjects(filtered);
+  };  
+
   const handleStudentCheckboxChange = (studentId) => {
     setStudentIds((prevStudentIds) =>
       prevStudentIds.includes(studentId)
@@ -108,12 +126,42 @@ const MapStudentandSubject = () => {
     );
   };
 
+ 
+
+  const handleSubjectFilterBySection = (section) => {
+    const filtered = students.filter((subject) => subject.section === section);
+    setFilteredStudents(filtered);
+  }
+
+  const [sectionFilter, setSectionFilter] = useState('');
+
+const handleSelectAllFilters = () => {
+  setStudentIds([]);
+  filteredStudents.map((student) => {
+    setStudentIds((prevStudentIds) => [...prevStudentIds, student.id]);
+  });
+  // console.log(studentIds);
+  
+}
+
+const handleSelectAllFiltersSubject = () => {
+  setSubjectIds([]);
+  filteredSubjects.map((subject) => {
+    setSubjectIds((prevSubjectIds) => [...prevSubjectIds, subject._id]);
+  })
+  // console.log(subjectIds); 
+}
+
   return (
     <div className="container mx-auto mt-10 m-4 flex justify-center items-center flex-col">
       <h1 className="text-3xl font-bold mb-4 text-blue-700">Combine Subjects and Students</h1>
 
+      
+
       <div className="flex gap-8 w-full">
         <div className=" w-1/2 bg-gray-100 p-4 rounded-lg">
+          {/* select all button  students*/}
+          <button onClick={handleSelectAllFilters} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4' >Select All</button>
           <label className="block text-gray-700 text-sm font-bold mb-2">Search Students:</label>
           <input
             type="text"
@@ -122,6 +170,16 @@ const MapStudentandSubject = () => {
             onChange={handleStudentFilterChange}
             placeholder="Search by name or enrollment number"
           />
+
+          <input 
+            type="text"
+            className="border p-2 w-full mb-4"
+            value={sectionFilter}
+            onChange={(e) => {setSectionFilter(e.target.value); handleSubjectFilterBySection(e.target.value)}}
+            placeholder="Filter by section"
+            />
+
+
           <div className="flex flex-col gap-4 overflow-y-auto max-h-96">
           {filteredStudents.map((student) => (
             <div key={student.id} className="flex items-center mb-2">
@@ -131,9 +189,9 @@ const MapStudentandSubject = () => {
                 checked={studentIds.includes(student.id)}
                 onChange={() => handleStudentCheckboxChange(student.id)}
                 className="mr-2"
-              />
+                />
               <span className="text-sm">
-                {student.enrollment_no} - {student.name}
+                {student.enrollment_no} - {student.name} ({student.branch}) ({student.section})
               </span>
             </div>
           ))}
@@ -141,6 +199,7 @@ const MapStudentandSubject = () => {
         </div>
 
         <div className=" w-1/2 bg-gray-100 p-4 rounded-lg">
+        <button onClick={handleSelectAllFiltersSubject} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4' >Select All</button>
           <label className="block text-gray-700 text-sm font-bold mb-2">Search Subjects:</label>
           <input
             type="text"
@@ -162,7 +221,7 @@ const MapStudentandSubject = () => {
               <option value="">Filter by Subject Name</option>
               {Array.from(new Set(subjects.map((subject) => subject.subject_name))).map((name) => (
                 <option key={name} value={name}>
-                  {name}
+                  {name} 
                 </option>
               ))}
             </select>
@@ -171,6 +230,15 @@ const MapStudentandSubject = () => {
               {Array.from(new Set(subjects.map((subject) => subject.branch))).map((branch) => (
                 <option key={branch} value={branch}>
                   {branch}
+                </option>
+              ))}
+            </select>
+
+            <select className="border p-2" onChange={handleSectionFilterChange}>
+              <option value="">Filter by Section</option>
+              {Array.from(new Set(subjects.map((subject) => subject.section))).map((section) => (
+                <option key={section} value={section}>
+                  {section}
                 </option>
               ))}
             </select>

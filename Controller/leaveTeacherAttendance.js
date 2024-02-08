@@ -7,6 +7,10 @@ const Student = require('../Model/studentSchema');
 const createLeaveTeacherAttendance = async (req, res) => {
     const { teacherId, subjectId, assign_teacherId, leaveDate, attendance } = req.body;
 
+    if (!teacherId || !subjectId || !leaveDate || !attendance || !assign_teacherId) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+
     // if that teacher was not assigned that subject error will be thrown
     const isTeacher = await Teacher.findOne({ _id: teacherId, subjectId });
     if (!isTeacher) return res.status(404).json({ message: "No teacher found" });
@@ -56,6 +60,10 @@ const getLeaveTeacherAttendanceByteacherId = async (req, res) => {
 
 const getassignTeachersubjectallStudentsbydate = async (req, res) => {
     const { teacherId, subjectId } = req.body;
+    if (!teacherId || !subjectId) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+
     const leaveDate = new Date();
     const assign_teacherId = req.teacherId;
     try {
@@ -74,6 +82,9 @@ const getassignTeachersubjectallStudentsbydate = async (req, res) => {
 
 const markleaveattendanceontoday = async (req, res) => {
     const { teacherId, subjectId,assign_teacherId,attendance } = req.body;
+    if (!teacherId || !subjectId || !attendance || !assign_teacherId) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
     try {
         const today = new Date();
         // if that teacher was not assigned that subject error will be thrown
@@ -94,6 +105,9 @@ const markleaveattendanceontoday = async (req, res) => {
 
 const adminaddattendanceinallstudents = async (req, res) => {
     const leaveAttendanceId  = req.params.id;
+    if (!leaveAttendanceId) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
     try {
         // if that teacher was not assigned that subject error will be thrown
         const isleaveTeacherAttendance = await LeaveTeacherAttendance.findById(leaveAttendanceId);
@@ -126,6 +140,7 @@ const adminaddattendanceinallstudents = async (req, res) => {
 
 const adminrejectleaveattendance = async (req, res) => {
     const leaveAttendanceId  = req.params.id;
+    
     try {
         // if that teacher was not assigned that subject error will be thrown
         const isleaveTeacherAttendance = await LeaveTeacherAttendance.findById(leaveAttendanceId);

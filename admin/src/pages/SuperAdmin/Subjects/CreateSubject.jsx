@@ -66,6 +66,7 @@ const CreateSubject = () => {
 
   return (
     <div>
+      <p className="text-2xl font-bold text-center mt-2">Create Subject</p>
       {/* <TopOfPage pagePath={"Dashboard >> subject >> create"} pageName={"Create subject"}/> */}
       <SubjectForm subject={subject} setSubject={setSubject}  HandleClick={HandleClick}/>
     </div>

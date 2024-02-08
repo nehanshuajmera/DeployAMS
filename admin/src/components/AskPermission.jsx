@@ -20,6 +20,7 @@ useEffect(()=>{
         setMsgType(TYPE.Err)
         setMsg(userDetail.errMsg)
       }
+      
       // const studentState = useSelector(state=>state.crudstudent)
       
     }catch(error){
@@ -63,9 +64,12 @@ const check=()=>{
       const response = await axios.post(`/api/updatepastattendance/asktoupdate/${sub_id}`, {
         date: data.date,
       });
-      
-      setMsgType(TYPE.SUCCESS);
-      setMsg(response.data.message);
+      if(response.status==200){
+        setMsgType(TYPE.SUCCESS);
+        setMsg("Ask for permission successfully for selected date.");
+      }
+      // setMsgType(TYPE.SUCCESS);
+      // setMsg("Ask for permission successfully for selected date.");
     } catch (error) {
       console.error("Error asking for permission:", error);
       setMsgType(TYPE.ERROR);

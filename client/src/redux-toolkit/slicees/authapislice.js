@@ -12,7 +12,7 @@ export const authasync = createAsyncThunk('auth/authasync', async (payload, { re
     try {
       
         
-        const response = await axios.get('api/authentic');
+        const response = await axios.get('/api/authentic');
             const msg = response.data.message;
             
             if (response.data.message === 'teacher' || response.data.message === 'Admin') {

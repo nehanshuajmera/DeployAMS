@@ -36,6 +36,7 @@ export const fetchdetailasync = createAsyncThunk('fetchDetail/fetchdetailasync',
         console.log(payload);
         // if(JSON.parse(localStorage.getItem('reduxState')).isAuthenticated === true)
         // {
+            
             const response = await axios.get('/api/admin/'+payload.apiname);
             const msg = response.data.message;
 

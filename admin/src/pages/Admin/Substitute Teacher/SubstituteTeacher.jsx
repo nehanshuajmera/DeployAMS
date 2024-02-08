@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { TYPE, useMsgErr } from '../../../context/MsgAndErrContext';
 
 const SubstituteTeacherRequests = () => {
+  const { setMsgType, setMsg } = useMsgErr();
   const [requests, setRequests] = useState([]);
   const [allSubjects,setALLSubjects] = useState([]);
   const [allTeachers, setAllTeachers] = useState([]);
@@ -52,12 +54,20 @@ const SubstituteTeacherRequests = () => {
     }
 
     try {
-      await axios.post('/api/substituteteacher/generaterequest', {
+      const respone = await axios.post('/api/substituteteacher/generaterequest', {
         subjectId: selectedSubject,
         assign_teacherId: selectedTeacher,
       });
-
-      alert('Request generated successfully');
+      if(respone.status !== 200){
+        setMsgType(TYPE.Err);
+          setMsg(" Failed to apply for request");
+      }else{
+        setMsgType(TYPE.Success);
+        setMsg("Request generated successfully");
+      }
+      window.location.reload();
+      
+      // alert('Request generated successfully');
       // Optionally, you can refetch the requests after submission
       // setRequests([]);
     } catch (error) {
@@ -67,7 +77,7 @@ const SubstituteTeacherRequests = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container mx-auto mt-8 px-4">
       <h1 className="text-3xl font-bold mb-4 text-blue-700">My Substitute Teacher Requests</h1>
 
       <div className="flex gap-4 mb-4">
@@ -139,6 +149,9 @@ const SubstituteTeacherRequests = () => {
           ))}
         </tbody>
       </table>
+      {
+        requests.length === 0 && <p className="text-center my-8 font-bold">No requests found</p>
+      }
     </div>
   );
 };
