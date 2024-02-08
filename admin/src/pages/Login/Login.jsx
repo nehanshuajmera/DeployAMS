@@ -36,7 +36,6 @@ export default function Login() {
       [name]: value,
     }));
   };
-  
 
   const handelsubmit = async (e) => {
     e.preventDefault();
@@ -44,8 +43,6 @@ export default function Login() {
     navigate('/teacherdashboard');
   };
   // useEffect(() => {
-
-
   // console.log(isLogin);
   // }, [isLogin])
 
@@ -86,8 +83,7 @@ export default function Login() {
             name='userId'
             placeholder="Teacher Id"
             value={loginData.userId}
-            onChange={handleChange}
-          />
+            onChange={handleChange}/>
         </div>
         <div className="inputContainer">
           <svg

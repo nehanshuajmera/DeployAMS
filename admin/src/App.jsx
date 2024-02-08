@@ -40,7 +40,7 @@ function App() {
   useEffect(() => {
     const unsub = async () => {
       try {
-       dispatch(authasync());
+        dispatch(authasync());
       } catch (error) {
         console.log(error);
       }
