@@ -117,6 +117,7 @@
     }
 
     .bttnCllg {
+        width: -moz-fit-content;
         width: fit-content;
         height: 80%;
     }
@@ -156,6 +157,7 @@
     }
 
     .bttnCllg {
+        width: -moz-fit-content;
         width: fit-content;
         height: 80%;
         padding: 0.2rem;

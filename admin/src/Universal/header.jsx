@@ -3,12 +3,10 @@ import AuthContext from '../context/AuthContext';
 import { useNavigate } from "react-router-dom";
 import './Header.css'
 
-
 export default function Header() {
   const { logout ,userdata } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // console.log(userdata);
   return (
     <header className="headerContainer text-white">
       <div className="headerDiv">
