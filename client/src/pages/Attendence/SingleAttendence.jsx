@@ -1,21 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./SingleAttendence.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutAsync } from "../../redux-toolkit/slicees/loginslice";
 import { studentdetailasync } from "../../redux-toolkit/slicees/studentdataslice";
 import AuthContext from "../../context/AuthContext";
 
 //hey nehanshu i have an task for you
 //you have  to join the data to frontend
-//i will guide you by this message.
-//to get the data of student on other page use use select hook like on line no.26 exactly same
-//but wait first you have to call api by use dispatch hook  in use effect so that data can reload on page automatically in line no. 16 exactly same
 export default function SingleAttendence(props) {
   const { IsLogin, userdata, logout } = useContext(AuthContext);
-
+  // console.log(userdata);
   const dispatch = useDispatch();
-  // console.log(data)
   useEffect(() => {
     const unsub = () => {
       dispatch(studentdetailasync());
@@ -25,21 +20,7 @@ export default function SingleAttendence(props) {
   }, []);
 
   const data = useSelector((state) => state.login);
-  // if(useLocation().pathname === '/studentattandence')
-  // {
-  //   dispatch(studentdetailasync());
-  // }
-
-  // const detail=useSelector((state)=>state.studentDetail.details);
-  //   console.log(detail);
-
   const navigate = useNavigate();
-  //  const handellogout=async()=>{
-  //   console.log("logging out");
-  //       dispatch(logoutAsync());
-  //       navigate("/login");
-
-  //   }
 
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -81,23 +62,23 @@ export default function SingleAttendence(props) {
       </div>
       <hr className="styleHr" />
       <div className="studentDetails">
-        <div className="studentProgramme">
-          <h4>Programme: {props?.Programme}</h4>
-        </div>
         <div className="studentName">
           <h4>Name: {userdata?.name}</h4>
+        </div>
+        <div className="studentProgramme">
+          <h4>Programme: {userdata?.programme}</h4>
+        </div>
+        <div className="cls-sec">
+          <h4>Branch: {userdata?.branch}</h4>
         </div>
         <div className="studentId">
           <h4>Enrollment No.: {userdata?.enrollment_no}</h4>
         </div>
         <div className="Year">
-          <h4>Year: {props?.Year}</h4>
-        </div>
-        <div className="cls-sec">
-          <h4>Class & Section: {userdata?.branch}</h4>
+          <h4>Year: {userdata?.year}</h4>
         </div>
         <div className="studentBatch">
-          <h4>Batch: {userdata?.batch}</h4>
+          <h4>Section: {userdata?.section}</h4>
         </div>
       </div>
       <div className="subjectAttendence">
@@ -142,7 +123,7 @@ export default function SingleAttendence(props) {
                 ? "present"
                 : "absent";
               ans = allattandance.includes(currentDate) ? ans : "holiday";
-              var todaysAttendanceCount = subject.attendance.find(ele=>convertDate(new Date(ele.date)) == currentDate)?.count||0
+              var todaysAttendanceCount = subject.attendance.find(ele => convertDate(new Date(ele.date)) == currentDate)?.count || 0
               return (
                 <tr key={index}>
                   <td className="dataForStudents">

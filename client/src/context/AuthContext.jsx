@@ -1,12 +1,9 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
-
 function AuthContextProvider(props) {
-    
   const [IsLogin, setIsLogin] = useState(null);
   const [toastmessage, settoastmessage] = useState("")
   
@@ -19,7 +16,8 @@ function AuthContextProvider(props) {
     "phone_no": "",
     "programme": "",
     "faculty": "",
-    "specialisation": "",
+    "specialization": "",
+    "department": "",
     "year": 0,
     "branch": "",
     "section": "",

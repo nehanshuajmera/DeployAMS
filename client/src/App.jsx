@@ -7,11 +7,8 @@ import ChangePassword from "./pages/ChangePassword/ChangePassword"
 import ProtectedRoute from "./protectrouter/ProtectedRoute"
 import StudentAttendence from "./pages/Attendence/StudentAttendence"
 import { useContext, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { studentdetailasync } from "./redux-toolkit/slicees/studentdataslice"
 import AuthContext from "./context/AuthContext"
 import NotFoundPage from "./pages/NotFoundPage"
-import { authasync } from "./redux-toolkit/slicees/authapislice"
 
 function App() {
   const { IsLogin } = useContext(AuthContext);

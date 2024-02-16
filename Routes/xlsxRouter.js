@@ -8,157 +8,146 @@ const xlsx = require('xlsx');
 const bcrypt = require("bcrypt");
 const isauthenticated = require('../Middleware/authenticated');
 const isAdmin = require('../Middleware/checkadmin');
-const fs = require('fs'); 
-const addLog=require('../Controller/logs');
+const fs = require('fs');
+const addLog = require('../Controller/logs');
 
 router.post("/addstudentxlsx", isAdmin, async (req, res) => {
-    try {
-        const file = req.files.file;
-        
-        // // Check file format and extension
-        // if (!file || !file.name.endsWith(".xlsx")) {
-        //   return res.status(400).json({ msg: 'Invalid file format or extension. Please upload a valid Excel file (.xlsx).' });
-        // }
-        
+  try {
+    const file = req.files.file;
+    // // Check file format and extension
+    // if (!file || !file.name.endsWith(".xlsx")) {
+    //   return res.status(400).json({ msg: 'Invalid file format or extension. Please upload a valid Excel file (.xlsx).' });
+    // }
+    const workbook = xlsx.read(file.data, { type: 'buffer' });
+    const sheetName = workbook.SheetNames[0];
+    const studentsData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-        const workbook = xlsx.read(file.data, { type: 'buffer' });
-        const sheetName = workbook.SheetNames[0];
-        const studentsData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    // const password="medicaps";
 
-        // const password="medicaps";
+    const students = await Promise.all(studentsData.map(async data => ({
+      name: data.name,
+      enrollment_no: data.enrollment_no.trim(),
+      scholar_no: data.scholar_no,
+      email: (data.enrollment_no.trim() + "@medicaps.ac.in").toLowerCase(),
+      phone_no: data.phone_no,
+      programme: data.programme,
+      faculty: data.faculty,
+      specialization: data.specialization,
+      year: data.year,
+      department: data.department,
+      class_name: data.class_name,
+      branch: data.branch,
+      section: data.section,
+      batch: "None",
+      password: await bcrypt.hash(data.password, 10),
+      created_at_and_by: {
+        admin_name: req.user_id,
+      },
+      subjects: [],
+      ratings: [],
+    })));
 
-        
-        const students = await Promise.all(studentsData.map(async data => ({
-            name: data.name,
-            enrollment_no: data.enrollment_no.trim(),
-            scholar_no: data.scholar_no,
-            email: (data.enrollment_no.trim() + "@medicaps.ac.in").toLowerCase(),
-            phone_no: data.phone_no,
-            programme: data.programme,
-            faculty: data.faculty,
-            specialisation: data.specialisation,
-            year: data.year,
-            department: data.department,
-            class_name: data.class_name,
-            branch: data.branch,
-            section: data.section,
-            batch: "None",
-            password: await bcrypt.hash(data.password, 10),
-            created_at_and_by: {
-                admin_name: req.user_id,
-            },
-            subjects: [],
-            ratings: [],
-        })));
+    // Save the students to the database
+    const savedStudents = await Student.insertMany(students);
 
-
-        // Save the students to the database
-        const savedStudents = await Student.insertMany(students);
-
-        addLog("Added Students via xlsx",req.user_id);
-
-        res.status(200).json({ msg: 'Students added successfully', data: savedStudents });
-
-        // res.status(200).json({ msg: 'Students added successfully', data: students });  
-
-    } catch (err) {
-      console.log(err)
-        res.status(500).json({ msg: err.message });
-    }
+    addLog("Added Students via xlsx", req.user_id);
+    res.status(200).json({ msg: 'Students added successfully', data: savedStudents });
+    // res.status(200).json({ msg: 'Students added successfully', data: students });  
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ msg: err.message });
+  }
 });
 
 router.post("/addteacherxlsx", isAdmin, async (req, res) => {
-    try {
+  try {
+    const file = req.files.file;
+    // // Check file format
+    // if (!file || !file.mimetype.endsWith(".xlsx")) {
+    //   return res.status(400).json({ msg: 'Invalid file format. Please upload an xlsx file.' });
+    // }
+    const workbook = xlsx.read(file.data, { type: 'buffer' });
+    const sheetName = workbook.SheetNames[0];
+    const teachersData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    // console.log(teachersData)
+    const password = "medicaps";
 
-        const file = req.files.file;
-        // // Check file format
-        // if (!file || !file.mimetype.endsWith(".xlsx")) {
-        //   return res.status(400).json({ msg: 'Invalid file format. Please upload an xlsx file.' });
-        // }
-        const workbook = xlsx.read(file.data, { type: 'buffer' });
-        const sheetName = workbook.SheetNames[0];
-        const teachersData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
-        // console.log(teachersData)
-        const password="medicaps";
+    const teachers = await Promise.all(teachersData.map(async data => ({
+      teacher_id: data.teacher_id,
+      name: data.name,
+      email: data.email,
+      phone_no: data.phone_no,
+      department: data.department,
+      faculty: data.faculty,
+      admin_role: "teacher",
+      designation: "teacher",
+      subjects: [],
+      password: await bcrypt.hash(password, 10),
+      created_at_and_by: {
+        admin_name: req.user_id,
+      }
+    })));
 
-        const teachers = await Promise.all(teachersData.map(async data => ({
-            teacher_id: data.teacher_id,
-            name: data.name,
-            email: data.email,
-            phone_no: data.phone_no,
-            department: data.department,
-            faculty: data.faculty,
-            admin_role: "teacher",
-            designation: "teacher",
-            subjects: [],
-            password: await bcrypt.hash(password, 10),
-            created_at_and_by: {
-                admin_name: req.user_id,
-            }
-        })));   
+    // Save the teachers to the database
+    const savedTeachers = await Teacher.insertMany(teachers);
+    addLog("Added Teacher via xlsx", req.user_id);
 
-        // Save the teachers to the database
-        const savedTeachers = await Teacher.insertMany(teachers);
-        addLog("Added Teacher via xlsx",req.user_id);
+    res.status(200).json({ msg: 'Teachers added successfully', data: savedTeachers });
 
-
-        res.status(200).json({ msg: 'Teachers added successfully', data: savedTeachers });
-        
-    } catch (err) {
-        res.status(500).json({ msg: err.message });
-    }
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
 });
 
 router.post("/addsubjectxlsx", isAdmin, async (req, res) => {
-    try {
-        const file = req.files.file;
-        
-        // // Check file format
-        // if (!file || !file.mimetype.endsWith(".xlsx")) {
-        //   return res.status(400).json({ msg: 'Invalid file format. Please upload an xlsx file.' });
-        // }
+  try {
+    const file = req.files.file;
 
-        const workbook = xlsx.read(file.data, { type: 'buffer' });
-        const sheetName = workbook.SheetNames[0];
-        const subjectsData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    // // Check file format
+    // if (!file || !file.mimetype.endsWith(".xlsx")) {
+    //   return res.status(400).json({ msg: 'Invalid file format. Please upload an xlsx file.' });
+    // }
 
-        const subjects = await Promise.all(subjectsData.map(async data => ({
-            subject_name: data.subject_name,
-            course_code: data.course_code,
-            branch: data.branch,
-            section: data.section,
-            department: data.department,
-            class_name: data.class_name,
-            batch: data.batch,
-            year: data.year,
-            lecture_dates: [],
-            day: [],
-        })));
+    const workbook = xlsx.read(file.data, { type: 'buffer' });
+    const sheetName = workbook.SheetNames[0];
+    const subjectsData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-        // Save the subjects to the database
-        const savedSubjects = await Subject.insertMany(subjects);
-        
-        addLog("Added Subjects via xlsx",req.user_id);
+    const subjects = await Promise.all(subjectsData.map(async data => ({
+      subject_name: data.subject_name,
+      course_code: data.course_code,
+      branch: data.branch,
+      section: data.section,
+      department: data.department,
+      class_name: data.class_name,
+      batch: data.batch,
+      year: data.year,
+      lecture_dates: [],
+      day: [],
+    })));
 
-        res.status(200).json({ msg: 'Subjects added successfully', data: savedSubjects });
-        
-    } catch (err) {
-        res.status(500).json({ msg: err.message });
-    }
+    // Save the subjects to the database
+    const savedSubjects = await Subject.insertMany(subjects);
+
+    addLog("Added Subjects via xlsx", req.user_id);
+
+    res.status(200).json({ msg: 'Subjects added successfully', data: savedSubjects });
+
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
 });
 
 const backupandmail = require('../Postman/vscode/key.js');
 
 router.get('/sendalldata', async (req, res) => {
-  try{
+  try {
     backupandmail();
     res.status(200).json({ msg: 'Data sent successfully' });
   }
-  catch(err){
+  catch (err) {
     res.status(500).json({ msg: 'Internal server error' });
   }
 });
-
 
 router.get('/attendance-report/all', isAdmin, async (req, res) => {
   try {

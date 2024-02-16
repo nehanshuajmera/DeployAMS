@@ -4,7 +4,7 @@ import DailyAttendence from './DailyAttendence'
 export default function AttendenceSheet() {
   return (
     <div className="attendenceSheet">
-        <DailyAttendence  Department={"Computer Science Engineering"}/>
+        <DailyAttendence department={"Computer Science Engineering"}/>
     </div>
   )
 }
