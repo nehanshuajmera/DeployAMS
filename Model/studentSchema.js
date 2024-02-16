@@ -12,7 +12,7 @@ const studentSchema = new mongoose.Schema({
   phone_no: String,
   programme: String,
   faculty: String,
-  specialisation: String,
+  specialization: String,
   year: Number,
   branch: String,
   section: String,

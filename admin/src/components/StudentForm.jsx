@@ -257,21 +257,21 @@ const StudentForm = ({ student, setStudent, HandleClick }) => {
         </div>
       </div>
       <div className="flex justify-center items-center flex-col md:flex-row gap-5 flex-1">
-        {/* specialisation field */}
+        {/* specialization field */}
         <div className="relative w-full grid grid-cols-3  flex-1">
           <label
-            htmlFor="specialisation"
+            htmlFor="specialization"
             className={`px-3 py-2 text-secondary text-xl col-span-1 `}
           >
-            specialisation
+            specialization
           </label>
           <div className="relative col-span-2">
             <input
               type="text"
-              name="specialisation"
-              id="specialisation"
-              className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/specialisation focus:border-primary focus:border-[1px] "
-              value={student.specialisation}
+              name="specialization"
+              id="specialization"
+              className="inputBox max-w-full outline-none bg-dimGray  border-secondary peer/specialization focus:border-primary focus:border-[1px] "
+              value={student.specialization}
               onChange={(e) => ChangeHandler(e)}
             />
             <span className="ml-2 text-lg text-primary">*</span>

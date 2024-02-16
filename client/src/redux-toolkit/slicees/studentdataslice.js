@@ -14,7 +14,7 @@ const initialState={
         "phone_no": "",
         "programme": "",
         "faculty": "",
-        "specialisation": "CSBS",
+        "specialization": "CSBS",
         "year": 2020,
         "branch": "",
         "section": "",

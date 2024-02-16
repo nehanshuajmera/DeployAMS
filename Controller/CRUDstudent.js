@@ -7,9 +7,9 @@ const addLog = require('../Controller/logs');
 const create_student=async (req, res) => {
     try {
       // Create a new student using the data from the request body
-      const { name, enrollment_no, programme,faculty, specialisation, year, scholar_no, email, phone_no, branch, section, batch, password, subjects, department,class_name } = req.body;
+      const { name, enrollment_no, programme,faculty, specialization, year, scholar_no, email, phone_no, branch, section, batch, password, subjects, department,class_name } = req.body;
 
-      if (!name || !enrollment_no || !programme || !faculty || !specialisation || !year || !scholar_no || !email || !phone_no || !branch || !section || !batch || !password || !subjects) {
+      if (!name || !enrollment_no || !programme || !faculty || !specialization || !year || !scholar_no || !email || !phone_no || !branch || !section || !batch || !password || !subjects) {
         return res.status(400).json({ message: "All fields are required" });
       }
   
@@ -19,7 +19,7 @@ const create_student=async (req, res) => {
         scholar_no,
         programme,
         faculty,
-        specialisation,
+        specialization,
         year,
         department,class_name,
         email,
@@ -144,7 +144,7 @@ const all_students=async (req, res) => {
           //   year: student.year,
           //   programme: student.programme,
           //   faculty: student.faculty,
-          //   specialisation: student.specialisation,
+          //   specialization: student.specialization,
           //   subjects: studentSubjects,
           // };
 
@@ -158,10 +158,10 @@ const all_students=async (req, res) => {
             branch: student.branch,
             section: student.section,
             batch: student.batch,
-            year: 2024 - student.year,
+            year: student.year,
             programme: student.programme,
             faculty: student.faculty,
-            specialisation: student.specialisation,
+            specialization: student.specialization,
             subjects: student.subjects,
           };
         })

@@ -507,7 +507,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"Vishal Sharma\", \r\n    \r\n    \"enrollment_no\":\"EN20CS306059\",\r\n    \"scholar_no\":\"2002235\",\r\n    \"email\":\"sharma39vishal@gmail.com\",\r\n            programme: \"\",\r\n        faculty: \"\",\r\n        specialisation: \"\",\r\n        year: \"\",\r\n\r\n    \"phone_no\":\"4659781641\", \r\n    \"branch\":\"CSBS\", \r\n    \"section\":\"S\", \r\n    \"batch\":\"B\", \r\n    \"password\":\"medicaps\", \r\n    \"subjects\":[]\r\n    \r\n}",
+					"raw": "{\r\n    \"name\":\"Vishal Sharma\", \r\n    \r\n    \"enrollment_no\":\"EN20CS306059\",\r\n    \"scholar_no\":\"2002235\",\r\n    \"email\":\"sharma39vishal@gmail.com\",\r\n            programme: \"\",\r\n        faculty: \"\",\r\n        specialization: \"\",\r\n        year: \"\",\r\n\r\n    \"phone_no\":\"4659781641\", \r\n    \"branch\":\"CSBS\", \r\n    \"section\":\"S\", \r\n    \"batch\":\"B\", \r\n    \"password\":\"medicaps\", \r\n    \"subjects\":[]\r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

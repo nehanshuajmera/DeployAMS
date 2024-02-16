@@ -13,7 +13,7 @@ const data = {
   email: "",
   programme: "",
   faculty: "",
-  specialisation: "",
+  specialization: "",
   year: "",
   phone_no: "",
   branch: "",
