@@ -2,6 +2,7 @@
     border-bottom: 4px solid #8d1322;
     margin: 0;
     padding: 0;
+    max-height: 11vh;
 }
 #u{
     text-align: center !important;
@@ -9,7 +10,7 @@
     align-items: center;
 }
 
-.logoImg {
+#y {
     width: 60%;
     height: 100%;
 }
