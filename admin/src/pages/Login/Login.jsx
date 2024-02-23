@@ -56,7 +56,6 @@ export default function Login() {
 
   return (
     <div className='loginClass'>
-
       <form onSubmit={handelsubmit} className="form_main">
         {
           isError &&

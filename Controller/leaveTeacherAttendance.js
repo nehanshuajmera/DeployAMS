@@ -16,7 +16,7 @@ const createLeaveTeacherAttendance = async (req, res) => {
     if (!isTeacher) return res.status(404).json({ message: "No teacher found" });
     // if that subject not have class no that day
     const classonleaveday= await Subject.findById(subjectId);
-    const isclass=classonleaveday.lecture_dates?.find(d => d.date.getFullYear() === today.getFullYear() && d.date.getMonth() === today.getMonth() && d.date.getDate() === today.getDate());
+    const isclassName=classonleaveday.lecture_dates?.find(d => d.date.getFullYear() === today.getFullYear() && d.date.getMonth() === today.getMonth() && d.date.getDate() === today.getDate());
 
     if(!isclass) return res.status(404).json({ message: "No class on that day" });
 

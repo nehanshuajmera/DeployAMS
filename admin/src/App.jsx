@@ -52,7 +52,7 @@ function App() {
   const { IsLogin } = useContext(AuthContext);
 
   return (
-    <div className="w-full overflow-hidden bg-dimWhite ">
+    <div className="w-full overflow-hidden bg-light ">
       {IsLogin ? <Header /> : null}
       <ErrMsg />
       <Routes>
@@ -261,9 +261,7 @@ function App() {
 
         <Route path="/alert" element={<Alert />} />
         <Route path="*" element={<ErrMsg />} />
-      </Routes>
-      {/* <Header />
-      <Dashboard /> */}
+        </Routes>
     </div>
   );
 }

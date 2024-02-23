@@ -139,19 +139,19 @@ const SubjectReport = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-    <div class="relative max-w-sm p-2">
-      <label class="block mb-2">
+    <div className="relative max-w-sm p-2">
+      <label className="block mb-2">
         Start Date
       </label>
-      <input  type="date" onChange={(e) => setStartDate(e.target.value)} class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date"/>
+      <input  type="date" onChange={(e) => setStartDate(e.target.value)} className="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date"/>
     </div>
 
 
-    <div class="relative max-w-sm p-2">
-      <label class="block mb-2">
+    <div className="relative max-w-sm p-2">
+      <label className="block mb-2">
         End Date
       </label>
-      <input  type="date" onChange={(e) => setEndDate(e.target.value)} class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date"/>
+      <input  type="date" onChange={(e) => setEndDate(e.target.value)} className="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date"/>
     </div>
     </div>
 
