@@ -188,6 +188,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background: url(https://www.medicaps.ac.in/resources/img/Departments--img/CSE/About-Department/1.%20Banner_11zon.jpg);
+    background-size: cover;
+    background-position: center;
 }
 
 .loginClass .form_main {
@@ -197,17 +200,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f7f7f7;
+    background: linear-gradient(45deg, #ffffff, #ffffff);
     padding: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 28px black;
     border-radius: 10px;
 }
 
 .loginClass .heading {
     font-size: 2em;
-    color: #2e2e2e;
+    color:#961515;
     font-weight: 700;
     margin-bottom: 20px;
+    font-family: 'franklin gothic';
 }
 
 .loginClass .inputContainer {
@@ -240,31 +244,34 @@
 
 .loginClass .inputField:focus {
     outline: none;
-    border-color: #663399;
+    border-color: #961515;
 }
 
 .loginClass .button {
     width: 100%;
     height: 40px;
     border: none;
-    background-color: #663399;
+    background-color: #961515;
     color: white;
-    font-size: 1em;
+    font-size: 1.5em;
     font-weight: 500;
     letter-spacing: 1px;
     margin: 10px 0;
     cursor: pointer;
     border-radius: 5px;
+    border: 1px solid white;
 }
 
 .loginClass .button:hover {
-    background-color: #5a2e99;
+    background-color: #ffffff;
+    border: 1px solid black;
+    color: #961515;
 }
 
 .loginClass .forgotLink {
     font-size: 0.8em;
     font-weight: 500;
-    color: #663399;
+    color:#961515;
     text-decoration: none;
     margin-top: 10px;
 }

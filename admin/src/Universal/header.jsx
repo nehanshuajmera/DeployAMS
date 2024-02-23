@@ -4,29 +4,41 @@ import { useNavigate } from "react-router-dom";
 import './Header.css'
 
 export default function Header() {
-  const { logout ,userdata } = useContext(AuthContext);
+  const { logout, userdata } = useContext(AuthContext);
   const navigate = useNavigate();
 
   return (
-    <header className="headerContainer text-white">
-      <div className="headerDiv">
-        {/* Logo and Title */}
-        <div className="logoCllg">
-          <img src="https://medicaps.ac.in/resources/img/logo-navbar.png" alt="CollegeLogo" className="logoImg"/>
-        </div>
-        {/* Buttons */}
-        <div className="bttnCllg">
-          {(userdata?.admin_role === 'Admin'||userdata?.admin_role === 'HOD') && (
-            <button className="bttnCss bg-blue-500 hover:bg-blue-600 text-white rounded" onClick={() => navigate('/dashboard')} >
-              Admin Dashboard
+    <nav className="navbar navbar-expand-md navbar-light" id="nav1">
+      <div className="container-fluid" >
+        <a href="" className="navbar-brand">
+          <img className="img-fluid" id="y" src="https://medicaps.ac.in/resources/img/logo-navbar.png" alt="CollegeLogo" />
+        </a>
+        <button className="navbar-toggler" data-bs-target="#a" data-bs-toggle="collapse">
+                <span className="navbar-toggler-icon" id="n"></span>
             </button>
-          )}
-          <button className="bttnCss bg-red-500 hover:bg-red-600 text-white rounded" onClick={() => logout()} >
-            Logout
-          </button>
+
+        <div className="navbar-collapse collapse" id="a">
+        <ul className="navbar-nav ms-auto" id="u">
+        <li>
+            <button className="bttnCss1" onClick={() => navigate('/teacherdashboard')} >
+              Teacher Dashboard
+            </button>
+            </li>
+          <li>
+            {(userdata?.admin_role === 'Admin' || userdata?.admin_role === 'HOD') && (
+              <button className="bttnCss1 " onClick={() => navigate('/dashboard')} >
+                Admin Dashboard
+              </button>
+            )}
+            </li>
+            <li>
+            <button className="bttnCss" onClick={() => logout()} >
+              Logout
+            </button>
+          </li>
+          </ul>
         </div>
       </div>
-      <hr className="styleHr" />
-    </header>
+    </nav>
   );
 }

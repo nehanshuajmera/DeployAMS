@@ -57,61 +57,66 @@ export default function TeacherDashboard() {
   };
 
   return (
-    <div className="teacherDashboard">
-      <hr className="styleHr" />
-      <div className="teacherContentContainer">
-        <div className="teacherDetailContainer">
-          <h1>Teacher Id : {userdata?.teacher_id}</h1>
-          <h1>Name : {userdata?.name}</h1>
-        </div>
-        <div className="teacherFeature">
-          <div className="teacherExtra DisplayMobile-2">
-            <div onClick={() => navigate("/substituteteacher")}>
-              {" "}
-              Substitute Teacher{" "}
-            </div>
-            {userdata.admin_role !== "teacher" ? (
-              <>
-              <div onClick={() => navigate("/academichead")}>
-                Attendance Report
-              </div>
-              <div onClick={() => navigate("/subjectreport")}>
-                Subject Report
-              </div>
-              </>
-            ) : null}
-            <div onClick={() => navigate("/pastattendancerequest")}>
-              Past Attendance Request
-            </div>
+    <div className="container-fluid" id="d1">
+      <div className="row align-items-center justify-content-center">
+
+        <div className="col-lg-4 p-5" id="bn">
+          <div className="card" id="p1">
+            <h1>Teacher Id : {userdata?.teacher_id}</h1>
+            <h1>Name : {userdata?.name}</h1>
           </div>
-          <div className="teacherMain DisplayMobile1">
-            {subjects &&
-              subjects.map((subject) => {
-                console.log(subject);
-                return (
-                  <div
-                    key={subject.subject_id._id}
-                    onClick={() =>
-                      gotoSubjectAttendance(subject.subject_id._id)
-                    }
-                  >
-                    <h3 style={{ fontWeight: "500", fontSize: "1.2rem" }}>
-                      {subject.subject_id.subject_name}
-                    </h3>
-                    <h3>
-                      {subject.subject_id.branch} -{" "}
-                      {subject.subject_id.course_code}
-                    </h3>
-                    <h3>Section: {subject.subject_id.section}</h3>
-                    <h3>Batch: {subject.subject_id.batch}</h3>
-                    <>
-                      {subject.subject_id.class_name && (
-                        <h3>Class: {subject.subject_id.class_name}</h3>
-                      )}
-                    </>
+        </div>
+
+        <div className="col-lg-8">
+          <div className="card" id="bn">
+            <div className="row" id="s1">
+              <div className="col"  id="s12" onClick={() => navigate("/substituteteacher")}>
+                {" "}
+                Substitute Teacher{" "}
+              </div>
+              {userdata.admin_role !== "teacher" ? (
+                <>
+                  <div className="col"  id="s12" onClick={() => navigate("/academichead")}>
+                    Attendance Report
                   </div>
-                );
-              })}
+                  <div className="col"   id="s12" onClick={() => navigate("/subjectreport")}>
+                    Subject Report
+                  </div>
+                </>
+              ) : null}
+              <div className="col"  id="s12" onClick={() => navigate("/pastattendancerequest")}>
+                Past Attendance Request
+              </div>
+            </div>
+            <div className="teacherMain DisplayMobile1">
+              {subjects &&
+                subjects.map((subject) => {
+                  console.log(subject);
+                  return (
+                    <div
+                      key={subject.subject_id._id}
+                      onClick={() =>
+                        gotoSubjectAttendance(subject.subject_id._id)
+                      }
+                    >
+                      <h3 style={{ fontWeight: "500", fontSize: "1.2rem" }}>
+                        {subject.subject_id.subject_name}
+                      </h3>
+                      <h3>
+                        {subject.subject_id.branch} -{" "}
+                        {subject.subject_id.course_code}
+                      </h3>
+                      <h3>Section: {subject.subject_id.section}</h3>
+                      <h3>Batch: {subject.subject_id.batch}</h3>
+                      <>
+                        {subject.subject_id.class_name && (
+                          <h3>Class: {subject.subject_id.class_name}</h3>
+                        )}
+                      </>
+                    </div>
+                  );
+                })}
+            </div>
           </div>
         </div>
       </div>

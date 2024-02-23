@@ -1,42 +1,51 @@
 .AdminDashboard {
-    background-image: url('https://img.freepik.com/free-vector/network-mesh-wire-digital-technology-background_1017-27428.jpg?w=1060&t=st=1700814703~exp=1700815303~hmac=6a310d20b0d0df6346466b04ff048f2ba29a16b8542deea3b3b8e2041e1219cd');
+    background-image: url(https://www.digitalplatforms.co.za/wp-content/uploads/2015/11/Website-Design-Background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    color: #000;
-    width: 100vw;
-    height: 85vh;
+    min-height: 89vh;
 }
-
-.dashboardMainContainer {
-    height: 60vh;
-    display: flex;
+.rw{
+   display: flex;
     justify-content: space-around;
     align-items: center;
-    flex-wrap: wrap;
 }
-
-.adminMain {
-    /* border: 1px solid green; */
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    max-width: 48vw;
+#pa{
+    padding: 4rem;
+}
+#z1{
+    align-items: center !important;
+    justify-content: space-between !important;
     text-align: center;
+    height: 50vh;
+    margin-top: 2rem;
+    border-radius: 1rem;
+    width: 30rem;
+
+}
+.j1{
+    margin-bottom: 10px;
+}
+.heading1{
+    width: 100%;
+    background: #8b0018;
+    color: white;
+    border-radius: 1rem;
+    border: 1px solid;
+    font-size: 1.5rem;
 }
 
-.adminMain div {
-    margin: 1rem;
-    padding: 1rem;
-    border: 2px solid black;
-    border-radius: 0.4rem;
-    font-weight: 500;
-    font-size: 1.2rem;
+
+#z1 div {
+    width: 100%;
     cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 500;
 }
 
-.adminMain div:hover {
-    color: #d2e9f9;
-    background-color: #030955;
+#z1 div:hover {
+    color: #960202;
+    
 }
 
 .adminExtra {
@@ -62,358 +71,18 @@
     background-color: #030955;
 }
 
-.styleHr {
-    border: 1px solid black;
-}
-
-/* Responsive Design CSS */
-@media (min-width: 320px) and (max-width: 479px) {
-    .AdminDashboard {
-        background-image: url('https://img.freepik.com/free-vector/network-mesh-wire-digital-technology-background_1017-27428.jpg?w=1060&t=st=1700814703~exp=1700815303~hmac=6a310d20b0d0df6346466b04ff048f2ba29a16b8542deea3b3b8e2041e1219cd');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: left;
-        height: 88vh;
-        width: 100vw;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    .dashboardMainContainer {
-        height: 86vh;
-        /* border: 1px solid red; */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    .admin-479px {
-        /* border: 1px solid green; */
+@media (max-width: 1280px) {
+    .rw{
         display: grid;
-        grid-template-columns: repeat(2, auto);
-        max-width: 80vw;
-        max-height: 40vh;
-        text-align: center;
+    grid-template-columns: repeat(1, auto);
+    justify-content: center;
     }
-
-    .admin-479px div {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0.8rem;
-        padding: 0.8rem;
-        border: 2px solid black;
-        border-radius: 0.4rem;
-        font-weight: 500;
-        font-size: 1.2rem;
-        cursor: pointer;
-    }
-
-    .admin-479px div:hover {
-        color: #d2e9f9;
-        background-color: #030955;
+    #pa{
+        padding: 2rem;
     }
 }
-
-@media (min-width: 479px) and (max-width: 599px) {
-    .AdminDashboard {
-        background-image: url('https://img.freepik.com/free-vector/network-mesh-wire-digital-technology-background_1017-27428.jpg?w=1060&t=st=1700814703~exp=1700815303~hmac=6a310d20b0d0df6346466b04ff048f2ba29a16b8542deea3b3b8e2041e1219cd');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: left;
-        height: 88vh;
-        width: 100vw;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    .dashboardMainContainer {
-        height: 86vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    .adminMain {
-        /* border: 1px solid green; */
-        /* display: grid;
-        grid-template-columns: repeat(1, auto); */
-        max-width: 96vw;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    .adminMain div {
-        display: flex;
-        margin: 1rem;
-        padding: 1rem;
-        border: 2px solid black;
-        border-radius: 0.4rem;
-        font-weight: 500;
-        font-size: 1.2rem;
-        cursor: pointer;
-        text-align: center;
-    }
-
-    .adminMain div:hover {
-        color: #d2e9f9;
-        background-color: #030955;
-    }
-
-    .adminExtra {
-        /* border: 1px solid green; */
-        /* display: grid;
-        grid-template-columns: repeat(1, auto); */
-        max-width: 90vw;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    .adminExtra div {
-        margin: 1rem;
-        padding: 1rem;
-        border: 2px solid black;
-        border-radius: 0.4rem;
-        font-weight: 500;
-        font-size: 1.2rem;
-        cursor: pointer;
-        text-align: center;
-        width: 60%;
-    }
-
-    .adminExtra div:hover {
-        color: #d2e9f9;
-        background-color: #030955;
-    }
+@media (max-width: 768px){
+#z1{
+    width: 80vw;
 }
-
-@media (min-width: 600px) and (max-width: 800px) {
-    .AdminDashboard {
-        background-image: url('https://img.freepik.com/free-vector/network-mesh-wire-digital-technology-background_1017-27428.jpg?w=1060&t=st=1700814703~exp=1700815303~hmac=6a310d20b0d0df6346466b04ff048f2ba29a16b8542deea3b3b8e2041e1219cd');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: left;
-        height: 88vh;
-        width: 100vw;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    .dashboardMainContainer {
-        height: 60vh;
-        /* border: 1px solid red; */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    .adminMain {
-        /* border: 1px solid green; */
-        display: grid;
-        grid-template-columns: repeat(1, auto);
-        max-width: 40vw;
-        max-height: 40vh;
-        text-align: center;
-    }
-
-    .adminMain div {
-        display: flex;
-        margin: 1rem;
-        padding: 1rem;
-        border: 2px solid black;
-        border-radius: 0.4rem;
-        font-weight: 500;
-        font-size: 1.4rem;
-        cursor: pointer;
-    }
-
-    .adminMain div:hover {
-        color: #d2e9f9;
-        background-color: #030955;
-    }
-
-    .adminExtra {
-        /* border: 1px solid green; */
-        display: grid;
-        grid-template-columns: repeat(1, auto);
-        max-width: 60vw;
-        max-height: 40vh;
-        text-align: center;
-    }
-
-    .adminExtra div {
-        margin: 1rem;
-        padding: 1rem;
-        border: 2px solid black;
-        border-radius: 0.4rem;
-        font-weight: 500;
-        font-size: 1.4rem;
-        cursor: pointer;
-        text-align: center;
-    }
-
-    .adminExtra div:hover {
-        color: #d2e9f9;
-        background-color: #030955;
-    }
 }
-
-@media (min-width: 801px) and (max-width: 1024px) {
-    .AdminDashboard {
-        background-image: url('https://img.freepik.com/free-vector/network-mesh-wire-digital-technology-background_1017-27428.jpg?w=1060&t=st=1700814703~exp=1700815303~hmac=6a310d20b0d0df6346466b04ff048f2ba29a16b8542deea3b3b8e2041e1219cd');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: left;
-        height: 88vh;
-        width: 100vw;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    .dashboardMainContainer {
-        height: 60vh;
-        /* border: 1px solid red; */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    .adminMain {
-        /* border: 1px solid green; */
-        display: grid;
-        grid-template-columns: repeat(1, auto);
-        max-width: 40vw;
-        max-height: 40vh;
-        text-align: center;
-    }
-
-    .adminMain div {
-        display: flex;
-        margin: 1rem;
-        padding: 1rem;
-        height: 8vh;
-        border: 2px solid black;
-        border-radius: 0.4rem;
-        font-weight: 500;
-        font-size: 1.5rem;
-        cursor: pointer;
-    }
-
-    .adminMain div:hover {
-        color: #d2e9f9;
-        background-color: #030955;
-    }
-
-    .adminExtra {
-        /* border: 1px solid green; */
-        display: grid;
-        grid-template-columns: repeat(1, auto);
-        max-width: 60vw;
-        max-height: 40vh;
-        text-align: center;
-    }
-
-    .adminExtra div {
-        margin: 1rem;
-        padding: 1rem;
-        height: 8vh;
-        border: 2px solid black;
-        border-radius: 0.4rem;
-        font-weight: 500;
-        font-size: 1.5rem;
-        cursor: pointer;
-        text-align: center;
-    }
-
-    .adminExtra div:hover {
-        color: #d2e9f9;
-        background-color: #030955;
-    }
-}
-
-/* @media (min-width: 1025px) and (max-width: 1280px){
-    .AdminDashboard {
-        background-image: url('https://img.freepik.com/free-vector/network-mesh-wire-digital-technology-background_1017-27428.jpg?w=1060&t=st=1700814703~exp=1700815303~hmac=6a310d20b0d0df6346466b04ff048f2ba29a16b8542deea3b3b8e2041e1219cd');
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: left;
-        height: 88vh;
-        width: 100vw;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    .dashboardMainContainer {
-        height: 60vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    .adminMain {
-        display: grid;
-        grid-template-columns: repeat(1, auto);
-        max-width: 40vw;
-        max-height: 40vh;
-        text-align: center;
-    }
-
-    .adminMain div {
-        display: flex;
-        margin: 1rem;
-        padding: 1rem;
-        height: 8vh;
-        border: 2px solid black;
-        border-radius: 0.4rem;
-        font-weight: 500;
-        font-size: 1.5rem;
-        cursor: pointer;
-    }
-
-    .adminMain div:hover {
-        color: #d2e9f9;
-        background-color: #030955;
-    }
-
-    .adminExtra {
-        display: grid;
-        grid-template-columns: repeat(1, auto);
-        max-width: 60vw;
-        max-height: 40vh;
-        text-align: center;
-    }
-
-    .adminExtra div {
-        margin: 1rem;
-        padding: 1rem;
-        height: 8vh;
-        border: 2px solid black;
-        border-radius: 0.4rem;
-        font-weight: 500;
-        font-size: 1.5rem;
-        cursor: pointer;
-        text-align: center;
-    }
-
-    .adminExtra div:hover {
-        color: #d2e9f9;
-        background-color: #030955;
-    }
-} */
